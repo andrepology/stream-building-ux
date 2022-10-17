@@ -1,38 +1,39 @@
-.App {
-  text-align: center;
+html,
+body {
+    margin: 0;
+    height: 100%;
+    overflow: auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.app-bg {
+  background-color: #F5F3F5;
+  background: radial-gradient(29.62% 51.89% at 78.54% 48.11%, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */, #F5F3F5;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.tweet {
+  background-color: #FFFFFF;
+  /* border: 1px solid #e7e7e7; */
+  border-radius: 12px;
+  padding: 36px;
+  opacity: 1;
+  transition: 0.3s ease-in-out all;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.active {
+    transform: scale(1.02);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
-.App-link {
-  color: #61dafb;
+.passive {
+  opacity: 0.5;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.tweet .interactions-block {
+  visibility: hidden;
+}
+
+.tweet:hover .interactions-block {
+  visibility: visible;
 }
