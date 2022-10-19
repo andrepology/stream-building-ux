@@ -5,13 +5,15 @@ import './App.css';
 
 const tweets = Array(50).fill(0).map((_, i) => ({
   id: i,
-  name: 'John Doe',
-  username: 'johndoe',
+  author: {
+    name: 'John Doe',
+    username: 'johndoe',
+  },
   created_at: '2021-01-01',
   html: 'This is a tweet',
 }));
 
-const StreamSidebar = ({ zoomLevel, inFocus, stream, setStream }) => {
+const StreamSidebar = ({ zoomLevel, inFocus, streams, currentStream, setStream }) => {
 
   const [zoom, setZoom] = useState("0");
 
@@ -33,26 +35,40 @@ const StreamSidebar = ({ zoomLevel, inFocus, stream, setStream }) => {
     return zoomLevelToZoomStyle[zoom]
   }
 
-  const streams = ['crypto', 'politics', 'sports', 'tech', 'world'];
-
   return (
     <div
-      className={'bg-white flex flex-col gap-2 overflow-y sticky top-32 w-40 h-40 p-4 mx-14 border'}
+      className={'bg-white flex flex-col gap-2 overflow-scroll sticky top-32 w-40 h-96 p-2 mr-12 ml-28 border'}
       style={setZoomStyle(zoom)}
-      onClick={() => { inFocus ? setZoom("0") : +zoom < -1 ? setZoom("1") : setZoom("-2") }}
+      onClick={(e) => { (inFocus && e.target.tagName !== "PARAGRAPH") ? setZoom("0") : +zoom < -1 ? setZoom("1") : setZoom("-2") }}
     >
-      {streams.map(e => {
+      {streams.map((e, i) => {
         return (
-          <p
-            className={cn(
-                          'bg-slate-100',
-                          {'hover:bg-slate-300': zoom === "1"},
-                          {'bg-slate-600': stream === e},
-                        )}
-            onClick={(evt) => setStream(evt.target.innerText)}
-          >
-            {e}
-          </p>
+          <>
+            <p
+              key={i}
+              className={cn(
+                'bg-slate-100 px-1',
+                { 'hover:bg-slate-300': zoom === "1" },
+                { 'bg-slate-600 grow': currentStream === e },
+                { 'shrink': currentStream !== e }
+              )}
+              onClick={(evt) => setStream(evt.target.innerText)}
+            >
+              {e.name}
+            </p>
+
+            <div>
+              {
+                e.seeds.map(seed => {
+                  if (seed.length) {
+                    return (<p>{seed}</p>)
+                  }
+                }
+                )
+              }
+            </div>
+          </>
+
         )
       }
       )}
@@ -86,12 +102,19 @@ const Inspect = ({ children, zoomLevel }) => {
   )
 }
 
-
 function App() {
+  const [focusedTweet, setFocusedTweet] = useState(1);
+  const [currentStream, setStream] = useState("thing building")
 
-  const [focusedTweet, setFocusedTweet] = useState(null);
-  const [stream, setStream] = useState("Stream Building")
+  // obj of streams: seeds
+  const sampleStreams = [
+    {name: 'crypto economics thing', seeds: ['acc1', 'acc2']},
+    {name: 'thing building', seeds: ['acc3', 'acc4']},
+    {name: 'test building', seeds: ['acc3', 'acc4']},
+    {name: 'foo building', seeds: ['acc3', 'acc4']}
+  ];
 
+  const [streams, setStreams] = useState(sampleStreams)
 
   const setSidebarZoomLevel = (focusedTweet) => {
     return (focusedTweet === null) ? "-3" : "1";
@@ -137,11 +160,13 @@ function App() {
         isFocused={inFocus}
         setFocusedTweet={setFocusedTweet}
         zoom={setTweetZoomLevel(focusedTweet, tweet.id)}
+        streams={streams}
+        setStreams={setStreams}
+        currentStream={currentStream}
       />
     )
   });
 
-  const streamElements = ['crypto', 'desci', 'politics', 'sports', 'tech', 'world'].map((stream) => (<p>{stream}</p>))
 
 
   return (
@@ -151,10 +176,10 @@ function App() {
           zoomLevel={setSidebarZoomLevel(focusedTweet)}
           inFocus={focusedTweet !== null}
           setStream={setStream}
-          stream={stream}
-        >
-          {streamElements}
-        </StreamSidebar>
+          currentStream={currentStream}
+          streams={streams}
+          setStreams={setStreams}
+        />
 
         <Feed className="relative">
           {tweetElements}
@@ -171,7 +196,7 @@ function App() {
       <div
         className='fixed top-8 left-24 text-gray-200 font-semibold text-6xl z-0'
       >
-        {stream || 'Stream Building'}
+        {currentStream || 'Stream Building UX'}
       </div>
     </div>
 

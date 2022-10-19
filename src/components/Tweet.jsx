@@ -113,17 +113,17 @@ const EntityPopup = ({ isFocused, setOpenOverview, openOverview }) => {
                 ref={entityRef}
                 className='relative'
                 onMouseEnter={() => setHovered(true)}
-                onClick = {() => setOpenOverview(true)}
+                onClick={() => setOpenOverview(true)}
             >
-                <div 
-                    id = "ENTITY"
+                <div
+                    id="ENTITY"
                     className={cn(
                         'bg-purple-200 px-4 rounded-full max-content',
-                        {'border border-purple-400': openOverview} )}
+                        { 'border border-purple-400': openOverview })}
                 >
                     Entity
                 </div>
-                
+
             </button>
 
             <div ref={previewRef} style={styles.popper} {...attributes.popper}>
@@ -131,7 +131,7 @@ const EntityPopup = ({ isFocused, setOpenOverview, openOverview }) => {
                     <div className={"tweet"}>
                         Entity Description
                         <button
-                            id = "INSPECT"
+                            id="INSPECT"
                             className="w-full rounded-full border"
                             onClick={() => setOpenOverview(true)}
                         >
@@ -194,7 +194,7 @@ const useLongPress = (
 
 
 
-function Tweet({ tweet, isFocused, setFocusedTweet, zoom }) {
+function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStreams }) {
 
     const tweetRef = useRef();
     const contextRef = useRef();
@@ -210,7 +210,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom }) {
         if (e.target.id === 'ENTITY') return;
         if (e.target.id === 'INSPECT') return;
 
-    
+
         // add delay
         setTimeout(async () => {
             if (isFocused) {
@@ -238,6 +238,25 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom }) {
         ],
     });
 
+    const addEntityToStream = (evt, entity) => {
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        setStreams(prevState => {
+
+            const newState = prevState.map((e,i) =>{
+                if (currentStream === e.name) {
+                    // push seed to current stream
+                    return {...e, seeds: e.seeds.concat([entity])}
+                }
+                return e
+            })
+
+            return newState
+        })
+
+    }
+
 
     const zoomLevel = {
         '1': { opacity: 1, zIndex: 7 },
@@ -263,10 +282,10 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom }) {
             // {...longPressedEvent}
             >
                 {/* Profile Icon */}
-                {false &&
+                {true &&
                     <a
                         className={cn(
-                            'block flex-none mr-3 w-12 h-12 rounded-full bg-gray-200/50 dark:bg-gray-700/50 overflow-hidden',
+                            'block flex-none mr-3 w-10 h-10 rounded-full bg-gray-200/50 dark:bg-gray-700/50 overflow-hidden',
                             { 'animate-pulse': !tweet }
                         )}
                         href={
@@ -277,8 +296,8 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom }) {
                     >
                         {tweet?.author?.profile_image_url && (
                             <img
-                                width={48}
-                                height={48}
+                                width={22}
+                                height={22}
                                 src={tweet.author.profile_image_url}
                                 alt=''
                             />
@@ -313,26 +332,22 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom }) {
                             </span>
                         )}
                         <span className='block peer pl-1 h-5' />
-                        <a
-                            data-cy='author'
-                            className={cn('peer text-gray-500 block flex-none', {
-                                'h-2.5 w-32 mb-1.5 ml-1.5 bg-gray-200/50 dark:bg-gray-700/50 animate-pulse rounded':
-                                    !tweet,
-                            })}
-                            href={
-                                tweet?.author
-                                    ? `https://twitter.com/${tweet.author.username}`
-                                    : ''
-                            }
-                            target='_blank'
-                            rel='noopener noreferrer'
-                        >
-                            {tweet?.author ? `@${tweet.author.username}` : ''}
-                        </a>
+                        {isFocused && (
+                            <p
+                                data-cy='author'
+                                className={cn(' text-gray-500 block flex-none', {
+                                    'my-1.5 mx-1.5 bg-blue-400/50 rounded':
+                                        tweet,
+                                })}
+
+                            >
+                                {tweet?.author ? `@${tweet.author.username}` : ''}
+                            </p>
+                        )}
 
                         <p
                             data-cy='date'
-                            className='relative text-gray-500 block flex-none'
+                            className='relative text-gray-500 pl-1 text-sm block flex-none'
                         >
                             {tweet && <TimeAgo datetime={tweet.created_at} locale='en_short' />}
                         </p>
@@ -342,11 +357,12 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom }) {
                     {/* Actual Tweet Content */}
                     <p
                         data-cy='text'
+                        // dangerouslySetInnerHTML={{ __html: tweet?.html ?? '' }}
                         className={cn('mb-3 text-xs', {
                             'h-12 w-full bg-gray-200/50 dark:bg-gray-700/50 animate-pulse rounded':
                                 !tweet,
                         })}
-                    // dangerouslySetInnerHTML={{ __html: tweet?.html ?? '' }}
+
                     >
                         focused?: {String(isFocused)} | ID: {tweet.id} | Zoom: {zoom}
                     </p>
@@ -390,7 +406,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom }) {
             </div>
             <div
                 ref={contextRef}
-                style={{...styles.popper, zIndex: 5}}
+                style={{ ...styles.popper, zIndex: 5 }}
                 {...attributes.popper}
 
             >
@@ -400,7 +416,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom }) {
                         onClick={() => setOpenOverview(false)}
                     >
                         Entity Overview
-                        <br/>
+                        <br />
                         <button className='rounded-full bg-gray-200 p-2 '>
                             Add to Stream
                         </button>
@@ -409,9 +425,12 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom }) {
             </div>
             <div>
                 {isFocused && (
-                 <div className='absolute w-10 h-10 text-lg rounded-full bg-white border justify-center align-middle text-center top-16 -left-12'>
-                    {"+"}
-                </div>   
+                    <div 
+                        className='absolute w-8 h-8 rounded-full bg-white border top-16 -left-10'
+                        onClick={(e) => addEntityToStream(e, tweet.author.username)}
+                    >
+                        {""}
+                    </div>
                 )}
             </div>
 
