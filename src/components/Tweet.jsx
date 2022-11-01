@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import { usePopper } from 'react-popper';
-import { TimeAgo } from './TimeAgo'
+import TimeAgo from 'timeago-react';
 import cn from 'classnames';
 
 import { num } from '../utils'
@@ -416,7 +416,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
                             data-cy='date'
                                 className='relative text-gray-400 text-sm block flex-none'
                         >
-                                {true && <TimeAgo datetime={tweet.created_at} locale='en_short' />}
+                                {true && <TimeAgo datetime={tweet.created_at} locale='en' />}
                         </p>
 
                         </div>
