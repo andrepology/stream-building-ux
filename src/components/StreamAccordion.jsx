@@ -46,8 +46,8 @@ const AccordionDetails = ({ height, seeds, isOpen }) => {
 
     const targetHeight = height - (2 * (32 + 4) + 2)
     const reveal = useSpring({
-        minHeight: isOpen && targetHeight,
-        config: { friction: 16, tension: 250  },
+        minHeight: isOpen? targetHeight: 0,
+        config: { friction: 20 },
     })
 
     return (
