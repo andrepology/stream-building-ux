@@ -1,7 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import { usePopper } from 'react-popper';
 import { TimeAgo } from './TimeAgo'
-import { useProximityFeedback } from 'react-proximity-feedback';
 import cn from 'classnames';
 
 import { num } from '../utils'
@@ -236,7 +235,6 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
     const [openOverview, setOpenOverview] = useState(false);
     const [isHovered, setHovered] = useState(false);
 
-    const { ref, distance, isNearby } = useProximityFeedback({ throttleInMs: 400, threshold: 100 });
 
     const { styles, attributes, update } = usePopper(tweetRef?.current, contextRef?.current, {
         placement: 'right-start',
@@ -367,11 +365,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
                     >
                         {/* returnfocused?: {String(isFocused)} | ID: {tweet.id} | Zoom: {zoom} */}
                         {tweet.html}
-                        {isFocused && (
-                            <div ref={ref}>
-                                {distance} {isNearby ? "nearby" : "not nearby"}
-                            </div>
-                        )}
+                        
                     </p>
 
                     {/* Tweet Header (Author, @handle, timestamp) */}
