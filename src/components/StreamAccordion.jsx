@@ -47,7 +47,7 @@ const AccordionDetails = ({ height, seeds, isOpen }) => {
     const targetHeight = height - (2 * (32 + 4) + 2)
     const reveal = useSpring({
         minHeight: isOpen? targetHeight: 0,
-        config: { friction: 20 },
+        config: { friction: 22 },
     })
 
     return (
@@ -107,6 +107,7 @@ export default function StreamAccordion({ streams, lists, inFocus, currentStream
                 className={
                     cn(
                         "w-full flex flex-col gap-0.5 p-0.5 z-0 rounded border border-gray-200 border-opacity-0 ",
+                        "transition-shadow duration-400 ease-in-out",
                         { "backdrop-blur-sm bg-radial overflow-y-scroll overflow-x-hidden": currentStream },
                         { "backdrop-blur-sm border-opacity-100 accordion-container ": inFocus },
                     )}
