@@ -123,7 +123,7 @@ function App() {
   return (
 
     <div className="app-bg h-screen w-screen flex gap-4">
-      <div className='w-56 h-full my-10 ml-12 z-20'>
+      <div className='w-56 h-full my-10 ml-8 z-20'>
         <StreamAccordion
           zoomLevel={setSidebarZoomLevel(focusedTweet)}
           inFocus={focusedTweet !== null}

@@ -373,10 +373,12 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
                             data-cy='date'
                             className={cn(
                                 'absolute -left-20 text-gray-400 text-xs block',
-                                { "visible": isHovered }
+                                'transition-opacity duration-500 ease-in-out',
+                                { "opacity-100": isHovered },
+                                { "opacity-0": !isHovered },
                             )}
                         >
-                            {true && <TimeAgo datetime={tweet.created_at} locale='en' />}
+                        <TimeAgo datetime={tweet.created_at} locale='en' />
                         </p>
                         {/* TODO: Abstract to <Entity id = {} /> */}
                         <div className='flex items-center gap-1'>
