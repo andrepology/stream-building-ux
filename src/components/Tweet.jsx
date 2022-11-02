@@ -372,7 +372,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
                         <p
                             data-cy='date'
                             className={cn(
-                                'absolute -left-24 text-gray-400 text-sm block',
+                                'absolute -left-20 text-gray-400 text-xs block',
                                 { "visible": isHovered }
                             )}
                         >
@@ -416,7 +416,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
                             </p>
                         </div>
                         
-                        <div className='uppercase font-semibold text-xxs px-1.5 py-1 bg-gray-100 rounded-full'>Tweet</div>
+                        <div className='uppercase font-semibold text-gray-900/70 text-xxs px-1.5 py-0.5 bg-gray-200 tracking-wide rounded-full'>Tweet</div>
 
                     </header>
 

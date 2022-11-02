@@ -30,7 +30,7 @@ const Stream = ({ children, inFocus }) => {
   });
 
   return (
-    <div className='grow overflow-visible z-10'>
+    <div className='grow overflow-y-scroll pl-16 z-10'>
       <animated.div 
         // style={{ x }} 
         className='flex flex-col pl-6 gap-12 max-w-lg'
