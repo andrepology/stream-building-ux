@@ -373,7 +373,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
                             data-cy='date'
                             className={cn(
                                 'absolute -left-20 text-gray-400 text-xs block',
-                                'transition-opacity duration-500 ease-in-out',
+                                'transition-opacity duration-300 ease-in-out',
                                 { "opacity-100": isHovered },
                                 { "opacity-0": !isHovered },
                             )}
