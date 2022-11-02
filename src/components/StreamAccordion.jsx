@@ -3,6 +3,7 @@ import cn from 'classnames'
 import { MdKeyboardArrowRight } from 'react-icons/md'
 import { useSpring, animated } from '@react-spring/web'
 
+import EntityTag from "./EntityTag";
 
 const AccordionSummary = ({ streamName, isOpen, setStream }) => {
 
@@ -41,6 +42,20 @@ const AccordionSummary = ({ streamName, isOpen, setStream }) => {
 }
 
 
+const InlineEntity = ({ name, kind }) => {
+
+    return (
+        <div className="w-full pl-2 pr-1 py-1.5 max-w-96 items-center inline-flex justify-between bg-white/60 hover:bg-white/80 rounded-lg border">
+            <div className="text-sm text-gray-500">
+                {name}
+            </div>
+
+            <EntityTag kind={kind} />
+
+        </div>
+    )
+}
+
 
 const AccordionDetails = ({ refHeight, seeds, isOpen }) => {
 
@@ -60,13 +75,14 @@ const AccordionDetails = ({ refHeight, seeds, isOpen }) => {
             className={"overflow-y-scroll w-full flex flex-col items-center"}
             style={{ minHeight }}
         >
-
-            <animated.div style={{ visibility, height }}>
-                    <div className="sticky top-2 rounded-lg  bg-slate-300/20 h-8 w-full" />
-                    <div className='mx-2 my-2'>
-                        {seeds}
+            {isOpen && (
+                <animated.div className="w-full " style={{ visibility, height }}>
+                    {/* <div className="sticky top-2 rounded-lg  bg-slate-300/20 h-8 w-full" /> */}
+                    <div className='my-2 mx-2 flex flex-col gap-1'>
+                        {seeds.map(e => <InlineEntity name={e} kind={"person"} />)}
                     </div>
             </animated.div>
+            )}
 
 
 
@@ -74,14 +90,14 @@ const AccordionDetails = ({ refHeight, seeds, isOpen }) => {
     )
 }
 
-const Accordion = ({ height, streamName, currentStream, setStream, lists }) => {
+const Accordion = ({ height, streamName, currentStream, setStream, lists, seeds }) => {
 
     const isOpen = currentStream === streamName;
 
     return (
         <div>
             <AccordionSummary streamName={streamName} isOpen={isOpen} setStream={setStream} />
-            <AccordionDetails isOpen={isOpen} refHeight={height} streamName={streamName} />
+            <AccordionDetails isOpen={isOpen} refHeight={height} streamName={streamName} seeds={seeds} />
         </div>
 
     )
@@ -97,9 +113,10 @@ export default function StreamAccordion({ streams, lists, inFocus, currentStream
     useEffect(() => {
         // TODO: set accordiong to my-10 in tailwind. 
         setHeight(2 / 3 * window.innerHeight);
-        console.log('height', height)
-
     }, [currentStream, height])
+
+
+
 
 
     return (
@@ -125,6 +142,7 @@ export default function StreamAccordion({ streams, lists, inFocus, currentStream
                         currentStream={currentStream}
                         setStream={setStream}
                         lists={lists}
+                        seeds={stream.seeds}
                     />
                 ))}
             </div>

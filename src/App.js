@@ -22,17 +22,20 @@ const tweets = sampleTweets.map(e => {
 })
 
 
-const Stream = ({ children, inFocus }) => {
 
+
+const Stream = ({ children, inFocus, openOverview }) => {
+
+  // TODO: push based on amount of space on screen
   const { x } = useSpring({
-    x: inFocus ? -200 : 0,
+    x: openOverview ? -300 : 0,
     config: { friction: 20 }
   });
 
   return (
     <div className='grow overflow-y-scroll pl-16 z-10'>
       <animated.div 
-        // style={{ x }} 
+        style={{ x }} 
         className='flex flex-col pl-6 gap-12 max-w-lg'
       >
         {/* Empty Space. To Replace with Dashboard */}
@@ -70,20 +73,20 @@ const streamIsSame = (prevStream, nextStream) => {
 
 const BackdropMemo = memo(StreamBackdrop, streamIsSame)
 
+// obj of streams: seeds
+const sampleStreams = [
+  { name: 'dogs', seeds: ['dogLover1', 'dogTweet1'] },
+  { name: 'pottery', seeds: ['potteryMaker1', 'potteryTweet', 'fourFingerTechnique'] },
+  { name: 'workout', seeds: ['buffguy1', 'gym4lyf', 'chestPressTechniqueTweet'] }
+];
+
 function App() {
   const [currentStream, setStream] = useState("dogs")
-
+  const [openOverview, setOpenOverview] = useState(false);
+  const [streams, setStreams] = useState(sampleStreams)
+  
   const [focusedTweet, setFocusedTweet] = useState(null);
   const inFocus = focusedTweet !== null;
-
-  // obj of streams: seeds
-  const sampleStreams = [
-    { name: 'dogs', seeds: ['dogLover1', 'dogTweet1'] },
-    { name: 'pottery', seeds: ['potteryMaker1', 'potteryTweet', 'fourFingerTechnique'] },
-    { name: 'workout', seeds: ['buffguy1', 'gym4lyf', 'chestPressTechniqueTweet'] }
-  ];
-
-  const [streams, setStreams] = useState(sampleStreams)
 
   const setSidebarZoomLevel = (focusedTweet) => {
     return (focusedTweet === null) ? "-3" : "1";
@@ -116,6 +119,8 @@ function App() {
         streams={streams}
         setStreams={setStreams}
         currentStream={currentStream}
+        openOverview={openOverview}
+        setOpenOverview={setOpenOverview}
       />
     )
   });
@@ -133,7 +138,7 @@ function App() {
         />
       </div>
 
-      <Stream inFocus={inFocus}>
+      <Stream openOverview={openOverview}>
           {tweetElements}
       </Stream>
 

@@ -1,86 +1,16 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { usePopper } from 'react-popper';
 import TimeAgo from 'timeago-react';
 import cn from 'classnames';
-import { animated, useSpring } from '@react-spring/web'
+import { animated, useSpring, Transition } from '@react-spring/web'
 
 import { num } from '../utils'
 
-import Profile from './Profile';
-
 import { GrFormClose } from 'react-icons/gr';
-
-import LikeIcon from '../icons/like.jsx'
-import ReplyIcon from '../icons/reply.jsx'
-import RetweetIcon from '../icons/retweet.jsx'
-import ShareIcon from '../icons/share.jsx'
 import VerifiedIcon from '../icons/verified.jsx'
 
+import EntityTag from './EntityTag';
 
-function Interaction({
-    active,
-    count,
-    color,
-    icon,
-    href,
-    Interaction,
-    activeIcon,
-    id,
-}) {
-
-    const isActive = false;
-    const iconWrapperComponent = (
-        <div
-            className={cn('p-1.5 mr-0.5 rounded-full transition duration-[0.2s]', {
-                'group-hover:bg-red-50 group-active:bg-red-50': color === 'red',
-                'group-hover:bg-blue-50 group-active:bg-blue-50': color === 'blue',
-                'group-hover:bg-green-50 group-active:bg-green-50': color === 'green',
-            })}
-        >
-            {isActive ? activeIcon : icon}
-        </div>
-    );
-    const className = cn(
-        'disabled:cursor-wait inline-flex justify-start items-center transition duration-[0.2s] group',
-        {
-            'hover:text-red-550 active:text-red-550': color === 'red',
-            'hover:text-blue-550 active:text-blue-550': color === 'blue',
-            'hover:text-green-550 active:text-green-550': color === 'green',
-            'text-red-550': color === 'red' && isActive,
-            'text-blue-550': color === 'blue' && isActive,
-            'text-green-550': color === 'green' && isActive,
-        }
-    );
-    const n = count !== undefined && count + (isActive ? 1 : 0);
-    if (Interaction && id)
-        return (
-            <div
-                className='grow shrink basis-0 mr-5 h-8'
-                method={isActive ? 'delete' : 'post'}
-            >
-                <button type='submit' className={cn('w-full', className)}>
-                    {iconWrapperComponent}
-                    {!!n && num(n)}
-                </button>
-                <input
-                    type='hidden'
-                    name='Interaction'
-                    value={isActive ? 'delete' : 'post'}
-                />
-            </div>
-        );
-    return (
-        <a
-            className={cn('grow shrink basis-0 h-8', className)}
-            href={href}
-            rel='noopener noreferrer'
-            target='_blank'
-        >
-            {iconWrapperComponent}
-            {!!n && num(n)}
-        </a>
-    );
-}
 
 const Tooltip = ({ title, children, className }) => {
     // a tooltip positioned with popper
@@ -103,13 +33,6 @@ const Tooltip = ({ title, children, className }) => {
     )
 }
 
-const Reaction = ({ icon }) => {
-    return (
-        <div className='rounded-full bg-white w-5 h-5'>
-            {icon}
-        </div>
-    )
-}
 
 const EntityPopup = ({ isFocused, update, setOpenOverview, openOverview }) => {
 
@@ -146,6 +69,7 @@ const EntityPopup = ({ isFocused, update, setOpenOverview, openOverview }) => {
                 ref={entityRef}
                 className='relative'
                 onMouseEnter={() => setHovered(true)}
+                // onMouseLeave={() => setHovered(false)}
                 onClick={() => handleClick()}
             >
                 <div
@@ -160,7 +84,7 @@ const EntityPopup = ({ isFocused, update, setOpenOverview, openOverview }) => {
             </button>
 
             <div ref={previewRef} style={styles.popper} {...attributes.popper}>
-                {isFocused && isHovered && !openOverview && (
+                {isHovered && !openOverview && (
                     <div className={"card shadow-context"}>
                         German Shepherd Description
                         <button
@@ -227,20 +151,65 @@ const useLongPress = (
 };
 
 
+const ContextBuilder = ({ openOverview, setOpenOverview, currentStream, relatedTweets, addEntityToStream }) => {
 
-function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStreams }) {
+    // a spring that pushes the context builder up when the overview is open
+    const { x } = useSpring({
+        x: setOpenOverview ? 40 : 0,
+    })
+
+
+
+
+    return (
+        <animated.div
+            style={{x}} 
+            className='flex flex-col gap-2 w-96'
+        >
+            <div
+                className={"card p-2 flex flex-col"}
+            >
+                <div className='flex justify-between'>
+                    <h1 className='w-3/5'>
+                        German Shepherd
+                    </h1>
+                    <GrFormClose
+                        className="w-6 h-6 cursor-pointer opacity-20 bg-gray-300 rounded-full"
+                        onClick={() => setOpenOverview(false)}
+                    />
+                </div>
+
+                <br />
+
+                <button
+                    onClick={(e) => addEntityToStream(e, "German Shepherd")}
+                    className='rounded-full bg-gray-200 p-2 '
+                >
+                    <p>Add to </p>
+                    <p>{currentStream}</p>
+                </button>
+            </div>
+            <div className='flex flex-col gap-1'>
+                <div className='mx-auto flex hover:bg-gray-300/30 px-1.5 py-1 rounded-md items-center gap-1 text-center text-xs text-gray-600/80'>
+                    <span className='text-base font-semibold inline-block'>5</span> Tweets
+                </div>
+                <div className='transition-all duration-500'>
+                    {relatedTweets}
+                </div>
+            </div>
+
+        </animated.div>
+    )
+}
+
+
+function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOverview, zoom, currentStream, setStreams }) {
 
     const tweetRef = useRef();
     const contextRef = useRef();
 
-    const [openOverview, setOpenOverview] = useState(false);
     const [isHovered, setHovered] = useState(false);
 
-    // shift to left when openOverview
-    const { x } = useSpring({
-        x: openOverview ? -200 : 0,
-        config: { friction: 10 }
-    });
 
 
     const { styles, attributes, update } = usePopper(tweetRef?.current, contextRef?.current, {
@@ -250,11 +219,12 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
             {
                 name: 'offset',
                 options: {
-                    offset: [0, 10],
+                    offset: [0, 0],
                 },
             },
         ],
     });
+
 
     const easeSetFocus = (e, time = 0) => {
         // use State to manage focus
@@ -291,7 +261,6 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
             }, time)
         }
         setHovered(true)
-        console.log("hovering")
     };
 
     const longPressedEvent = useLongPress(easeSetFocus, easeSetFocus);
@@ -343,20 +312,19 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
     }
 
     return (
-        <div
+        <animated.div
             className={cn(
                 'relative transition-all duration-500 ease-in-out',
                 { 'active-pad': isFocused },
             )}
             onMouseEnter={(e) => easeSetHover(true)}
             onMouseLeave={(e) => easeSetHover(false)}
-            // style = {{x}}
         >
 
             <div
                 className={cn(
                     'rounded-2xl flex w-full relative transition-all duration-500 ease-in-out',
-                    { 'active bg-gray-50 bg-opacity-5 backdrop-blur-sm': isFocused },
+                    { 'active backdrop-blur-sm': isFocused },
                     { 'border border-purple-100': openOverview },
                     { 'shadow-content': isFocused && !openOverview },
                     { 'shadow-context': isFocused && openOverview },
@@ -366,7 +334,14 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
                 ref={tweetRef}
             // {...longPressedEvent}
             >
-                <article className='flex-1 tweet min-w-0 relative flex flex-col gap-8'>
+                <article
+                    className={cn(
+                        'flex-1 min-w-0 relative flex flex-col gap-8',
+                        { 'tweet-focus': isFocused },
+                        { 'tweet': !isFocused },
+                    )}
+
+                >
                     {/* Tweet Header (Author, @handle, timestamp) */}
                     <header className='flex w-full justify-between items-center'>
                         <p
@@ -418,7 +393,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
                             </p>
                         </div>
                         
-                        <div className='uppercase font-semibold text-gray-900/70 text-xxs px-1.5 py-0.5 bg-gray-200 tracking-wide rounded-full'>Tweet</div>
+                        <EntityTag kind={"tweet"} />
 
                     </header>
 
@@ -473,47 +448,21 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
                 </article>
             </div>
 
+            {/* Context Building */}
             <div
                 ref={contextRef}
                 style={{ ...styles.popper, zIndex: 100 }}
                 {...attributes.popper}
 
             >
-                {isFocused && openOverview && (
-                    <div className='flex flex-col gap-2'>
-                    <div
-                            className={"card p-2 flex flex-col"}
-                        >
-                            <div className='flex justify-between'>
-                                <h1 className='w-3/5'>
-                                    German Shepherd Overview
-                                </h1>
-                                <GrFormClose
-                                    className="w-6 h-6 cursor-pointer opacity-20 bg-gray-300 rounded-full"
-                                    onClick={() => setOpenOverview(false)}
-                                />
-                            </div>
-
-                        <br />
-                            <button
-                                onClick={(e) => addEntityToStream(e, "German Shepher")}
-                                className='rounded-full bg-gray-200 p-2 '>
-
-                                <p>Add to </p>
-                                <p>{currentStream}</p>
-                        </button>
-                        </div>
-                        <div className='flex flex-col gap-1'>
-                            <div className='mx-auto flex hover:bg-gray-300/30 px-1.5 py-1 rounded-md items-center gap-1 text-center text-xs text-gray-600/80'>
-                                <span className='text-base font-semibold inline-block'>5</span> Tweets
-                            </div>
-                            <div className='transition-all duration-500'>
-                                {relatedTweets}
-                            </div>
-                        </div>
-
-                    </div>
-                )}
+                {isFocused && openOverview ? (
+                    <ContextBuilder
+                        setOpenOverview={setOpenOverview}
+                        currentStream={currentStream}
+                        relatedTweets={relatedTweets}
+                        addEntityToStream={addEntityToStream}
+                    />
+                ) : () => null}
             </div>
 
             <div>
@@ -529,7 +478,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, zoom, currentStream, setStre
                 )}
             </div>
 
-        </div>
+        </animated.div>
     );
 
 

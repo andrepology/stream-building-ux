@@ -24,8 +24,18 @@ body {
   background-color: #F5F3F5;
 }
 
+
+
 .tweet {
   background-color: #fafafa;
+  border: 1px solid #F2F2F2;
+  border-radius: 12px;
+  padding: 36px;
+  transition: all 0.3s ease-in-out;
+}
+
+.tweet-focus {
+  background-color: #fafafa08;
   border: 1px solid #F2F2F2;
   border-radius: 12px;
   padding: 36px;
@@ -45,7 +55,7 @@ body {
   }
   
   .bg-radial {
-    background: linear-gradient(-45deg, #eebeb01c, #fb9ec217, #c1e7f42d, #88f6dc24);
+    background: linear-gradient(-45deg, #d6ab9e1c, #fb9ec217, #c1e7f42d, #88f6dc24);
     background-size: 400% 400%;
     border: 1px solid #e9e9e975;
     animation: rotateBg 15s ease infinite;
