@@ -42,27 +42,32 @@ const AccordionSummary = ({ streamName, isOpen, setStream }) => {
 
 
 
-const AccordionDetails = ({ height, seeds, isOpen }) => {
+const AccordionDetails = ({ refHeight, seeds, isOpen }) => {
 
-    const targetHeight = height - (2 * (32 + 4) + 2)
-    const reveal = useSpring({
-        minHeight: isOpen? targetHeight: 0,
-        config: { friction: 22 },
+    const targetHeight = refHeight - (2 * (32 + 4) + 2)
+    const { minHeight, height, visibility } = useSpring({
+        from: { minHeight: 0, height: 0, visibility: 0, y: 0 },
+        to: {
+            minHeight: isOpen ? targetHeight : 0,
+            height: isOpen? targetHeight: 0,
+            visibility: isOpen ? 1 : 0,
+        },
+        config: { friction: 16 },
     })
 
     return (
         <animated.div
             className={"overflow-y-scroll w-full flex flex-col items-center"}
-            style={reveal}
+            style={{ minHeight }}
         >
-            {false && (
-                <>
+
+            <animated.div style={{ visibility, height }}>
                     <div className="sticky top-2 rounded-lg  bg-slate-300/20 h-8 w-full" />
                     <div className='mx-2 my-2'>
                         {seeds}
                     </div>
-                </>
-            )}
+            </animated.div>
+
 
 
         </animated.div>
@@ -76,7 +81,7 @@ const Accordion = ({ height, streamName, currentStream, setStream, lists }) => {
     return (
         <div>
             <AccordionSummary streamName={streamName} isOpen={isOpen} setStream={setStream} />
-            <AccordionDetails isOpen={isOpen} height={height} streamName={streamName} />
+            <AccordionDetails isOpen={isOpen} refHeight={height} streamName={streamName} />
         </div>
 
     )
@@ -94,7 +99,7 @@ export default function StreamAccordion({ streams, lists, inFocus, currentStream
         setHeight(2 / 3 * window.innerHeight);
         console.log('height', height)
 
-    }, [currentStream])
+    }, [currentStream, height])
 
 
     return (

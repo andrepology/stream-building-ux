@@ -6,18 +6,16 @@ body {
     box-sizing: border-box;
 }
 
-
 .app-bg {
   background-color: #F5F3F5;
 }
 
 .tweet {
   background-color: #fafafa;
-    border: 1px solid #eaeaea;
+  border: 1px solid #F2F2F2;
   border-radius: 12px;
-  padding: 12px;
-    padding-bottom: 56px;
-    transition: all 1s ease-in-out;
+  padding: 36px;
+  transition: all 0.3s ease-in-out;
   }
   
   .card {
@@ -25,7 +23,7 @@ body {
     border: 1px solid #eaeaea;
     border-radius: 12px;
     padding: 12px;
-    transition: all 1s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
   
   .accordion-container {
@@ -75,10 +73,3 @@ body {
   opacity: 0.5;
 }
 
-.tweet .interactions-block {
-  visibility: hidden;
-}
-
-.tweet:hover .interactions-block {
-  visibility: visible;
-}

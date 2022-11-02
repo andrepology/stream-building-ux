@@ -22,21 +22,28 @@ const tweets = sampleTweets.map(e => {
 })
 
 
-const Stream = (props) => {
-  const { children, ...rest } = props;
+const Stream = ({ children, inFocus }) => {
+
+  const { x } = useSpring({
+    x: inFocus ? -200 : 0,
+    config: { friction: 20 }
+  });
+
   return (
-    <div className='grow overflow-auto'>
-      <div className='flex flex-col pl-6 gap-2 w-3/5 max-w-md' {...props}>
+    <div className='grow overflow-visible z-10'>
+      <animated.div 
+        // style={{ x }} 
+        className='flex flex-col pl-6 gap-12 max-w-lg'
+      >
         {/* Empty Space. To Replace with Dashboard */}
         <div className='h-0'></div>
         {children}
-      </div>
+      </animated.div>
     </div>
   )
 }
 
 const TweetMemo = memo(Tweet);
-
 
 
 const StreamBackdrop = ({ currentStream }) => {
@@ -64,8 +71,10 @@ const streamIsSame = (prevStream, nextStream) => {
 const BackdropMemo = memo(StreamBackdrop, streamIsSame)
 
 function App() {
-  const [focusedTweet, setFocusedTweet] = useState(null);
   const [currentStream, setStream] = useState("dogs")
+
+  const [focusedTweet, setFocusedTweet] = useState(null);
+  const inFocus = focusedTweet !== null;
 
   // obj of streams: seeds
   const sampleStreams = [
@@ -114,19 +123,17 @@ function App() {
   return (
 
     <div className="app-bg h-screen w-screen flex gap-4">
-      <div className='w-56 my-10 ml-12 z-10'>
+      <div className='w-56 h-full my-10 ml-12 z-20'>
         <StreamAccordion
           zoomLevel={setSidebarZoomLevel(focusedTweet)}
           inFocus={focusedTweet !== null}
           setStream={setStream}
           currentStream={currentStream}
           streams={streams}
-
         />
       </div>
 
-      {/* TODO: need a more stable positioning fix */}
-      <Stream>
+      <Stream inFocus={inFocus}>
           {tweetElements}
       </Stream>
 
