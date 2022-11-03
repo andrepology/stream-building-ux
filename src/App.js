@@ -28,12 +28,12 @@ const Stream = ({ children, inFocus, openOverview }) => {
 
   // TODO: push based on amount of space on screen
   const { x } = useSpring({
-    x: openOverview ? -300 : 0,
+    x: openOverview ? -598 : 0,
     config: { friction: 20 }
   });
 
   return (
-    <div className='grow overflow-y-scroll pl-16 z-10'>
+    <div className='grow overflow-y-scroll flex justify-center pr-28 z-10'>
       <animated.div 
         style={{ x }} 
         className='flex flex-col pl-6 gap-12 max-w-lg'
@@ -128,7 +128,7 @@ function App() {
   return (
 
     <div className="app-bg h-screen w-screen flex gap-4">
-      <div className='w-56 h-full my-10 ml-8 z-20'>
+      <div className='w-56 h-full my-28 ml-12 z-20 bg-transparent'>
         <StreamAccordion
           zoomLevel={setSidebarZoomLevel(focusedTweet)}
           inFocus={focusedTweet !== null}

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import cn from 'classnames'
 import { MdKeyboardArrowRight } from 'react-icons/md'
-import { useSpring, animated } from '@react-spring/web'
+import { useSpring, animated, useTransition } from '@react-spring/web'
 
 import EntityTag from "./EntityTag";
 
@@ -116,9 +116,7 @@ export default function StreamAccordion({ streams, lists, inFocus, currentStream
     }, [currentStream, height])
 
 
-
-
-
+    
     return (
         <div className="h-full" ref={accordionRef}>
             {/* <div className = "text-xs pl-1 text-gray-400/80 font-light"> 
