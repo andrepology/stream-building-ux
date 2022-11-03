@@ -231,20 +231,22 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
         e.preventDefault();
         e.stopPropagation();
 
-        // do nothing if a entity
-        console.log(e.target)
+        
 
         if (e.target.id === 'ENTITY') return;
         if (e.target.id === 'INSPECT') return;
+
 
 
         // add delay
         setTimeout(async () => {
             if (isFocused) {
                 setFocusedTweet(null);
+                if (openOverview) setOpenOverview(false);
                 return
             }
             setFocusedTweet(tweet.id);
+            if (openOverview) setOpenOverview(false);
             setTimeout(() => {
                 update();
             }, 300)
@@ -319,6 +321,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
             )}
             onMouseEnter={(e) => easeSetHover(true)}
             onMouseLeave={(e) => easeSetHover(false)}
+            
         >
 
             <div
