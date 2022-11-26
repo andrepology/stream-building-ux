@@ -369,10 +369,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
     }
 
     
-    const content = tweet.html.replace(/\n/g, "<br />");
-
     const [tweetContent, setContent] = useState(null);
-
     useEffect(() => {
 
         let content = tweet.html.replace(/(?:\r\n|\r|\n)/g, "<br>");
@@ -432,7 +429,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
                         <TimeAgo datetime={tweet.created_at} locale='en' />
                         </p>
                         {/* TODO: Abstract to <Entity id = {} /> */}
-                        <div className='flex items-center gap-1'>
+                        <div className='flex items-baseline gap-1'>
                             <a
                                 href={
                                     tweet?.author
@@ -476,18 +473,15 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
                     {/* Tweet Content */}
                     <p
                         data-cy='text'
-                        // dangerouslySetInnerHTML={{ __html: tweet?.html ?? '' }}
+                        dangerouslySetInnerHTML={{ __html: tweetContent ?? '' }}
                         className={cn(
                             'text-lg tracking-tight leading-6 text-gray-600',
                             { 'h-12 w-full': !tweet },
                             { 'accordion-container card cursor-grab': isFocused }
                         )}
 
-                    >
-                        {/* returnfocused?: {String(isFocused)} | ID: {tweet.id} | Zoom: {zoom} */}
-                        {tweetContent}
-
-                    </p>
+                    />
+        
 
                     {/* Tagged Entity Buttons :: only on focus */}
                     {isFocused && (

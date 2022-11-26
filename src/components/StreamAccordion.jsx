@@ -45,7 +45,10 @@ const AccordionSummary = ({ streamName, isOpen, setStream }) => {
 const InlineEntity = ({ name, kind }) => {
 
     return (
-        <div className="w-full pl-2 pr-1 py-1.5 max-w-96 items-center inline-flex justify-between bg-white/60 hover:bg-white/80 rounded-lg border">
+        <div className={
+            cn(
+            "w-full pl-2 pr-1 py-1.5 max-w-96 items-center inline-flex justify-between bg-white/0 hover:bg-white/80 rounded-lg  border-opacity-0 hover:border-opacity-0")
+        }>
             <div className="text-sm text-gray-500">
                 {name}
             </div>
@@ -103,13 +106,12 @@ const Accordion = ({ height, streamName, currentStream, setStream, lists, seeds 
     )
 }
 
-
-export default function StreamAccordion({ streams, lists, inFocus, currentStream, setStream }) {
+const StreamAccordion = ({ streams, lists, inFocus, currentStream, setStream }) => {
 
     const accordionRef = useRef();
     const [height, setHeight] = useState(Number);
 
-    // set height according to viewport height
+    // set height to a fraction of viewport height
     useEffect(() => {
         // TODO: set accordiong to my-10 in tailwind. 
         setHeight(2 / 3 * window.innerHeight);
@@ -147,3 +149,50 @@ export default function StreamAccordion({ streams, lists, inFocus, currentStream
         </div>
     )
 }
+
+
+const StreamSidebar = ({ streams, lists, inFocus, currentStream, setStream }) => {
+    // Renders a list of streams and View Controller
+    const accordionRef = useRef();
+    const [height, setHeight] = useState(Number);
+
+    // set height to a fraction of viewport height
+    useEffect(() => {
+        // TODO: set accordiong to my-10 in tailwind. 
+        setHeight(2 / 3 * window.innerHeight);
+    }, [currentStream, height])
+
+
+    
+    return (
+        <div className="h-full" ref={accordionRef}>
+            {/* <div className = "text-xs pl-1 text-gray-400/80 font-light"> 
+                Private Streams
+            </div>
+            */}
+            <div
+                className={
+                    cn(
+                        "w-full flex flex-col gap-0.5 p-0.5 z-0 rounded border border-gray-200 border-opacity-0 ",
+                        "transition-shadow duration-400 ease-in-out",
+                        { "backdrop-blur-sm bg-radial overflow-y-scroll overflow-x-hidden": currentStream },
+                        { "backdrop-blur-sm border-opacity-100 accordion-container ": inFocus },
+                    )}
+            >
+                {streams.map((stream, index) => (
+                    <Accordion
+                        key={index}
+                        height={height}
+                        streamName={stream.name}
+                        currentStream={currentStream}
+                        setStream={setStream}
+                        lists={lists}
+                        seeds={stream.seeds}
+                    />
+                ))}
+            </div>
+        </div>
+    )
+}
+
+export { Accordion, AccordionSummary, AccordionDetails, InlineEntity, StreamAccordion, StreamSidebar }
