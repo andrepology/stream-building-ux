@@ -1,4 +1,4 @@
-import { useState, useEffect, memo, useMemo } from 'react';
+import { useState, useEffect, memo } from 'react';
 import cn from 'classnames';
 import { useSpring, animated } from '@react-spring/web'
 
@@ -8,8 +8,10 @@ import Tweet from './components/Tweet';
 import './App.css';
 
 import sampleTweets from './components/sampleTweets';
+import tftTweets from './components/sample';
 
 const tweets = sampleTweets.map(e => {
+  // reduce to essential data
   return {
     id: e.tweet.properties.id,
     author: {
@@ -22,13 +24,12 @@ const tweets = sampleTweets.map(e => {
 })
 
 
-
-
 const Stream = ({ children, inFocus, openOverview }) => {
 
   // TODO: push based on amount of space on screen
-  const { x } = useSpring({
+  const { x, scale } = useSpring({
     x: openOverview ? -598 : 0,
+    scale: openOverview ? 0.90 : 1,
     config: { friction: 20 }
   });
 
@@ -105,7 +106,7 @@ function App() {
     }
   }
 
-  const tweetElements = tweets.map((tweet) => {
+  const tweetElements = tftTweets.map((tweet) => {
 
     const inFocus = focusedTweet === tweet.id;
 

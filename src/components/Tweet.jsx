@@ -178,7 +178,7 @@ const ContextBuilder = ({ setOpenOverview, currentStream, relatedTweets, addEnti
 
     return (
         <animated.div
-            style={{x}} 
+            style={{x: 112}} 
             className='flex flex-col gap-2 w-128'
         >
             <div className='tweet flex flex-col gap-7'>
@@ -268,11 +268,9 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
 
     const [isHovered, setHovered] = useState(false);
 
-
-
     const { styles, attributes, update } = usePopper(tweetRef?.current, contextRef?.current, {
         placement: 'right-start',
-        position: 'absolute',
+        position: 'fixed',
         modifiers: [
             {
                 name: 'offset',
@@ -365,10 +363,22 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
 
 
     const interactions = {
-        "Retweets": 22,
-        "Likes": 54,
-        "Replies": 2,
+        "Retweets": tweet.public_metrics.retweet_count,
+        "Likes": tweet.public_metrics.like_count,
+        "Replies": tweet.public_metrics.reply_count,
     }
+
+    
+    const content = tweet.html.replace(/\n/g, "<br />");
+
+    const [tweetContent, setContent] = useState(null);
+
+    useEffect(() => {
+
+        let content = tweet.html.replace(/(?:\r\n|\r|\n)/g, "<br>");
+        setContent(content);
+
+    }, [])
 
 
     const rhysEntity = {
@@ -475,7 +485,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
 
                     >
                         {/* returnfocused?: {String(isFocused)} | ID: {tweet.id} | Zoom: {zoom} */}
-                        {tweet.html}
+                        {tweetContent}
 
                     </p>
 
