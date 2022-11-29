@@ -74,8 +74,6 @@ const AccordionDetails = ({ refHeight, expanded, children }) => {
 const Accordion = ({ height, summary, details, toggle, open = null }) => {
     // renders a controlled accordion with animated expand/collapse
 
-   
-
     const [expanded, setExpanded] = useState(false)
     
     const detailsToggle = toggle? () => toggle() : () => setExpanded(!expanded)
