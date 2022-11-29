@@ -10,7 +10,7 @@ import './App.css';
 import tftTweets from './components/sample';
 
 
-const Stream = ({ children, inFocus, openOverview }) => {
+const Stream = ({ children, openOverview }) => {
 
   // TODO: push based on amount of space on screen
   const { x, scale } = useSpring({
@@ -20,7 +20,7 @@ const Stream = ({ children, inFocus, openOverview }) => {
   });
 
   return (
-    <div className='grow overflow-y-scroll flex justify-center pr-28 z-10'>
+    <div className='h-screen w-screen overflow-y-scroll flex justify-center z-10'>
       <animated.div 
         style={{ x }} 
         className='flex flex-col pl-6 gap-6 max-w-lg'
@@ -62,7 +62,7 @@ const BackdropMemo = memo(StreamBackdrop, streamIsSame)
 
 // obj of streams: seeds
 const sampleStreams = [
-  { name: 'Tools For Thought', seeds: ['Alex Xu', 'Tana Inc.'] },
+  { name: 'Tools For Thought', seeds: [{name: 'Alex Xu', kind: 'person'}, {name: 'Tana Inc.', kind : 'Organization'}] },
   { name: 'Human In The Loop', seeds: ['Andy Matuschak', 'CMU_HCI'] },
   { name: 'Biochemistry Geeks', seeds: [''] }
 ];
@@ -114,14 +114,15 @@ function App() {
 
   return (
 
-    <div className="app-bg h-screen w-screen flex gap-4">
-      <div className='w-56 h-full mb-28 mt-12 ml-12 z-20 bg-transparent'>
+    <div className="app-bg h-screen w-screen flex justify-center">
+      <div className='w-56 fixed top-12 left-12 z-20'>
         <StreamSidebar
           zoomLevel={setSidebarZoomLevel(focusedTweet)}
           inFocus={focusedTweet !== null}
           setStream={setStream}
           currentStream={currentStream}
-          streams={streams}
+          stream={streams[0]}
+          streamContent = {tweetElements.length}
         />
       </div>
 
