@@ -20,13 +20,13 @@ const Stream = ({ children, openOverview }) => {
   });
 
   return (
-    <div className='h-screen w-screen overflow-y-scroll flex justify-center z-10'>
+    <div className='h-screen w-screen overflow-y-scroll pl-24 flex justify-center z-10'>
       <animated.div 
         style={{ x }} 
         className='flex flex-col pl-6 gap-6 max-w-lg'
       >
         {/* Empty Space. To Replace with Dashboard */}
-        <div className='h-0'></div>
+        <div className='h-12'/>
         {children}
       </animated.div>
     </div>
