@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import cn from 'classnames'
 import { useSpring, animated, useTransition } from '@react-spring/web'
 
@@ -45,13 +45,13 @@ const AccordionDetails = ({ refHeight, expanded, children }) => {
 
     // TODO: smarter targetHeight
     // TODO: height transition
-    const targetHeight = refHeight - (2 * (32 + 4) + 2)
+    
 
     const { minHeight, height, visibility } = useSpring({
         from: { minHeight: 0, height: 0, visibility: 0, y: 0 },
         to: {
-            minHeight: expanded ? targetHeight : 0,
-            height: expanded ? targetHeight : 0,
+            minHeight: expanded ? refHeight : 0,
+            height: expanded ? refHeight : 0,
             visibility: expanded ? 1 : 0,
         },
         config: { friction: 16 },
@@ -184,19 +184,20 @@ const ContentFilters = ({ filters, setFilters}) => {
 }
 
 
-const useRefHeight = (ref) => {
-    // returns the height of the ref
+const useRefHeight = (ref, state) => {
+    // returns remaining height 
     const [height, setHeight] = useState(0)
 
     useEffect(() => {
-        console.log("Ref Changed")
-        setHeight( window.innerHeight - ref.current?.clientHeight - 44)
+        if (ref.current) {
+            setHeight( window.innerHeight - ref.current?.clientHeight - 2*48)
+        }
     }, 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [ref.current?.clientHeight])
+    [ref, state])
 
     return height
 }
+
 
 
 const StreamSidebar = ({ stream, inFocus, currentStream, streamContent }) => {
@@ -205,9 +206,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamContent }) => {
 
     const [open, setOpen] = useState({ seeds: false, view: false })
     const toggleOpen = (key) => {
-
-        console.log(open)
-        
+        // ensure only one is open at a time
         const nextOpen = {...open}
 
         // set rest to false
@@ -218,7 +217,6 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamContent }) => {
                 nextOpen[k] = !v
             }
         }
-        console.log(nextOpen)
         setOpen(nextOpen)
     }
 
@@ -231,14 +229,19 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamContent }) => {
             ref={sidebarRef}
             className={
                 cn(
-                    "w-full flex flex-col gap-0 p-0.5 z-0 rounded-xl border border-gray-200 border-opacity-0 ",
+                    "w-full flex flex-col bg-radial gap-0 p-0 z-0 rounded-xl border border-gray-200 border-opacity-0 ",
                     "transition-shadow duration-400 ease-in-out",
-                    { "backdrop-blur-sm bg-radial overflow-y-scroll overflow-x-hidden": currentStream },
-                    { "backdrop-blur-sm border-opacity-100 accordion-container ": inFocus },
+                    { "backdrop-blur-sm overflow-y-scroll overflow-x-hidden": currentStream },
+                    { "backdrop-blur-sm border-opacity-100 accordion-shadow ": inFocus },
                 )}
         >
             <div
-                className="flex flex-col pt-6 px-6 pb-3 rounded bg-white/70 gap-0 font-medium text-sm text-gray-500"
+                className={
+                    cn(
+                        "flex flex-col pt-6 px-6 pb-3 rounded-xl bg-white/60 gap-0 font-medium text-sm text-gray-500",
+                        {"bg-white/80" : inFocus}
+                    )
+                }
             >
 
                 <StreamHeader streamName={stream.name} />
