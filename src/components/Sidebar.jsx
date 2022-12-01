@@ -61,9 +61,9 @@ const AccordionDetails = ({ refHeight, expanded, children }) => {
         return (
             <animated.div
                 className={"overflow-y-scroll w-full flex flex-col items-center"}
-                style={{ minHeight }}
+                style={refHeight && { minHeight }}
             >
-                <animated.div className="w-full " style={{ visibility, height }}> 
+                <animated.div className="w-full " style={refHeight && { visibility, height }}> 
                     {children}
                 </animated.div>
             </animated.div>
@@ -84,14 +84,12 @@ const Accordion = ({ height, summary, details, toggle, open = null }) => {
             <AccordionSummary toggle={detailsToggle}>
                 {summary}
             </AccordionSummary>
-            <AccordionDetails refHeight={height} expanded={isOpen} >
+            <AccordionDetails refHeight={height ?? null} expanded={isOpen} >
                 {details}
             </AccordionDetails>
         </div>
-
     )
 
-    
 }
 
 
@@ -179,14 +177,81 @@ const SeedDrawer = ({ seeds }) => {
     )
 }
 
-const ContentFilters = ({ filters, setFilters}) => {
-    // TODO: responsible for filtering feed content
+const ContentFilters = () => {
+    // TODO: recursively renders feed toggles
+
+    const filters = [
+        {
+            name: "Tweets",
+            count: 22,
+            children: [
+                { name: "Standalone", count: 3 },
+                { name: "Replies", count: 2 },
+                { name: "Retweets", count: 12 },
+                { name: "Quote Tweets", count: 5 },
+                { name: "Threads", count: 3 }
+            ]
+        },
+        {
+            name: "Accounts",
+            count: 5,
+            children: []
+        },
+        {
+            name: "Media",
+            count: 12,
+            children: [
+                { name: "Images", count: 3 },
+                { name: "Videos", count: 12 },
+                { name: "Links", count: 4 },
+                { name: "Articles", count: 2 },
+            ]
+        },
+        {
+            name: "Entities",
+            count: 12,
+            children: []
+        },
+    ]
+
+    const renderFilters = (filters) => {
+        if (typeof (filters) == "object" && filters.length > 0) {
+
+            return (
+                <div className="w-full pl-2 font-normal">
+                    {filters.map((filter, i) => {
+
+                        return (
+                            <Accordion
+                                key={i}
+                                summary={<StreamSummary quantity={filter.name} count={filter.count} />}
+                                details={renderFilters(filter.children)}
+                            />
+                        )
+                    }
+                    )}
+                </div>
+            )
+        } else {
+            return null
+        }
+
+    }
+
+    return (
+        <div className="w-full h-full flex flex-col items-center">
+            {renderFilters(filters)}
+        </div>
+    )
+
 }
 
 
 const useRefHeight = (ref, state) => {
     // returns remaining height 
     const [height, setHeight] = useState(0)
+
+    console.log("ref changed", ref)
 
     useEffect(() => {
         if (ref.current) {
@@ -197,7 +262,6 @@ const useRefHeight = (ref, state) => {
 
     return height
 }
-
 
 
 const StreamSidebar = ({ stream, inFocus, currentStream, streamContent }) => {
@@ -256,7 +320,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamContent }) => {
                 <Accordion
                     height={remainingHeight}
                     summary={<StreamSummary quantity={"Content"} count={streamContent} noBorder />}
-                    details={<SeedDrawer seeds={stream.seeds} />}
+                    details={<ContentFilters />}
                     toggle = {() => toggleOpen("view")}
                     open = {open["view"]}
                 />

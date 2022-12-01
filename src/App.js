@@ -115,7 +115,7 @@ function App() {
   return (
 
     <div className="app-bg h-screen w-screen flex justify-center">
-      <div className='w-56 fixed top-12 left-12 z-20'>
+      <div className='w-56 fixed top-6 left-6 z-20'>
         <StreamSidebar
           zoomLevel={setSidebarZoomLevel(focusedTweet)}
           inFocus={focusedTweet !== null}
