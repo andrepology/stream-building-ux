@@ -251,8 +251,6 @@ const useRefHeight = (ref, state) => {
     // returns remaining height 
     const [height, setHeight] = useState(0)
 
-    console.log("ref changed", ref)
-
     useEffect(() => {
         if (ref.current) {
             setHeight( window.innerHeight - ref.current?.clientHeight - 2*48)
@@ -264,7 +262,7 @@ const useRefHeight = (ref, state) => {
 }
 
 
-const StreamSidebar = ({ stream, inFocus, currentStream, streamContent }) => {
+const StreamSidebar = ({ stream, inFocus, currentStream, streamContent, filters, setFilters }) => {
     // Renders a Stream object, its metadata, View Controller and Seeds
     // TODO: handles two states. Seeds, and View Controller
 
@@ -323,6 +321,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamContent }) => {
                     details={<ContentFilters />}
                     toggle = {() => toggleOpen("view")}
                     open = {open["view"]}
+
                 />
 
             </div>

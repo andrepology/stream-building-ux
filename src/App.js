@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from 'react';
+import { useState, useEffect, memo, useMemo } from 'react';
 import cn from 'classnames';
 import { useSpring, animated } from '@react-spring/web'
 
@@ -68,12 +68,12 @@ const sampleStreams = [
 ];
 
 function App() {
-  const [currentStream, setStream] = useState("Tools For Thought");
-  const [openOverview, setOpenOverview] = useState(false);
   const [streams, setStreams] = useState(sampleStreams)
+  const [currentStream, setStream] = useState("Tools For Thought");
+  const [streamFilters, setFilters ] = useState({});
   
   const [focusedTweet, setFocusedTweet] = useState(null);
-  const inFocus = focusedTweet !== null;
+  const [openOverview, setOpenOverview] = useState(false);
 
   const setSidebarZoomLevel = (focusedTweet) => {
     return (focusedTweet === null) ? "-3" : "1";
@@ -91,7 +91,89 @@ function App() {
         }
     }
   }
+
+  // Tally Feed statistics on a change of currentStream or streamFilters
+  useEffect(() => {
+    console.log('Tallying Feed Statistics');
+
+    // time performance of tallying
+    const start = performance.now();
+    
+    const tally = {
+      Tweets: {
+        Count: 0,
+        Standalone: 0,
+        Replies: 0,
+        Retweets: 0,
+        Quotes: 0
+      },
+      Accounts : {
+        Count: 0,
+      }
+    }
+
+    const accounts = new Set()
+
+    tftTweets.forEach(tweet => {
+
+      accounts.add(tweet.author.username)
+
+      if (tweet.standalone === true) {
+        tally.Tweets.Standalone += 1;
+      } else if (tweet.reply === true) {
+        tally.Tweets.Replies += 1;
+      } else if (tweet.rt === true) {
+        tally.Tweets.Retweets += 1;
+      } else if (tweet.quote === true) {
+        tally.Tweets.Quotes += 1;
+      }
+    })
+
+    tally.Tweets.Count = tally.Tweets.Standalone + tally.Tweets.Replies + tally.Tweets.Retweets + tally.Tweets.Quotes;
+    tally.Accounts.Count = accounts.size
+    
+    const end = performance.now();
+    
+    console.log(tally, `Tallying took ${end - start} ms`);
+
+    const filters = [
+      {
+          name: "Tweets",
+          count: 22,
+          children: [
+              { name: "Standalone", count: 3 },
+              { name: "Replies", count: 2 },
+              { name: "Retweets", count: 12 },
+              { name: "Quote Tweets", count: 5 },
+              { name: "Threads", count: 3 }
+          ]
+      },
+      {
+          name: "Accounts",
+          count: 5,
+          children: []
+      },
+      {
+          name: "Media",
+          count: 12,
+          children: [
+              { name: "Images", count: 3 },
+              { name: "Videos", count: 12 },
+              { name: "Links", count: 4 },
+              { name: "Articles", count: 2 },
+          ]
+      },
+      {
+          name: "Entities",
+          count: 12,
+          children: []
+      },
+  ]
+
+  }, [currentStream, streamFilters])
   
+  // TODO: memo according to filters and focus
+
   const tweetElements = tftTweets.map((tweet) => {
 
     const inFocus = focusedTweet === tweet.id;
@@ -119,14 +201,22 @@ function App() {
         <StreamSidebar
           zoomLevel={setSidebarZoomLevel(focusedTweet)}
           inFocus={focusedTweet !== null}
+
           setStream={setStream}
           currentStream={currentStream}
           stream={streams[0]}
           streamContent = {tweetElements.length}
+
+          setFilters={setFilters}
+          filters = {streamFilters}
+
         />
       </div>
 
-      <Stream openOverview={openOverview}>
+      <Stream 
+        openOverview={openOverview}
+        filters = {streamFilters}
+      >
           {tweetElements}
       </Stream>
 
