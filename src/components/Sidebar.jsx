@@ -7,6 +7,7 @@ import EntityTag from "./EntityTag";
 import { MdKeyboardArrowRight } from 'react-icons/md'
 import { BiDotsVertical } from 'react-icons/bi'
 import { useCallback } from "react";
+import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 
 
 const InlineEntity = ({ name, kind }) => {
@@ -61,9 +62,9 @@ const AccordionDetails = ({ refHeight, expanded, children }) => {
         return (
             <animated.div
                 className={"overflow-y-scroll w-full flex flex-col items-center"}
-                style={refHeight && { minHeight }}
+                style={refHeight ? { minHeight } : {}}
             >
-                <animated.div className="w-full " style={refHeight && { visibility, height }}> 
+                <animated.div className="w-full " style={refHeight ? { visibility, height } : {}}> 
                     {children}
                 </animated.div>
             </animated.div>
@@ -165,6 +166,58 @@ const StreamSummary = ({ quantity = "Seeds", count = 5, noBorder = false }) => {
     )
 }
 
+
+const Filter = ({ quantity = "Seeds", count = 5 }) => {
+
+    const [isHovered, setHover] = useState(false)
+    const [isVisible, setVisible] = useState(true)
+
+    const eyeCon = isVisible ?
+        <HiOutlineEye size={12} style={{ color: '#b3bfcb' }} />
+        :
+        <HiOutlineEyeOff size={12} style={{ color: '#b3bfcb' }} />
+
+
+    return (
+        <div
+            className="flex items-center gap-0"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+        >
+            <div
+                className={cn(
+                    "grow py-3 text-sm text-gray-500/80 flex justify-between items-center",
+                    { "text-gray-300": !isVisible }
+                )}
+            >
+                <p>
+                    {quantity}
+                </p>
+                {isVisible &&
+                    <div className="rounded-full px-2 h-4 flex items-center justify-center bg-gray-100 text-gray-500/40 text-xs">
+                        {count}
+                    </div>
+                }
+            </div>
+
+            {isVisible ?
+                isHovered && (
+                    <div onClick={() => setVisible(!isVisible)}>
+                        {eyeCon}
+                    </div>
+                )
+                :
+                <div onClick={() => setVisible(!isVisible)}>
+                    {eyeCon}
+                </div>
+            }
+        </div>
+
+    )
+
+}
+
+
 const SeedDrawer = ({ seeds }) => {
     // Renders a column of inline seeds
 
@@ -177,54 +230,20 @@ const SeedDrawer = ({ seeds }) => {
     )
 }
 
-const ContentFilters = () => {
+const ContentFilters = ({ streamFilters, setFilters }) => {
     // TODO: recursively renders feed toggles
 
-    const filters = [
-        {
-            name: "Tweets",
-            count: 22,
-            children: [
-                { name: "Standalone", count: 3 },
-                { name: "Replies", count: 2 },
-                { name: "Retweets", count: 12 },
-                { name: "Quote Tweets", count: 5 },
-                { name: "Threads", count: 3 }
-            ]
-        },
-        {
-            name: "Accounts",
-            count: 5,
-            children: []
-        },
-        {
-            name: "Media",
-            count: 12,
-            children: [
-                { name: "Images", count: 3 },
-                { name: "Videos", count: 12 },
-                { name: "Links", count: 4 },
-                { name: "Articles", count: 2 },
-            ]
-        },
-        {
-            name: "Entities",
-            count: 12,
-            children: []
-        },
-    ]
-
-    const renderFilters = (filters) => {
-        if (typeof (filters) == "object" && filters.length > 0) {
+    const renderFilters = (streamFilters) => {
+        if (typeof (streamFilters) == "object" && streamFilters.length > 0) {
 
             return (
                 <div className="w-full pl-2 font-normal">
-                    {filters.map((filter, i) => {
+                    {streamFilters.map((filter, i) => {
 
                         return (
                             <Accordion
                                 key={i}
-                                summary={<StreamSummary quantity={filter.name} count={filter.count} />}
+                                summary={<Filter isVisible={filter.isVisible} quantity={filter.name} count={filter.count} />}
                                 details={renderFilters(filter.children)}
                             />
                         )
@@ -240,7 +259,7 @@ const ContentFilters = () => {
 
     return (
         <div className="w-full h-full flex flex-col items-center">
-            {renderFilters(filters)}
+            {renderFilters(streamFilters)}
         </div>
     )
 
@@ -262,7 +281,7 @@ const useRefHeight = (ref, state) => {
 }
 
 
-const StreamSidebar = ({ stream, inFocus, currentStream, streamContent, filters, setFilters }) => {
+const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, setFilters }) => {
     // Renders a Stream object, its metadata, View Controller and Seeds
     // TODO: handles two states. Seeds, and View Controller
 
@@ -317,8 +336,8 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamContent, filters,
                 />
                 <Accordion
                     height={remainingHeight}
-                    summary={<StreamSummary quantity={"Content"} count={streamContent} noBorder />}
-                    details={<ContentFilters />}
+                    summary={<StreamSummary quantity={"Content"} count={100} noBorder />}
+                    details={<ContentFilters streamFilters={streamFilters} setFilters={setFilters} />}
                     toggle = {() => toggleOpen("view")}
                     open = {open["view"]}
 

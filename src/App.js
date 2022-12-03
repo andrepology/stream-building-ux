@@ -55,7 +55,7 @@ const StreamBackdrop = ({ currentStream }) => {
 }
 
 const streamIsSame = (prevStream, nextStream) => {
-  return prevStream === nextStream
+  return prevStream == nextStream
 }
 
 const BackdropMemo = memo(StreamBackdrop, streamIsSame)
@@ -92,7 +92,7 @@ function App() {
     }
   }
 
-  // Tally Feed statistics on a change of currentStream or streamFilters
+  // Tally Feed statistics on a change of currentStream or streamFiltersx 
   useEffect(() => {
     console.log('Tallying Feed Statistics');
 
@@ -109,6 +109,14 @@ function App() {
       },
       Accounts : {
         Count: 0,
+      },
+      Media: {
+        Count: 0,
+        Images: 0,
+        Videos: 0,
+      },
+      Entities: {
+        Count: 0
       }
     }
 
@@ -117,6 +125,14 @@ function App() {
     tftTweets.forEach(tweet => {
 
       accounts.add(tweet.author.username)
+
+      tweet.media.forEach(media => {
+        if (media.type === "photo") {
+          tally.Media.Images += 1
+        } else if (media.type === "video") {
+          tally.Media.Videos += 1
+        }
+      })
 
       if (tweet.standalone === true) {
         tally.Tweets.Standalone += 1;
@@ -127,53 +143,44 @@ function App() {
       } else if (tweet.quote === true) {
         tally.Tweets.Quotes += 1;
       }
+
+      const nEntities = tweet['entities.annotations'].length
+      if (nEntities > 0) {
+        tally.Entities.Count += tweet['entities.annotations'].length
+      }
     })
 
     tally.Tweets.Count = tally.Tweets.Standalone + tally.Tweets.Replies + tally.Tweets.Retweets + tally.Tweets.Quotes;
     tally.Accounts.Count = accounts.size
+    tally.Media.Count = tally.Media.Images + tally.Media.Videos
     
     const end = performance.now();
     
     console.log(tally, `Tallying took ${end - start} ms`);
 
-    const filters = [
-      {
-          name: "Tweets",
-          count: 22,
-          children: [
-              { name: "Standalone", count: 3 },
-              { name: "Replies", count: 2 },
-              { name: "Retweets", count: 12 },
-              { name: "Quote Tweets", count: 5 },
-              { name: "Threads", count: 3 }
-          ]
-      },
-      {
-          name: "Accounts",
-          count: 5,
-          children: []
-      },
-      {
-          name: "Media",
-          count: 12,
-          children: [
-              { name: "Images", count: 3 },
-              { name: "Videos", count: 12 },
-              { name: "Links", count: 4 },
-              { name: "Articles", count: 2 },
-          ]
-      },
-      {
-          name: "Entities",
-          count: 12,
-          children: []
-      },
-  ]
+    // TODO: pls refactor this to one schema lol
+    var filterState = []
+    for (const k in tally) {
+      filterState.push({
+        name: k,
+        count: tally[k].Count,
+        isVisible: true,
+        children: Object.entries(tally[k]).filter((k, v) => {
+          if (k !== "Count") {
+            return (k, v)
+          }
+        }).map(a => {
+          return { name: a[0], count: a[1] }
+        })
+      })
 
-  }, [currentStream, streamFilters])
+    }
+    setFilters(filterState)
+
+  }, [currentStream])
+  
   
   // TODO: memo according to filters and focus
-
   const tweetElements = tftTweets.map((tweet) => {
 
     const inFocus = focusedTweet === tweet.id;
@@ -208,7 +215,7 @@ function App() {
           streamContent = {tweetElements.length}
 
           setFilters={setFilters}
-          filters = {streamFilters}
+          streamFilters = {streamFilters}
 
         />
       </div>

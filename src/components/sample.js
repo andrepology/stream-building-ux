@@ -1,41 +1,18 @@
 const tftTweets = [
     {
-        "id": "1592967591114739712",
+        "id": "1594996344657432576",
         "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+            "name": "Science girl",
+            "username": "gunsnrosesgirl3",
+            "description": "banner art by @AurelieBeatley"
         },
-        "html": "Every founder has \"built with ❤️\" on their website\\n\\nWhere are my founders building from a place of pure rage?",
-        "created_at": "2022-11-16T19:47:24.000Z",
+        "html": "In 1850, a severe storm hit Scotland stripping large knoll known as \"Skara Brae”\\n\\nUnderneath was a Neolithic village with 10 houses complete with stone hearths, beds, cupboards and flushing toilets \\n\\nThis village was occupied from 3180 BC to about 2500 BC  1/🧵 \\n\\n📸 Wknight94 https://t.co/IUS1B5QT1O",
+        "created_at": "2022-11-22T10:08:56.000Z",
         "public_metrics": {
-            "like_count": 3168,
-            "quote_count": 97,
-            "reply_count": 325,
-            "retweet_count": 237
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1593987901569830913",
-        "author": {
-            "name": "John McCann",
-            "username": "dangermccann",
-            "description": null
-        },
-        "html": "Introducing the Logseq Metrics plugin, my first plugin released to the @logseq marketplace.  Metrics lets you easily record and visualize everyday data, personal habits or anything you care about that you can measure, right inside your Logseq journal.  \\nhttps://t.co/Yiymb6osIk https://t.co/7dkavcAmCx",
-        "created_at": "2022-11-19T15:21:45.000Z",
-        "public_metrics": {
-            "like_count": 40,
-            "quote_count": 1,
-            "reply_count": 4,
-            "retweet_count": 6
+            "like_count": 7985,
+            "quote_count": 62,
+            "reply_count": 103,
+            "retweet_count": 996
         },
         "standalone": true,
         "rt": false,
@@ -44,104 +21,31 @@ const tftTweets = [
         "geo.country": null,
         "entities.annotations": [
             {
-                "type": "Other",
-                "text": "Logseq Metrics"
+                "type": "Organization",
+                "text": "Scotland"
             },
             {
                 "type": "Other",
-                "text": "Logseq journal"
+                "text": "Skara Brae"
             }
         ],
-        "context_annotations": null
+        "context_annotations": "[{\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"854692455005921281\", \"name\": \"Science\", \"description\": \"Science\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"1046582045349015552\", \"name\": \"Archaeology\", \"description\": \"Archaeology\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"854692455005921281\", \"name\": \"Science\", \"description\": \"Science\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1046582045349015552\", \"name\": \"Archaeology\", \"description\": \"Archaeology\"}}]",
+        "media": []
     },
     {
-        "id": "1594555108531920896",
-        "author": {
-            "name": "Brian Roemmele",
-            "username": "BrianRoemmele",
-            "description": "we can only see what we think is possible..."
-        },
-        "html": "Habitat. https://t.co/8ux6wGhdnN",
-        "created_at": "2022-11-21T04:55:37.000Z",
-        "public_metrics": {
-            "like_count": 54,
-            "quote_count": 0,
-            "reply_count": 2,
-            "retweet_count": 5
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1594758028070293505",
-        "author": {
-            "name": "Brian Roemmele",
-            "username": "BrianRoemmele",
-            "description": "we can only see what we think is possible..."
-        },
-        "html": "No smoking section, 1971. https://t.co/MlmRmtmjoZ",
-        "created_at": "2022-11-21T18:21:57.000Z",
-        "public_metrics": {
-            "like_count": 37,
-            "quote_count": 1,
-            "reply_count": 3,
-            "retweet_count": 3
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1592899045172736000",
-        "author": {
-            "name": "Nick Milo 🗺",
-            "username": "NickMilo",
-            "description": "You deserve a guilt-free place to think and generate insights\\nMastodon: @nickmilo@pkm.social"
-        },
-        "html": "I often talk about the power of using @obsdmd to work at the Speed of Thought. Does anyone even know what I'm talking about, or what that even means??",
-        "created_at": "2022-11-16T15:15:01.000Z",
-        "public_metrics": {
-            "like_count": 55,
-            "quote_count": 1,
-            "reply_count": 23,
-            "retweet_count": 4
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Speed of Thought"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1594190522201300992",
+        "id": "1595199238132363264",
         "author": {
             "name": "Codex OS",
             "username": "codexeditor",
             "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "Using my @jugendingenieur ortho remote to step through code. Honestly feels really nice and smooth. We need more custom hardware for programming. https://t.co/s2s4rxtUwy",
-        "created_at": "2022-11-20T04:46:53.000Z",
+        "html": "Volvo Tundra concept (1979) https://t.co/4cVFNlbp4L",
+        "created_at": "2022-11-22T23:35:10.000Z",
         "public_metrics": {
-            "like_count": 37,
-            "quote_count": 2,
-            "reply_count": 1,
-            "retweet_count": 4
+            "like_count": 927,
+            "quote_count": 5,
+            "reply_count": 18,
+            "retweet_count": 151
         },
         "standalone": false,
         "rt": true,
@@ -151,25 +55,560 @@ const tftTweets = [
         "entities.annotations": [
             {
                 "type": "Other",
-                "text": "ortho"
+                "text": "Volvo Tundra concept"
             }
         ],
-        "context_annotations": null
+        "context_annotations": "[{\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781972125179518977\", \"name\": \"Auto Manufacturer - Auto\"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696940178935808\", \"name\": \"Gaming Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to offline and online games such as gaming consoles, tabletop games, video game publishers\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10026500778\", \"name\": \"Volvo Cars\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"10026500778\", \"name\": \"Volvo Cars\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1196845866138533888\", \"name\": \"Automobile Brands\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781972125179518977\", \"name\": \"Auto Manufacturer - Auto\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10026500778\", \"name\": \"Volvo Cars\"}}, {\"domain\": {\"id\": \"48\", \"name\": \"Product\", \"description\": \"Products created by Brands.  Examples: Ford Explorer, Apple iPhone.\"}, \"entity\": {\"id\": \"10045512601\", \"name\": \"Volvo Car USA\"}}]",
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
     },
     {
-        "id": "1593048989553029120",
+        "id": "1592685031348178948",
+        "author": {
+            "name": "Complexity Weekend",
+            "username": "ComplexWeekend",
+            "description": "Meet new collaborators and Learn Complexity Science by Doing. We host biannual Weekend events & monthly gatherings."
+        },
+        "html": "Complexity Weekend November 2022 Heartbeat ~ November 27 - https://t.co/LwlMxvmzda",
+        "created_at": "2022-11-16T01:04:36.000Z",
+        "public_metrics": {
+            "like_count": 0,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 2
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1594651913467105280",
+        "author": {
+            "name": "👑 Sidharth",
+            "username": "kingsidharth",
+            "description": "Product & Design at @growthschoolio YT Channel for Designers & PMs: https://t.co/roOUh4yaWl… 🧵 threads, 🎭 characters & 💩posts (he/him)"
+        },
+        "html": "Brain is a fascinating place — learning to visualise it with @logseq https://t.co/KHsdiICVO1",
+        "created_at": "2022-11-21T11:20:18.000Z",
+        "public_metrics": {
+            "like_count": 24,
+            "quote_count": 0,
+            "reply_count": 4,
+            "retweet_count": 2
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1594179674649034752",
         "author": {
             "name": "Codex OS",
             "username": "codexeditor",
             "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "Magnificent. Like a shield in miniature. https://t.co/tMcaCBAlGe",
-        "created_at": "2022-11-17T01:10:51.000Z",
+        "html": "The Egyptian eye of Horus is a symbol that translates to 6 senses. \\n\\nThought was understood as a sense like all of the others that is sent to your mind to create an understanding of the world around you.\\n\\nThis was one of the first things taught in their philosophy. https://t.co/FFVjYLkhNp https://t.co/GXx7gLmbJi",
+        "created_at": "2022-11-20T04:03:47.000Z",
+        "public_metrics": {
+            "like_count": 307,
+            "quote_count": 6,
+            "reply_count": 23,
+            "retweet_count": 57
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Person",
+                "text": "Horus"
+            }
+        ],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1595131201014366208",
+        "author": {
+            "name": "Supernotes",
+            "username": "supernotesapp",
+            "description": "Supernotes, the social note-taking and knowledge sharing platform. Follow us for inspiration, sneak peeks & productivity hacks."
+        },
+        "html": "Who's been using the new Pinned tab on mobile? 📌 https://t.co/5CJFZAvDWN",
+        "created_at": "2022-11-22T19:04:49.000Z",
+        "public_metrics": {
+            "like_count": 20,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 2
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "Pinned"
+            }
+        ],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1594891076317634564",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "SceneComposer: Any-Level Semantic Image Synthesis\\nabs: https://t.co/nAc1pu631J \\nproject page: https://t.co/9O7pwHyRvA https://t.co/8yfhGvtrjw",
+        "created_at": "2022-11-22T03:10:38.000Z",
+        "public_metrics": {
+            "like_count": 272,
+            "quote_count": 4,
+            "reply_count": 2,
+            "retweet_count": 58
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1593038801491750912",
+        "author": {
+            "name": "Remedios Varo",
+            "username": "artistvaro",
+            "description": "Fan account of Remedios Varo Uranga, a Spanish-Mexican para-surrealist painter and anarchist. #artbot by @andreitr"
+        },
+        "html": "Solar Music #remediosvaro #varo https://t.co/LvG1cvJJTT https://t.co/rBGclVdluD",
+        "created_at": "2022-11-17T00:30:22.000Z",
+        "public_metrics": {
+            "like_count": 485,
+            "quote_count": 5,
+            "reply_count": 2,
+            "retweet_count": 92
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "Solar Music"
+            },
+            {
+                "type": "Other",
+                "text": "remediosvaro"
+            }
+        ],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1594448267269787648",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "A brief post on why you're here forever and why Mastodon sucks ass https://t.co/IM26CIiQ8f",
+        "created_at": "2022-11-20T21:51:04.000Z",
+        "public_metrics": {
+            "like_count": 43,
+            "quote_count": 4,
+            "reply_count": 7,
+            "retweet_count": 7
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "Mastodon"
+            }
+        ],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1594764301650329605",
+        "author": {
+            "name": "fif",
+            "username": "5thletta",
+            "description": "https://t.co/kZXetmO0yg"
+        },
+        "html": "On Chess — https://t.co/VgPdlAh6hI https://t.co/EX8HlxXlnH",
+        "created_at": "2022-11-21T18:46:53.000Z",
+        "public_metrics": {
+            "like_count": 9,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 2
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1588862507275649025",
+        "author": {
+            "name": "Trail Marks",
+            "username": "TrailMarks",
+            "description": "Experience the Annotated Web as an Extension of (y)our Mind(s)\\nTrailMarks are  Thought Vectors in (inter)Personal  Mutual Learning Spaces\\n∀  is a Conversation"
+        },
+        "html": "There are great communities out there, too unfortunately I only engaged with very few.\\n@GETDWeb,  @Kernel, @SolidMit @EFF \\nAny community scouts out there? @Web3foundation \\n\\nTake Back the Web (feat. Brewster Kahle &amp; Mai Ishikawa Su... https://t.co/mGUDLDipai via \\n@YouTube",
+        "created_at": "2022-11-05T11:55:16.000Z",
+        "public_metrics": {
+            "like_count": 0,
+            "quote_count": 1,
+            "reply_count": 0,
+            "retweet_count": 0
+        },
+        "standalone": false,
+        "rt": false,
+        "reply": true,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "Take Back the Web"
+            },
+            {
+                "type": "Person",
+                "text": "Brewster Kahle"
+            },
+            {
+                "type": "Other",
+                "text": "Mai Ishikawa Su"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696940178935808\", \"name\": \"Gaming Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to offline and online games such as gaming consoles, tabletop games, video game publishers\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"847527946864607232\", \"name\": \"Mobile gaming\", \"description\": \"Mobile gaming\"}}, {\"domain\": {\"id\": \"71\", \"name\": \"Video Game\", \"description\": \"A video game like Overwatch\"}, \"entity\": {\"id\": \"992498112978534400\", \"name\": \"Animal Crossing\", \"description\": \"This entity includes all conversation about the franchise, as well as any individual installments in the series, if applicable.\\t\\t\\t\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"847527650667094017\", \"name\": \"Gaming\", \"description\": \"Gaming\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"992498112978534400\", \"name\": \"Animal Crossing\", \"description\": \"This entity includes all conversation about the franchise, as well as any individual installments in the series, if applicable.\\t\\t\\t\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1070028159964262400\", \"name\": \"Video games\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1491897662399922176\", \"name\": \"Simulation games\"}}]",
+        "media": []
+    },
+    {
+        "id": "1594091507354865664",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "Amsterdam, Netherlands 🇳🇱 https://t.co/YFzz0o6sXS",
+        "created_at": "2022-11-19T22:13:26.000Z",
+        "public_metrics": {
+            "like_count": 6062,
+            "quote_count": 32,
+            "reply_count": 21,
+            "retweet_count": 654
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1594153430393950208",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "Belogradchik is an ancient fortress located on the north slopes of the Balkan Mountains. Bulgaria. https://t.co/CKocNwdwd8",
+        "created_at": "2022-11-20T02:19:30.000Z",
+        "public_metrics": {
+            "like_count": 347,
+            "quote_count": 1,
+            "reply_count": 5,
+            "retweet_count": 58
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Place",
+                "text": "Belogradchik"
+            },
+            {
+                "type": "Place",
+                "text": "Balkan Mountains"
+            },
+            {
+                "type": "Place",
+                "text": "Bulgaria"
+            }
+        ],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1592988594276569088",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "#PKMChat Good to know for the laggards among my followers. This means that Evernote has reached the last stage of its life cycle: Shareholders liquidate it, and the new owner will milk the install base: you. https://t.co/Hri6fCWWhI",
+        "created_at": "2022-11-16T21:10:51.000Z",
+        "public_metrics": {
+            "like_count": 5,
+            "quote_count": 0,
+            "reply_count": 1,
+            "retweet_count": 1
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "PKMChat"
+            },
+            {
+                "type": "Other",
+                "text": "Evernote"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697333571112960\", \"name\": \"Technology Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to softwares, apps, communication equipments, hardwares\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974596752842752\", \"name\": \"Services\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10043689834\", \"name\": \"Evernote\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"848920371311001600\", \"name\": \"Technology\", \"description\": \"Technology and computing\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"848959158082617344\", \"name\": \"Enterprise software\", \"description\": \"Enterprise software\"}}]",
+        "media": []
+    },
+    {
+        "id": "1595382686801170433",
+        "author": {
+            "name": "charles blass 🌊🔥🏄🏻🔤 (🥚 , 🥚)",
+            "username": "lovevolv",
+            "description": "🪐#omniverse #interoperability #flow #KB2 @the_platf0rm #dao @cicollaboratory #community #wisdom #dynamic #learning #music #radio📡 #open #enzymes #lovolution"
+        },
+        "html": "@TrailMarks @braddegraf douglas adams alan kay @TheTedNelson et al related artifact from Ted2\\ncc @stewartbrand @hrheingold https://t.co/4QvF4s8pkc",
+        "created_at": "2022-11-23T11:44:07.000Z",
         "public_metrics": {
             "like_count": 1,
+            "quote_count": 1,
+            "reply_count": 0,
+            "retweet_count": 1
+        },
+        "standalone": false,
+        "rt": false,
+        "reply": true,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "douglas adams"
+            },
+            {
+                "type": "Person",
+                "text": "alan"
+            },
+            {
+                "type": "Other",
+                "text": "Ted2"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"10\", \"name\": \"Person\", \"description\": \"Named people in the world like Nelson Mandela\"}, \"entity\": {\"id\": \"1070710935344435200\", \"name\": \"Howard Rheingold\", \"description\": \"American journalist\"}}, {\"domain\": {\"id\": \"94\", \"name\": \"Journalist\", \"description\": \"A journalist like 'Anderson Cooper'\"}, \"entity\": {\"id\": \"1070710935344435200\", \"name\": \"Howard Rheingold\", \"description\": \"American journalist\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1046545033657081857\", \"name\": \"News\", \"description\": \"News\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1070710935344435200\", \"name\": \"Howard Rheingold\", \"description\": \"American journalist\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1074755369530880001\", \"name\": \"Journalists\", \"description\": \"Journalism\"}}]",
+        "media": []
+    },
+    {
+        "id": "1595067577373528064",
+        "author": {
+            "name": "Jonathan Whitaker",
+            "username": "johnowhitaker",
+            "description": "Data scientist and independent researcher based in Zimbabwe. Trying https://t.co/gpaB7yqUtq too"
+        },
+        "html": "How do you edit existing images with diffusion models? I made a quick, informal video covering some of the different approaches, and I'll try to summarize the four main strategies in this thread.\\nVideo: https://t.co/8w1a7UOBVp\\n1/5 https://t.co/XRhORvWN4N",
+        "created_at": "2022-11-22T14:52:00.000Z",
+        "public_metrics": {
+            "like_count": 408,
+            "quote_count": 3,
+            "reply_count": 12,
+            "retweet_count": 75
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1593744240278147072",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "Peter Thiel on the most important lesson to learn from Steve Jobs: https://t.co/FAMKpiGzhj",
+        "created_at": "2022-11-18T23:13:31.000Z",
+        "public_metrics": {
+            "like_count": 2301,
+            "quote_count": 28,
+            "reply_count": 19,
+            "retweet_count": 388
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Person",
+                "text": "Peter Thiel"
+            },
+            {
+                "type": "Person",
+                "text": "Steve Jobs"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"10\", \"name\": \"Person\", \"description\": \"Named people in the world like Nelson Mandela\"}, \"entity\": {\"id\": \"1032977830613676034\", \"name\": \"Steve Jobs\", \"description\": \"Steve Jobs\"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696848252391426\", \"name\": \"Financial Services Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to Banks, Credit cards, Insurance, Investments, Stocks \"}}, {\"domain\": {\"id\": \"65\", \"name\": \"Interests and Hobbies Vertical\", \"description\": \"Top level interests and hobbies groupings, like Food or Travel\"}, \"entity\": {\"id\": \"781974596148793345\", \"name\": \"Business & finance\"}}, {\"domain\": {\"id\": \"65\", \"name\": \"Interests and Hobbies Vertical\", \"description\": \"Top level interests and hobbies groupings, like Food or Travel\"}, \"entity\": {\"id\": \"781974596148793345\", \"name\": \"Business & finance\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"857878777191211008\", \"name\": \"Leadership\", \"description\": \"Leadership\"}}, {\"domain\": {\"id\": \"67\", \"name\": \"Interests and Hobbies\", \"description\": \"Interests, opinions, and behaviors of individuals, groups, or cultures; like Speciality Cooking or Theme Parks\"}, \"entity\": {\"id\": \"1486470043353239552\", \"name\": \"Jobs\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1032977830613676034\", \"name\": \"Steve Jobs\", \"description\": \"Steve Jobs\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1166406108623163392\", \"name\": \"Business personalities\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1517463284449828869\", \"name\": \"Peter Thiel\"}}]",
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1592954669105487872",
+        "author": {
+            "name": "Salesforce Platform",
+            "username": "SalesforceforIT",
+            "description": "Build apps and automate fast for success now. For help: @asksalesforce"
+        },
+        "html": "Interested in reducing costs and increasing productivity? 🙋\\n \\nJoin us at @AWSreInvent and learn how to innovate at scale faster with @salesforce Platform, @Tableau, @MuleSoft, and @SlackHQ.\\n\\nSave your spot: https://t.co/L3bvcsVdjt https://t.co/b6HxbbTx50",
+        "created_at": "2022-11-16T18:56:03.000Z",
+        "public_metrics": {
+            "like_count": 28,
+            "quote_count": 1,
+            "reply_count": 2,
+            "retweet_count": 12
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": "[{\"domain\": {\"id\": \"29\", \"name\": \"Events [Entity Service]\", \"description\": \"Real world events. \"}, \"entity\": {\"id\": \"1583398748016631808\", \"name\": \"Amazon Re:invent 2022\"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697333571112960\", \"name\": \"Technology Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to softwares, apps, communication equipments, hardwares\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"1480944072101490692\", \"name\": \"Salesforce\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"864154902926196737\", \"name\": \"S&P 500\", \"description\": \"S&P 500\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1480944072101490692\", \"name\": \"Salesforce\"}}, {\"domain\": {\"id\": \"45\", \"name\": \"Brand Vertical\", \"description\": \"Top level entities that describe a Brands industry\"}, \"entity\": {\"id\": \"781974597226799105\", \"name\": \"B2B\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974597172203520\", \"name\": \"Services - B2B\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10027325070\", \"name\": \"Salesforce\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10042877598\", \"name\": \"Slack\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10043273937\", \"name\": \"Tableau\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"848920371311001600\", \"name\": \"Technology\", \"description\": \"Technology and computing\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"848959158082617344\", \"name\": \"Enterprise software\", \"description\": \"Enterprise software\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"10043273937\", \"name\": \"Tableau\"}}]",
+        "media": []
+    },
+    {
+        "id": "1594147904431611904",
+        "author": {
+            "name": "Reduct.Video",
+            "username": "ReductVideo",
+            "description": "🎥 Think with the ideas in your video. Search, review, analyze, synthesize, edit—collaboratively, in the browser."
+        },
+        "html": "this is cheezburger.\\n\\ncheezburger is a cat.\\n\\ncheezburger likes to understand and edit the content of her video in faster-than-real-time using https://t.co/0mWQZthHhX. https://t.co/wxipBsexHG",
+        "created_at": "2022-11-20T01:57:32.000Z",
+        "public_metrics": {
+            "like_count": 3,
             "quote_count": 0,
             "reply_count": 0,
             "retweet_count": 0
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Organization",
+                "text": "cheezburger"
+            },
+            {
+                "type": "Organization",
+                "text": "cheezburger"
+            },
+            {
+                "type": "Other",
+                "text": "cheezburger"
+            }
+        ],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1595409983759609861",
+        "author": {
+            "name": "norm away on a wellness retreat 🌴",
+            "username": "NormanChella",
+            "description": "Podcasting, Polymathy and Memory. Podcast Librarian @Podchaser, Chief BizDev @rrpmalaysia. Slightly crazy, always insane at @ttnchannel | tweets are my own"
+        },
+        "html": "Firm reminder that to be weird in public is to be a lighthouse: a beacon for the kind of conversations you want, with the people you seek finding you whilst out on the dark sea\\n\\nThe internet is a lonely, chaotic place, but we always sail for light regardless of reason https://t.co/s2XAmCkg15",
+        "created_at": "2022-11-23T13:32:36.000Z",
+        "public_metrics": {
+            "like_count": 13,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 5
         },
         "standalone": false,
         "rt": false,
@@ -177,21 +616,144 @@ const tftTweets = [
         "quote": true,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": "[{\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"854692455005921281\", \"name\": \"Science\", \"description\": \"Science\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"1046582045349015552\", \"name\": \"Archaeology\", \"description\": \"Archaeology\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"854692455005921281\", \"name\": \"Science\", \"description\": \"Science\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1046582045349015552\", \"name\": \"Archaeology\", \"description\": \"Archaeology\"}}]"
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1579020331070939136",
+        "id": "1594455616059101185",
+        "author": {
+            "name": "Eduardo",
+            "username": "lalo3487",
+            "description": null
+        },
+        "html": "@engineers_feed https://t.co/SrcMEfH5Tn",
+        "created_at": "2022-11-20T22:20:17.000Z",
+        "public_metrics": {
+            "like_count": 4388,
+            "quote_count": 14,
+            "reply_count": 50,
+            "retweet_count": 236
+        },
+        "standalone": false,
+        "rt": false,
+        "reply": true,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1593471437771530240",
         "author": {
             "name": "Codex OS",
             "username": "codexeditor",
             "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "@tweet_librarian By spending some hours/days right now I can validate whether the \"future feature\" is something that is really worthwhile. I get to use it, play with it, validate it. I devise a simple form that is \"forwards compatible\" &amp; then flesh that out as needed from actual experience. 2/2",
-        "created_at": "2022-10-09T08:05:58.000Z",
+        "html": "Odds are higher than I'd like that we lose Twitter, so please fill this out to stay in touch.\\n\\nI don't have a newsletter or anything atm, but if I start one, or migrate to another social platform, I'll be sure to reach out so you can join me over there ❤️\\n\\nhttps://t.co/JA0pc9TSne",
+        "created_at": "2022-11-18T05:09:30.000Z",
+        "public_metrics": {
+            "like_count": 7,
+            "quote_count": 0,
+            "reply_count": 1,
+            "retweet_count": 1
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "Twitter"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"1364653904433045506\", \"name\": \"Aposto!\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974596752842752\", \"name\": \"Services\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10045225402\", \"name\": \"Twitter\"}}]",
+        "media": []
+    },
+    {
+        "id": "1593645843365494784",
+        "author": {
+            "name": "Multi",
+            "username": "multi_agi",
+            "description": "We are Multi, a new AI startup on a mission to automate all knowledge work."
+        },
+        "html": "Drag and drop blocks that represent different types of models and control how information flows between them to assemble complex results. https://t.co/yVkgOKRq7q",
+        "created_at": "2022-11-18T16:42:32.000Z",
+        "public_metrics": {
+            "like_count": 61,
+            "quote_count": 5,
+            "reply_count": 1,
+            "retweet_count": 6
+        },
+        "standalone": false,
+        "rt": false,
+        "reply": true,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1595283733405278209",
+        "author": {
+            "name": "Brian Roemmele",
+            "username": "BrianRoemmele",
+            "description": "we can only see what we think is possible..."
+        },
+        "html": "Pulpit Rock,  Norway.\\n https://t.co/z9DOvIf5QD",
+        "created_at": "2022-11-23T05:10:55.000Z",
+        "public_metrics": {
+            "like_count": 246,
+            "quote_count": 11,
+            "reply_count": 26,
+            "retweet_count": 29
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Place",
+                "text": "Rock"
+            },
+            {
+                "type": "Place",
+                "text": "Norway"
+            }
+        ],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "video"
+            }
+        ]
+    },
+    {
+        "id": "1593640055062544384",
+        "author": {
+            "name": "Mem",
+            "username": "memdotai",
+            "description": "Your self-organizing workspace.\\n\\nGet Mem It for Twitter: https://t.co/PXu0Fqq8k1…\\nWebsite: https://t.co/XSDVK00mbv \\nCommunity: https://t.co/arZa1ml8IS"
+        },
+        "html": "Substack:\\n\\nhttps://t.co/OlO1S1hZoe",
+        "created_at": "2022-11-18T16:19:32.000Z",
         "public_metrics": {
             "like_count": 1,
-            "quote_count": 1,
-            "reply_count": 0,
+            "quote_count": 0,
+            "reply_count": 1,
             "retweet_count": 0
         },
         "standalone": false,
@@ -200,295 +762,20 @@ const tftTweets = [
         "quote": false,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1592986067237756930",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "So if we assume that this rate is the post 2020 rate of sudden cardiac events in sports we would roughly calculate about 150 over 12 months: that would give us a 10 fold rise in sudden cardiac events in sports since the pandemic started",
-        "created_at": "2022-11-16T21:00:49.000Z",
-        "public_metrics": {
-            "like_count": 22,
-            "quote_count": 0,
-            "reply_count": 1,
-            "retweet_count": 4
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": "[{\"domain\": {\"id\": \"123\", \"name\": \"Ongoing News Story\", \"description\": \"Ongoing News Stories like 'Brexit'\"}, \"entity\": {\"id\": \"1220701888179359745\", \"name\": \"COVID-19\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1220701888179359745\", \"name\": \"COVID-19\"}}]"
-    },
-    {
-        "id": "1595153942325121025",
-        "author": {
-            "name": "Graph Commons",
-            "username": "graphcommons",
-            "description": "Collaborative platform for mapping, analyzing, publishing data-networks. Email/PGP public key: https://t.co/WS1YOJsTcR"
-        },
-        "html": "The new Graph Commons is here! https://t.co/lvm4xBwlFg\\n\\nThere are a lot of new features and improvements. We can't wait to see how you'll use them to gain better insights and create deeper impact. 1/9 🧵 https://t.co/2Etsb6t3B4",
-        "created_at": "2022-11-22T20:35:11.000Z",
-        "public_metrics": {
-            "like_count": 51,
-            "quote_count": 3,
-            "reply_count": 2,
-            "retweet_count": 17
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Graph Commons"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1592924891208372224",
-        "author": {
-            "name": "Linus",
-            "username": "thesephist",
-            "description": "thought & craft · ex @replit @hackclub @dormroomfund"
-        },
-        "html": "Small rant about LLMs and how I see them being put, rather thoughtlessly IMO, into productivity tools. 📄\\n\\nTL;DR — Most knowledge work isn't a text-generation task, and your product shouldn't ship an implementation detail of LLMs as the end-user interface\\n\\nhttps://t.co/N1NJoKzUqA https://t.co/eEedO8Zf00",
-        "created_at": "2022-11-16T16:57:43.000Z",
-        "public_metrics": {
-            "like_count": 692,
-            "quote_count": 41,
-            "reply_count": 40,
-            "retweet_count": 83
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "LLMs"
-            },
-            {
-                "type": "Other",
-                "text": "LLMs"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1592928785737076739",
-        "author": {
-            "name": "Historic Vids",
-            "username": "historyinmemes",
-            "description": "Daily history lessons. Education through memes!"
-        },
-        "html": "In the Russian dance Berezka, women move with short steps, so short that they look like they're floating. https://t.co/l3AegK2TA1",
-        "created_at": "2022-11-16T17:13:12.000Z",
-        "public_metrics": {
-            "like_count": 409778,
-            "quote_count": 4409,
-            "reply_count": 2074,
-            "retweet_count": 50622
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Person",
-                "text": "Berezka"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1593248595389472768",
-        "author": {
-            "name": "Ness Labs",
-            "username": "ness_labs",
-            "description": "The learning community for ambitious knowledge workers. Join us to think better, learn faster, and work happier: https://t.co/aw5gE8xtMw 🧠✨"
-        },
-        "html": "The team at @fibery_io is on a mission to augment organizational intelligence 🧠📈\\n\\n@mdubakov told us about:\\n\\n• Proper productivity metrics\\n• Working with structured &amp; unstructured information\\n• The legacy of early hypertext tools\\n• ...and more!\\n\\nhttps://t.co/3h7Hf187gD",
-        "created_at": "2022-11-17T14:24:00.000Z",
-        "public_metrics": {
-            "like_count": 10,
-            "quote_count": 1,
-            "reply_count": 1,
-            "retweet_count": 1
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1592974089547022336",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "@kosmik_app multiplayer web browser (thank you gain @fondationdb 🧡 for the live events) https://t.co/ycIgCV5OCy",
-        "created_at": "2022-11-16T20:13:13.000Z",
-        "public_metrics": {
-            "like_count": 6,
-            "quote_count": 0,
-            "reply_count": 0,
-            "retweet_count": 1
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696940178935808\", \"name\": \"Gaming Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to offline and online games such as gaming consoles, tabletop games, video game publishers\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"847527650667094017\", \"name\": \"Gaming\", \"description\": \"Gaming\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1070028159964262400\", \"name\": \"Video games\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1491898017464549376\", \"name\": \"Multiplayer games\"}}]"
-    },
-    {
-        "id": "1594331628339273729",
-        "author": {
-            "name": "Retro Tech Dreams",
-            "username": "RetroTechDreams",
-            "description": "Retro tech, early web & vintage computing. 80s, 90s, early 2000s nostalgia. Follow for daily posts."
-        },
-        "html": "Televideo PM/286 (1987) https://t.co/liUvPScV35",
-        "created_at": "2022-11-20T14:07:36.000Z",
-        "public_metrics": {
-            "like_count": 531,
-            "quote_count": 3,
-            "reply_count": 4,
-            "retweet_count": 81
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Televideo"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1594834582947663872",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "How do you feel the quality of Twitter search is? What would get you to use Twitter search instead of Google?\\n\\nBTW, there's some nice advanced search stuff here: https://t.co/CYMzuWD1HT",
-        "created_at": "2022-11-21T23:26:09.000Z",
-        "public_metrics": {
-            "like_count": 4881,
-            "quote_count": 137,
-            "reply_count": 1819,
-            "retweet_count": 366
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Twitter"
-            },
-            {
-                "type": "Other",
-                "text": "Twitter"
-            },
-            {
-                "type": "Organization",
-                "text": "Google"
-            }
-        ],
-        "context_annotations": "[{\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974596752842752\", \"name\": \"Services\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10026378521\", \"name\": \"Google \"}}, {\"domain\": {\"id\": \"48\", \"name\": \"Product\", \"description\": \"Products created by Brands.  Examples: Ford Explorer, Apple iPhone.\"}, \"entity\": {\"id\": \"1395474411180892160\", \"name\": \"Google brand conversation\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"10026378521\", \"name\": \"Google \"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974596752842752\", \"name\": \"Services\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10045225402\", \"name\": \"Twitter\"}}]"
-    },
-    {
-        "id": "1593212872259416065",
-        "author": {
-            "name": "TfT Hacker - Exploring Tools for Thought and PKM",
-            "username": "TfTHacker",
-            "description": "Exploring Tools for Thought space and PKM, with focus on tools like Obsidian, Tana, Craft, LogSeq, RemNote, AthensResearch, OneNote, etc https://t.co/GyMiAikIl1"
-        },
-        "html": "This is the release of the year for me.\\n\\nBlock references still need work, but this is the biggest piece of the puzzle for me.\\n\\nThis is my favorite plugin by far. Excellent work! https://t.co/rwmsGf55lH",
-        "created_at": "2022-11-17T12:02:03.000Z",
-        "public_metrics": {
-            "like_count": 15,
-            "quote_count": 0,
-            "reply_count": 3,
-            "retweet_count": 2
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": "[{\"domain\": {\"id\": \"3\", \"name\": \"TV Shows\", \"description\": \"Television shows from around the world\"}, \"entity\": {\"id\": \"1518904568435798017\", \"name\": \"Star Trek: Strange New Worlds\"}}, {\"domain\": {\"id\": \"29\", \"name\": \"Events [Entity Service]\", \"description\": \"Real world events. \"}, \"entity\": {\"id\": \"1565409468237565952\", \"name\": \"LoL Worlds 2022\"}}, {\"domain\": {\"id\": \"45\", \"name\": \"Brand Vertical\", \"description\": \"Top level entities that describe a Brands industry\"}, \"entity\": {\"id\": \"781974597310615553\", \"name\": \"Entertainment\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974597218340864\", \"name\": \"Video Games - Entertainment\"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696802391859201\", \"name\": \"Entertainment & Leisure Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to movies, music, television, franchises, venues, theme parks, toys, tourism, hotels\"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696940178935808\", \"name\": \"Gaming Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to offline and online games such as gaming consoles, tabletop games, video game publishers\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10047023523\", \"name\": \"League of Legends\", \"description\": \"This entity includes all conversation about the entire League of Legends universe.\\n\\t\\nNOTE: Following the release of Arcane, Video Game (domain 71) annotations were halted on 12/3/2021.\"}}, {\"domain\": {\"id\": \"71\", \"name\": \"Video Game\", \"description\": \"A video game like Overwatch\"}, \"entity\": {\"id\": \"10047023523\", \"name\": \"League of Legends\", \"description\": \"This entity includes all conversation about the entire League of Legends universe.\\n\\t\\nNOTE: Following the release of Arcane, Video Game (domain 71) annotations were halted on 12/3/2021.\"}}, {\"domain\": {\"id\": \"71\", \"name\": \"Video Game\", \"description\": \"A video game like Overwatch\"}, \"entity\": {\"id\": \"1466863301971759106\", \"name\": \"Teamfight Tactics\"}}, {\"domain\": {\"id\": \"116\", \"name\": \"Video Game Tournament\", \"description\": \"Video game tournament, like Evolution\"}, \"entity\": {\"id\": \"1565409468237565952\", \"name\": \"LoL Worlds 2022\"}}, {\"domain\": {\"id\": \"130\", \"name\": \"Multimedia Franchise\", \"description\": \"Franchises which span multiple forms of media like 'Harry Potter'\"}, \"entity\": {\"id\": \"10047023523\", \"name\": \"League of Legends\", \"description\": \"This entity includes all conversation about the entire League of Legends universe.\\n\\t\\nNOTE: Following the release of Arcane, Video Game (domain 71) annotations were halted on 12/3/2021.\"}}, {\"domain\": {\"id\": \"130\", \"name\": \"Multimedia Franchise\", \"description\": \"Franchises which span multiple forms of media like 'Harry Potter'\"}, \"entity\": {\"id\": \"1010220507482865665\", \"name\": \"Star Trek\", \"description\": \"This entity includes all conversation about the franchise, as well as any individual installments in the series, if applicable.\\t\\t\\t\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"10047023523\", \"name\": \"League of Legends\", \"description\": \"This entity includes all conversation about the entire League of Legends universe.\\n\\t\\nNOTE: Following the release of Arcane, Video Game (domain 71) annotations were halted on 12/3/2021.\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"839544274442051584\", \"name\": \"Entertainment\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"839544337360801792\", \"name\": \"Esports\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"847527650667094017\", \"name\": \"Gaming\", \"description\": \"Gaming\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"847869772129685504\", \"name\": \"Sci-fi & fantasy\", \"description\": \"Sci-fi and fantasy\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1010220507482865665\", \"name\": \"Star Trek\", \"description\": \"This entity includes all conversation about the franchise, as well as any individual installments in the series, if applicable.\\t\\t\\t\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1070028159964262400\", \"name\": \"Video games\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1072937043393560576\", \"name\": \"Television\", \"description\": \"Television\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1074757527995277313\", \"name\": \"Entertainment franchises\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1197906382529294337\", \"name\": \"Competitive games\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1272667416061861888\", \"name\": \"Esports leagues\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1276514328007467008\", \"name\": \"Movies & TV\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1283481070956998656\", \"name\": \"Sci-fi & fantasy TV\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1291094662682271744\", \"name\": \"Gaming events\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1394789549163782147\", \"name\": \"League of Legends World Championship\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1436053202835689485\", \"name\": \"Events\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1466863301971759106\", \"name\": \"Teamfight Tactics\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1491568918174912515\", \"name\": \"Esports events\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1491897789013393420\", \"name\": \"Strategy games\"}}]"
-    },
-    {
-        "id": "1593747753691381763",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "🏛 The Sacred Way, Delphi, Greece. The Treasury of the Athenians can be seen to the right. 📷 mango2friendly / https://t.co/wav9RNe6hf https://t.co/rt5SeZpkel",
-        "created_at": "2022-11-18T23:27:29.000Z",
-        "public_metrics": {
-            "like_count": 777,
-            "quote_count": 2,
-            "reply_count": 9,
-            "retweet_count": 131
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Place",
-                "text": "Delphi"
-            },
-            {
-                "type": "Place",
-                "text": "Greece"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1594840677157937153",
+        "id": "1593335413631987713",
         "author": {
             "name": "ClickUp",
             "username": "clickup",
             "description": "Save time with the all-in-one productivity platform that brings teams, tasks, and tools together in one place."
         },
-        "html": "8/ Long meeting? Schedule breaks\\n\\nIf you just know the meeting will be a doozy, schedule time in the agenda for a quick break\\n\\nBrief breaks will help everyone stay in good spirits\\n\\nSet your timer in ClickUp for five minutes and pop open your bevy of choice 🧃 https://t.co/CsRFhjhbiO",
-        "created_at": "2022-11-21T23:50:22.000Z",
+        "html": "4/ Why do you need a product roadmap?\\n\\nThere are 4 main reasons:\\n-It offers clear direction for dev teams\\n-It provides increased visibility\\n-It reduces the amount of project detours\\n-It offers a single source of truth🙌",
+        "created_at": "2022-11-17T20:09:00.000Z",
         "public_metrics": {
-            "like_count": 4,
+            "like_count": 8,
             "quote_count": 0,
             "reply_count": 1,
             "retweet_count": 0
@@ -499,22 +786,23 @@ const tftTweets = [
         "quote": false,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1593686776849215488",
+        "id": "1593420088820092929",
         "author": {
-            "name": "⚡️ Ev Chapman 🚢 | Creative Entrepreneur",
-            "username": "evielync",
-            "description": "I build digital products with @tana_inc + @NotionHQ. And help creators build a joyful writing inbox practice that drives their ideas & content for years."
+            "name": "AK",
+            "username": "_akhaliq",
+            "description": "paper tweets, dms are open, ML @Gradio (acq. by @HuggingFace 🤗)\\n\\npatreon: https://t.co/aqu4khhSem\\n\\nMastodon: https://t.co/KIxbMZhNJM"
         },
-        "html": "Kurt Vonnegut on creativity:\\n\\n\"Practice any art.... no matter how well or how badly. Not to get money or fame, but to experience becoming, to find out what's inside you, to make your soul grow.\"\\n\\nPractice creativity - because you can. Because it's good for you ✌️",
-        "created_at": "2022-11-18T19:25:11.000Z",
+        "html": "InstructPix2Pix: Learning to Follow Image Editing Instructions\\nabs: https://t.co/UqsKEMRkkx \\nproject page: https://t.co/WTFqVkkJli \\n\\nInstructPix2Pix, trained on generated data, and generalizes to real images and user-written instructions at inference time https://t.co/YPHY7zmBqb",
+        "created_at": "2022-11-18T01:45:28.000Z",
         "public_metrics": {
-            "like_count": 67,
-            "quote_count": 2,
-            "reply_count": 12,
-            "retweet_count": 11
+            "like_count": 659,
+            "quote_count": 23,
+            "reply_count": 21,
+            "retweet_count": 146
         },
         "standalone": true,
         "rt": false,
@@ -523,54 +811,190 @@ const tftTweets = [
         "geo.country": null,
         "entities.annotations": [
             {
-                "type": "Person",
-                "text": "Kurt Vonnegut"
+                "type": "Other",
+                "text": "InstructPix2Pix"
             }
         ],
-        "context_annotations": "[{\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1166408461485101056\", \"name\": \"Authors\"}}]"
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1593136417776881666",
+        "id": "1593754579367497728",
         "author": {
-            "name": "neuro.social.self",
-            "username": "neurosocialself",
-            "description": "Links to contemporary essays, videos, news items, many written by sociologists, psychologists, neurologists, geneticists and philosophers 🚣🏼‍♂️🚣🏼‍♂️☀️🌴🌴🌴"
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "‘A man who is 'of sound mind' is one who keeps the inner madman under lock and key.’\\n\\nPaul Valery https://t.co/rjaeeJbBE9",
-        "created_at": "2022-11-17T06:58:15.000Z",
+        "html": "🏛 The Greek Island of Delos. \\nPhoto credit tinatin.8956/ Instagram https://t.co/AnwK7vx0QH https://t.co/nDOAPqO1E6",
+        "created_at": "2022-11-18T23:54:36.000Z",
         "public_metrics": {
-            "like_count": 32,
+            "like_count": 230,
             "quote_count": 2,
-            "reply_count": 0,
-            "retweet_count": 7
+            "reply_count": 3,
+            "retweet_count": 35
         },
-        "standalone": true,
-        "rt": false,
+        "standalone": false,
+        "rt": true,
         "reply": false,
         "quote": false,
         "geo.country": null,
         "entities.annotations": [
             {
-                "type": "Person",
-                "text": "Paul Valery"
+                "type": "Place",
+                "text": "Greek"
+            },
+            {
+                "type": "Place",
+                "text": "Delos"
+            },
+            {
+                "type": "Other",
+                "text": "Instagram"
             }
         ],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
     },
     {
-        "id": "1594387631881584640",
+        "id": "1594348594542571525",
         "author": {
-            "name": "Andy Matuschak",
-            "username": "andy_matuschak",
-            "description": "More wonder, more insight, more capacity, more joy!\\n\\nCurrently exploring tools that augment human memory and attention."
+            "name": "Nick Milo 🗺",
+            "username": "NickMilo",
+            "description": "You deserve a guilt-free place to think and generate insights\\nMastodon: @nickmilo@pkm.social"
         },
-        "html": "If you're seriously interested in tools for thought, @andy_matuschak is offering a research fellowship to work on them: https://t.co/zYErtgix9S",
-        "created_at": "2022-11-20T17:50:08.000Z",
+        "html": "When you do less highlights something miraculous happens: you have more time for insights.\\n\\nThis is what happens when you shift from passive thinking to active, engaged thinking: you go from note-taker to note-maker.",
+        "created_at": "2022-11-20T15:15:01.000Z",
         "public_metrics": {
-            "like_count": 34,
-            "quote_count": 0,
-            "reply_count": 1,
+            "like_count": 40,
+            "quote_count": 1,
+            "reply_count": 5,
             "retweet_count": 5
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1593151972692983809",
+        "author": {
+            "name": "TfT Hacker - Exploring Tools for Thought and PKM",
+            "username": "TfTHacker",
+            "description": "Exploring Tools for Thought space and PKM, with focus on tools like Obsidian, Tana, Craft, LogSeq, RemNote, AthensResearch, OneNote, etc https://t.co/GyMiAikIl1"
+        },
+        "html": "Using multiple vaults in @obsdmd ???\\n\\n@n_vanderhoeven discusses the pros &amp; cons of using multiple vaults. It's a good subject because, in general, most users will use one vault, but it is good to understand when you should use multiple vaults. #TfT\\n\\nhttps://t.co/ndis10hLKs",
+        "created_at": "2022-11-17T08:00:04.000Z",
+        "public_metrics": {
+            "like_count": 12,
+            "quote_count": 0,
+            "reply_count": 2,
+            "retweet_count": 1
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": "[{\"domain\": {\"id\": \"45\", \"name\": \"Brand Vertical\", \"description\": \"Top level entities that describe a Brands industry\"}, \"entity\": {\"id\": \"781974597310615553\", \"name\": \"Entertainment\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974597218340864\", \"name\": \"Video Games - Entertainment\"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696940178935808\", \"name\": \"Gaming Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to offline and online games such as gaming consoles, tabletop games, video game publishers\"}}, {\"domain\": {\"id\": \"71\", \"name\": \"Video Game\", \"description\": \"A video game like Overwatch\"}, \"entity\": {\"id\": \"1466863301971759106\", \"name\": \"Teamfight Tactics\"}}, {\"domain\": {\"id\": \"130\", \"name\": \"Multimedia Franchise\", \"description\": \"Franchises which span multiple forms of media like 'Harry Potter'\"}, \"entity\": {\"id\": \"10047023523\", \"name\": \"League of Legends\", \"description\": \"This entity includes all conversation about the entire League of Legends universe.\\n\\t\\nNOTE: Following the release of Arcane, Video Game (domain 71) annotations were halted on 12/3/2021.\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"10047023523\", \"name\": \"League of Legends\", \"description\": \"This entity includes all conversation about the entire League of Legends universe.\\n\\t\\nNOTE: Following the release of Arcane, Video Game (domain 71) annotations were halted on 12/3/2021.\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"847527650667094017\", \"name\": \"Gaming\", \"description\": \"Gaming\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1070028159964262400\", \"name\": \"Video games\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1197906382529294337\", \"name\": \"Competitive games\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1466863301971759106\", \"name\": \"Teamfight Tactics\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1491897789013393420\", \"name\": \"Strategy games\"}}]",
+        "media": []
+    },
+    {
+        "id": "1593723670396018691",
+        "author": {
+            "name": "soul nate",
+            "username": "MNateShyamalan",
+            "description": "forbes' 7.4 billion under 7.4 billion. @mnateshyamalan@mstdn.social"
+        },
+        "html": "i’m in a code review with elon musk. ive got the CSS for https://t.co/iXbfr5d1Jg on 3 monitors. my browser’s in dark mode so it looks cool. “this part?” he asks, pointing to code for the Giant Omelette. “caches tweets in the mainframe cyberhex,” i say. he nods. “as i suspected”",
+        "created_at": "2022-11-18T21:51:47.000Z",
+        "public_metrics": {
+            "like_count": 105704,
+            "quote_count": 325,
+            "reply_count": 349,
+            "retweet_count": 13015
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "elon musk"
+            },
+            {
+                "type": "Other",
+                "text": "CSS"
+            },
+            {
+                "type": "Other",
+                "text": "Giant Omelette"
+            },
+            {
+                "type": "Other",
+                "text": "cyberhex"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696848252391426\", \"name\": \"Financial Services Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to Banks, Credit cards, Insurance, Investments, Stocks \"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697333571112960\", \"name\": \"Technology Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to softwares, apps, communication equipments, hardwares\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"848920371311001600\", \"name\": \"Technology\", \"description\": \"Technology and computing\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"898673391980261376\", \"name\": \"Web development\", \"description\": \"Web Development\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"848921413196984320\", \"name\": \"Computer programming\", \"description\": \"Computer programming\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"898673391980261376\", \"name\": \"Web development\", \"description\": \"Web Development\"}}, {\"domain\": {\"id\": \"10\", \"name\": \"Person\", \"description\": \"Named people in the world like Nelson Mandela\"}, \"entity\": {\"id\": \"808713037230157824\", \"name\": \"Elon Musk\", \"description\": \"Elon Musk\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974596752842752\", \"name\": \"Services\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10045225402\", \"name\": \"Twitter\"}}, {\"domain\": {\"id\": \"65\", \"name\": \"Interests and Hobbies Vertical\", \"description\": \"Top level interests and hobbies groupings, like Food or Travel\"}, \"entity\": {\"id\": \"781974596148793345\", \"name\": \"Business & finance\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"857878777191211008\", \"name\": \"Leadership\", \"description\": \"Leadership\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"808713037230157824\", \"name\": \"Elon Musk\", \"description\": \"Elon Musk\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1091420346660470784\", \"name\": \"Tech personalities\", \"description\": \"Tech Professionals\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1166406108623163392\", \"name\": \"Business personalities\"}}]",
+        "media": []
+    },
+    {
+        "id": "1593137134147620865",
+        "author": {
+            "name": "Ancient Origins",
+            "username": "ancientorigins",
+            "description": "The best in archaeology, lost civilizations, sacred texts, ancient places, artifacts, mysteries & unexplained phenomena. Always keeping an open mind!"
+        },
+        "html": "Predjama - a castle in a cave. What could be more appropriate for the home of a Slovenian Robin Hood? https://t.co/rS95xVC26I https://t.co/5Rzl9X2FnM",
+        "created_at": "2022-11-17T07:01:06.000Z",
+        "public_metrics": {
+            "like_count": 251,
+            "quote_count": 2,
+            "reply_count": 4,
+            "retweet_count": 34
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "Predjama"
+            },
+            {
+                "type": "Person",
+                "text": "Robin Hood"
+            }
+        ],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1594797943575707648",
+        "author": {
+            "name": "Are.na",
+            "username": "AREdotNA",
+            "description": "A platform for connecting ideas and building knowledge. Support questions? Email help@are.na"
+        },
+        "html": "@AREdotNA I want people dropping their favorite weird https://t.co/ISxjUdKpW5 channels (or their own) in the replies",
+        "created_at": "2022-11-21T21:00:34.000Z",
+        "public_metrics": {
+            "like_count": 8,
+            "quote_count": 0,
+            "reply_count": 2,
+            "retweet_count": 1
         },
         "standalone": false,
         "rt": true,
@@ -578,58 +1002,92 @@ const tftTweets = [
         "quote": false,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1594751318153134080",
+        "id": "1595177439394926592",
         "author": {
-            "name": "Aesthetica",
-            "username": "Anc_Aesthetics",
-            "description": "Aesthetics | Architecture | History | Fantasy | Chivalry"
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "Belogradchik Fortress, Bulgaria https://t.co/A33qwATjao",
-        "created_at": "2022-11-21T17:55:17.000Z",
+        "html": "https://t.co/sRjNjYHk7S",
+        "created_at": "2022-11-22T22:08:33.000Z",
         "public_metrics": {
-            "like_count": 35516,
-            "quote_count": 159,
-            "reply_count": 425,
-            "retweet_count": 2457
+            "like_count": 9,
+            "quote_count": 0,
+            "reply_count": 2,
+            "retweet_count": 1
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1594782785905967105",
+        "author": {
+            "name": "ClickUp",
+            "username": "clickup",
+            "description": "Save time with the all-in-one productivity platform that brings teams, tasks, and tools together in one place."
+        },
+        "html": "We're honored to be included in the 2022 Top Workplaces list for the second year in a row! 💜\\n\\nMore info here: https://t.co/4dFk2BYlKZ\\n\\n#TopWorkplace https://t.co/nHMWZT5jeM",
+        "created_at": "2022-11-21T20:00:20.000Z",
+        "public_metrics": {
+            "like_count": 18,
+            "quote_count": 0,
+            "reply_count": 2,
+            "retweet_count": 2
         },
         "standalone": true,
         "rt": false,
         "reply": false,
         "quote": false,
         "geo.country": null,
-        "entities.annotations": [
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": [
             {
-                "type": "Place",
-                "text": "Bulgaria"
+                "type": "photo"
             }
-        ],
-        "context_annotations": null
+        ]
     },
     {
-        "id": "1593356232617648129",
+        "id": "1594497135340269569",
         "author": {
-            "name": "Andy Matuschak",
-            "username": "andy_matuschak",
-            "description": "More wonder, more insight, more capacity, more joy!\\n\\nCurrently exploring tools that augment human memory and attention."
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "If you know anyone who might be a good fit, please send this their way!",
-        "created_at": "2022-11-17T21:31:43.000Z",
+        "html": "@engineers_feed https://t.co/SrcMEfH5Tn",
+        "created_at": "2022-11-21T01:05:16.000Z",
         "public_metrics": {
-            "like_count": 19,
-            "quote_count": 0,
-            "reply_count": 3,
-            "retweet_count": 0
+            "like_count": 4388,
+            "quote_count": 14,
+            "reply_count": 50,
+            "retweet_count": 236
         },
         "standalone": false,
-        "rt": false,
-        "reply": true,
+        "rt": true,
+        "reply": false,
         "quote": false,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
     },
     {
         "id": "1592994263352365059",
@@ -665,22 +1123,396 @@ const tftTweets = [
                 "text": "Greece"
             }
         ],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
     },
     {
-        "id": "1594720797205176321",
+        "id": "1595395867187777537",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "It is like a dying loved one saying goodbye through music. Arrau understood.",
+        "created_at": "2022-11-23T12:36:30.000Z",
+        "public_metrics": {
+            "like_count": 1,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 0
+        },
+        "standalone": false,
+        "rt": false,
+        "reply": true,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Person",
+                "text": "Arrau"
+            }
+        ],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1595192013963788289",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "@codexeditor I think the main implication is that although the financial analogy of tech debt is good, this is an example of where it breaks down. it is very possible for something to be tech debt in one moment, and then after rescoping not be. And importantly this also applies in reverse",
+        "created_at": "2022-11-22T23:06:28.000Z",
+        "public_metrics": {
+            "like_count": 1,
+            "quote_count": 0,
+            "reply_count": 2,
+            "retweet_count": 1
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1594242156893552640",
+        "author": {
+            "name": "Kate Ullman",
+            "username": "KateUll",
+            "description": "From West Brom. Lives in Cornwall. \\nWhen I grow up I'm going to be an archaeologist. Until then: teacher of early years children who have complex needs."
+        },
+        "html": "Ales Stenar, Scania, Sweden.  #StandingStoneSunday https://t.co/bVDt4IqeU7",
+        "created_at": "2022-11-20T08:12:04.000Z",
+        "public_metrics": {
+            "like_count": 248,
+            "quote_count": 0,
+            "reply_count": 3,
+            "retweet_count": 44
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Person",
+                "text": "Stenar"
+            },
+            {
+                "type": "Place",
+                "text": "Scania"
+            },
+            {
+                "type": "Place",
+                "text": "Sweden"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696888568045569\", \"name\": \"Food & Beverage Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent and related to foods & beverages such as snacks, soft drinks, beers.\"}}, {\"domain\": {\"id\": \"65\", \"name\": \"Interests and Hobbies Vertical\", \"description\": \"Top level interests and hobbies groupings, like Food or Travel\"}, \"entity\": {\"id\": \"834828264786898945\", \"name\": \"Drinks\", \"description\": \"Drinks\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"834828445238431744\", \"name\": \"Generic Drinks\", \"description\": \"Generic Drinks\"}}, {\"domain\": {\"id\": \"67\", \"name\": \"Interests and Hobbies\", \"description\": \"Interests, opinions, and behaviors of individuals, groups, or cultures; like Speciality Cooking or Theme Parks\"}, \"entity\": {\"id\": \"850142258871418880\", \"name\": \"Beer\", \"description\": \"Beer\"}}, {\"domain\": {\"id\": \"173\", \"name\": \"Product Taxonomy\", \"description\": \"A product taxonomy for labeling categories of products. \"}, \"entity\": {\"id\": \"850142258871418880\", \"name\": \"Beer\", \"description\": \"Beer\"}}]",
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1594620207674589184",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "@codexeditor I turned it into a color image. ↙(ↂ⼼_ↂ)↗\\n\\nattributes: monument, langoustino, and acini di pepe.\\n\\nsnapshot https://t.co/6pIjlzcTYV",
+        "created_at": "2022-11-21T09:14:18.000Z",
+        "public_metrics": {
+            "like_count": 15,
+            "quote_count": 0,
+            "reply_count": 2,
+            "retweet_count": 3
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1595315311254933505",
+        "author": {
+            "name": "Ioannis Tz",
+            "username": "tzoumio",
+            "description": null
+        },
+        "html": "The ancient Greek Doric temple of Zeus at Cyrene, Libya. https://t.co/LE22o0unLj",
+        "created_at": "2022-11-23T07:16:24.000Z",
+        "public_metrics": {
+            "like_count": 1613,
+            "quote_count": 3,
+            "reply_count": 11,
+            "retweet_count": 312
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Person",
+                "text": "Zeus"
+            },
+            {
+                "type": "Place",
+                "text": "Cyrene"
+            },
+            {
+                "type": "Place",
+                "text": "Libya"
+            }
+        ],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1592867175458828288",
+        "author": {
+            "name": "Raymond D Sims",
+            "username": "rsims",
+            "description": "Personal Knowledge Management (PKM) / Tools for Thought (TfT) / Second Brain (BASB) / Extended Mind.\\nProductivity.\\nJob Satisfaction.\\nLife Coach in training."
+        },
+        "html": "Connecting this thought to @anthilemoon's Mindful Productivity Masterclass PACT (Purposeful, Actionable, Contextual, Trackable) alternative to SMART goals.\\n\\nOutput (Effort) over Outcome. https://t.co/QfPnWLwXQY",
+        "created_at": "2022-11-16T13:08:23.000Z",
+        "public_metrics": {
+            "like_count": 7,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 1
+        },
+        "standalone": false,
+        "rt": false,
+        "reply": false,
+        "quote": true,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": "[{\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1289190614207049728\", \"name\": \"Productivity\"}}]",
+        "media": []
+    },
+    {
+        "id": "1592462751850692610",
+        "author": {
+            "name": "Dan Ariely",
+            "username": "danariely",
+            "description": "Professor, Scientist, Bestselling Author, Experimentalist at heart."
+        },
+        "html": "The benefits of focusing on one thing at a time \\n\\nhttps://t.co/NpEQ90ayFr",
+        "created_at": "2022-11-15T10:21:21.000Z",
+        "public_metrics": {
+            "like_count": 97,
+            "quote_count": 6,
+            "reply_count": 4,
+            "retweet_count": 27
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1595494309809324032",
+        "author": {
+            "name": "The Syllabus",
+            "username": "syllabus_tweets",
+            "description": "A Knowledge Curation Platform. We index, rank, and review tens of thousands of newly published pieces across text, audio, and video. Subscribe ⬇️"
+        },
+        "html": "1. \"What has prompted the dramatic rise of anti-establishment politics in recent years? And why has this development taken a progressive form in some countries while taking a nativist form in others?\"\\n\\nBy John Brown🔒\\n\\nhttps://t.co/08v92Fcrww",
+        "created_at": "2022-11-23T19:07:40.000Z",
+        "public_metrics": {
+            "like_count": 0,
+            "quote_count": 0,
+            "reply_count": 1,
+            "retweet_count": 0
+        },
+        "standalone": false,
+        "rt": false,
+        "reply": true,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Person",
+                "text": "John"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"847878884917886977\", \"name\": \"Politics\", \"description\": \"Politics\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1046545033657081857\", \"name\": \"News\", \"description\": \"News\"}}]",
+        "media": []
+    },
+    {
+        "id": "1595835126230958080",
+        "author": {
+            "name": "Ness Labs",
+            "username": "ness_labs",
+            "description": "The learning community for ambitious knowledge workers. Join us to think better, learn faster, and work happier: https://t.co/aw5gE8xtMw 🧠✨"
+        },
+        "html": "A healthy and cracking resource for mindful productivity for knowledge workers... 🧠\\n\\nNone of than @NessLabs\\n\\nhttps://t.co/lRioNRapdf",
+        "created_at": "2022-11-24T17:41:57.000Z",
+        "public_metrics": {
+            "like_count": 4,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 1
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1593312790546206720",
+        "author": {
+            "name": "Ness Labs",
+            "username": "ness_labs",
+            "description": "The learning community for ambitious knowledge workers. Join us to think better, learn faster, and work happier: https://t.co/aw5gE8xtMw 🧠✨"
+        },
+        "html": "I've been enjoying the Maker Mind newsletter by @ness_labs - if you're curious about how the mind works, you should subscribe! 🧠 https://t.co/8yaRWX1vRQ",
+        "created_at": "2022-11-17T18:39:06.000Z",
+        "public_metrics": {
+            "like_count": 3,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 1
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "Maker Mind"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"1364653904433045506\", \"name\": \"Aposto!\"}}]",
+        "media": []
+    },
+    {
+        "id": "1593913208032710656",
+        "author": {
+            "name": "Paul Rony - in NYC 🗽",
+            "username": "Paul_Rony",
+            "description": "Co-founder @kosmik_app. In love with computer history and design. Let’s chat: https://t.co/pgg23R1i34"
+        },
+        "html": "In case it all goes dark here ⬇️ https://t.co/Abbr6aA5nP https://t.co/9TkkLtFmIn",
+        "created_at": "2022-11-19T10:24:56.000Z",
+        "public_metrics": {
+            "like_count": 8,
+            "quote_count": 1,
+            "reply_count": 1,
+            "retweet_count": 3
+        },
+        "standalone": false,
+        "rt": false,
+        "reply": false,
+        "quote": true,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": "[{\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"1168499224297656321\", \"name\": \"Discord\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1168499224297656321\", \"name\": \"Discord\"}}, {\"domain\": {\"id\": \"165\", \"name\": \"Technology\", \"description\": \"for individual and types of technology, e.g., food technology, 3D printing\"}, \"entity\": {\"id\": \"1196446161223028736\", \"name\": \"Social media\"}}]",
+        "media": []
+    },
+    {
+        "id": "1593539185167798273",
+        "author": {
+            "name": "Houari Maïdi",
+            "username": "HouariMAIDI",
+            "description": "Psychoanalyst, University Professor in Clinical Psychology and Psychoanalysis, Paris, Lille, Besançon. Author of several books (Adolescence, The Feminine,...)"
+        },
+        "html": "Vladimir Mayakovsky, lettre à sa sœur Lyudmila, 1905. https://t.co/Xr8xvzDEtG",
+        "created_at": "2022-11-18T09:38:42.000Z",
+        "public_metrics": {
+            "like_count": 6,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 4
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1595154030908829696",
+        "author": {
+            "name": "Graph Commons",
+            "username": "graphcommons",
+            "description": "Collaborative platform for mapping, analyzing, publishing data-networks. Email/PGP public key: https://t.co/WS1YOJsTcR"
+        },
+        "html": "🕸 The graph making experience has improved from data imports to management, from customized graph visualizations to navigation.\\n2/9 https://t.co/tIQQsKsfyT",
+        "created_at": "2022-11-22T20:35:32.000Z",
+        "public_metrics": {
+            "like_count": 9,
+            "quote_count": 0,
+            "reply_count": 2,
+            "retweet_count": 1
+        },
+        "standalone": false,
+        "rt": false,
+        "reply": true,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "video"
+            }
+        ]
+    },
+    {
+        "id": "1594009358811033600",
         "author": {
             "name": "Cortex Futura",
             "username": "cortexfutura",
             "description": "Teaching Tana and how to make Knowledge Management actionable for individuals and teams"
         },
-        "html": "How do you call the perception of your mental and physical energy and focus? Is that covered by \"interoception\" or is there a better word for it?\\nLooking for a word I can use as \"X Log Entry\" to log my state every day.",
-        "created_at": "2022-11-21T15:54:01.000Z",
+        "html": "5 Tana Feature You Might Have Missed! (New Video)\\n\\n1) PARENT and GRANDPARENT in Live Search\\n2) Auto-init source tag from ancestor\\n3) Build title from fields\\n4) Multi-Tag Nodes\\n5) Multiple Inheritance\\n\\n🧵",
+        "created_at": "2022-11-19T16:47:01.000Z",
         "public_metrics": {
-            "like_count": 6,
+            "like_count": 41,
             "quote_count": 1,
-            "reply_count": 7,
-            "retweet_count": 1
+            "reply_count": 4,
+            "retweet_count": 6
         },
         "standalone": true,
         "rt": false,
@@ -690,10 +1522,226 @@ const tftTweets = [
         "entities.annotations": [
             {
                 "type": "Other",
-                "text": "X Log Entry"
+                "text": "Tana"
             }
         ],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1594441453748748288",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "We are continuously improving Reader so I ask you, what do want in a PDF viewer? \\n\\nhttps://t.co/2mnLXiLQrZ https://t.co/UesYH6hd8X",
+        "created_at": "2022-11-20T21:24:00.000Z",
+        "public_metrics": {
+            "like_count": 7,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 2
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "Reader"
+            },
+            {
+                "type": "Other",
+                "text": "PDF"
+            }
+        ],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1595491141021011977",
+        "author": {
+            "name": "Jonathan Ochshorn",
+            "username": "jonochshorn",
+            "description": "Architect, educator @CornellAAP, singer-songwriter, author of Building Bad @LHArtBooks."
+        },
+        "html": "Don't worry about the logo. It's time to start thinking about Reduct Tower (with apologies to George Howe, William Lescaze, and their legendary 1932 PSFS Building in Philadelphia). https://t.co/YuI5tOYum9 https://t.co/DUkoacH1B8",
+        "created_at": "2022-11-23T18:55:05.000Z",
+        "public_metrics": {
+            "like_count": 2,
+            "quote_count": 1,
+            "reply_count": 0,
+            "retweet_count": 0
+        },
+        "standalone": false,
+        "rt": false,
+        "reply": false,
+        "quote": true,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "Reduct Tower"
+            },
+            {
+                "type": "Person",
+                "text": "George Howe"
+            },
+            {
+                "type": "Person",
+                "text": "William Lescaze"
+            },
+            {
+                "type": "Place",
+                "text": "Philadelphia"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"156\", \"name\": \"Cities\", \"description\": \"Cities around the world\"}, \"entity\": {\"id\": \"856865161344196608\", \"name\": \"Philadelphia\", \"description\": \"Philadelphia\"}}]",
+        "media": []
+    },
+    {
+        "id": "1595801924556804104",
+        "author": {
+            "name": "The Syllabus",
+            "username": "syllabus_tweets",
+            "description": "A Knowledge Curation Platform. We index, rank, and review tens of thousands of newly published pieces across text, audio, and video. Subscribe ⬇️"
+        },
+        "html": "“Content moderation, once an obscure subject of academic inquiry, is now at the heart of American political and cultural conflict.”\\n\\nBy @MarechalPhD for @NewAmerica\\n\\nhttps://t.co/pWhOjLlaG7",
+        "created_at": "2022-11-24T15:30:02.000Z",
+        "public_metrics": {
+            "like_count": 8,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 0
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1595523849423970304",
+        "author": {
+            "name": "Matter",
+            "username": "matter",
+            "description": "On a quest to build the perfect reader.\\n\\nWall of love: https://t.co/rLtrjQOTXj"
+        },
+        "html": "New this week: Spotlight search 🔎⚡️\\n\\n * Keyword highlighting + full-text snippets\\n * Search is now local &amp; instantaneous\\n * Restrict search to any section of your library\\n\\nAlso...\\n\\nPull to refresh is back! Happy Thanksgiving. :) https://t.co/Y5KAjQW4PF",
+        "created_at": "2022-11-23T21:05:03.000Z",
+        "public_metrics": {
+            "like_count": 113,
+            "quote_count": 2,
+            "reply_count": 2,
+            "retweet_count": 7
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": "[{\"domain\": {\"id\": \"29\", \"name\": \"Events [Entity Service]\", \"description\": \"Real world events. \"}, \"entity\": {\"id\": \"1310591085282910210\", \"name\": \"Thanksgiving Day \", \"description\": \"This entity includes all conversations for all years for Thanksgiving Day \"}}, {\"domain\": {\"id\": \"119\", \"name\": \"Holiday\", \"description\": \"Holidays like Christmas or Halloween\"}, \"entity\": {\"id\": \"1310591085282910210\", \"name\": \"Thanksgiving Day \", \"description\": \"This entity includes all conversations for all years for Thanksgiving Day \"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1310591085282910210\", \"name\": \"Thanksgiving Day \", \"description\": \"This entity includes all conversations for all years for Thanksgiving Day \"}}]",
+        "media": [
+            {
+                "type": "animated_gif"
+            }
+        ]
+    },
+    {
+        "id": "1596120299853869061",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "https://t.co/vsbdkNY1ki",
+        "created_at": "2022-11-25T12:35:08.000Z",
+        "public_metrics": {
+            "like_count": 11,
+            "quote_count": 1,
+            "reply_count": 0,
+            "retweet_count": 6
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1594898374926692352",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "browser as machine",
+        "created_at": "2022-11-22T03:39:39.000Z",
+        "public_metrics": {
+            "like_count": 2,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 1
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1593969352747143169",
+        "author": {
+            "name": "Retro Tech Dreams",
+            "username": "RetroTechDreams",
+            "description": "Retro tech, early web & vintage computing. 80s, 90s, early 2000s nostalgia. Follow for daily posts."
+        },
+        "html": "The Motorola Accompli 009 (2001, $550) could send pages, make phone calls, and browse the web. It had a full-color screen, QWERTY keyboard, and ran Java. https://t.co/YinDNCaoPM",
+        "created_at": "2022-11-19T14:08:02.000Z",
+        "public_metrics": {
+            "like_count": 644,
+            "quote_count": 11,
+            "reply_count": 14,
+            "retweet_count": 112
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "Motorola Accompli 009"
+            },
+            {
+                "type": "Other",
+                "text": "QWERTY"
+            },
+            {
+                "type": "Other",
+                "text": "Java"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697333571112960\", \"name\": \"Technology Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to softwares, apps, communication equipments, hardwares\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10027762047\", \"name\": \"Motorola\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"848920371311001600\", \"name\": \"Technology\", \"description\": \"Technology and computing\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"848920700073123840\", \"name\": \"Cell Phones\", \"description\": \"Cell phones\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"848985956778561538\", \"name\": \"Mobile\", \"description\": \"Mobile\"}}]",
+        "media": []
     },
     {
         "id": "1593651819389112320",
@@ -716,337 +1764,53 @@ const tftTweets = [
         "quote": false,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1593761059072274433",
+        "id": "1595659461196414976",
         "author": {
             "name": "Codex OS",
             "username": "codexeditor",
             "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "Fragment of relief, representing cartridges of Pharaoh Tutmes III. Dated (1479-1425 BC), 18th Dynasty; New Empire.\\n\\nTutmes was buried in Deir el-Bahari, complex of graves and mortuary temples, of ancient Egyptians, located on bank of Nile river, opposite side Luxor.\\n\\nLuxor Museum https://t.co/rmzR7ep29N",
-        "created_at": "2022-11-19T00:20:21.000Z",
+        "html": "2. Albion’s coast is sick silent; the American meadows faint.",
+        "created_at": "2022-11-24T06:03:56.000Z",
         "public_metrics": {
-            "like_count": 350,
-            "quote_count": 3,
-            "reply_count": 3,
-            "retweet_count": 79
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Pharaoh Tutmes III"
-            },
-            {
-                "type": "Place",
-                "text": "New Empire"
-            },
-            {
-                "type": "Place",
-                "text": "Deir el-Bahari"
-            },
-            {
-                "type": "Place",
-                "text": "Nile river"
-            },
-            {
-                "type": "Place",
-                "text": "Luxor Museum"
-            }
-        ],
-        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696940178935808\", \"name\": \"Gaming Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to offline and online games such as gaming consoles, tabletop games, video game publishers\"}}]"
-    },
-    {
-        "id": "1593975426346532864",
-        "author": {
-            "name": "Paul Rony - in NYC 🗽",
-            "username": "Paul_Rony",
-            "description": "Co-founder @kosmik_app. In love with computer history and design. Let’s chat: https://t.co/pgg23R1i34"
-        },
-        "html": "There are already 30 people in this little community, come on and join @Mappletons @polbaladas @alexobenauer @codexeditor @RobertHaisfield @yiliu_shenburke @JosefiinaIda and many more 🫧 https://t.co/LLzG3k3gnI",
-        "created_at": "2022-11-19T14:32:10.000Z",
-        "public_metrics": {
-            "like_count": 14,
-            "quote_count": 0,
-            "reply_count": 0,
-            "retweet_count": 6
-        },
-        "standalone": false,
-        "rt": false,
-        "reply": false,
-        "quote": true,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1593265458907697155",
-        "author": {
-            "name": "Betaworks",
-            "username": "betaworks",
-            "description": "We invest, accelerate, & build — our focus right now is on web3, crypto media, NCLC, applied machine learning, and tools for thinking. CEO: @Borthwick."
-        },
-        "html": "🚨THINKCamp Announcement🚨\\nAt Betaworks, we’ve been endlessly fascinated by software that helps you ideate, create, and share ideas with those around you. Software's paramount value has been in providing us leverage in not just our productivity, but also our thinking. 🧵",
-        "created_at": "2022-11-17T15:31:01.000Z",
-        "public_metrics": {
-            "like_count": 44,
-            "quote_count": 5,
-            "reply_count": 2,
-            "retweet_count": 11
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Betaworks"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1595272696535068672",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "Rock-art sites of Tadrart Acacus, Libya.\\n\\nRock-Art Sites of Tadrart Acacus is a World Heritage Site, well known for one things: thousands of prehistoric cave paintings, dated 12,000-10,000 BC.\\n\\n#archaeohistories https://t.co/F0cDwQY7X1",
-        "created_at": "2022-11-23T04:27:04.000Z",
-        "public_metrics": {
-            "like_count": 340,
-            "quote_count": 2,
-            "reply_count": 1,
-            "retweet_count": 56
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Place",
-                "text": "Tadrart Acacus"
-            },
-            {
-                "type": "Place",
-                "text": "Libya"
-            },
-            {
-                "type": "Place",
-                "text": "Tadrart Acacus"
-            }
-        ],
-        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697439489880065\", \"name\": \"Travel & Transportation Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to travel as airlines, travel agencies, hotels\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"839159814991167489\", \"name\": \"Travel\", \"description\": \"Travel\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1308451535018315778\", \"name\": \"World Heritage Site\"}}]"
-    },
-    {
-        "id": "1594947273100005377",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "i yearn for better tools for working with dense hypermedia (which is why i am making them)",
-        "created_at": "2022-11-22T06:53:57.000Z",
-        "public_metrics": {
-            "like_count": 54,
-            "quote_count": 1,
-            "reply_count": 2,
-            "retweet_count": 4
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "hypermedia"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1594026754519486465",
-        "author": {
-            "name": "Jim Leary",
-            "username": "Jim_Leary",
-            "description": "Archaeologist, prehistorian. Author of 'The Story of Silbury Hill' and 'The Remembered Land. Surviving Sea-Level Rise After the Last Ice Age'. Mobility & paths."
-        },
-        "html": "Glimpsing Whitby Abbey. https://t.co/HTZ35Y2myb",
-        "created_at": "2022-11-19T17:56:08.000Z",
-        "public_metrics": {
-            "like_count": 266,
-            "quote_count": 1,
-            "reply_count": 6,
-            "retweet_count": 37
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Whitby Abbey"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1593107426974175233",
-        "author": {
-            "name": "TfT Hacker - Exploring Tools for Thought and PKM",
-            "username": "TfTHacker",
-            "description": "Exploring Tools for Thought space and PKM, with focus on tools like Obsidian, Tana, Craft, LogSeq, RemNote, AthensResearch, OneNote, etc https://t.co/GyMiAikIl1"
-        },
-        "html": "I did these loops over multiple months, increasing and decreasing time, the number of things to read, and so on.\\n\\nEach loop was a week so that I could iterate the process fast.\\n\\nAs I went through each loop, I documented the plan and, during the study phase, \"the results\".",
-        "created_at": "2022-11-17T05:03:03.000Z",
-        "public_metrics": {
-            "like_count": 0,
-            "quote_count": 0,
-            "reply_count": 1,
-            "retweet_count": 0
-        },
-        "standalone": false,
-        "rt": false,
-        "reply": true,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1594681921451479040",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "An essay I would like to read: \"The Fresco Considered as a User Interface\" ...",
-        "created_at": "2022-11-21T13:19:32.000Z",
-        "public_metrics": {
-            "like_count": 10,
-            "quote_count": 1,
-            "reply_count": 1,
-            "retweet_count": 0
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "The Fresco Considered"
-            },
-            {
-                "type": "Other",
-                "text": "a User Interface"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1594425316285775873",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "Televideo PM/286 (1987) https://t.co/liUvPScV35",
-        "created_at": "2022-11-20T20:19:53.000Z",
-        "public_metrics": {
-            "like_count": 531,
-            "quote_count": 3,
-            "reply_count": 4,
-            "retweet_count": 81
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Televideo"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1593870728419774467",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "What seems under-explored in the realm of social networks is the design space that lies somewhere between group chat (Discord, Slack) and broadcast-posting (Twitter, Farcaster, Mastodon), especially along the lines of in-group reputation.",
-        "created_at": "2022-11-19T07:36:08.000Z",
-        "public_metrics": {
-            "like_count": 44,
-            "quote_count": 0,
-            "reply_count": 7,
-            "retweet_count": 3
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Discord"
-            },
-            {
-                "type": "Other",
-                "text": "Slack"
-            },
-            {
-                "type": "Other",
-                "text": "Twitter"
-            },
-            {
-                "type": "Organization",
-                "text": "Farcaster"
-            },
-            {
-                "type": "Place",
-                "text": "Mastodon"
-            }
-        ],
-        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697333571112960\", \"name\": \"Technology Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to softwares, apps, communication equipments, hardwares\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"1168499224297656321\", \"name\": \"Discord\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1168499224297656321\", \"name\": \"Discord\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1196446161223028736\", \"name\": \"Social media\"}}, {\"domain\": {\"id\": \"165\", \"name\": \"Technology\", \"description\": \"for individual and types of technology, e.g., food technology, 3D printing\"}, \"entity\": {\"id\": \"1196446161223028736\", \"name\": \"Social media\"}}, {\"domain\": {\"id\": \"45\", \"name\": \"Brand Vertical\", \"description\": \"Top level entities that describe a Brands industry\"}, \"entity\": {\"id\": \"781974597226799105\", \"name\": \"B2B\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974596752842752\", \"name\": \"Services\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974597172203520\", \"name\": \"Services - B2B\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10042877598\", \"name\": \"Slack\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10045225402\", \"name\": \"Twitter\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"848920371311001600\", \"name\": \"Technology\", \"description\": \"Technology and computing\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"848959158082617344\", \"name\": \"Enterprise software\", \"description\": \"Enterprise software\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"10045225402\", \"name\": \"Twitter\"}}, {\"domain\": {\"id\": \"165\", \"name\": \"Technology\", \"description\": \"for individual and types of technology, e.g., food technology, 3D printing\"}, \"entity\": {\"id\": \"1196446161223028736\", \"name\": \"Social media\"}}]"
-    },
-    {
-        "id": "1594776779432071192",
-        "author": {
-            "name": "Lilibeth Bustos Linares",
-            "username": "lilibustosli",
-            "description": "Colombian Lead Product Designer @Nuvocargo\\nFounder of https://t.co/39Z93R60ka\\nTeaching UX-UI @memorisely\\n🔗 @playbook_hq feature✨💃🏽👇\\nhttps://t.co/PQaxAWfxzl"
-        },
-        "html": "“The oldest and strongest emotion of humankind is fear, and the oldest and strongest kind of fear is fear of the unknown,”  wrote  H.P. Lovecraft.\"\\n\\nThe Uncertain Mind: How the Brain Handles the Unknown via @_Glasp \\nhttps://t.co/ZX4iuAqxCn",
-        "created_at": "2022-11-21T19:36:28.000Z",
-        "public_metrics": {
-            "like_count": 6,
+            "like_count": 12,
             "quote_count": 0,
             "reply_count": 0,
             "retweet_count": 2
         },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "Albion"
+            }
+        ],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1593590632869933056",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "One sentence by John Milton contains an entire essay.\\n\\nIt is breathtaking.\\n\\nA sentence by Milton sports like a blue whale on the ocean while those of other writers flap on the shore like gasping fish. https://t.co/5ZKPjcJh0t",
+        "created_at": "2022-11-18T13:03:09.000Z",
+        "public_metrics": {
+            "like_count": 2,
+            "quote_count": 1,
+            "reply_count": 0,
+            "retweet_count": 0
+        },
         "standalone": true,
         "rt": false,
         "reply": false,
@@ -1055,52 +1819,37 @@ const tftTweets = [
         "entities.annotations": [
             {
                 "type": "Person",
-                "text": "H.P. Lovecraft"
+                "text": "John Milton"
             },
             {
-                "type": "Other",
-                "text": "The Uncertain Mind: How the Brain Handles the Unknown"
+                "type": "Organization",
+                "text": "Milton sports"
             }
         ],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "photo"
+            },
+            {
+                "type": "photo"
+            }
+        ]
     },
     {
-        "id": "1593607051531403266",
-        "author": {
-            "name": "Francisco Ribeiro",
-            "username": "fraveris",
-            "description": null
-        },
-        "html": "Art Nouveau à Bruxelles https://t.co/c3IZ5jVOpa",
-        "created_at": "2022-11-18T14:08:23.000Z",
-        "public_metrics": {
-            "like_count": 12660,
-            "quote_count": 71,
-            "reply_count": 52,
-            "retweet_count": 1850
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1594608653536878592",
+        "id": "1595019212753620992",
         "author": {
             "name": "Codex OS",
             "username": "codexeditor",
             "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "Word of the Day: QUICQUIDLIBET (n.) whatever you want, whatever pleases you [17thC]",
-        "created_at": "2022-11-21T08:28:24.000Z",
+        "html": "Made some 1,400 years ago: Complete wooden vessels are rarely preserved. Due to a damp environment, a wooden pitcher, a canteen, a small barrel, and a large beaker, and a candle holder have been preserved in quite good condition. They were found at the early medieval burial...1/2 https://t.co/DPcOlrlp8R",
+        "created_at": "2022-11-22T11:39:49.000Z",
         "public_metrics": {
-            "like_count": 204,
-            "quote_count": 2,
-            "reply_count": 3,
-            "retweet_count": 76
+            "like_count": 4954,
+            "quote_count": 25,
+            "reply_count": 31,
+            "retweet_count": 750
         },
         "standalone": false,
         "rt": true,
@@ -1108,39 +1857,8 @@ const tftTweets = [
         "quote": false,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1593668151950118912",
-        "author": {
-            "name": "David Senra",
-            "username": "FoundersPodcast",
-            "description": "Learn from history's greatest entrepreneurs. Every week I read a biography of an entrepreneur and tell you what I learned."
-        },
-        "html": "Peter Thiel on the most important lesson to learn from Steve Jobs: https://t.co/FAMKpiGzhj",
-        "created_at": "2022-11-18T18:11:11.000Z",
-        "public_metrics": {
-            "like_count": 2301,
-            "quote_count": 28,
-            "reply_count": 19,
-            "retweet_count": 388
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Person",
-                "text": "Peter Thiel"
-            },
-            {
-                "type": "Person",
-                "text": "Steve Jobs"
-            }
-        ],
-        "context_annotations": "[{\"domain\": {\"id\": \"10\", \"name\": \"Person\", \"description\": \"Named people in the world like Nelson Mandela\"}, \"entity\": {\"id\": \"1032977830613676034\", \"name\": \"Steve Jobs\", \"description\": \"Steve Jobs\"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696848252391426\", \"name\": \"Financial Services Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to Banks, Credit cards, Insurance, Investments, Stocks \"}}, {\"domain\": {\"id\": \"65\", \"name\": \"Interests and Hobbies Vertical\", \"description\": \"Top level interests and hobbies groupings, like Food or Travel\"}, \"entity\": {\"id\": \"781974596148793345\", \"name\": \"Business & finance\"}}, {\"domain\": {\"id\": \"65\", \"name\": \"Interests and Hobbies Vertical\", \"description\": \"Top level interests and hobbies groupings, like Food or Travel\"}, \"entity\": {\"id\": \"781974596148793345\", \"name\": \"Business & finance\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"857878777191211008\", \"name\": \"Leadership\", \"description\": \"Leadership\"}}, {\"domain\": {\"id\": \"67\", \"name\": \"Interests and Hobbies\", \"description\": \"Interests, opinions, and behaviors of individuals, groups, or cultures; like Speciality Cooking or Theme Parks\"}, \"entity\": {\"id\": \"1486470043353239552\", \"name\": \"Jobs\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1032977830613676034\", \"name\": \"Steve Jobs\", \"description\": \"Steve Jobs\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1166406108623163392\", \"name\": \"Business personalities\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1517463284449828869\", \"name\": \"Peter Thiel\"}}]"
+        "context_annotations": null,
+        "media": []
     },
     {
         "id": "1592925511537545218",
@@ -1172,22 +1890,109 @@ const tftTweets = [
                 "text": "AI"
             }
         ],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1594214793392570369",
+        "id": "1592194944953110528",
         "author": {
-            "name": "Linus",
-            "username": "thesephist",
-            "description": "thought & craft · ex @replit @hackclub @dormroomfund"
+            "name": "Philipp Schmitt → @philippschmitt@mstdn.social",
+            "username": "philippschmitt",
+            "description": "Artist, designer.\\n@philippschmitt@mstdn.social"
         },
-        "html": "ML paper titles that go extremely hard https://t.co/hCz0LwPv26",
-        "created_at": "2022-11-20T06:23:20.000Z",
+        "html": "New research-y project: Blueprints for Intelligence, a visual history of artificial neural networks from 1943 to 2020\\nhttps://t.co/CcPFYIxeJz",
+        "created_at": "2022-11-14T16:37:11.000Z",
         "public_metrics": {
-            "like_count": 46,
-            "quote_count": 0,
-            "reply_count": 2,
-            "retweet_count": 0
+            "like_count": 2008,
+            "quote_count": 62,
+            "reply_count": 43,
+            "retweet_count": 540
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "Blueprints for Intelligence"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697333571112960\", \"name\": \"Technology Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to softwares, apps, communication equipments, hardwares\"}}]",
+        "media": []
+    },
+    {
+        "id": "1595522605502517249",
+        "author": {
+            "name": "AisleOne",
+            "username": "AisleOne",
+            "description": "A weekly newsletter on design, photography, film, music and culture. Curated and written by Antonio Carusone. Subscribe for free. https://t.co/FSlmz5i9c1"
+        },
+        "html": "Some of my favorite vintage calendar designs.\\n\\n1. Massimo Vignelli - 1965\\n2. Wim Crouwel - 1964\\n3. Enzo Mari - 1963\\n4. Barbara Loveland - 1975\\n\\nSources: West Michigan Graphic Design Archives, Flickr, eMuseum, Archivio Grafica Italiana https://t.co/EcEkHYnjJb",
+        "created_at": "2022-11-23T21:00:07.000Z",
+        "public_metrics": {
+            "like_count": 1226,
+            "quote_count": 7,
+            "reply_count": 6,
+            "retweet_count": 133
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Person",
+                "text": "Massimo Vignelli"
+            },
+            {
+                "type": "Person",
+                "text": "Wim Crouwel"
+            },
+            {
+                "type": "Person",
+                "text": "Enzo Mari"
+            },
+            {
+                "type": "Person",
+                "text": "Barbara Loveland"
+            },
+            {
+                "type": "Other",
+                "text": "West Michigan Graphic Design Archives"
+            },
+            {
+                "type": "Other",
+                "text": "Flickr"
+            },
+            {
+                "type": "Other",
+                "text": "eMuseum"
+            },
+            {
+                "type": "Other",
+                "text": "Archivio Grafica Italiana"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"1046577790353428480\", \"name\": \"Visual arts\", \"description\": \"Visual Arts\"}}, {\"domain\": {\"id\": \"67\", \"name\": \"Interests and Hobbies\", \"description\": \"Interests, opinions, and behaviors of individuals, groups, or cultures; like Speciality Cooking or Theme Parks\"}, \"entity\": {\"id\": \"1046580793848418305\", \"name\": \"Graphic design\", \"description\": \"Graphic Design\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1046577790353428480\", \"name\": \"Visual arts\", \"description\": \"Visual Arts\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1046580793848418305\", \"name\": \"Graphic design\", \"description\": \"Graphic Design\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1265660441822281728\", \"name\": \"Art\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1280550787207147521\", \"name\": \"Arts & culture\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1369255204948901889\", \"name\": \"The 60s\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1369617520496308224\", \"name\": \"The 70s\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1410504549006135296\", \"name\": \"Cultural history\"}}, {\"domain\": {\"id\": \"159\", \"name\": \"States\", \"description\": \"States, provinces, or prefectures, like California or Fukushima Prefecture\"}, \"entity\": {\"id\": \"1004448635902259200\", \"name\": \"Michigan\", \"description\": \"Michigan\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974596752842752\", \"name\": \"Services\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10041893670\", \"name\": \"Flickr\"}}]",
+        "media": []
+    },
+    {
+        "id": "1595000904318685187",
+        "author": {
+            "name": "Pernille Ripp",
+            "username": "pernilleripp",
+            "description": "Global educator, mother of 4 and soulmate to an incredible man. Teacher, writer creator of the Global Read Aloud, author, speaker. She/her/hers"
+        },
+        "html": "Really fantastic article about the detriment of multi-tasking and why single-tasking is much better for attainment and gains.  https://t.co/O9JOZiXAKc",
+        "created_at": "2022-11-22T10:27:03.000Z",
+        "public_metrics": {
+            "like_count": 23,
+            "quote_count": 2,
+            "reply_count": 0,
+            "retweet_count": 5
         },
         "standalone": true,
         "rt": false,
@@ -1195,95 +2000,20 @@ const tftTweets = [
         "quote": false,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1593640053196169219",
+        "id": "1594425222815703040",
         "author": {
-            "name": "Mem",
-            "username": "memdotai",
-            "description": "Your self-organizing workspace.\\n\\nGet Mem It for Twitter: https://t.co/PXu0Fqq8k1…\\nWebsite: https://t.co/XSDVK00mbv \\nCommunity: https://t.co/arZa1ml8IS"
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "Read it on the Memo:\\n\\nhttps://t.co/MKoMLUbB0D",
-        "created_at": "2022-11-18T16:19:31.000Z",
+        "html": "Baba Yaga's hut ... https://t.co/9Zw7DFBQ3L",
+        "created_at": "2022-11-20T20:19:30.000Z",
         "public_metrics": {
-            "like_count": 0,
-            "quote_count": 0,
-            "reply_count": 1,
-            "retweet_count": 0
-        },
-        "standalone": false,
-        "rt": false,
-        "reply": true,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Memo"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1593985412380647424",
-        "author": {
-            "name": "ArchaeoHistories",
-            "username": "histories_arch",
-            "description": "History is an unending dialogue between present and the past, that's why few pages of history give more insight than all the metaphysical volumes."
-        },
-        "html": "An Architectural Marvel : \\n\\nInterconnected Chain rings made out from single piece of rock. \\n\\nGaurishvara Temple, located in town of Yelandur, Chamarajanagar district of Karnataka, India. Built in 16th Century CE.\\n\\n#archaeohistories https://t.co/IA0jlaRxfP",
-        "created_at": "2022-11-19T15:11:51.000Z",
-        "public_metrics": {
-            "like_count": 923,
-            "quote_count": 3,
-            "reply_count": 3,
-            "retweet_count": 180
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Marvel"
-            },
-            {
-                "type": "Place",
-                "text": "Gaurishvara Temple"
-            },
-            {
-                "type": "Place",
-                "text": "Yelandur"
-            },
-            {
-                "type": "Place",
-                "text": "Chamarajanagar"
-            },
-            {
-                "type": "Place",
-                "text": "Karnataka"
-            },
-            {
-                "type": "Place",
-                "text": "India"
-            }
-        ],
-        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697378571808768\", \"name\": \"Textile, Apparel & Luxury Good Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to apparel and accessories \"}}]"
-    },
-    {
-        "id": "1594255343218999298",
-        "author": {
-            "name": "Bionic Reading®",
-            "username": "bionicreading",
-            "description": "Faster. Better. More focused. Reading.🇨🇭 Official account Bionic Reading®. Bionic Reading App for iOS, Android & Web"
-        },
-        "html": "Try it out 👉 https://t.co/tk2RJQjtcH https://t.co/ESKGxH2As6",
-        "created_at": "2022-11-20T09:04:28.000Z",
-        "public_metrics": {
-            "like_count": 11,
+            "like_count": 6,
             "quote_count": 0,
             "reply_count": 1,
             "retweet_count": 1
@@ -1294,68 +2024,188 @@ const tftTweets = [
         "quote": true,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1595100569433407491",
+        "id": "1593351362422587392",
         "author": {
-            "name": "Clint Murphy",
-            "username": "IAmClintMurphy",
-            "description": "I simplify psychology, success and money by sharing advice from millionaires, expert authors and my life."
+            "name": "The Browser Company",
+            "username": "browsercompany",
+            "description": "We're building Arc — a better way to use the internet.\\n\\nGet Arc: https://t.co/UFptCafPF4"
         },
-        "html": "Let's talk productivity and systems and how to 3x your performance. \\n\\nIt's going to be fun 🤝 https://t.co/MsRl6koT0H",
-        "created_at": "2022-11-22T17:03:05.000Z",
+        "html": "The joy of @browsercompany @ArcInternet x @figma x Google Meet https://t.co/MqSJro2Tf5",
+        "created_at": "2022-11-17T21:12:22.000Z",
         "public_metrics": {
-            "like_count": 11,
-            "quote_count": 0,
-            "reply_count": 1,
-            "retweet_count": 2
+            "like_count": 313,
+            "quote_count": 1,
+            "reply_count": 10,
+            "retweet_count": 12
         },
         "standalone": false,
-        "rt": false,
-        "reply": false,
-        "quote": true,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1594876064530046977",
-        "author": {
-            "name": "🎃Spooky Scary DM Sarah 🎃",
-            "username": "The_DM_Sarah",
-            "description": "Writer, pro DM, chaotic academic, antifa.  All tweets are my own opinion, RTs not endorsements, etc. She/her/hers 🏳️‍🌈♠️"
-        },
-        "html": "A note: if you're not using @obsdmd for campaign planning, I cannot recommend it highly enough. I can see every link of an extraordinarily complex plot (War of the Burning Sky, or rather chapters 1-4 of it) at a glance. A 🧵 on how I've been using it: https://t.co/jhBEaSh5Th",
-        "created_at": "2022-11-22T02:10:59.000Z",
-        "public_metrics": {
-            "like_count": 30,
-            "quote_count": 0,
-            "reply_count": 6,
-            "retweet_count": 3
-        },
-        "standalone": true,
-        "rt": false,
+        "rt": true,
         "reply": false,
         "quote": false,
         "geo.country": null,
         "entities.annotations": [
             {
                 "type": "Other",
-                "text": "War of the Burning Sky"
+                "text": "Google Meet"
             }
         ],
-        "context_annotations": null
+        "context_annotations": "[{\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974596752842752\", \"name\": \"Services\"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697333571112960\", \"name\": \"Technology Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to softwares, apps, communication equipments, hardwares\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10026378521\", \"name\": \"Google \"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"1524184876139769856\", \"name\": \"Figma\"}}, {\"domain\": {\"id\": \"48\", \"name\": \"Product\", \"description\": \"Products created by Brands.  Examples: Ford Explorer, Apple iPhone.\"}, \"entity\": {\"id\": \"1395474411180892160\", \"name\": \"Google brand conversation\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"848920371311001600\", \"name\": \"Technology\", \"description\": \"Technology and computing\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1196446727181500416\", \"name\": \"Tech industry\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1524184876139769856\", \"name\": \"Figma\"}}]",
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
     },
     {
-        "id": "1592854631302201344",
+        "id": "1594490836812632065",
         "author": {
-            "name": "Trail Marks",
-            "username": "TrailMarks",
-            "description": "Experience the Annotated Web as an Extension of (y)our Mind(s)\\nTrailMarks are  Thought Vectors in (inter)Personal  Mutual Learning Spaces\\n∀  is a Conversation"
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "A 2000 year old Roman mosaic washed by waters of mighty river Euphrates in ancient city of Zeugma in Türkiye.\\n\\nIt was discovered in 2000 in a Roman villa of ancient city during rescue excavations and it is thought to date from 1st century CE.\\n\\n#archaeohistories https://t.co/RMRx1wvK71",
+        "created_at": "2022-11-21T00:40:14.000Z",
+        "public_metrics": {
+            "like_count": 1595,
+            "quote_count": 4,
+            "reply_count": 3,
+            "retweet_count": 177
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Place",
+                "text": "Euphrates"
+            },
+            {
+                "type": "Place",
+                "text": "Zeugma"
+            },
+            {
+                "type": "Place",
+                "text": "Türkiye"
+            }
+        ],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1593640056635416577",
+        "author": {
+            "name": "Mem",
+            "username": "memdotai",
+            "description": "Your self-organizing workspace.\\n\\nGet Mem It for Twitter: https://t.co/PXu0Fqq8k1…\\nWebsite: https://t.co/XSDVK00mbv \\nCommunity: https://t.co/arZa1ml8IS"
+        },
+        "html": "Or Medium: \\n\\nhttps://t.co/Ph8sauRrlz",
+        "created_at": "2022-11-18T16:19:32.000Z",
+        "public_metrics": {
+            "like_count": 0,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 0
+        },
+        "standalone": false,
+        "rt": false,
+        "reply": true,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1594073661547630592",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "There are already 30 people in this little community, come on and join @Mappletons @polbaladas @alexobenauer @codexeditor @RobertHaisfield @yiliu_shenburke @JosefiinaIda and many more 🫧 https://t.co/LLzG3k3gnI",
+        "created_at": "2022-11-19T21:02:32.000Z",
+        "public_metrics": {
+            "like_count": 14,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 6
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1593029179188326404",
+        "author": {
+            "name": "Riley Crane",
+            "username": "RCrane95",
+            "description": "Visiting the past, reflecting on the present and stepping into the future | Learning languages 🇫🇷 🇩🇪"
+        },
+        "html": "@eganmontgomery @_mjpeters No kidding I re-read a favorite on tending our mind gardens by @anthilemoon this afternoon. Check it out https://t.co/RlITXqmSLi",
+        "created_at": "2022-11-16T23:52:08.000Z",
+        "public_metrics": {
+            "like_count": 7,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 1
+        },
+        "standalone": false,
+        "rt": false,
+        "reply": true,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1595286910703874048",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "This is worth 35 seconds of your time.\\n\\nEarthrise.\\n\\nEarlier today. https://t.co/6O2XkcikN5",
+        "created_at": "2022-11-23T05:23:33.000Z",
+        "public_metrics": {
+            "like_count": 13098,
+            "quote_count": 177,
+            "reply_count": 152,
+            "retweet_count": 2311
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "video"
+            }
+        ]
+    },
+    {
+        "id": "1586321877378957314",
+        "author": {
+            "name": "@dietrich@mastodon.social",
+            "username": "dietrich",
+            "description": "A lifestyle brand offering timeless products of unique modernity.\\n\\n@ipfs at @protocollabs\\n\\n@dietrich@mastodon.social"
         },
         "html": "wild. @fabricedesre sharing OS-level @IPFS in @capyloon with @Boot2Gecko @n0computer. https://t.co/5l4aaT42Dm",
-        "created_at": "2022-11-16T12:18:32.000Z",
+        "created_at": "2022-10-29T11:39:42.000Z",
         "public_metrics": {
             "like_count": 21,
             "quote_count": 1,
@@ -1363,8 +2213,8 @@ const tftTweets = [
             "retweet_count": 2
         },
         "standalone": false,
-        "rt": true,
-        "reply": false,
+        "rt": false,
+        "reply": true,
         "quote": false,
         "geo.country": null,
         "entities.annotations": [
@@ -1373,206 +2223,60 @@ const tftTweets = [
                 "text": "OS"
             }
         ],
-        "context_annotations": null
-    },
-    {
-        "id": "1593428095502995456",
-        "author": {
-            "name": "Andy Matuschak",
-            "username": "andy_matuschak",
-            "description": "More wonder, more insight, more capacity, more joy!\\n\\nCurrently exploring tools that augment human memory and attention."
-        },
-        "html": "A system which seems only modestly powerful—no matter how broadly applicable—probably can’t be evolved in-place into something transformative. The primitive abstraction will need to change. Easier to do that with a highly focused context, much harder if you’ve prematurely scaled.",
-        "created_at": "2022-11-18T02:17:17.000Z",
-        "public_metrics": {
-            "like_count": 16,
-            "quote_count": 0,
-            "reply_count": 1,
-            "retweet_count": 1
-        },
-        "standalone": false,
-        "rt": false,
-        "reply": true,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1594589097808510977",
-        "author": {
-            "name": "Jousef Murad 🧠 💻",
-            "username": "Jousefm2",
-            "description": "💻 Teaching Science @ https://t.co/WeRXA7KgPC | 🎬 YouTuber | ⚙️ Engineer at @Monolith_AI 🧠 | 🎙️ Podcaster @EngineeredM"
-        },
-        "html": "⚡2D to Simulate 3D: Made that legendary Rubik's Cube even easier to Understand ⚡\\n\\nThe legendary Rubik's Cube made even easier to understand https://t.co/g8jArAfP0l",
-        "created_at": "2022-11-21T07:10:41.000Z",
-        "public_metrics": {
-            "like_count": 5433,
-            "quote_count": 84,
-            "reply_count": 46,
-            "retweet_count": 1112
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
+        "context_annotations": null,
+        "media": [
             {
-                "type": "Other",
-                "text": "3D"
-            },
-            {
-                "type": "Other",
-                "text": "Rubik's Cube"
-            },
-            {
-                "type": "Other",
-                "text": "Rubik's Cube"
+                "type": "photo"
             }
-        ],
-        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697333571112960\", \"name\": \"Technology Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to softwares, apps, communication equipments, hardwares\"}}]"
+        ]
     },
     {
-        "id": "1594524338249957376",
+        "id": "1595884696722100224",
         "author": {
-            "name": "Heptabase",
-            "username": "Heptabase",
-            "description": "A visual note-taking tool for learning complex topics. (YC W22)"
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "本來只是隨意記個想法，寫著寫著好像覺得可以寫篇短短的部落格文，來分享一下 Heptabase 新上線的功能：讓 Journal 的內容也可以作為卡片放到白板上。\\n\\nhttps://t.co/Q7Vl3CSUjk",
-        "created_at": "2022-11-21T02:53:21.000Z",
+        "html": "Kurt Gödel, who was one of Albert Einstein's best friends in his later years, found a solution to general theory of relativity that modelled a strange, unusual and rotating universe allowing for backward time travel \\n\\n[the Gödel metric: https://t.co/85MQtsJA0P] https://t.co/hrnbSau8Ni",
+        "created_at": "2022-11-24T20:58:56.000Z",
         "public_metrics": {
-            "like_count": 19,
-            "quote_count": 0,
-            "reply_count": 1,
-            "retweet_count": 5
+            "like_count": 5000,
+            "quote_count": 63,
+            "reply_count": 105,
+            "retweet_count": 845
         },
         "standalone": false,
         "rt": true,
         "reply": false,
         "quote": false,
         "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
+        "entities.annotations": [
+            {
+                "type": "Person",
+                "text": "Kurt Gödel"
+            },
+            {
+                "type": "Person",
+                "text": "Albert Einstein"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"10\", \"name\": \"Person\", \"description\": \"Named people in the world like Nelson Mandela\"}, \"entity\": {\"id\": \"963117586387845120\", \"name\": \"Albert Einstein\", \"description\": \"Albert Einstein\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"854692455005921281\", \"name\": \"Science\", \"description\": \"Science\"}}]",
+        "media": []
     },
     {
-        "id": "1595857814806614016",
+        "id": "1594026754519486465",
         "author": {
-            "name": "Ghost of Hellas",
-            "username": "ghostofhellas",
-            "description": "Greek art and culture through the ages."
+            "name": "Jim Leary",
+            "username": "Jim_Leary",
+            "description": "Archaeologist, prehistorian. Author of 'The Story of Silbury Hill' and 'The Remembered Land. Surviving Sea-Level Rise After the Last Ice Age'. Mobility & paths."
         },
-        "html": "Waves hit the cliffs in front of the temple of Poseidon, one of the Twelve Olympians in ancient Greek religion and god of the sea, at cape Sounion in Attica, Greece. (29.09.2018 - Photo credit: Aris Messinis) https://t.co/HxW8f535lg",
-        "created_at": "2022-11-24T19:12:07.000Z",
+        "html": "Glimpsing Whitby Abbey. https://t.co/HTZ35Y2myb",
+        "created_at": "2022-11-19T17:56:08.000Z",
         "public_metrics": {
-            "like_count": 214,
-            "quote_count": 2,
-            "reply_count": 1,
-            "retweet_count": 38
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1593526959308476417",
-        "author": {
-            "name": "Maggie Appleton - indieweb.social/@maggie",
-            "username": "Mappletons",
-            "description": "Product design @oughtinc. Makes visual essays about UX, programming, and anthropology. Adores digital gardening 🌱, end-user development, and embodied cognition"
-        },
-        "html": "Composable GPT-3 blocks on a spatial canvas from @max__drake https://t.co/BdnkuKRqT1",
-        "created_at": "2022-11-18T08:50:08.000Z",
-        "public_metrics": {
-            "like_count": 27,
+            "like_count": 266,
             "quote_count": 1,
-            "reply_count": 3,
-            "retweet_count": 4
-        },
-        "standalone": false,
-        "rt": false,
-        "reply": true,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "GPT-3"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1592924897453699073",
-        "author": {
-            "name": "Linus",
-            "username": "thesephist",
-            "description": "thought & craft · ex @replit @hackclub @dormroomfund"
-        },
-        "html": "A vanishingly small slice of knowledge work has the shape of text-in-text-out (copywriting/Jasper). The real alpha is not in generating text, but in using this new capability and wrapping it into jobs that have other shapes.",
-        "created_at": "2022-11-16T16:57:45.000Z",
-        "public_metrics": {
-            "like_count": 29,
-            "quote_count": 1,
-            "reply_count": 1,
-            "retweet_count": 3
-        },
-        "standalone": false,
-        "rt": false,
-        "reply": true,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Jasper"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1594129691581243393",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "Stop relying on hand drawn pictures to reason about your existing system.\\n\\nAnd stop relying on reading as a way to inform the drawing of those pictures, too.",
-        "created_at": "2022-11-20T00:45:10.000Z",
-        "public_metrics": {
-            "like_count": 17,
-            "quote_count": 0,
-            "reply_count": 2,
-            "retweet_count": 5
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1593420088820092929",
-        "author": {
-            "name": "AK",
-            "username": "_akhaliq",
-            "description": "paper tweets, dms are open, ML @Gradio (acq. by @HuggingFace 🤗)\\n\\npatreon: https://t.co/aqu4khhSem\\n\\nMastodon: https://t.co/KIxbMZhNJM"
-        },
-        "html": "InstructPix2Pix: Learning to Follow Image Editing Instructions\\nabs: https://t.co/UqsKEMRkkx \\nproject page: https://t.co/WTFqVkkJli \\n\\nInstructPix2Pix, trained on generated data, and generalizes to real images and user-written instructions at inference time https://t.co/YPHY7zmBqb",
-        "created_at": "2022-11-18T01:45:28.000Z",
-        "public_metrics": {
-            "like_count": 659,
-            "quote_count": 23,
-            "reply_count": 21,
-            "retweet_count": 146
+            "reply_count": 6,
+            "retweet_count": 37
         },
         "standalone": true,
         "rt": false,
@@ -1582,273 +2286,15 @@ const tftTweets = [
         "entities.annotations": [
             {
                 "type": "Other",
-                "text": "InstructPix2Pix"
+                "text": "Whitby Abbey"
             }
         ],
-        "context_annotations": null
-    },
-    {
-        "id": "1593723895668170752",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "@codexeditor You can hear the Liszt in Nyiregyhazi’s performance.",
-        "created_at": "2022-11-18T21:52:41.000Z",
-        "public_metrics": {
-            "like_count": 1,
-            "quote_count": 0,
-            "reply_count": 0,
-            "retweet_count": 1
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
+        "context_annotations": null,
+        "media": [
             {
-                "type": "Person",
-                "text": "Liszt"
-            },
-            {
-                "type": "Person",
-                "text": "Nyiregyhazi"
+                "type": "photo"
             }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1594970247731322881",
-        "author": {
-            "name": "Nina Willburger @ninawillburger@social.anoxinon.de",
-            "username": "DrNWillburger",
-            "description": "Archaeologist | Department Head Landesmuseum Württemberg | Adjunct Lecturer University Stuttgart and State Academy of Arts | Private account, views are my own🖖"
-        },
-        "html": "Made some 1,400 years ago: Complete wooden vessels are rarely preserved. Due to a damp environment, a wooden pitcher, a canteen, a small barrel, and a large beaker, and a candle holder have been preserved in quite good condition. They were found at the early medieval burial...1/2 https://t.co/DPcOlrlp8R",
-        "created_at": "2022-11-22T08:25:14.000Z",
-        "public_metrics": {
-            "like_count": 4954,
-            "quote_count": 25,
-            "reply_count": 31,
-            "retweet_count": 750
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1595283733405278209",
-        "author": {
-            "name": "Brian Roemmele",
-            "username": "BrianRoemmele",
-            "description": "we can only see what we think is possible..."
-        },
-        "html": "Pulpit Rock,  Norway.\\n https://t.co/z9DOvIf5QD",
-        "created_at": "2022-11-23T05:10:55.000Z",
-        "public_metrics": {
-            "like_count": 246,
-            "quote_count": 11,
-            "reply_count": 26,
-            "retweet_count": 29
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Place",
-                "text": "Rock"
-            },
-            {
-                "type": "Place",
-                "text": "Norway"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1593503725666144257",
-        "author": {
-            "name": "Trail Marks",
-            "username": "TrailMarks",
-            "description": "Experience the Annotated Web as an Extension of (y)our Mind(s)\\nTrailMarks are  Thought Vectors in (inter)Personal  Mutual Learning Spaces\\n∀  is a Conversation"
-        },
-        "html": "The better FUTURE that was predicted by inventing it was stolen. Steve Job run with a tiny bit of the vision.\\nAnd ignored the essence.\\nRemember\\nThe simplest solutions that works forever\\ncreates true value not money\\ncomplications opportunities to make money\\nhttps://t.co/PCdiBtVtGz https://t.co/fzkNuVp0eM",
-        "created_at": "2022-11-18T07:17:48.000Z",
-        "public_metrics": {
-            "like_count": 1,
-            "quote_count": 0,
-            "reply_count": 0,
-            "retweet_count": 0
-        },
-        "standalone": false,
-        "rt": false,
-        "reply": true,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Person",
-                "text": "Steve Job"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1594718987279290368",
-        "author": {
-            "name": "Tableau",
-            "username": "tableau",
-            "description": "Tableau helps people see and understand data.\\nWe ❤️ our #DataFam.\\nFor support: @TableauSupport"
-        },
-        "html": "What is your biggest data transformation challenge?",
-        "created_at": "2022-11-21T15:46:49.000Z",
-        "public_metrics": {
-            "like_count": 3,
-            "quote_count": 0,
-            "reply_count": 1,
-            "retweet_count": 1
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": "[{\"domain\": {\"id\": \"45\", \"name\": \"Brand Vertical\", \"description\": \"Top level entities that describe a Brands industry\"}, \"entity\": {\"id\": \"781974597226799105\", \"name\": \"B2B\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974597172203520\", \"name\": \"Services - B2B\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10043273937\", \"name\": \"Tableau\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"10043273937\", \"name\": \"Tableau\"}}]"
-    },
-    {
-        "id": "1593793511371177984",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "Word of the Day: STAR-QUELLER (n.) someone whose own work is of such poor quality that everyone else’s work is ruined",
-        "created_at": "2022-11-19T02:29:19.000Z",
-        "public_metrics": {
-            "like_count": 323,
-            "quote_count": 8,
-            "reply_count": 4,
-            "retweet_count": 114
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Word"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1593356131081940993",
-        "author": {
-            "name": "Andy Matuschak",
-            "username": "andy_matuschak",
-            "description": "More wonder, more insight, more capacity, more joy!\\n\\nCurrently exploring tools that augment human memory and attention."
-        },
-        "html": "📣 Launching a research fellowship: work with me on a research project of mutual interest; get six months of funding and mentorship.\\n\\nDetails here (apply by Nov 25): https://t.co/KU4gfhZjqy https://t.co/w9yUZFCOTR",
-        "created_at": "2022-11-17T21:31:19.000Z",
-        "public_metrics": {
-            "like_count": 336,
-            "quote_count": 15,
-            "reply_count": 24,
-            "retweet_count": 102
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1595682970610040833",
-        "author": {
-            "name": "Linus",
-            "username": "thesephist",
-            "description": "thought & craft · ex @replit @hackclub @dormroomfund"
-        },
-        "html": "Same https://t.co/tcGXykvEIE",
-        "created_at": "2022-11-24T07:37:21.000Z",
-        "public_metrics": {
-            "like_count": 6,
-            "quote_count": 0,
-            "reply_count": 1,
-            "retweet_count": 0
-        },
-        "standalone": false,
-        "rt": false,
-        "reply": false,
-        "quote": true,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696848252391426\", \"name\": \"Financial Services Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to Banks, Credit cards, Insurance, Investments, Stocks \"}}, {\"domain\": {\"id\": \"67\", \"name\": \"Interests and Hobbies\", \"description\": \"Interests, opinions, and behaviors of individuals, groups, or cultures; like Speciality Cooking or Theme Parks\"}, \"entity\": {\"id\": \"1486764935287754752\", \"name\": \"Taxes\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"781974596148793345\", \"name\": \"Business & finance\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1278093262406815744\", \"name\": \"Fields of study\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1288793950199771136\", \"name\": \"Economics\"}}]"
-    },
-    {
-        "id": "1593700040274759680",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "Roman glass 'bird bottles', known as 'unguentarium'; these delicate vessels were made with their contents (perfumes or cosmetic oils) sealed inside. The tip of the tail would be broken off to pour out the liquid. 1st century AD, Thessaloniki Archaeological Museum. https://t.co/X3kp0LGDoi",
-        "created_at": "2022-11-18T20:17:53.000Z",
-        "public_metrics": {
-            "like_count": 1178,
-            "quote_count": 13,
-            "reply_count": 10,
-            "retweet_count": 284
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Place",
-                "text": "Thessaloniki Archaeological Museum"
-            }
-        ],
-        "context_annotations": "[{\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"854692455005921281\", \"name\": \"Science\", \"description\": \"Science\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"1046582045349015552\", \"name\": \"Archaeology\", \"description\": \"Archaeology\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"854692455005921281\", \"name\": \"Science\", \"description\": \"Science\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1046582045349015552\", \"name\": \"Archaeology\", \"description\": \"Archaeology\"}}]"
-    },
-    {
-        "id": "1595099818719793152",
-        "author": {
-            "name": "The Syllabus",
-            "username": "syllabus_tweets",
-            "description": "A Knowledge Curation Platform. We index, rank, and review tens of thousands of newly published pieces across text, audio, and video. Subscribe ⬇️"
-        },
-        "html": "Our Podcast of the Week deploys social media to understand our time's prevailing ideology. While the algorithmic logic of digital platforms may indeed read our desires, it is neoliberalism that makes us antisocial.\\n\\nBy @MattFlisfeder in @unconscioushh\\n\\nhttps://t.co/qXLFAgcjQM",
-        "created_at": "2022-11-22T17:00:06.000Z",
-        "public_metrics": {
-            "like_count": 5,
-            "quote_count": 0,
-            "reply_count": 0,
-            "retweet_count": 2
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696802391859201\", \"name\": \"Entertainment & Leisure Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to movies, music, television, franchises, venues, theme parks, toys, tourism, hotels\"}}, {\"domain\": {\"id\": \"91\", \"name\": \"Podcast\", \"description\": \"A podcast like \\\"Serial\\\"\"}, \"entity\": {\"id\": \"1490751295698837510\", \"name\": \"Podcasts\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"839544274442051584\", \"name\": \"Entertainment\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1074758954444513282\", \"name\": \"Podcasts & radio\", \"description\": \"Podcasts\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1490751295698837510\", \"name\": \"Podcasts\"}}]"
+        ]
     },
     {
         "id": "1589995198289182720",
@@ -1880,366 +2326,46 @@ const tftTweets = [
                 "text": "AI"
             }
         ],
-        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696940178935808\", \"name\": \"Gaming Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to offline and online games such as gaming consoles, tabletop games, video game publishers\"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697333571112960\", \"name\": \"Technology Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to softwares, apps, communication equipments, hardwares\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"847527650667094017\", \"name\": \"Gaming\", \"description\": \"Gaming\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1070028312276127746\", \"name\": \"Game development\", \"description\": \"Video Game Publisher\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1265660441822281728\", \"name\": \"Art\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1491568130480508928\", \"name\": \"Gaming industry\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1537182142450372608\", \"name\": \"AI image generation\"}}]"
+        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696940178935808\", \"name\": \"Gaming Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to offline and online games such as gaming consoles, tabletop games, video game publishers\"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697333571112960\", \"name\": \"Technology Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to softwares, apps, communication equipments, hardwares\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"847527650667094017\", \"name\": \"Gaming\", \"description\": \"Gaming\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1070028312276127746\", \"name\": \"Game development\", \"description\": \"Video Game Publisher\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1265660441822281728\", \"name\": \"Art\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1491568130480508928\", \"name\": \"Gaming industry\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1537182142450372608\", \"name\": \"AI image generation\"}}]",
+        "media": []
     },
     {
-        "id": "1595154030908829696",
+        "id": "1594103486064443393",
         "author": {
-            "name": "Graph Commons",
-            "username": "graphcommons",
-            "description": "Collaborative platform for mapping, analyzing, publishing data-networks. Email/PGP public key: https://t.co/WS1YOJsTcR"
+            "name": "Dune Quotes",
+            "username": "DuneQuoteBot",
+            "description": "A bot that spits out a random quote from Frank Herbert's six Dune books, even though spit is a terrible waste of water."
         },
-        "html": "🕸 The graph making experience has improved from data imports to management, from customized graph visualizations to navigation.\\n2/9 https://t.co/tIQQsKsfyT",
-        "created_at": "2022-11-22T20:35:32.000Z",
+        "html": "There's no secret to balance. You just have to feel the waves.",
+        "created_at": "2022-11-19T23:01:02.000Z",
         "public_metrics": {
-            "like_count": 9,
-            "quote_count": 0,
-            "reply_count": 2,
-            "retweet_count": 1
-        },
-        "standalone": false,
-        "rt": false,
-        "reply": true,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1593508467410599936",
-        "author": {
-            "name": "Trail Marks",
-            "username": "TrailMarks",
-            "description": "Experience the Annotated Web as an Extension of (y)our Mind(s)\\nTrailMarks are  Thought Vectors in (inter)Personal  Mutual Learning Spaces\\n∀  is a Conversation"
-        },
-        "html": "Complexity Weekend November 2022 Heartbeat ~ November 27 - https://t.co/LwlMxvmzda",
-        "created_at": "2022-11-18T07:36:39.000Z",
-        "public_metrics": {
-            "like_count": 0,
-            "quote_count": 0,
+            "like_count": 223,
+            "quote_count": 1,
             "reply_count": 0,
-            "retweet_count": 2
+            "retweet_count": 59
         },
-        "standalone": false,
-        "rt": true,
+        "standalone": true,
+        "rt": false,
         "reply": false,
         "quote": false,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1593523022501408769",
-        "author": {
-            "name": "Andric",
-            "username": "andrictham",
-            "description": "👓 Nerds out on: software design, dev, product, tools for thought. Learning SwiftUI. Farcaster: https://t.co/MB6PFPWjvm. Mastodon: @andric@toolsforthought.rocks"
-        },
-        "html": "@Paul_Rony @polbaladas @codexeditor @alexobenauer I’m on https://t.co/ju1ubk4nKz Mastodon server",
-        "created_at": "2022-11-18T08:34:29.000Z",
-        "public_metrics": {
-            "like_count": 5,
-            "quote_count": 0,
-            "reply_count": 1,
-            "retweet_count": 1
-        },
-        "standalone": false,
-        "rt": false,
-        "reply": true,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Mastodon server"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1593258852811608064",
-        "author": {
-            "name": "Ioannis Tz",
-            "username": "tzoumio",
-            "description": null
-        },
-        "html": "Delos island, Cyclades, Greece. https://t.co/JCts132jZw",
-        "created_at": "2022-11-17T15:04:46.000Z",
-        "public_metrics": {
-            "like_count": 1865,
-            "quote_count": 5,
-            "reply_count": 7,
-            "retweet_count": 265
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Place",
-                "text": "Delos island"
-            },
-            {
-                "type": "Place",
-                "text": "Cyclades"
-            },
-            {
-                "type": "Place",
-                "text": "Greece"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1592924899877982208",
-        "author": {
-            "name": "Linus",
-            "username": "thesephist",
-            "description": "thought & craft · ex @replit @hackclub @dormroomfund"
-        },
-        "html": "This means text generation in the best LLM products will be an implementation detail, as much as backend APIs are for current SaaS:\\n\\n- Parsing nuanced, contextual action items out of transcriptions or human input\\n- Translating between soft, ill-defined data fmts and natural lang",
-        "created_at": "2022-11-16T16:57:45.000Z",
-        "public_metrics": {
-            "like_count": 35,
-            "quote_count": 0,
-            "reply_count": 1,
-            "retweet_count": 2
-        },
-        "standalone": false,
-        "rt": false,
-        "reply": true,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "LLM"
-            },
-            {
-                "type": "Other",
-                "text": "SaaS"
-            }
-        ],
-        "context_annotations": "[{\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"1260985796053487616\", \"name\": \"Organic\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1260985796053487616\", \"name\": \"Organic\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1278017316656082945\", \"name\": \"Green living\"}}]"
-    },
-    {
-        "id": "1594943762312187905",
-        "author": {
-            "name": "Haggard Hawks 🦅",
-            "username": "HaggardHawks",
-            "description": "Obscure words, etymological tales, language trivia // Books available here: https://t.co/5k8NBYQc6y // Tweets by @PaulAnthJones // Artwork by @bread_and_ink"
-        },
-        "html": "HOBBIES are named after hobbyhorses, not the other way around. As another word for a pastime, HOBBY only dates back to the 1800s and is based on the notion that something done just for fun should bring you as much amusement as a toy horse brings a child. https://t.co/kgeiItpxA6",
-        "created_at": "2022-11-22T06:40:00.000Z",
-        "public_metrics": {
-            "like_count": 512,
-            "quote_count": 5,
-            "reply_count": 3,
-            "retweet_count": 178
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "HOBBIES"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1593955722122911744",
-        "author": {
-            "name": "Marcel Schwittlick",
-            "username": "schwittlick_",
-            "description": "Artist - he/him\\n\\nMastodon: https://t.co/Qcy0RsfJQF\\nInstagram: https://t.co/16NaGJwcv4\\nFarcaster: https://t.co/jH17mcqI3E\\nWeb: https://t.co/5qdDC2athA"
-        },
-        "html": "Buxton, William. Computer Music 1976/77 : A Directory to Current Work https://t.co/p2v10m13kz",
-        "created_at": "2022-11-19T13:13:53.000Z",
-        "public_metrics": {
-            "like_count": 72,
-            "quote_count": 0,
-            "reply_count": 0,
-            "retweet_count": 8
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Place",
-                "text": "Buxton"
-            },
-            {
-                "type": "Person",
-                "text": "William"
-            }
-        ],
-        "context_annotations": "[{\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1410504549006135296\", \"name\": \"Cultural history\"}}]"
-    },
-    {
-        "id": "1594433688494047232",
+        "id": "1593081690364481536",
         "author": {
             "name": "Codex OS",
             "username": "codexeditor",
             "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "Tintern Abbey underneath the stars 🤩 https://t.co/iWZhM5mJQ9",
-        "created_at": "2022-11-20T20:53:09.000Z",
+        "html": "The piano is a giant block of sound, and Nyiregyhazi is the sculptor ... @zeno_dox \\nhttps://t.co/8VXMBPIpjH",
+        "created_at": "2022-11-17T03:20:47.000Z",
         "public_metrics": {
-            "like_count": 3081,
-            "quote_count": 22,
-            "reply_count": 52,
-            "retweet_count": 355
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "Tintern Abbey"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1593935141319188482",
-        "author": {
-            "name": "Pol (⨍)",
-            "username": "polbaladas",
-            "description": "ceo of @fermat_ws (⨍) tools, thought & interfaces. philosopher & charlatan"
-        },
-        "html": "Join the latest TfT discord server \"HyperTalk\"\\ncome and join @codexeditor @Paul_Rony @nbaronia1 @Mappletons @yiliu_shenburke and more!\\n\\nhttps://t.co/arAx7H2atT",
-        "created_at": "2022-11-19T11:52:06.000Z",
-        "public_metrics": {
-            "like_count": 5,
-            "quote_count": 0,
+            "like_count": 1,
+            "quote_count": 1,
             "reply_count": 1,
-            "retweet_count": 3
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "TfT"
-            },
-            {
-                "type": "Other",
-                "text": "discord"
-            },
-            {
-                "type": "Other",
-                "text": "HyperTalk"
-            }
-        ],
-        "context_annotations": "[{\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"1168499224297656321\", \"name\": \"Discord\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1168499224297656321\", \"name\": \"Discord\"}}, {\"domain\": {\"id\": \"165\", \"name\": \"Technology\", \"description\": \"for individual and types of technology, e.g., food technology, 3D printing\"}, \"entity\": {\"id\": \"1196446161223028736\", \"name\": \"Social media\"}}]"
-    },
-    {
-        "id": "1593338460609257472",
-        "author": {
-            "name": "Liron Shapira",
-            "username": "liron",
-            "description": "Rationalist, entrepreneur and angel investor. Was the Michael Burry of the crypto bubble."
-        },
-        "html": "Why do so many people in tech still worship @Balajis?\\n\\nThe man is a charlatan, a mockery of tech discourse.\\n\\nHe has no etiquette in interviews, dodging every question with a rambling GPT-3 smokescreen.\\n\\nNeed proof? Just watch his latest interview 👇\\n\\nhttps://t.co/gf8RnHsPKC",
-        "created_at": "2022-11-17T20:21:06.000Z",
-        "public_metrics": {
-            "like_count": 638,
-            "quote_count": 22,
-            "reply_count": 88,
-            "retweet_count": 63
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "GPT-3"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1595688409875595264",
-        "author": {
-            "name": "Paul Rony - in NYC 🗽",
-            "username": "Paul_Rony",
-            "description": "Co-founder @kosmik_app. In love with computer history and design. Let’s chat: https://t.co/pgg23R1i34"
-        },
-        "html": "HyperTalk is growing, join our little community around computing history, the future of computing and a whole lot of other topics 🌍\\nhttps://t.co/j0b9ybuYM0",
-        "created_at": "2022-11-24T07:58:58.000Z",
-        "public_metrics": {
-            "like_count": 14,
-            "quote_count": 1,
-            "reply_count": 0,
-            "retweet_count": 4
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "HyperTalk"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1592924904911163392",
-        "author": {
-            "name": "Linus",
-            "username": "thesephist",
-            "description": "thought & craft · ex @replit @hackclub @dormroomfund"
-        },
-        "html": "Text, like code, is a liability, not an asset.\\n\\nAn organization should strive to own as little text as necessary to express their information and accomplish tasks.",
-        "created_at": "2022-11-16T16:57:47.000Z",
-        "public_metrics": {
-            "like_count": 47,
-            "quote_count": 1,
-            "reply_count": 3,
-            "retweet_count": 4
-        },
-        "standalone": false,
-        "rt": false,
-        "reply": true,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1595030568429039616",
-        "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
-        },
-        "html": "\"Markdown, with support for [[wikilinks]] and #hashtags, is all that is needed to express thought ...\" https://t.co/Q4NyQ0e70O",
-        "created_at": "2022-11-22T12:24:56.000Z",
-        "public_metrics": {
-            "like_count": 43,
-            "quote_count": 0,
-            "reply_count": 5,
             "retweet_count": 0
         },
         "standalone": true,
@@ -2249,136 +2375,84 @@ const tftTweets = [
         "geo.country": null,
         "entities.annotations": [
             {
-                "type": "Other",
-                "text": "wikilinks"
+                "type": "Person",
+                "text": "Nyiregyhazi"
             }
         ],
-        "context_annotations": null
+        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696802391859201\", \"name\": \"Entertainment & Leisure Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to movies, music, television, franchises, venues, theme parks, toys, tourism, hotels\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"898268092110852096\", \"name\": \"Piano\", \"description\": \"Piano\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"1046577790353428480\", \"name\": \"Visual arts\", \"description\": \"Visual Arts\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"1131990542198247424\", \"name\": \"Musical instruments\", \"description\": \"Musical Instruments\"}}, {\"domain\": {\"id\": \"67\", \"name\": \"Interests and Hobbies\", \"description\": \"Interests, opinions, and behaviors of individuals, groups, or cultures; like Speciality Cooking or Theme Parks\"}, \"entity\": {\"id\": \"1046579830823706624\", \"name\": \"Sculpting\", \"description\": \"Sculpting\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"847524658970636288\", \"name\": \"Music\", \"description\": \"Music and radio\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"898268092110852096\", \"name\": \"Piano\", \"description\": \"Piano\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1046577790353428480\", \"name\": \"Visual arts\", \"description\": \"Visual Arts\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1046579830823706624\", \"name\": \"Sculpting\", \"description\": \"Sculpting\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1131990542198247424\", \"name\": \"Musical instruments\", \"description\": \"Musical Instruments\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1265660441822281728\", \"name\": \"Art\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1280550787207147521\", \"name\": \"Arts & culture\"}}, {\"domain\": {\"id\": \"173\", \"name\": \"Product Taxonomy\", \"description\": \"A product taxonomy for labeling categories of products. \"}, \"entity\": {\"id\": \"898268092110852096\", \"name\": \"Piano\", \"description\": \"Piano\"}}]",
+        "media": []
     },
     {
-        "id": "1593718365167980544",
+        "id": "1592948195880992769",
         "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+            "name": "The Syllabus",
+            "username": "syllabus_tweets",
+            "description": "A Knowledge Curation Platform. We index, rank, and review tens of thousands of newly published pieces across text, audio, and video. Subscribe ⬇️"
         },
-        "html": "This data visualization by https://t.co/yDmPPoWSeQ shows nightflights and bird migrations over Western Europe using gps tracks for a ZDF series with Colourfield TV \\n\\n[source: https://t.co/aiU1iW6zIF]\\nhttps://t.co/T11El8CjbG",
-        "created_at": "2022-11-18T21:30:42.000Z",
+        "html": ".@GruiaBadescu shows that contemporary urban transformations in the European South-east region reflect novel processes and alignments that can contribute to the larger project of rethinking urban geopolitics.\\n\\nBy @Geopolitics_Jl \\n\\nhttps://t.co/PF0zT1Rbdn",
+        "created_at": "2022-11-16T18:30:20.000Z",
         "public_metrics": {
-            "like_count": 691,
-            "quote_count": 8,
-            "reply_count": 11,
-            "retweet_count": 128
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Place",
-                "text": "Western Europe"
-            },
-            {
-                "type": "Organization",
-                "text": "ZDF"
-            },
-            {
-                "type": "Organization",
-                "text": "Colourfield TV"
-            }
-        ],
-        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696802391859201\", \"name\": \"Entertainment & Leisure Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to movies, music, television, franchises, venues, theme parks, toys, tourism, hotels\"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697333571112960\", \"name\": \"Technology Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to softwares, apps, communication equipments, hardwares\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"848920371311001600\", \"name\": \"Technology\", \"description\": \"Technology and computing\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"930484568305541120\", \"name\": \"Data science\", \"description\": \"Data Science\"}}, {\"domain\": {\"id\": \"67\", \"name\": \"Interests and Hobbies\", \"description\": \"Interests, opinions, and behaviors of individuals, groups, or cultures; like Speciality Cooking or Theme Parks\"}, \"entity\": {\"id\": \"1037076248877395968\", \"name\": \"GPS and maps\", \"description\": \"GPS & Maps\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"930484568305541120\", \"name\": \"Data science\", \"description\": \"Data Science\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1357402587947913217\", \"name\": \"Data visualization\"}}, {\"domain\": {\"id\": \"165\", \"name\": \"Technology\", \"description\": \"for individual and types of technology, e.g., food technology, 3D printing\"}, \"entity\": {\"id\": \"848920371311001600\", \"name\": \"Technology\", \"description\": \"Technology and computing\"}}]"
-    },
-    {
-        "id": "1594348594542571525",
-        "author": {
-            "name": "Nick Milo 🗺",
-            "username": "NickMilo",
-            "description": "You deserve a guilt-free place to think and generate insights\\nMastodon: @nickmilo@pkm.social"
-        },
-        "html": "When you do less highlights something miraculous happens: you have more time for insights.\\n\\nThis is what happens when you shift from passive thinking to active, engaged thinking: you go from note-taker to note-maker.",
-        "created_at": "2022-11-20T15:15:01.000Z",
-        "public_metrics": {
-            "like_count": 40,
-            "quote_count": 1,
-            "reply_count": 5,
-            "retweet_count": 5
+            "like_count": 7,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 1
         },
         "standalone": true,
         "rt": false,
         "reply": false,
         "quote": false,
         "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
+        "entities.annotations": [
+            {
+                "type": "Place",
+                "text": "South"
+            },
+            {
+                "type": "Place",
+                "text": "east"
+            }
+        ],
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1594300421228490752",
-        "author": {
-            "name": "Heptabase",
-            "username": "Heptabase",
-            "description": "A visual note-taking tool for learning complex topics. (YC W22)"
-        },
-        "html": "沈迷Heptabase⋯⋯\\n你喜歡寫設定嗎？需要精神時光屋嗎？\\n假日醒來直接開，一天就會消失不見ㄛ！\\n欸不是我的初衷明明就是拿來整理思路想策略，結果失控一直爆寫文章草稿（我以為我已經沒有力量寫部落格了結果原來是之前的紀錄方式會讓我一直忘記自己有很多草稿可以用？？？）",
-        "created_at": "2022-11-20T12:03:35.000Z",
-        "public_metrics": {
-            "like_count": 14,
-            "quote_count": 0,
-            "reply_count": 1,
-            "retweet_count": 2
-        },
-        "standalone": false,
-        "rt": true,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1593134200143884288",
+        "id": "1593107426974175233",
         "author": {
             "name": "TfT Hacker - Exploring Tools for Thought and PKM",
             "username": "TfTHacker",
             "description": "Exploring Tools for Thought space and PKM, with focus on tools like Obsidian, Tana, Craft, LogSeq, RemNote, AthensResearch, OneNote, etc https://t.co/GyMiAikIl1"
         },
-        "html": "The CODE model has been a companion of mine since discovering it via @fortelabs https://t.co/2zcdf84Lf9",
-        "created_at": "2022-11-17T06:49:26.000Z",
+        "html": "I did these loops over multiple months, increasing and decreasing time, the number of things to read, and so on.\\n\\nEach loop was a week so that I could iterate the process fast.\\n\\nAs I went through each loop, I documented the plan and, during the study phase, \"the results\".",
+        "created_at": "2022-11-17T05:03:03.000Z",
         "public_metrics": {
-            "like_count": 33,
+            "like_count": 0,
             "quote_count": 0,
-            "reply_count": 2,
-            "retweet_count": 5
+            "reply_count": 1,
+            "retweet_count": 0
         },
         "standalone": false,
-        "rt": true,
-        "reply": false,
+        "rt": false,
+        "reply": true,
         "quote": false,
         "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "CODE"
-            }
-        ],
-        "context_annotations": null
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1593274685608923136",
+        "id": "1592968746393800704",
         "author": {
-            "name": "Arys🏺🪶",
-            "username": "ArysPan",
-            "description": "History&Archaeology 🏛 lover of the arts 🗿photography, architecture and of coffee☕\\n•Cycladic/Minoan/Mycenaean, Classical Greece, Hellenistic period, Byzantium•"
+            "name": "Gareth Harney",
+            "username": "OptimoPrincipi",
+            "description": "Celebrating the endless wonders of the Roman world. “For these Romans I set no bounds in space or time; but have given empire without end.”"
         },
-        "html": "An amazing #Greek carnelian intaglio with the head of Medusa. \\n\\nHellenistic period, 3rd–1st century BCE\\n©MET\\n#Archaeology https://t.co/Gd5yPmmudY",
-        "created_at": "2022-11-17T16:07:41.000Z",
+        "html": "Helmet and gold burial mask of a Macedonian warrior, c.520 BC. The gold sheet was pressed against the dead man's face and still retains the imprint of his features. From Sindos, Tomb 115. Thessaloniki Archaeological Museum. https://t.co/M2JEiQzVII",
+        "created_at": "2022-11-16T19:51:59.000Z",
         "public_metrics": {
-            "like_count": 1425,
-            "quote_count": 8,
-            "reply_count": 23,
-            "retweet_count": 269
+            "like_count": 1388,
+            "quote_count": 18,
+            "reply_count": 19,
+            "retweet_count": 200
         },
         "standalone": true,
         "rt": false,
@@ -2387,23 +2461,80 @@ const tftTweets = [
         "geo.country": null,
         "entities.annotations": [
             {
-                "type": "Person",
-                "text": "Medusa"
+                "type": "Place",
+                "text": "Sindos"
+            },
+            {
+                "type": "Other",
+                "text": "Tomb 115"
+            },
+            {
+                "type": "Place",
+                "text": "Thessaloniki Archaeological Museum"
             }
         ],
-        "context_annotations": "[{\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"854692455005921281\", \"name\": \"Science\", \"description\": \"Science\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"1046582045349015552\", \"name\": \"Archaeology\", \"description\": \"Archaeology\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"854692455005921281\", \"name\": \"Science\", \"description\": \"Science\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1046582045349015552\", \"name\": \"Archaeology\", \"description\": \"Archaeology\"}}]"
+        "context_annotations": "[{\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"854692455005921281\", \"name\": \"Science\", \"description\": \"Science\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"1046582045349015552\", \"name\": \"Archaeology\", \"description\": \"Archaeology\"}}, {\"domain\": {\"id\": \"123\", \"name\": \"Ongoing News Story\", \"description\": \"Ongoing News Stories like 'Brexit'\"}, \"entity\": {\"id\": \"1220701888179359745\", \"name\": \"COVID-19\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"854692455005921281\", \"name\": \"Science\", \"description\": \"Science\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1046582045349015552\", \"name\": \"Archaeology\", \"description\": \"Archaeology\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1220701888179359745\", \"name\": \"COVID-19\"}}]",
+        "media": []
     },
     {
-        "id": "1595839425212293120",
+        "id": "1595494315324854273",
         "author": {
-            "name": "WikiResearch",
-            "username": "WikiResearch",
-            "description": "Curated @Wikipedia @Wikidata @Wikimedia research news, hot off the press. For full coverage subscribe to our newsletter. Tweets by @tilmanbayer & @mad_astronaut"
+            "name": "The Syllabus",
+            "username": "syllabus_tweets",
+            "description": "A Knowledge Curation Platform. We index, rank, and review tens of thousands of newly published pieces across text, audio, and video. Subscribe ⬇️"
         },
-        "html": "\"Mapping Process for the Task: @Wikidata Statements to Text as @Wikipedia Sentences\" a mapping process to convert Wikidata statements to natural language text (WS2T) for Wikipedia projects at the sentence level.\\n\\n(Ta Hoang et al, 2022)\\n\\nhttps://t.co/6cOTZIYXaf https://t.co/S5v2UzsA9A",
-        "created_at": "2022-11-24T17:59:02.000Z",
+        "html": "3. \"The failure of many advanced capitalist democracies to address the climate crisis has led some to wonder whether democracy may be holding back the green transition.\"\\n\\nBy @amandamachin 🔒\\n\\nhttps://t.co/g2uQSmEUev",
+        "created_at": "2022-11-23T19:07:42.000Z",
         "public_metrics": {
-            "like_count": 27,
+            "like_count": 1,
+            "quote_count": 0,
+            "reply_count": 1,
+            "retweet_count": 0
+        },
+        "standalone": false,
+        "rt": false,
+        "reply": true,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": "[{\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1265415402915393537\", \"name\": \"Climate change\"}}]",
+        "media": []
+    },
+    {
+        "id": "1592880482710343681",
+        "author": {
+            "name": "Ness Labs",
+            "username": "ness_labs",
+            "description": "The learning community for ambitious knowledge workers. Join us to think better, learn faster, and work happier: https://t.co/aw5gE8xtMw 🧠✨"
+        },
+        "html": "Connecting this thought to @anthilemoon's Mindful Productivity Masterclass PACT (Purposeful, Actionable, Contextual, Trackable) alternative to SMART goals.\\n\\nOutput (Effort) over Outcome. https://t.co/QfPnWLwXQY",
+        "created_at": "2022-11-16T14:01:16.000Z",
+        "public_metrics": {
+            "like_count": 7,
+            "quote_count": 0,
+            "reply_count": 0,
+            "retweet_count": 1
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": "[{\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1289190614207049728\", \"name\": \"Productivity\"}}]",
+        "media": []
+    },
+    {
+        "id": "1595743249771237376",
+        "author": {
+            "name": "Stian Håklev",
+            "username": "houshuang",
+            "description": "Builder at @tana_inc. Building innovative platforms for individual and collaborative thought and learning."
+        },
+        "html": "It has always been possible to search for all references to a node in @tana_inc, or all node where for example Author:: John Grisham. In the last release, we added some functionality to make it even easier to create these searches. https://t.co/oJ4Pb4q7Uc https://t.co/hnmtQjPcWe",
+        "created_at": "2022-11-24T11:36:52.000Z",
+        "public_metrics": {
+            "like_count": 30,
             "quote_count": 1,
             "reply_count": 2,
             "retweet_count": 5
@@ -2415,89 +2546,27 @@ const tftTweets = [
         "geo.country": null,
         "entities.annotations": [
             {
-                "type": "Other",
-                "text": "Wikidata"
-            },
-            {
-                "type": "Other",
-                "text": "WS2T"
-            },
-            {
-                "type": "Other",
-                "text": "Wikipedia"
-            },
-            {
-                "type": "Other",
-                "text": "Ta Hoang"
+                "type": "Person",
+                "text": "John Grisham"
             }
         ],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1594409132416987136",
-        "author": {
-            "name": "Western Traditionalist",
-            "username": "Western_Trad",
-            "description": "Thee / Thou. It is not enough to be passively not modernist, you must be actively anti-modernist."
-        },
-        "html": "MAKE AMERICA GOTHIC AGAIN https://t.co/1Noa0yiIZl",
-        "created_at": "2022-11-20T19:15:34.000Z",
-        "public_metrics": {
-            "like_count": 26515,
-            "quote_count": 173,
-            "reply_count": 230,
-            "retweet_count": 2541
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [
-            {
-                "type": "Other",
-                "text": "AMERICA"
-            }
-        ],
-        "context_annotations": null
-    },
-    {
-        "id": "1595024491280990208",
-        "author": {
-            "name": "Trail Marks",
-            "username": "TrailMarks",
-            "description": "Experience the Annotated Web as an Extension of (y)our Mind(s)\\nTrailMarks are  Thought Vectors in (inter)Personal  Mutual Learning Spaces\\n∀  is a Conversation"
-        },
-        "html": "experiment\\n\\nhttps://t.co/vcBQH5j1Dp",
-        "created_at": "2022-11-22T12:00:47.000Z",
-        "public_metrics": {
-            "like_count": 0,
-            "quote_count": 0,
-            "reply_count": 1,
-            "retweet_count": 0
-        },
-        "standalone": true,
-        "rt": false,
-        "reply": false,
-        "quote": false,
-        "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
-    },
-    {
-        "id": "1595034255067078657",
+        "id": "1595539160408133632",
         "author": {
             "name": "Codex OS",
             "username": "codexeditor",
             "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "Theseus and Minotaur by Maestro dei Cassoni Campana, Detail. Date: c. 1510 - 1515. https://t.co/SXnYAdNLw5",
-        "created_at": "2022-11-22T12:39:35.000Z",
+        "html": "If you could ask an @obsdmd team member questions about the tool, what would they be?\\n\\n👀",
+        "created_at": "2022-11-23T22:05:54.000Z",
         "public_metrics": {
-            "like_count": 2993,
-            "quote_count": 31,
-            "reply_count": 18,
-            "retweet_count": 479
+            "like_count": 18,
+            "quote_count": 0,
+            "reply_count": 10,
+            "retweet_count": 3
         },
         "standalone": false,
         "rt": true,
@@ -2505,22 +2574,80 @@ const tftTweets = [
         "quote": false,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1593906477487751170",
+        "id": "1594726161309110272",
         "author": {
-            "name": "Massimo",
-            "username": "Rainmaker1973",
-            "description": "Astronomy, astronautics, meteorology, physics. Engineer, trying to build the big picture of #science via selected & curated pics, videos & links"
+            "name": "Clementmor1",
+            "username": "clementmor1",
+            "description": "Clément - Trying to recreate a half remembered dream\\n💎 https://t.co/iYpyL5V6wE\\n🪐 https://t.co/o3FJPVE9Ma"
         },
-        "html": "This BMW was presented at CES 2022 to showcase a technology that enables a car to change its exterior colour, using an all-electric iX to debut this innovative paint changing technology \\n\\n[source, read more: https://t.co/KPI4se97Y5]\\nhttps://t.co/19ALo7FCNJ",
-        "created_at": "2022-11-19T09:58:12.000Z",
+        "html": "Hey 🌞 https://t.co/5lqlXG65d8",
+        "created_at": "2022-11-21T16:15:20.000Z",
         "public_metrics": {
-            "like_count": 2695,
-            "quote_count": 61,
-            "reply_count": 111,
-            "retweet_count": 340
+            "like_count": 98419,
+            "quote_count": 358,
+            "reply_count": 371,
+            "retweet_count": 17284
+        },
+        "standalone": true,
+        "rt": false,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "video"
+            }
+        ]
+    },
+    {
+        "id": "1593754901146136576",
+        "author": {
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+        },
+        "html": "I’m sad to report that Fred Brooks has died this day. @ComputerHistory \\n\\nhttps://t.co/hM5UQz6MyC",
+        "created_at": "2022-11-18T23:55:53.000Z",
+        "public_metrics": {
+            "like_count": 1338,
+            "quote_count": 141,
+            "reply_count": 74,
+            "retweet_count": 478
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Person",
+                "text": "Fred Brooks"
+            }
+        ],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1595445475959881729",
+        "author": {
+            "name": "Tableau",
+            "username": "tableau",
+            "description": "Tableau helps people see and understand data.\\nWe ❤️ our #DataFam.\\nFor support: @TableauSupport"
+        },
+        "html": "Viz inspiration—game on!\\n\\n@VizByMoon explores the game-themed qualifier entries for #IronViz 2023, using @WJSutton12’s Tableau Public API documentation, and categorization by @ItsElisaDavis. A team effort for this #VizOfTheDay.\\n\\nhttps://t.co/exVeUrrVfC https://t.co/QN9xPhgBnP",
+        "created_at": "2022-11-23T15:53:38.000Z",
+        "public_metrics": {
+            "like_count": 76,
+            "quote_count": 4,
+            "reply_count": 8,
+            "retweet_count": 10
         },
         "standalone": true,
         "rt": false,
@@ -2529,53 +2656,76 @@ const tftTweets = [
         "geo.country": null,
         "entities.annotations": [
             {
-                "type": "Organization",
-                "text": "BMW"
+                "type": "Other",
+                "text": "IronViz"
             },
             {
                 "type": "Other",
-                "text": "CES 2022"
+                "text": "Tableau Public API"
+            },
+            {
+                "type": "Other",
+                "text": "VizOfTheDay"
             }
         ],
-        "context_annotations": "[{\"domain\": {\"id\": \"29\", \"name\": \"Events [Entity Service]\", \"description\": \"Real world events. \"}, \"entity\": {\"id\": \"1297903923848572928\", \"name\": \"CES\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781972125179518977\", \"name\": \"Auto Manufacturer - Auto\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974596752842752\", \"name\": \"Services\"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696420500541440\", \"name\": \"Automotive, Aircraft & Boat Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to automobile, spacecraft, aircraft and boat manufacturing\"}}, {\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557697333571112960\", \"name\": \"Technology Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to softwares, apps, communication equipments, hardwares\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10026490686\", \"name\": \"BMW\"}}, {\"domain\": {\"id\": \"48\", \"name\": \"Product\", \"description\": \"Products created by Brands.  Examples: Ford Explorer, Apple iPhone.\"}, \"entity\": {\"id\": \"1412579054855671809\", \"name\": \"Google Innovation\"}}, {\"domain\": {\"id\": \"65\", \"name\": \"Interests and Hobbies Vertical\", \"description\": \"Top level interests and hobbies groupings, like Food or Travel\"}, \"entity\": {\"id\": \"847528391163092993\", \"name\": \"Automotive\", \"description\": \"Car culture\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"848920371311001600\", \"name\": \"Technology\", \"description\": \"Technology and computing\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"847528646185070592\", \"name\": \"Luxury Cars\", \"description\": \"Luxury\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"10026490686\", \"name\": \"BMW\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"847528391163092993\", \"name\": \"Automotive\", \"description\": \"Car culture\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"848920371311001600\", \"name\": \"Technology\", \"description\": \"Technology and computing\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1196845866138533888\", \"name\": \"Automobile Brands\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1297903923848572928\", \"name\": \"CES\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1303989823011606528\", \"name\": \"Tech events\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1436053202835689485\", \"name\": \"Events\"}}, {\"domain\": {\"id\": \"29\", \"name\": \"Events [Entity Service]\", \"description\": \"Real world events. \"}, \"entity\": {\"id\": \"1346120833178091521\", \"name\": \"CES 2021\"}}]"
+        "context_annotations": "[{\"domain\": {\"id\": \"45\", \"name\": \"Brand Vertical\", \"description\": \"Top level entities that describe a Brands industry\"}, \"entity\": {\"id\": \"781974597226799105\", \"name\": \"B2B\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974597172203520\", \"name\": \"Services - B2B\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10043273937\", \"name\": \"Tableau\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"10043273937\", \"name\": \"Tableau\"}}]",
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
     },
     {
-        "id": "1595245378743451648",
+        "id": "1592924894764814336",
         "author": {
-            "name": "SUMMER",
-            "username": "infinitsummer",
-            "description": "design x engineering dreams of a better internet @nook_browser"
+            "name": "Linus",
+            "username": "thesephist",
+            "description": "thought & craft · ex @replit @hackclub @dormroomfund"
         },
-        "html": "material continuity across infinite canvas apps will be an inflection point",
-        "created_at": "2022-11-23T02:38:31.000Z",
+        "html": "The fact that LLMs generate text is not the point. LLMs are cheap, infinitely scalable black boxes to soft human-like reasoning. That's the headline! The text I/O mode is just the API to this reasoning genie. It's a side effect of the training paradigm.",
+        "created_at": "2022-11-16T16:57:44.000Z",
         "public_metrics": {
-            "like_count": 6,
-            "quote_count": 0,
-            "reply_count": 0,
-            "retweet_count": 1
+            "like_count": 40,
+            "quote_count": 2,
+            "reply_count": 2,
+            "retweet_count": 5
         },
-        "standalone": true,
+        "standalone": false,
         "rt": false,
-        "reply": false,
+        "reply": true,
         "quote": false,
         "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "LLMs"
+            },
+            {
+                "type": "Other",
+                "text": "LLMs"
+            },
+            {
+                "type": "Other",
+                "text": "API"
+            }
+        ],
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1594943866268176384",
+        "id": "1593500752462446592",
         "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+            "name": "Trail Marks",
+            "username": "TrailMarks",
+            "description": "Experience the Annotated Web as an Extension of (y)our Mind(s)\\nTrailMarks are  Thought Vectors in (inter)Personal  Mutual Learning Spaces\\n∀  is a Conversation"
         },
-        "html": "Visual analogue of indoor dining with airborne COVID ... https://t.co/5qyoThOHgf",
-        "created_at": "2022-11-22T06:40:24.000Z",
+        "html": "We had that on the Alto, SmallTalk 50 years ago\\nThen @daningalls created Morphic Computing the Lively Kernel #MetaCircularSoftware\\n I learned about it a decade ago\\nWe could have had it all, but then the \\nthat was predicted by inventing i\\nwas stolen\\n\\nhttps://t.co/dhbed0cGkB https://t.co/vbL7i0xaaD",
+        "created_at": "2022-11-18T07:05:59.000Z",
         "public_metrics": {
-            "like_count": 2,
+            "like_count": 3,
             "quote_count": 0,
-            "reply_count": 0,
-            "retweet_count": 0
+            "reply_count": 1,
+            "retweet_count": 1
         },
         "standalone": false,
         "rt": false,
@@ -2584,53 +2734,109 @@ const tftTweets = [
         "geo.country": null,
         "entities.annotations": [
             {
-                "type": "Other",
-                "text": "airborne"
+                "type": "Place",
+                "text": "Alto"
             },
             {
                 "type": "Other",
-                "text": "COVID"
+                "text": "SmallTalk"
+            },
+            {
+                "type": "Other",
+                "text": "Morphic Computing"
+            },
+            {
+                "type": "Other",
+                "text": "Lively Kernel"
+            },
+            {
+                "type": "Other",
+                "text": "MetaCircularSoftware"
             }
         ],
-        "context_annotations": "[{\"domain\": {\"id\": \"123\", \"name\": \"Ongoing News Story\", \"description\": \"Ongoing News Stories like 'Brexit'\"}, \"entity\": {\"id\": \"1220701888179359745\", \"name\": \"COVID-19\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1220701888179359745\", \"name\": \"COVID-19\"}}]"
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1593550172004679681",
+        "id": "1593600930133393409",
         "author": {
-            "name": "norm away on a wellness retreat 🌴",
-            "username": "NormanChella",
-            "description": "Podcasting, Polymathy and Memory. Podcast Librarian @Podchaser, Chief BizDev @rrpmalaysia. Slightly crazy, always insane at @ttnchannel | tweets are my own"
+            "name": "Gareth Harney",
+            "username": "OptimoPrincipi",
+            "description": "Celebrating the endless wonders of the Roman world. “For these Romans I set no bounds in space or time; but have given empire without end.”"
         },
-        "html": "Just in case the big blue bird blows up, I'm on every other social as @normanchella \\n\\nAnd I'm also found on my website as well\\n\\nSo for my mutuals and followers etc., we can always find each other - and if you see this, let's keep in touch 😌\\nhttps://t.co/S2zQzbfw87",
-        "created_at": "2022-11-18T10:22:22.000Z",
+        "html": "Roman glass 'bird bottles', known as 'unguentarium'; these delicate vessels were made with their contents (perfumes or cosmetic oils) sealed inside. The tip of the tail would be broken off to pour out the liquid. 1st century AD, Thessaloniki Archaeological Museum. https://t.co/X3kp0LGDoi",
+        "created_at": "2022-11-18T13:44:04.000Z",
         "public_metrics": {
-            "like_count": 7,
-            "quote_count": 0,
-            "reply_count": 1,
-            "retweet_count": 1
+            "like_count": 1178,
+            "quote_count": 13,
+            "reply_count": 10,
+            "retweet_count": 284
         },
         "standalone": true,
         "rt": false,
         "reply": false,
         "quote": false,
         "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
+        "entities.annotations": [
+            {
+                "type": "Place",
+                "text": "Thessaloniki Archaeological Museum"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"854692455005921281\", \"name\": \"Science\", \"description\": \"Science\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"1046582045349015552\", \"name\": \"Archaeology\", \"description\": \"Archaeology\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"854692455005921281\", \"name\": \"Science\", \"description\": \"Science\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1046582045349015552\", \"name\": \"Archaeology\", \"description\": \"Archaeology\"}}]",
+        "media": []
     },
     {
-        "id": "1594840664478736385",
+        "id": "1594426231092834304",
         "author": {
-            "name": "ClickUp",
-            "username": "clickup",
-            "description": "Save time with the all-in-one productivity platform that brings teams, tasks, and tools together in one place."
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "5/ Avoid distractions 💻\\n\\nAvoiding distractions includes avoiding the urge to multitask\\n\\nStay focused and... \\n\\n- Put your phone away\\n- Turn off the TV or music\\n- Mute any notifications\\n- Close your extra tabs",
-        "created_at": "2022-11-21T23:50:19.000Z",
+        "html": "Sumerian Bull Lyre, 2550–2400 BC.\\nFound in the King’s Grave, Royal Cemetery, Ur, Iraq. \\n\\n(Medium: Wood, lapis lazuli, gold, silver, shell, bitumen, in modern wood support, 46 × 55\")\\n\\nBritish Museum\\n\\n#archaeohistories https://t.co/PqGSmi4KrL",
+        "created_at": "2022-11-20T20:23:31.000Z",
         "public_metrics": {
-            "like_count": 4,
+            "like_count": 343,
+            "quote_count": 4,
+            "reply_count": 5,
+            "retweet_count": 68
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Place",
+                "text": "Royal Cemetery"
+            },
+            {
+                "type": "Place",
+                "text": "Iraq"
+            },
+            {
+                "type": "Place",
+                "text": "British Museum"
+            }
+        ],
+        "context_annotations": null,
+        "media": []
+    },
+    {
+        "id": "1595401046922350592",
+        "author": {
+            "name": "Hazard, Servant of Light",
+            "username": "natural_hazard",
+            "description": "circus-punk ||\\nluck dealer ||\\nJoy-Jitsu black belt ||\\nmaking it pleasant for you to supplement my education ||\\nBrooklyn peeps DM and let's go for a stroll!"
+        },
+        "html": "@codexeditor \"he could pick the piano up and throw it at you\" 😙🤌 amaze",
+        "created_at": "2022-11-23T12:57:05.000Z",
+        "public_metrics": {
+            "like_count": 1,
             "quote_count": 0,
             "reply_count": 1,
-            "retweet_count": 0
+            "retweet_count": 1
         },
         "standalone": false,
         "rt": false,
@@ -2638,22 +2844,23 @@ const tftTweets = [
         "quote": false,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696802391859201\", \"name\": \"Entertainment & Leisure Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to movies, music, television, franchises, venues, theme parks, toys, tourism, hotels\"}}]"
+        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696802391859201\", \"name\": \"Entertainment & Leisure Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to movies, music, television, franchises, venues, theme parks, toys, tourism, hotels\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"898268092110852096\", \"name\": \"Piano\", \"description\": \"Piano\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"1131990542198247424\", \"name\": \"Musical instruments\", \"description\": \"Musical Instruments\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"847524658970636288\", \"name\": \"Music\", \"description\": \"Music and radio\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"898268092110852096\", \"name\": \"Piano\", \"description\": \"Piano\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1131990542198247424\", \"name\": \"Musical instruments\", \"description\": \"Musical Instruments\"}}, {\"domain\": {\"id\": \"173\", \"name\": \"Product Taxonomy\", \"description\": \"A product taxonomy for labeling categories of products. \"}, \"entity\": {\"id\": \"898268092110852096\", \"name\": \"Piano\", \"description\": \"Piano\"}}]",
+        "media": []
     },
     {
-        "id": "1593333634945032192",
+        "id": "1593775530817556480",
         "author": {
-            "name": "Codex OS",
-            "username": "codexeditor",
-            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
+            "name": "Linus",
+            "username": "thesephist",
+            "description": "thought & craft · ex @replit @hackclub @dormroomfund"
         },
-        "html": "Excited to share we've raised a seed round for https://t.co/AYRWTFi3Kn. Very lucky to have found investors @betaworks and @blueyard who believe in our vision of an open, decentralized, worldwide thought graph. 🖖 https://t.co/gcGZ1nav7u",
-        "created_at": "2022-11-17T20:01:55.000Z",
+        "html": "Introducing AltDiffusion, a multilingual text-image generation model built on @StableDiffusion.\\nCurrently supports English, Chinese, Spanish, French, Japanese, Korean, Arabic, Russian and Italian:\\nhttps://t.co/EjhXISuJQu\\n@HuggingFace Model: https://t.co/nMKJUEVZ99 https://t.co/j9C7R4E596",
+        "created_at": "2022-11-19T01:17:52.000Z",
         "public_metrics": {
-            "like_count": 145,
-            "quote_count": 4,
-            "reply_count": 15,
-            "retweet_count": 13
+            "like_count": 298,
+            "quote_count": 9,
+            "reply_count": 9,
+            "retweet_count": 90
         },
         "standalone": false,
         "rt": true,
@@ -2661,73 +2868,75 @@ const tftTweets = [
         "quote": false,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696848252391426\", \"name\": \"Financial Services Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent related to Banks, Credit cards, Insurance, Investments, Stocks \"}}, {\"domain\": {\"id\": \"65\", \"name\": \"Interests and Hobbies Vertical\", \"description\": \"Top level interests and hobbies groupings, like Food or Travel\"}, \"entity\": {\"id\": \"781974596148793345\", \"name\": \"Business & finance\"}}, {\"domain\": {\"id\": \"66\", \"name\": \"Interests and Hobbies Category\", \"description\": \"A grouping of interests and hobbies entities, like Novelty Food or Destinations\"}, \"entity\": {\"id\": \"857878402157629440\", \"name\": \"Investors and patents\", \"description\": \"Investors and patents\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"781974596148793345\", \"name\": \"Business & finance\"}}]"
+        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696888568045569\", \"name\": \"Food & Beverage Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent and related to foods & beverages such as snacks, soft drinks, beers.\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1265660441822281728\", \"name\": \"Art\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1537182142450372608\", \"name\": \"AI image generation\"}}]",
+        "media": []
     },
     {
-        "id": "1592917229376573441",
+        "id": "1595481477655179264",
         "author": {
-            "name": "Zdzisław Beksiński",
-            "username": "ArtistBeksinski",
-            "description": "Fan account of Zdzisław Beksiński, a Polish painter, photographer and sculptor, specializing in the field of dystopian surrealism. #artbot by @andreitr"
+            "name": "Brian Roemmele",
+            "username": "BrianRoemmele",
+            "description": "we can only see what we think is possible..."
         },
-        "html": "Untitled #beksinski #zdislavbeksinski https://t.co/ixx22jrL0p https://t.co/vMF96EiKm8",
-        "created_at": "2022-11-16T16:27:17.000Z",
+        "html": "Twenty hours. https://t.co/rTOWw0Ioki",
+        "created_at": "2022-11-23T18:16:41.000Z",
         "public_metrics": {
-            "like_count": 197,
+            "like_count": 95,
             "quote_count": 0,
-            "reply_count": 0,
-            "retweet_count": 25
+            "reply_count": 4,
+            "retweet_count": 15
         },
         "standalone": true,
         "rt": false,
         "reply": false,
         "quote": false,
         "geo.country": null,
-        "entities.annotations": [
+        "entities.annotations": [],
+        "context_annotations": "[{\"domain\": {\"id\": \"46\", \"name\": \"Business Taxonomy\", \"description\": \"Categories within Brand Verticals that narrow down the scope of Brands\"}, \"entity\": {\"id\": \"1557696888568045569\", \"name\": \"Food & Beverage Business\", \"description\": \"Brands, companies, advertisers and every non-person handle with the profit intent and related to foods & beverages such as snacks, soft drinks, beers.\"}}]",
+        "media": [
             {
-                "type": "Person",
-                "text": "beksinski"
+                "type": "video"
             }
-        ],
-        "context_annotations": null
+        ]
     },
     {
-        "id": "1593989996071247873",
+        "id": "1593404459631009792",
         "author": {
-            "name": "The Syllabus",
-            "username": "syllabus_tweets",
-            "description": "A Knowledge Curation Platform. We index, rank, and review tens of thousands of newly published pieces across text, audio, and video. Subscribe ⬇️"
+            "name": "Codex OS",
+            "username": "codexeditor",
+            "description": "'What is now proved was once only imagined.' (William Blake)\\n\\nCreating the knowledge worker's OS.\\n\\n@argimenes@mastodon.social"
         },
-        "html": "We must recognise pandemics as long-term processes, and shift our focus beyond epidemic episodes of disruption, to better understand how past societies learned to live with diseases.\\n\\nBy Nükhet Varlık  for @NYUADInstitute \\n\\nhttps://t.co/5MJ7MwHDeE",
-        "created_at": "2022-11-19T15:30:04.000Z",
+        "html": "Happening now @nwspk in London. We have some extra space if you’re in the city and want to come along https://t.co/yM9TkU7wJs",
+        "created_at": "2022-11-18T00:43:21.000Z",
         "public_metrics": {
-            "like_count": 6,
-            "quote_count": 0,
-            "reply_count": 0,
-            "retweet_count": 0
+            "like_count": 91,
+            "quote_count": 3,
+            "reply_count": 9,
+            "retweet_count": 7
         },
-        "standalone": true,
-        "rt": false,
+        "standalone": false,
+        "rt": true,
         "reply": false,
         "quote": false,
         "geo.country": null,
         "entities.annotations": [
             {
-                "type": "Person",
-                "text": "Nükhet Varlık"
+                "type": "Place",
+                "text": "London"
             }
         ],
-        "context_annotations": null
+        "context_annotations": "[{\"domain\": {\"id\": \"156\", \"name\": \"Cities\", \"description\": \"Cities around the world\"}, \"entity\": {\"id\": \"855412191050121217\", \"name\": \"London\", \"description\": \"london\"}}]",
+        "media": []
     },
     {
-        "id": "1592963231781265408",
+        "id": "1594714765108150272",
         "author": {
             "name": "The Syllabus",
             "username": "syllabus_tweets",
             "description": "A Knowledge Curation Platform. We index, rank, and review tens of thousands of newly published pieces across text, audio, and video. Subscribe ⬇️"
         },
-        "html": ".@jgreene2 discusses on the use of communications technologies in American medicine.\\n\\nBy @TheDealNewsroom\\n\\nhttps://t.co/Ihb5xJ3NKi",
-        "created_at": "2022-11-16T19:30:04.000Z",
+        "html": "The hype surrounding digital works dominated the international art world for two years. Then the market collapsed, and buyers lost millions. Yet optimism still pervades the scene.  \\n\\nBy @CPadtberg for @derspiegel \\n\\nhttps://t.co/fI7JO6iOfK",
+        "created_at": "2022-11-21T15:30:03.000Z",
         "public_metrics": {
             "like_count": 1,
             "quote_count": 0,
@@ -2740,30 +2949,78 @@ const tftTweets = [
         "quote": false,
         "geo.country": null,
         "entities.annotations": [],
-        "context_annotations": null
+        "context_annotations": null,
+        "media": []
     },
     {
-        "id": "1595357500135587842",
+        "id": "1594713555936460806",
         "author": {
-            "name": "@rgallen@mastodon.world",
-            "username": "r_g_allen",
-            "description": "Archivist @magdalenoxford; medievalist @UniofOxford; Fellow @SocAntiquaries @RoyalHistSoc. Follow me on Mastodon 🦣 ➡️ @rgallen@mastodon.world"
+            "name": "ClickUp",
+            "username": "clickup",
+            "description": "Save time with the all-in-one productivity platform that brings teams, tasks, and tools together in one place."
         },
-        "html": "If I started a company that made bars of soap that looked like this, would anyone be interested? https://t.co/oHzc7Sow5W",
-        "created_at": "2022-11-23T10:04:02.000Z",
+        "html": "#clickupevents makes learning fun! Lego build event with @clickup and @theadamward https://t.co/h9BSJDHbHE",
+        "created_at": "2022-11-21T15:25:14.000Z",
         "public_metrics": {
-            "like_count": 1198,
-            "quote_count": 15,
-            "reply_count": 81,
-            "retweet_count": 65
+            "like_count": 8,
+            "quote_count": 0,
+            "reply_count": 1,
+            "retweet_count": 1
+        },
+        "standalone": false,
+        "rt": true,
+        "reply": false,
+        "quote": false,
+        "geo.country": null,
+        "entities.annotations": [
+            {
+                "type": "Other",
+                "text": "clickupevents"
+            },
+            {
+                "type": "Other",
+                "text": "Lego"
+            }
+        ],
+        "context_annotations": "[{\"domain\": {\"id\": \"45\", \"name\": \"Brand Vertical\", \"description\": \"Top level entities that describe a Brands industry\"}, \"entity\": {\"id\": \"781974596740190208\", \"name\": \"CPG\"}}, {\"domain\": {\"id\": \"30\", \"name\": \"Entities [Entity Service]\", \"description\": \"Entity Service top level domain, every item that is in Entity Service should be in this domain\"}, \"entity\": {\"id\": \"781974596148862977\", \"name\": \"Child Care - CPG\"}}, {\"domain\": {\"id\": \"47\", \"name\": \"Brand\", \"description\": \"Brands and Companies\"}, \"entity\": {\"id\": \"10024374015\", \"name\": \"LEGO\"}}, {\"domain\": {\"id\": \"48\", \"name\": \"Product\", \"description\": \"Products created by Brands.  Examples: Ford Explorer, Apple iPhone.\"}, \"entity\": {\"id\": \"1338949734145277952\", \"name\": \"LEGO - Build Campaign\"}}, {\"domain\": {\"id\": \"65\", \"name\": \"Interests and Hobbies Vertical\", \"description\": \"Top level interests and hobbies groupings, like Food or Travel\"}, \"entity\": {\"id\": \"864925500627484672\", \"name\": \"Family and life stages\", \"description\": \"Family and Life Stages\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"10024374015\", \"name\": \"LEGO\"}}, {\"domain\": {\"id\": \"131\", \"name\": \"Unified Twitter Taxonomy\", \"description\": \"A taxonomy of user interests. \"}, \"entity\": {\"id\": \"1278061468265508864\", \"name\": \"Collectibles\"}}]",
+        "media": [
+            {
+                "type": "photo"
+            }
+        ]
+    },
+    {
+        "id": "1593287053269209088",
+        "author": {
+            "name": "Angela O'Brien",
+            "username": "GrecianGirly",
+            "description": "Avid book collector / Geek / Masters Student\\nClassics/Ancient History/Archaeology 🏺🏛 \\n(Half-English / Half-Greek)\\nExpect typos and photos of sheep 😊🐑"
+        },
+        "html": "🏛 The beautiful Athenian Acropolis during snowfall! ❄🇬🇷 https://t.co/iQMarpSQRa",
+        "created_at": "2022-11-17T16:56:49.000Z",
+        "public_metrics": {
+            "like_count": 16358,
+            "quote_count": 129,
+            "reply_count": 117,
+            "retweet_count": 2570
         },
         "standalone": true,
         "rt": false,
         "reply": false,
         "quote": false,
         "geo.country": null,
-        "entities.annotations": [],
-        "context_annotations": null
+        "entities.annotations": [
+            {
+                "type": "Place",
+                "text": "Athenian Acropolis"
+            }
+        ],
+        "context_annotations": null,
+        "media": [
+            {
+                "type": "video"
+            }
+        ]
     }
 ]
 
