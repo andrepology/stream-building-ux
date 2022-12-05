@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef, memo } from "react";
+import { useState, useEffect, useRef, Children, cloneElement } from "react";
 import cn from 'classnames'
 import { useSpring, animated, useTransition } from '@react-spring/web'
 
 import EntityTag from "./EntityTag";
 
 import { MdKeyboardArrowRight } from 'react-icons/md'
-import { BiDotsVertical } from 'react-icons/bi'
+import { BiDotsVertical, BiCaretRight } from 'react-icons/bi'
 import { useCallback } from "react";
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 
@@ -29,13 +29,13 @@ const InlineEntity = ({ name, kind }) => {
 
 
 
-const AccordionSummary = ({ children, toggle }) => {
+const AccordionSummary = ({ children, toggle, expanded }) => {
 
     return (
         <div
             onClick={() => toggle()}
         >
-            {children}
+            {Children.map(children, child => cloneElement(child, { expanded: expanded }))}
         </div>
     )
 
@@ -75,6 +75,7 @@ const AccordionDetails = ({ refHeight, expanded, children }) => {
 const Accordion = ({ height, summary, details, toggle, open = null }) => {
     // renders a controlled accordion with animated expand/collapse
 
+    // fallback if not controlled by parent
     const [expanded, setExpanded] = useState(false)
     
     const detailsToggle = toggle? () => toggle() : () => setExpanded(!expanded)
@@ -82,7 +83,7 @@ const Accordion = ({ height, summary, details, toggle, open = null }) => {
 
     return (
         <div>
-            <AccordionSummary toggle={detailsToggle}>
+            <AccordionSummary toggle={detailsToggle} expanded={isOpen}>
                 {summary}
             </AccordionSummary>
             <AccordionDetails refHeight={height ?? null} expanded={isOpen} >
@@ -148,7 +149,11 @@ const StreamHeader = ({ streamName, onClick = () => console.log("Clicked") }) =>
 }
 
 
-const StreamSummary = ({ quantity = "Seeds", count = 5, noBorder = false }) => {
+const StreamSummary = ({ quantity = "Seeds", count = 5, noBorder = false, expanded }) => {
+
+    console.log(quantity, expanded)
+
+
     return (
         <div 
             className={cn(
@@ -156,9 +161,16 @@ const StreamSummary = ({ quantity = "Seeds", count = 5, noBorder = false }) => {
                 {"border-b border-gray-100": !noBorder}
             )}
         >
-            <p>
-                {quantity}
-            </p>
+            <div className="flex gap-0.5 items-center">
+                <BiCaretRight
+                    size={10}
+                    // rotate if expanded
+                    style={expanded ? { transform: "rotate(90deg)" } : {}}
+                />
+                <p>
+                    {quantity}
+                </p>
+            </div>
             <div className="rounded-full px-2 h-4 flex items-center justify-center bg-gray-100 text-gray-500/40 text-xs">
                 {count}
             </div>
@@ -167,7 +179,7 @@ const StreamSummary = ({ quantity = "Seeds", count = 5, noBorder = false }) => {
 }
 
 
-const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible }) => {
+const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasChildren, expanded }) => {
 
     const [isHovered, setHover] = useState(false)
 
@@ -194,9 +206,19 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible }) => 
                     { "text-gray-300": !isVisible }
                 )}
             >
-                <p>
-                    {quantity}
-                </p>
+                <div
+                    className="flex gap-0.5 items-center"
+                >
+                    {hasChildren && (
+                        <BiCaretRight
+                            size={10}
+                            style={expanded ? { color: '#b3bfcb', transform: "rotate(90deg)" } : {}}
+                        />
+                    )}
+                    <p>
+                        {quantity}
+                    </p>
+                </div>
                 {isVisible &&
                     <div className="rounded-full px-2 h-4 flex items-center justify-center bg-gray-100 text-gray-500/40 text-xs">
                         {count}
@@ -247,7 +269,7 @@ const ContentFilters = ({ streamFilters, toggleFilters }) => {
                         return (
                             <Accordion
                                 key={i}
-                                summary={<Filter isVisible={filter.isVisible} quantity={filter.name} count={filter.count} toggleFilters = {toggleFilters} />}
+                                summary={<Filter isVisible={filter.isVisible} quantity={filter.name} count={filter.count} toggleFilters = {toggleFilters} hasChildren = {filter.children?.length > 0} />}
                                 details={renderFilters(filter.children)}
                             />
                         )
