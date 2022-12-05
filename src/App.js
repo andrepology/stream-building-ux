@@ -1,4 +1,4 @@
-import { useState, useEffect, memo, useMemo } from 'react';
+import { useState, useEffect, memo, useMemo, useCallback } from 'react';
 import cn from 'classnames';
 import { useSpring, animated } from '@react-spring/web'
 
@@ -67,144 +67,8 @@ const sampleStreams = [
   { name: 'Biochemistry Geeks', seeds: [''] }
 ];
 
-function App() {
-  const [streams, setStreams] = useState(sampleStreams)
-  const [currentStream, setStream] = useState("Tools For Thought");
+const useFilters = () => {
   const [streamFilters, setFilters ] = useState([]);
-  
-  const [focusedTweet, setFocusedTweet] = useState(null);
-  const [openOverview, setOpenOverview] = useState(false);
-
-  const setSidebarZoomLevel = (focusedTweet) => {
-    return (focusedTweet === null) ? "-3" : "1";
-  }
-
-  const setTweetZoomLevel = (focusedTweet, id) => {
-    switch (focusedTweet) {
-      case null:
-        return "0";
-      default:
-        if (focusedTweet !== id) {
-          return "-3";
-        } else {
-          return "0";
-        }
-    }
-  }
-
-  // Tally Feed statistics on a change of currentStream or streamFiltersx 
-  useEffect(() => {
-    console.log('Tallying Feed Statistics');
-
-    // time performance of tallying
-    const start = performance.now();
-    
-    const tally = {
-      Tweets: {
-        Count: 0,
-        Standalone: 0,
-        Replies: 0,
-        Retweets: 0,
-        Quotes: 0
-      },
-      Accounts : {
-        Count: 0,
-      },
-      Media: {
-        Count: 0,
-        Images: 0,
-        Videos: 0,
-      },
-      Entities: {
-        Count: 0
-      }
-    }
-
-    const accounts = new Set()
-
-    tftTweets.forEach(tweet => {
-
-      accounts.add(tweet.author.username)
-
-      tweet.media.forEach(media => {
-        if (media.type === "photo") {
-          tally.Media.Images += 1
-        } else if (media.type === "video") {
-          tally.Media.Videos += 1
-        }
-      })
-
-      if (tweet.standalone === true) {
-        tally.Tweets.Standalone += 1;
-      } else if (tweet.reply === true) {
-        tally.Tweets.Replies += 1;
-      } else if (tweet.rt === true) {
-        tally.Tweets.Retweets += 1;
-      } else if (tweet.quote === true) {
-        tally.Tweets.Quotes += 1;
-      }
-
-      const nEntities = tweet['entities.annotations'].length
-      if (nEntities > 0) {
-        tally.Entities.Count += tweet['entities.annotations'].length
-      }
-    })
-
-    tally.Tweets.Count = tally.Tweets.Standalone + tally.Tweets.Replies + tally.Tweets.Retweets + tally.Tweets.Quotes;
-    tally.Accounts.Count = accounts.size
-    tally.Media.Count = tally.Media.Images + tally.Media.Videos
-    
-    const end = performance.now();
-    
-    console.log(`Tallying took ${end - start} ms`);
-
-    // TODO: pls refactor this to one schema lol
-    var filterState = []
-    for (const k in tally) {
-      filterState.push({
-        name: k,
-        count: tally[k].Count,
-        isVisible: true,
-        children: Object.entries(tally[k]).filter((k, v) => {
-          if (k !== "Count") {
-            return (k, v)
-          }
-        }).map(a => {
-          return { name: a[0], count: a[1], isVisible: true }
-        })
-      })
-    }
-
-    console.log(`Transforming took ${performance.now() - end} ms`, filterState);
-
-    setFilters(filterState)
-
-  }, [currentStream])
-  
-  
-  // TODO: memo according to filters and focus
-  const tweetElements = tftTweets.map((tweet) => {
-
-    const inFocus = focusedTweet === tweet.id;
-
-    return (
-      <TweetMemo
-        key={tweet.id}
-        tweet={tweet}
-        isFocused={inFocus}
-        setFocusedTweet={setFocusedTweet}
-        zoom={setTweetZoomLevel(focusedTweet, tweet.id)}
-        streams={streams}
-        setStreams={setStreams}
-        currentStream={currentStream}
-        openOverview={openOverview}
-        setOpenOverview={setOpenOverview}
-      />
-    )
-  });
-
-
-
   const toggleFilters = (filterName) => {
     // toggle filter with name = key visibilty
     // all children share same state
@@ -241,6 +105,210 @@ function App() {
 
   } 
 
+  return [streamFilters, setFilters, toggleFilters]
+}
+
+function App() {
+  const [streams, setStreams] = useState(sampleStreams)
+  const [currentStream, setStream] = useState("Tools For Thought");
+
+  
+  const [accounts, setAccounts] = useState([]);
+  const [tweets, setTweets] = useState([]);
+  const [entities, setEntities] = useState([]);
+
+  const [focusedTweet, setFocusedTweet] = useState(null);
+  const [openOverview, setOpenOverview] = useState(false);
+
+  const [streamFilters, setFilters, toggleFilters] = useFilters();
+
+  const setSidebarZoomLevel = (focusedTweet) => {
+    return (focusedTweet === null) ? "-3" : "1";
+  }
+
+  const setTweetZoomLevel = (focusedTweet, id) => {
+    switch (focusedTweet) {
+      case null:
+        return "0";
+      default:
+        if (focusedTweet !== id) {
+          return "-3";
+        } else {
+          return "0";
+        }
+    }
+  }
+
+  // Tally Feed statistics on a change of currentStream or streamFiltersx 
+  useEffect(() => {
+    // console.log('Tallying Feed Statistics');
+
+    // time performance of tallying
+    const start = performance.now();
+    
+    const tally = {
+      Tweets: {
+        Count: 0,
+        Standalone: 0,
+        Replies: 0,
+        Retweets: 0,
+        Quotes: 0
+      },
+      Accounts : {
+        Count: 0,
+      },
+      Media: {
+        Count: 0,
+        Images: 0,
+        Videos: 0,
+      },
+      Entities: {
+        Count: 0
+      }
+    }
+
+    const accounts = new Set()
+    const nextAccounts = []
+
+    tftTweets.forEach(tweet => {
+
+      accounts.add(tweet.author.username)
+      nextAccounts.push(tweet.author)
+
+      tweet.media.forEach(media => {
+        if (media.type === "photo") {
+          tally.Media.Images += 1
+        } else if (media.type === "video") {
+          tally.Media.Videos += 1
+        }
+      })
+
+      if (tweet.standalone === true) {
+        tally.Tweets.Standalone += 1;
+      } else if (tweet.reply === true) {
+        tally.Tweets.Replies += 1;
+      } else if (tweet.rt === true) {
+        tally.Tweets.Retweets += 1;
+      } else if (tweet.quote === true) {
+        tally.Tweets.Quotes += 1;
+      }
+
+      const nEntities = tweet['entities.annotations'].length
+      if (nEntities > 0) {
+        tally.Entities.Count += tweet['entities.annotations'].length
+      }
+    })
+
+    setAccounts(nextAccounts.filter(acc => acc.username in accounts))
+
+    tally.Tweets.Count = tally.Tweets.Standalone + tally.Tweets.Replies + tally.Tweets.Retweets + tally.Tweets.Quotes;
+    tally.Accounts.Count = accounts.size
+    tally.Media.Count = tally.Media.Images + tally.Media.Videos
+    
+    const end = performance.now();
+    
+    // console.log(`Tallying took ${end - start} ms`);
+
+    // TODO: pls refactor this to one schema lol
+    var filterState = []
+    for (const k in tally) {
+      filterState.push({
+        name: k,
+        count: tally[k].Count,
+        isVisible: true,
+        children: Object.entries(tally[k]).filter((k, v) => {
+          if (k !== "Count") {
+            return (k, v)
+          }
+        }).map(a => {
+          return { name: a[0], count: a[1], isVisible: true }
+        })
+      })
+    }
+
+    // console.log(`Transforming took ${performance.now() - end} ms`, filterState);
+
+    setFilters(filterState)
+
+
+
+  }, [currentStream])
+
+
+  const createTweetElements = (tweets) => {
+
+    
+    const elems = tweets.map((tweet) => {
+
+      const inFocus = focusedTweet === tweet.id;
+
+      return (
+        <Tweet
+          key={tweet.id}
+          tweet={tweet}
+          isFocused={inFocus}
+          setFocusedTweet={setFocusedTweet}
+          zoom={setTweetZoomLevel(focusedTweet, tweet.id)}
+          streams={streams}
+          setStreams={setStreams}
+          currentStream={currentStream}
+          openOverview={openOverview}
+          setOpenOverview={setOpenOverview}
+        />
+      )
+    })
+
+    return elems
+  }
+
+  
+
+  useEffect(() => {
+    // console.log("Computing Tweets to Render based on Filters")
+
+    const start = performance.now();
+
+
+    console.log("Filtering Tweets with Stream Filters", streamFilters)
+
+    const nextTweets = tftTweets.filter(tweet => {
+
+      // check if tweet meets filter criteria
+      
+      return streamFilters.some(filter => {
+        if (filter.name === "Tweets") {
+
+          if (!filter.isVisible) {
+            return false
+          }
+
+          return filter.children.filter(child => child.isVisible).some(child => {
+            if (child.name === "Standalone") {
+              return tweet.standalone
+            } else if (child.name === "Replies") {
+              return tweet.reply
+            } else if (child.name === "Retweets") {
+              return tweet.rt
+            } else if (child.name === "Quotes") {
+              return tweet.quote
+            }
+          })
+        }
+      
+      })
+    })
+
+    setTweets(nextTweets)
+
+    const end = performance.now();
+
+    console.log(`Filtering took ${end - start} ms`);
+
+
+  }, [streamFilters])
+
+  
+
   return (
 
     <div className="app-bg h-screen w-screen flex justify-center">
@@ -252,9 +320,8 @@ function App() {
           setStream={setStream}
           currentStream={currentStream}
           stream={streams[0]}
-          streamContent = {tweetElements.length}
+          streamContent={tweets.length}
 
-          setFilters={setFilters}
           streamFilters = {streamFilters}
           toggleFilters = {toggleFilters}
 
@@ -265,7 +332,7 @@ function App() {
         openOverview={openOverview}
         filters = {streamFilters}
       >
-          {tweetElements}
+        {createTweetElements(tweets)}
       </Feed>
 
       <BackdropMemo currentStream={currentStream} />
