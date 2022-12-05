@@ -167,10 +167,14 @@ const StreamSummary = ({ quantity = "Seeds", count = 5, noBorder = false }) => {
 }
 
 
-const Filter = ({ quantity = "Seeds", count = 5 }) => {
+const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible }) => {
 
     const [isHovered, setHover] = useState(false)
-    const [isVisible, setVisible] = useState(true)
+
+    const handleClick = () => {
+        console.log("Toggling filter", quantity)
+        toggleFilters(quantity)
+    }
 
     const eyeCon = isVisible ?
         <HiOutlineEye size={12} style={{ color: '#b3bfcb' }} />
@@ -202,12 +206,12 @@ const Filter = ({ quantity = "Seeds", count = 5 }) => {
 
             {isVisible ?
                 isHovered && (
-                    <div onClick={() => setVisible(!isVisible)}>
+                    <div onClick={() => handleClick()}>
                         {eyeCon}
                     </div>
                 )
                 :
-                <div onClick={() => setVisible(!isVisible)}>
+                <div onClick={() => handleClick()}>
                     {eyeCon}
                 </div>
             }
@@ -230,7 +234,7 @@ const SeedDrawer = ({ seeds }) => {
     )
 }
 
-const ContentFilters = ({ streamFilters, setFilters }) => {
+const ContentFilters = ({ streamFilters, toggleFilters }) => {
     // TODO: recursively renders feed toggles
 
     const renderFilters = (streamFilters) => {
@@ -243,7 +247,7 @@ const ContentFilters = ({ streamFilters, setFilters }) => {
                         return (
                             <Accordion
                                 key={i}
-                                summary={<Filter isVisible={filter.isVisible} quantity={filter.name} count={filter.count} />}
+                                summary={<Filter isVisible={filter.isVisible} quantity={filter.name} count={filter.count} toggleFilters = {toggleFilters} />}
                                 details={renderFilters(filter.children)}
                             />
                         )
@@ -281,7 +285,7 @@ const useRefHeight = (ref, state) => {
 }
 
 
-const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, setFilters }) => {
+const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFilters }) => {
     // Renders a Stream object, its metadata, View Controller and Seeds
     // TODO: handles two states. Seeds, and View Controller
 
@@ -304,6 +308,8 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, setFilte
     // track remaining height for AccordionDetails
     const sidebarRef = useRef()
     const remainingHeight = useRefHeight(sidebarRef)
+
+    
 
     return (
         <div
@@ -337,7 +343,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, setFilte
                 <Accordion
                     height={remainingHeight}
                     summary={<StreamSummary quantity={"Content"} count={100} noBorder />}
-                    details={<ContentFilters streamFilters={streamFilters} setFilters={setFilters} />}
+                    details={<ContentFilters streamFilters={streamFilters} toggleFilters = {toggleFilters} />}
                     toggle = {() => toggleOpen("view")}
                     open = {open["view"]}
 

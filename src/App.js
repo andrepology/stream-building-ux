@@ -10,19 +10,19 @@ import './App.css';
 import tftTweets from './components/sample';
 
 
-const Stream = ({ children, openOverview }) => {
+const Feed = ({ children, openOverview }) => {
 
   // TODO: push based on amount of space on screen
   const { x, scale } = useSpring({
-    x: openOverview ? -598 : 0,
-    scale: openOverview ? 0.90 : 1,
+    x: openOverview ? -100 : 0,
+    scale: openOverview ? 0.6 : 1,
     config: { friction: 20 }
   });
 
   return (
     <div className='h-screen w-screen overflow-y-scroll pl-24 flex justify-center z-10'>
       <animated.div 
-        style={{ x }} 
+        style={{ x, scale }} 
         className='flex flex-col pl-6 gap-6 max-w-lg'
       >
         {/* Empty Space. To Replace with Dashboard */}
@@ -156,7 +156,7 @@ function App() {
     
     const end = performance.now();
     
-    console.log(tally, `Tallying took ${end - start} ms`);
+    console.log(`Tallying took ${end - start} ms`);
 
     // TODO: pls refactor this to one schema lol
     var filterState = []
@@ -170,11 +170,13 @@ function App() {
             return (k, v)
           }
         }).map(a => {
-          return { name: a[0], count: a[1] }
+          return { name: a[0], count: a[1], isVisible: true }
         })
       })
-
     }
+
+    console.log(`Transforming took ${performance.now() - end} ms`, filterState);
+
     setFilters(filterState)
 
   }, [currentStream])
@@ -201,6 +203,30 @@ function App() {
     )
   });
 
+  const toggleFilters = (filterName) => {
+    // toggle filter with name = key visibilty
+    // all children share same state
+
+    const nextFilters = [...streamFilters]
+
+    const toggle = (filter) => {
+        if (filter.name === filterName) {
+          let nextState = !filter.isVisible
+          filter.isVisible = nextState
+          filter.children?.forEach(child => child.isVisible = nextState)
+        } else if (filter.children) {
+            filter.children.forEach(child => toggle(child))
+        }
+    }
+
+    nextFilters.forEach(filter => toggle(filter))
+
+    console.log(nextFilters)
+
+    setFilters(nextFilters)
+
+  } 
+
   return (
 
     <div className="app-bg h-screen w-screen flex justify-center">
@@ -216,16 +242,17 @@ function App() {
 
           setFilters={setFilters}
           streamFilters = {streamFilters}
+          toggleFilters = {toggleFilters}
 
         />
       </div>
 
-      <Stream 
+      <Feed 
         openOverview={openOverview}
         filters = {streamFilters}
       >
           {tweetElements}
-      </Stream>
+      </Feed>
 
       <BackdropMemo currentStream={currentStream} />
 
