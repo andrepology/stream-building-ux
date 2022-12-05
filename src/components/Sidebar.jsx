@@ -329,6 +329,9 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
     const sidebarRef = useRef()
     const remainingHeight = useRefHeight(sidebarRef)
 
+
+    const visibleContentCount = streamFilters.filter(filter => filter.isVisible).reduce((acc, filter) => acc + filter.count, 0)
+
     
 
     return (
@@ -362,7 +365,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
                 />
                 <Accordion
                     height={remainingHeight}
-                    summary={<StreamSummary quantity={"Content"} count={100} noBorder />}
+                    summary={<StreamSummary quantity={"Content"} count={visibleContentCount} noBorder />}
                     details={<ContentFilters streamFilters={streamFilters} toggleFilters = {toggleFilters} />}
                     toggle = {() => toggleOpen("view")}
                     open = {open["view"]}
