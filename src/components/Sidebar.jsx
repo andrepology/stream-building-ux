@@ -330,7 +330,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
     const remainingHeight = useRefHeight(sidebarRef)
 
 
-    const visibleContentCount = streamFilters.filter(filter => filter.isVisible).reduce((acc, filter) => acc + filter.count, 0)
+    const visibleContentCount = streamFilters?.filter(filter => filter.isVisible).reduce((acc, filter) => acc + filter.count, 0)
 
     
 

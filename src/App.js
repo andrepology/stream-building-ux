@@ -70,7 +70,7 @@ const sampleStreams = [
 function App() {
   const [streams, setStreams] = useState(sampleStreams)
   const [currentStream, setStream] = useState("Tools For Thought");
-  const [streamFilters, setFilters ] = useState({});
+  const [streamFilters, setFilters ] = useState([]);
   
   const [focusedTweet, setFocusedTweet] = useState(null);
   const [openOverview, setOpenOverview] = useState(false);
@@ -203,6 +203,8 @@ function App() {
     )
   });
 
+
+
   const toggleFilters = (filterName) => {
     // toggle filter with name = key visibilty
     // all children share same state
@@ -226,7 +228,7 @@ function App() {
     // Ensure parent counts are sum of children
     const updateCounts = (filter) => {
       if (filter.children?.length > 1) {
-        filter.count = filter.children.filter(child => child.isVisible).reduce((acc, child) => acc + child.count, 0)
+        filter.count = filter.children?.filter(child => child.isVisible).reduce((acc, child) => acc + child.count, 0)
         filter.children.forEach(child => updateCounts(child))
       }
     }
