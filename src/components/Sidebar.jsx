@@ -151,7 +151,6 @@ const StreamHeader = ({ streamName, onClick = () => console.log("Clicked") }) =>
 
 const StreamSummary = ({ quantity = "Seeds", count = 5, noBorder = false, expanded }) => {
 
-    console.log(quantity, expanded)
 
 
     return (
@@ -184,7 +183,6 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
     const [isHovered, setHover] = useState(false)
 
     const handleClick = () => {
-        console.log("Toggling filter", quantity)
         toggleFilters(quantity)
     }
 

@@ -223,6 +223,18 @@ function App() {
 
     console.log(nextFilters)
 
+    // Ensure parent counts are sum of children
+    const updateCounts = (filter) => {
+      if (filter.children?.length > 1) {
+        filter.count = filter.children.filter(child => child.isVisible).reduce((acc, child) => acc + child.count, 0)
+        filter.children.forEach(child => updateCounts(child))
+      }
+    }
+
+    nextFilters.forEach(filter => updateCounts(filter))
+
+    console.log(nextFilters)
+
     setFilters(nextFilters)
 
   } 
