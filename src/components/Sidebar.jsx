@@ -16,11 +16,11 @@ import bg from '../assets/bg.png'
 
 const StreamCover = ({className}) => {
 
+
     const bgImage = {
         backgroundImage: `url(${bg})`,
         zIndex: -1,
         backgroundSize: "cover",
-        
     }
 
     return(
@@ -151,18 +151,25 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
 
     const [ref, width] = useWidth()
 
-    
+    const focusStyle = {
+        boxShadow: "0px 28px 32px -28px #d2d1d1",
+        height: width,
+    }
+
+    const position = isFocused? "absolute left-1 top-9" : "absolute left-1 top-7"
+
     return (
         <div
             onClick={() => setFocus(!isFocused)}
-            style = { isFocused ? {height: width }: {}}
+            style = { isFocused ? focusStyle: {}}
             
             ref={ref}
+            
             className={
                 cn(
                     "relative transition-all duration-300 px-5 py-5",
                     "hover:bg-gray-100/10 flex flex-col justify-between",
-                    {"text-2xl leading-7 m-1 accordion-shadow rounded-xl px-5 py-5": isFocused},
+                    {"text-2xl leading-9 m-0.5 rounded-xl px-5 py-5": isFocused},
                     {"text-md leading-6 px-5 py-2": !isFocused}
                 )
             }
@@ -177,7 +184,7 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
                         <MdKeyboardArrowRight
                             size={12}
                             onClick={onClick}
-                            className = "absolute left-1 top-7"
+                            className = {"transition-all duration-300 " + position}
                             style={{ transform: "rotate(180deg)" }}
                         />
                     )}
@@ -196,9 +203,9 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
             </div>
             <StreamCover 
                 className = {cn(
-                    "absolute z-0 w-full h-full top-0 left-0",
+                    "absolute z-0 w-full transition-all duration-300 h-full top-0 left-0",
                     {"rounded-xl opacity-70": isFocused},
-                    {"opacity-30": !isFocused}
+                    {"opacity-10": !isFocused}
                 )}
             />
         </div >
@@ -246,6 +253,7 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
         :
         <HiOutlineEyeOff size={12} style={{ color: '#b3bfcb' }} />
 
+    const opacity = {opacity: 1 - (level - 1)*0.55}
 
     return (
         <div 
@@ -261,7 +269,7 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
             >
                 <div
                     className={cn(
-                        "grow py-2.5 text-sm text-gray-500/80 flex justify-between items-baseline",
+                        "grow py-2.5 text-sm flex justify-between items-baseline",
                         { "text-gray-300": !isVisible },
                         { "pl-1": level === 1 },
                         { "pl-3": level === 2 },
@@ -272,7 +280,7 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
                         className={cn(
                             "flex gap-0.5 items-center",
                             { "font-light": !hasChildren },
-                            { "cursor-pointer text-gray-500/90": hasChildren && isVisible },
+                            { "cursor-pointer text-gray-700/90": hasChildren && isVisible },
                         )}
                     >
                         <p>
@@ -280,7 +288,10 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
                         </p>
                     </div>
                     {isVisible &&
-                        <div className="rounded-full px-2 h-4 flex items-center justify-center text-gray-600 text-xs">
+                        <div 
+                            style = {opacity}
+                            className="rounded-full px-2 h-4 flex items-center justify-center text-gray-600 text-xs"
+                        >
                             {count}
                         </div>
                     }
@@ -447,7 +458,7 @@ const Tabs = ({ open, toggleOpen }) => {
             <div className="flex flex-col  gap-0 cursor-pointer">
                 <h1
                     // style= {fontAnim(open.seeds)}
-                    className={activeStyle(open.seeds) + " transition-all duration-500"}
+                    className={activeStyle(open.seeds) + " transition-all duration-200"}
                     onClick={() => toggleOpen("seeds")}
                 >
                     Seeds
