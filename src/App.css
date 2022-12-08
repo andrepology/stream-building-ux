@@ -76,12 +76,12 @@ body {
   
   
   .active-pad {
-    padding-top: 2rem;
-    padding-bottom: 6rem;
+    padding-top:0.5rem;
+    padding-bottom: 2rem;
   }
   
   .shadow-content {
-    box-shadow: 0 0 256px 36px rgba(63, 63, 63, 0.15);
+    box-shadow: 0px 0px 40px rgba(77, 77, 77, 0.2)
   }
   
   .shadow-context {

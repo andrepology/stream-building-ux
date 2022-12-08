@@ -423,51 +423,58 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
                             { 'gap-6' : isFocused},
                         )}
                     >
-                        <p
-                            data-cy='date'
-                            className={cn(
-                                'absolute -left-28 text-gray-400 text-xs block',
-                                'transition-opacity duration-300 ease-in-out',
-                                { "opacity-100": isHovered },
-                                { "opacity-0": !isHovered },
-                            )}
-                        >
-                        <TimeAgo datetime={tweet.created_at} locale='en' />
-                        </p>
-                       
-                        <div className='flex items-baseline gap-1'>
-                            <a
-                                href={
-                                    tweet?.author
-                                        ? `https://twitter.com/${tweet.author.username}`
-                                        : ''
-                                }
-                                target='_blank'
-                                rel='noopener noreferrer'
-                                style = {{fontFamily: "GT Pressura", fontWeight: "normal"}}
-                                className={cn(
-                                    'hover:underline block text-gray-800 tracking-tight text-lg leading-5 min-w-0 shrink truncate',
-                                    {
-                                        'h-4 w-40 mt-1 mb-1.5 bg-gray-200/50 dark:bg-gray-700/50 animate-pulse rounded':
-                                            !tweet,
+                        <div className = "flex justify-between items-baseline">
+
+                            <div className='flex items-baseline gap-1'>
+                                <a
+                                    href={
+                                        tweet?.author
+                                            ? `https://twitter.com/${tweet.author.username}`
+                                            : ''
                                     }
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                    style = {{fontFamily: "GT Pressura", fontWeight: "normal"}}
+                                    className={cn(
+                                        'hover:underline block text-gray-800 tracking-tight text-lg leading-5 min-w-0 shrink truncate',
+                                        {
+                                            'h-4 w-40 mt-1 mb-1.5 bg-gray-200/50 dark:bg-gray-700/50 animate-pulse rounded':
+                                                !tweet,
+                                        }
+                                    )}
+                                >
+                                    {tweet?.author?.name}
+                                </a>
+                                {tweet?.author?.verified && (
+                                    <span className='block peer pl-0.5 h-5'>
+                                        <VerifiedIcon className='h-5 w-5 fill-sky-500 dark:fill-current' />
+                                    </span>
                                 )}
-                            >
-                                {tweet?.author?.name}
-                            </a>
-                            {tweet?.author?.verified && (
-                                <span className='block peer pl-0.5 h-5'>
-                                    <VerifiedIcon className='h-5 w-5 fill-sky-500 dark:fill-current' />
-                                </span>
-                            )}
+
+                                <p
+                                    data-cy='author'
+                                    className={cn('text-gray-400 text-sm block flex-none')}
+                                >
+                                    {tweet?.author ? `@${tweet.author.username}` : ''}
+                                </p>
+                            </div>
+
+
 
                             <p
-                                data-cy='author'
-                                className={cn('text-gray-400 text-sm block flex-none')}
+                                data-cy='date'
+                                className={cn(
+                                    'text-gray-400 text-xs block pr-2',
+                                    'transition-opacity duration-300 ease-in-out',
+                                    { "opacity-100": isFocused },
+                                    { "opacity-0": !isFocused },
+                                )}
                             >
-                                {tweet?.author ? `@${tweet.author.username}` : ''}
+                                <TimeAgo datetime={tweet.created_at} locale='en' />
                             </p>
+
                         </div>
+                        
                         
                         {/* Tweet Content */}
                         <p
@@ -489,7 +496,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
                     <div className='flex pt-6 items-baseline text-xs text-gray-500'>
 
                             <div className = "pr-4">
-                                <p className='text-gray-300'> Interactions <span className='text-sm text-gray-500 pr-1'>5</span> </p>
+                                <p className='text-gray-300'> Interactions <span className='text-gray-500 pr-1'>5</span> </p>
                             </div>
 
 
