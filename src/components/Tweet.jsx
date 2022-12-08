@@ -372,10 +372,12 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
     const [tweetContent, setContent] = useState(null);
     useEffect(() => {
 
-        let content = tweet.html.replace(/(?:\r\n|\r|\n)/g, "<br>");
+        console.log("Editing Tweet")
+        // convert \\n to <br>
+        const content = tweet.html.replace(/\\n/g, '<br/>');
         setContent(content);
 
-    }, [])
+    }, [tweet.html])
 
 
     const rhysEntity = {
@@ -396,7 +398,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
 
             <div
                 className={cn(
-                    'rounded-xl flex w-full relative transition-all duration-500 ease-in-out',
+                    'rounded-xl tweet flex flex-col w-full relative transition-all duration-300 ease-in-out',
                     { 'active backdrop-blur-sm': isFocused },
                     { 'border border-purple-100': openOverview },
                     { 'shadow-content': isFocused && !openOverview },
@@ -409,18 +411,22 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
             >
                 <article
                     className={cn(
-                        'flex items-start min-w-0 relative rounded-xl',
-                        { 'tweet-focus': isFocused },
-                        { 'tweet': !isFocused },
+                        'flex flex-1 items-start min-w-0 relative rounded-xl',
                     )}
 
                 >
-                    {/* Tweet Header (Author, @handle, timestamp) */}
-                    <header className='flex flex-col gap-3 w-full'>
+                    {/* Tweet Header (Author, @handle, timestamp) and Content */}
+                    <header 
+                        className={cn(
+                            'flex flex-col w-full',
+                            { 'gap-3' : !isFocused},
+                            { 'gap-6' : isFocused},
+                        )}
+                    >
                         <p
                             data-cy='date'
                             className={cn(
-                                'absolute -left-20 text-gray-400 text-xs block',
+                                'absolute -left-28 text-gray-400 text-xs block',
                                 'transition-opacity duration-300 ease-in-out',
                                 { "opacity-100": isHovered },
                                 { "opacity-0": !isHovered },
@@ -428,7 +434,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
                         >
                         <TimeAgo datetime={tweet.created_at} locale='en' />
                         </p>
-                        {/* TODO: Abstract to <Entity id = {} /> */}
+                       
                         <div className='flex items-baseline gap-1'>
                             <a
                                 href={
@@ -457,10 +463,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
 
                             <p
                                 data-cy='author'
-                                className={cn(' text-gray-400 text-sm block flex-none', {
-    
-                                })}
-
+                                className={cn('text-gray-400 text-sm block flex-none')}
                             >
                                 {tweet?.author ? `@${tweet.author.username}` : ''}
                             </p>
@@ -473,49 +476,36 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
                             className={cn(
                                 'text-md tracking-tight leading-5 text-gray-600',
                                 { 'h-12 w-full': !tweet },
-                                { 'accordion-container card cursor-grab': isFocused }
                             )}
                         />
                     </header>
 
+                    <EntityTag className = "relative top-2" kind={"tweet"} />
+                </article>
 
-                    <EntityTag kind={"tweet"} />
-        
+                {/* Tagged Entity Buttons :: only on focus */}
+                {isFocused && (
+                        
+                    <div className='flex pt-6 items-baseline text-xs text-gray-500'>
 
-                    {/* Tagged Entity Buttons :: only on focus */}
-                    {isFocused && (
-                        <>
-                            <div className='pt-6 border-t'>
-                                <EntityPopup
-                                    isFocused={isFocused}
-                                    update={update}
-                                    openOverview={openOverview}
-                                    setOpenOverview={setOpenOverview}
-                                    entity={rhysEntity}
-                                />
+                            <div className = "pr-4">
+                                <p className='text-gray-300'> Interactions <span className='text-sm text-gray-500 pr-1'>5</span> </p>
                             </div>
 
-                            <div className='flex justify-between tracking-tight items-center border-t pt-6 text-xs text-gray-400/70'>
 
-                                    <div>
-                                        <p className='text-xs text-gray-500'> <span className='text-sm pr-1'>5</span> Stream Interactions </p>
-                                    </div>
-
-
-                                    <div className='flex gap-3'>
-                                        {Object.entries(interactions).map(([interaction, ct]) => {
-                                            return (
-                                                <p> <span className='text-sm text-gray-500 pr-1'>{ct}</span>{interaction}</p>
-                                            )
-                                        }
-                                    )}
-                                </div>
-                            </div>
-                        </>
+                            <div className='flex gap-3 text-gray-300'>
+                                {Object.entries(interactions).map(([interaction, ct]) => {
+                                    return (
+                                        <p>{interaction}<span className='text-gray-500 pl-1'>{ct}</span></p>
+                                    )
+                                }
+                            )}
+                        </div>
+                    </div>
+                
                     )}
 
 
-                </article>
             </div>
 
             {/* Context Building */}
