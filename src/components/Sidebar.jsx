@@ -157,7 +157,7 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
         height: width,
     }
 
-    const position = isFocused? "absolute left-1 top-7" : "absolute left-1 top-6"
+    const position = isFocused? "absolute left-1 top-9" : "absolute left-1 top-6"
 
     const font = {fontFamily: "GT Pressura"}
 
