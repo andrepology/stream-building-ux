@@ -120,6 +120,23 @@ function App() {
   const [focusedTweet, setFocusedTweet] = useState(null);
   const [openOverview, setOpenOverview] = useState(false);
 
+  const [viewConfig, setViewConfig] = useState({
+    zoom: {
+      topic: true,
+      tweet: false
+    },
+    limit: {
+      day: true,
+      week: false,
+      month: false,
+    },
+    sort: {
+      new: true,
+      relevant: false
+    },
+    recommendations: true
+  });
+
   const [streamFilters, setFilters, toggleFilters] = useFilters();
 
   const setSidebarZoomLevel = (focusedTweet) => {
@@ -237,6 +254,7 @@ function App() {
 
   const createTweetElements = (tweets) => {
 
+    console.log("rendering tweets")
     
     const elems = tweets.map((tweet) => {
 
@@ -260,8 +278,6 @@ function App() {
 
     return elems
   }
-
-  
 
   useEffect(() => {
     // console.log("Computing Tweets to Render based on Filters")
@@ -325,6 +341,8 @@ function App() {
           streamFilters = {streamFilters}
           toggleFilters = {toggleFilters}
 
+          viewConfig = {viewConfig}
+
         />
       </div>
 
@@ -344,6 +362,3 @@ function App() {
 }
 
 export default App;
-
-
-

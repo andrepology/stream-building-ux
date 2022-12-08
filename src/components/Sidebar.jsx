@@ -95,34 +95,60 @@ const Accordion = ({ height, summary, details, toggle, open = null }) => {
 }
 
 
+const useWidth = () => {
+    const [width, setWidth] = useState(0)
+    const ref = useRef(null)
+    const measure = useCallback(() => {
+        setWidth(ref.current.getBoundingClientRect().width)
+    }, [])
+    useEffect(() => {
+        measure()
+        window.addEventListener('resize', measure)
+        return () => {
+            window.removeEventListener('resize', measure)
+        }
+    }, [measure])
+    return [ref, width]
+}
+
+
 
 const StreamHeader = ({ streamName, onClick = () => console.log("Clicked") }) => {
     // Simply renders the heading/Stream metadata
     // Can register onClick events for backwards nav
     // TODO: share, export functionality
 
+    // onFocus make square
 
+    
     const spin = useSpring({
         config: { friction: 5 },
         transform: true ? "rotate(180deg)" : "rotate(0deg)"
     })
-
+    
     const [hover, setHover] = useState(false)
+    const [isFocused, setFocus] = useState(false)
 
+    const [ref, width] = useWidth()
 
+    
     return (
         <div
+            onClick={() => setFocus(!isFocused)}
+            style = { isFocused ? {height: width }: {}}
+            ref={ref}
             className={
                 cn(
-                    "bg-transparent text-xl leading-6 tracking-tight pb-6 flex justify-between items-baseline cursor-pointer",
-                    { "sticky top-0 z-10 border-b border-gray-100": true },
-                    { "hover:bg-white/30": true }
-
+                    "bg-gray-50/60 transition-all duration-300 tracking-tight px-5 py-5 flex justify-between items-baseline cursor-pointer",
+                    "sticky top-0 z-10 border-b border-gray-100",
+                    { "hover:bg-white/70": true },
+                    {"text-2xl leading-7 m-1 accordion-shadow rounded-xl px-5 py-5": isFocused},
+                    {"text-md leading-6 px-5 py-2": !isFocused}
                 )
             }
         >
             <div
-                className="flex items-baseline gap-0.5"
+                className="flex items-baseline gap-0.5 w-4/5"
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
             >
@@ -130,17 +156,17 @@ const StreamHeader = ({ streamName, onClick = () => console.log("Clicked") }) =>
                     <MdKeyboardArrowRight
                         size={12}
                         onClick={onClick}
+                        className = "absolute left-1 top-7"
                         style={{ transform: "rotate(180deg)" }}
                     />
                 )}
                 {streamName}
             </div>
 
-
-            <animated.div className="" style={spin}>
+            <animated.div style={spin}>
                 <BiDotsVertical
                     size={12}
-                    style={true ? { color: '#847c7c' } : { color: '#b3bfcb' }}
+                    style={true ? { color: '#8e8a8a30' } : { color: '#b3bfcb' }}
                 />
             </animated.div>
         </div >
@@ -178,13 +204,10 @@ const StreamSummary = ({ quantity = "Seeds", count = 5, noBorder = false, expand
 }
 
 
-const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasChildren, expanded }) => {
+const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasChildren, level }) => {
 
     const [isHovered, setHover] = useState(false)
 
-    const handleClick = () => {
-        toggleFilters(quantity)
-    }
 
     const eyeCon = isVisible ?
         <HiOutlineEye size={12} style={{ color: '#b3bfcb' }} />
@@ -194,31 +217,33 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
 
     return (
         <div
-            className="flex items-center gap-0"
+            className="flex items-center gap-0 border-b"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
         >
             <div
                 className={cn(
-                    "grow py-3 text-sm text-gray-500/80 flex justify-between items-center",
-                    { "text-gray-300": !isVisible }
+                    "grow py-2.5 text-sm text-gray-500/80 flex justify-between items-baseline",
+                    
+                    { "text-gray-300": !isVisible },
+                    {"pl-1": level === 1},
+                    {"pl-3": level === 2},
+
                 )}
             >
                 <div
-                    className="flex gap-0.5 items-center"
-                >
-                    {hasChildren && (
-                        <BiCaretRight
-                            size={10}
-                            style={expanded ? { color: '#b3bfcb', transform: "rotate(90deg)" } : {}}
-                        />
+                    className={cn(
+                        "flex gap-0.5 items-center",
+                        {"font-light": !hasChildren},
+                        {"cursor-pointer": hasChildren},
                     )}
+                >
                     <p>
                         {quantity}
                     </p>
                 </div>
                 {isVisible &&
-                    <div className="rounded-full px-2 h-4 flex items-center justify-center bg-gray-100 text-gray-500/40 text-xs">
+                    <div className="rounded-full px-2 h-4 flex items-center justify-center text-gray-600 text-xs">
                         {count}
                     </div>
                 }
@@ -226,12 +251,12 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
 
             {isVisible ?
                 isHovered && (
-                    <div onClick={() => handleClick()}>
+                    <div onClick={() => toggleFilters(quantity)}>
                         {eyeCon}
                     </div>
                 )
                 :
-                <div onClick={() => handleClick()}>
+                <div className = "px-2" onClick={() => toggleFilters(quantity)}>
                     {eyeCon}
                 </div>
             }
@@ -246,7 +271,7 @@ const SeedDrawer = ({ seeds }) => {
     // Renders a column of inline seeds
 
     return (
-        <div className="w-full h-full flex flex-col items-center">
+        <div className="w-full h-full flex flex-col gap-2 px-5 pt-4">
             {seeds.map((seed, i) => (
                 <InlineEntity key={i} name={seed.name} kind={seed.kind} />
             ))}
@@ -254,26 +279,29 @@ const SeedDrawer = ({ seeds }) => {
     )
 }
 
-const ContentFilters = ({ streamFilters, toggleFilters }) => {
+const ContentFilters = ({ streamFilters, toggleFilters, viewConfig }) => {
     // TODO: recursively renders feed toggles
 
-    const renderFilters = (streamFilters) => {
+
+
+    const renderFilters = (streamFilters, level) => {
         if (typeof (streamFilters) == "object" && streamFilters.length > 0) {
 
-            return (
-                <div className="w-full pl-2 font-normal">
+            return (            
+                <div className="w-full font-normal">
                     {streamFilters.map((filter, i) => {
 
                         return (
                             <Accordion
                                 key={i}
-                                summary={<Filter isVisible={filter.isVisible} quantity={filter.name} count={filter.count} toggleFilters = {toggleFilters} hasChildren = {filter.children?.length > 0} />}
-                                details={renderFilters(filter.children)}
+                                summary={<Filter isVisible={filter.isVisible} quantity={filter.name} count={filter.count} toggleFilters={toggleFilters} hasChildren={filter.children?.length > 0} level = {level} />}
+                                details={renderFilters(filter.children, level + 1)}
                             />
                         )
                     }
                     )}
                 </div>
+            
             )
         } else {
             return null
@@ -282,30 +310,112 @@ const ContentFilters = ({ streamFilters, toggleFilters }) => {
     }
 
     return (
-        <div className="w-full h-full flex flex-col items-center">
-            {renderFilters(streamFilters)}
+        <div className="w-full h-full flex flex-col px-5 pt-4 pb-16">
+            {/* <ViewController
+                viewConfig={viewConfig}
+            /> */}
+            {renderFilters(streamFilters, 1)}
         </div>
     )
 
 }
 
 
-const useRefHeight = (ref, state) => {
+const useRemainingHeight = (ref, state) => {
     // returns remaining height 
     const [height, setHeight] = useState(0)
 
-    useEffect(() => {
+    // create useCallback
+    const handleResize = useCallback(() => {
         if (ref.current) {
-            setHeight( window.innerHeight - ref.current?.clientHeight - 2*48)
+            setHeight( window.innerHeight - ref.current?.clientHeight - 2*26)
         }
+    }, [ref])
+
+    useEffect(() => {
+        console.log("Measuring remaining height")
+        handleResize()
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
     }, 
     [ref, state])
 
     return height
 }
 
+const Control = ({ controlName, value, form }) => {
 
-const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFilters }) => {
+    return (
+        <div className="flex flex-col gap-0 pt-3 pb-2 pl-6 pr-2 ">
+            <label className="text-xxs uppercase tracking-wider text-gray-400/80">{controlName}</label>
+            <div className="flex justify-between">
+                <div className="text-gray-500">
+                    {value}
+                </div>
+                <div className="text-gray-500">
+                    {form}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const ViewController = ({ viewConfig }) => {
+    // Renders form controls for a ViewConfig object
+
+    return (
+        <div className="flex flex-col">
+            <Control controlName={"Limit"} value={"Day"} form={"T"} />
+            <Control controlName={"Recommend"} value={"On"} form={"T"} />
+            <Control controlName={"Zoom"} value={"Tweet"} form={"T"} />
+        </div>
+    )
+
+}
+
+const Tabs = ({ open, toggleOpen }) => {
+    // Renders tabs for Seeds and View Controller
+
+    const activeStyle = (isActive) => (
+        isActive ?
+            "text-gray-800/80 font-normal text-xl leading-8"
+            :
+            "text-gray-300/80 font-extralight text-lg leading-8 hover:text-gray-400"
+    )
+
+    return (
+        <div>
+            <div 
+                className={cn(
+                    "pl-5 #f9f9f9 pt-3 pb-0 flex gap-4 items-baseline tracking-tighter",
+                )}
+            >
+                <div className="flex flex-col gap-0 cursor-pointer">
+                    <h1
+                        className={activeStyle(open.seeds)}
+                        onClick={() => toggleOpen("seeds")}
+                    >
+                        Seeds
+                    </h1>
+                    <div className = {cn("h-1", {"border-b border-gray-400/60": open.seeds})}/>
+                </div>
+                <div className="flex flex-col gap-0 cursor-pointer">
+                    <h1
+                        className={activeStyle(open.view)}
+                        onClick={() => toggleOpen("view")}
+                    >
+                        View
+                    </h1>
+                    <div 
+                        className = {cn("h-1", {"border-b border-gray-400/60": open.view})}
+                    />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFilters, viewConfig }) => {
     // Renders a Stream object, its metadata, View Controller and Seeds
     // TODO: handles two states. Seeds, and View Controller
 
@@ -327,19 +437,20 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
 
     // track remaining height for AccordionDetails
     const sidebarRef = useRef()
-    const remainingHeight = useRefHeight(sidebarRef)
+    const remainingHeight = useRemainingHeight(sidebarRef)
 
 
     const visibleContentCount = streamFilters?.filter(filter => filter.isVisible).reduce((acc, filter) => acc + filter.count, 0)
 
-    
+    const [row, setRow] = useState(true)
 
     return (
         <div
             ref={sidebarRef}
+            style = {{ backgroundColor: "#F4F1F4"}}
             className={
                 cn(
-                    "w-full flex flex-col bg-radial gap-0 p-0 z-0 rounded-xl border border-gray-200 border-opacity-0 ",
+                    "w-full flex flex-col gap-0 p-0 z-0 rounded-xl border border-gray-200 border-opacity-100 ",
                     "transition-shadow duration-400 ease-in-out",
                     { "backdrop-blur-sm overflow-y-scroll overflow-x-hidden": currentStream },
                     { "backdrop-blur-sm border-opacity-100 accordion-shadow ": inFocus },
@@ -348,29 +459,39 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
             <div
                 className={
                     cn(
-                        "flex flex-col pt-6 px-6 pb-3 rounded-xl bg-white/60 gap-0 font-medium text-sm text-gray-500",
-                        {"bg-white/80" : inFocus}
+                        "flex flex-col rounded-xl gap-0 font-medium text-sm text-gray-500"
                     )
                 }
             >
 
                 <StreamHeader streamName={stream.name} />
 
-                <Accordion 
-                    height={remainingHeight}
-                    summary={<StreamSummary quantity={"Seeds"} count={stream.seeds.length} />}
-                    details={<SeedDrawer seeds={stream.seeds} />}
-                    toggle = {() => toggleOpen("seeds")}
-                    open = {open["seeds"]}
-                />
-                <Accordion
-                    height={remainingHeight}
-                    summary={<StreamSummary quantity={"Content"} count={visibleContentCount} noBorder />}
-                    details={<ContentFilters streamFilters={streamFilters} toggleFilters = {toggleFilters} />}
-                    toggle = {() => toggleOpen("view")}
-                    open = {open["view"]}
+                <div
+                    className={cn("transition-all duration-500", { "flex flex-row": false }, { "flex flex-col": true })}
+                    onMouseEnter={() => setRow(!row)}
+                    onMouseLeave={() => setRow(!row)}
+                >
+                    <Tabs open={open} toggleOpen={toggleOpen} />
 
-                />
+                    <Accordion
+                        height={remainingHeight}
+                        summary={<div></div>}
+                        details={<SeedDrawer seeds={stream.seeds} />}
+                        toggle={() => toggleOpen("seeds")}
+                        open={open["seeds"]}
+                    />
+
+
+                    <Accordion
+                        height={remainingHeight}
+                        summary={<div></div>}
+                        details={<ContentFilters streamFilters={streamFilters} toggleFilters={toggleFilters} viewConfig={viewConfig} />}
+                        toggle={() => toggleOpen("view")}
+                        open={open["view"]}
+
+                    />
+                </div>
+
 
             </div>
         </div>
