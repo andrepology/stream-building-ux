@@ -216,50 +216,57 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
 
 
     return (
-        <div
-            className="flex items-center gap-0 border-b"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
+        <div 
+            className={cn(
+                "px-5",
+                { "hover:bg-white/50 pointer": hasChildren }
+            )}
         >
             <div
-                className={cn(
-                    "grow py-2.5 text-sm text-gray-500/80 flex justify-between items-baseline",
-                    
-                    { "text-gray-300": !isVisible },
-                    {"pl-1": level === 1},
-                    {"pl-3": level === 2},
-
-                )}
+                className="flex  items-center gap-0 border-b border-gray-300/30"
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
             >
                 <div
                     className={cn(
-                        "flex gap-0.5 items-center",
-                        {"font-light": !hasChildren},
-                        {"cursor-pointer": hasChildren},
+                        "grow py-2.5 text-sm text-gray-500/80 flex justify-between items-baseline",
+
+                        { "text-gray-300": !isVisible },
+                        { "pl-1": level === 1 },
+                        { "pl-3": level === 2 },
+
                     )}
                 >
-                    <p>
-                        {quantity}
-                    </p>
+                    <div
+                        className={cn(
+                            "flex gap-0.5 items-center",
+                            { "font-light": !hasChildren },
+                            { "cursor-pointer text-gray-500/90": hasChildren },
+                        )}
+                    >
+                        <p>
+                            {quantity}
+                        </p>
+                    </div>
+                    {isVisible &&
+                        <div className="rounded-full px-2 h-4 flex items-center justify-center text-gray-600 text-xs">
+                            {count}
+                        </div>
+                    }
                 </div>
-                {isVisible &&
-                    <div className="rounded-full px-2 h-4 flex items-center justify-center text-gray-600 text-xs">
-                        {count}
+
+                {isVisible ?
+                    isHovered && (
+                        <div onClick={() => toggleFilters(quantity)}>
+                            {eyeCon}
+                        </div>
+                    )
+                    :
+                    <div className="px-2" onClick={() => toggleFilters(quantity)}>
+                        {eyeCon}
                     </div>
                 }
             </div>
-
-            {isVisible ?
-                isHovered && (
-                    <div onClick={() => toggleFilters(quantity)}>
-                        {eyeCon}
-                    </div>
-                )
-                :
-                <div className = "px-2" onClick={() => toggleFilters(quantity)}>
-                    {eyeCon}
-                </div>
-            }
         </div>
 
     )
@@ -310,7 +317,7 @@ const ContentFilters = ({ streamFilters, toggleFilters, viewConfig }) => {
     }
 
     return (
-        <div className="w-full h-full flex flex-col px-5 pt-4 pb-16">
+        <div className="w-full h-full flex flex-col pt-4 pb-16">
             {/* <ViewController
                 viewConfig={viewConfig}
             /> */}
@@ -384,34 +391,35 @@ const Tabs = ({ open, toggleOpen }) => {
     )
 
     return (
-        <div>
-            <div 
-                className={cn(
-                    "pl-5 #f9f9f9 pt-3 pb-0 flex gap-4 items-baseline tracking-tighter",
-                )}
-            >
-                <div className="flex flex-col gap-0 cursor-pointer">
-                    <h1
-                        className={activeStyle(open.seeds)}
-                        onClick={() => toggleOpen("seeds")}
-                    >
-                        Seeds
-                    </h1>
-                    <div className = {cn("h-1", {"border-b border-gray-400/60": open.seeds})}/>
-                </div>
-                <div className="flex flex-col gap-0 cursor-pointer">
-                    <h1
-                        className={activeStyle(open.view)}
-                        onClick={() => toggleOpen("view")}
-                    >
-                        View
-                    </h1>
-                    <div 
-                        className = {cn("h-1", {"border-b border-gray-400/60": open.view})}
-                    />
-                </div>
+
+        <div 
+            style={{ backgroundColor: "#faf9fac8" }}
+            className={cn(
+                "pl-5 pt-3 pb-0 flex gap-4 items-baseline tracking-tighter",
+            )}
+        >
+            <div className="flex flex-col gap-0 cursor-pointer">
+                <h1
+                    className={activeStyle(open.seeds)}
+                    onClick={() => toggleOpen("seeds")}
+                >
+                    Seeds
+                </h1>
+                <div className={cn("h-1", { "border-b border-gray-400/60": open.seeds })} />
+            </div>
+            <div className="flex flex-col gap-0 cursor-pointer">
+                <h1
+                    className={activeStyle(open.view)}
+                    onClick={() => toggleOpen("view")}
+                >
+                    View
+                </h1>
+                <div
+                    className={cn("h-1", { "border-b border-gray-400/60": open.view })}
+                />
             </div>
         </div>
+
     )
 }
 
