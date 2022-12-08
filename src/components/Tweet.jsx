@@ -8,6 +8,7 @@ import { num } from '../utils'
 
 import { GrFormClose } from 'react-icons/gr';
 import VerifiedIcon from '../icons/verified.jsx'
+import {IoAdd} from 'react-icons/io5'
 
 import EntityTag from './EntityTag';
 
@@ -388,7 +389,6 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
     return (
         <animated.div
             className={cn(
-                'relative transition-all duration-500 ease-in-out',
                 { 'active-pad': isFocused },
             )}
             onMouseEnter={(e) => easeSetHover(true)}
@@ -398,7 +398,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
 
             <div
                 className={cn(
-                    'rounded-xl tweet flex flex-col w-full relative transition-all duration-300 ease-in-out',
+                    'rounded-xl tweet w-full relative transition-all duration-300 ease-in-out',
                     { 'active backdrop-blur-sm': isFocused },
                     { 'border border-purple-100': openOverview },
                     { 'shadow-content': isFocused && !openOverview },
@@ -411,14 +411,14 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
             >
                 <article
                     className={cn(
-                        'flex flex-1 items-start min-w-0 relative rounded-xl',
+                        'relative min-h-full flex flex-1 min-w-0 rounded-xl',
                     )}
 
                 >
                     {/* Tweet Header (Author, @handle, timestamp) and Content */}
                     <header 
                         className={cn(
-                            'flex flex-col w-full',
+                            'flex flex-col w-full h-full relative',
                             { 'gap-3' : !isFocused},
                             { 'gap-6' : isFocused},
                         )}
@@ -485,32 +485,45 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
                                 { 'h-12 w-full': !tweet },
                             )}
                         />
+
+                        {/* Tagged Entity Buttons :: only on focus */}
+                        {isFocused && (
+                        
+                            <div className='flex items-baseline mb-1.5 text-xs text-gray-500'>
+
+                                <div className="pr-4">
+                                    <p className='text-gray-300'> Interactions <span className='text-gray-500 pr-1'>5</span> </p>
+                                </div>
+
+
+                                <div className='flex gap-3 text-gray-300'>
+                                    {Object.entries(interactions).map(([interaction, ct]) => {
+                                        return (
+                                            <p>{interaction}<span className='text-gray-500 pl-1'>{ct}</span></p>
+                                        )
+                                    }
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
                     </header>
 
-                    <EntityTag className = "relative top-2" kind={"tweet"} />
+                    <div className='flex flex-col justify-between items-center'>
+                        <EntityTag className="relative top-2" kind={"Tweet"} />
+
+                        {isFocused && (
+                            <div 
+                                // center icon below
+                                className='h-8 w-8 flex items-center justify-center rounded-lg bg-gray-200/40'
+                            > 
+                                <IoAdd /> 
+                            </div>
+                        )}
+                            
+                    </div>
                 </article>
 
-                {/* Tagged Entity Buttons :: only on focus */}
-                {isFocused && (
-                        
-                    <div className='flex pt-6 items-baseline text-xs text-gray-500'>
-
-                            <div className = "pr-4">
-                                <p className='text-gray-300'> Interactions <span className='text-gray-500 pr-1'>5</span> </p>
-                            </div>
-
-
-                            <div className='flex gap-3 text-gray-300'>
-                                {Object.entries(interactions).map(([interaction, ct]) => {
-                                    return (
-                                        <p>{interaction}<span className='text-gray-500 pl-1'>{ct}</span></p>
-                                    )
-                                }
-                            )}
-                        </div>
-                    </div>
-                
-                    )}
 
 
             </div>
