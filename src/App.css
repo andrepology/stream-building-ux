@@ -29,8 +29,7 @@ body {
 .tweet {
   background-color: #fafafa;
   border: 1px solid #F2F2F2;
-  border-radius: 12px;
-  padding: 36px;
+  padding: 18px 24px 24px;
   transition: all 0.3s ease-in-out;
 }
 
@@ -38,7 +37,7 @@ body {
   background-color: #fafafa08;
   border: 1px solid #F2F2F2;
   border-radius: 12px;
-  padding: 36px;
+  padding: 36px 48px;
   transition: all 0.3s ease-in-out;
   }
   

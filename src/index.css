@@ -7,9 +7,17 @@
 @font-face {
   font-family: 'GT Pressura';
   src:  url('./assets/GT-Pressura-Extended-Medium-Trial.otf') format('opentype');
+  font-weight: medium;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GT Pressura';
+  src:  url('./assets/GT-Pressura-Regular-Trial.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
+
 
 
 
