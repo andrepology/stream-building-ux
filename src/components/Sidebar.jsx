@@ -9,6 +9,18 @@ import { BiDotsVertical, BiCaretRight } from 'react-icons/bi'
 import { useCallback } from "react";
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 
+// import bg image from public folder
+import bg from '../assets/bg.png'
+
+const StreamCover = ({className}) => {
+    return(
+        <div className={className}>
+            <img className = "rounded-xl" src={bg} alt = {"Stream Cover"} />
+        </div>
+    )
+}
+
+
 
 const InlineEntity = ({ name, kind }) => {
 
@@ -140,15 +152,16 @@ const StreamHeader = ({ streamName, onClick = () => console.log("Clicked") }) =>
             className={
                 cn(
                     "bg-gray-50/60 transition-all duration-300 tracking-tight px-5 py-5 flex justify-between items-baseline cursor-pointer",
-                    "sticky top-0 z-10 border-b border-gray-100",
+                    " relative border-b border-gray-100",
                     { "hover:bg-white/70": true },
                     {"text-2xl leading-7 m-1 accordion-shadow rounded-xl px-5 py-5": isFocused},
                     {"text-md leading-6 px-5 py-2": !isFocused}
                 )
             }
         >
+            <StreamCover className = "absolute z-0 w-full h-full top-0 left-0 rounded-xl" />
             <div
-                className="flex items-baseline gap-0.5 w-4/5"
+                className="flex z-10 items-baseline gap-0.5 w-4/5"
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
             >
@@ -219,7 +232,7 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
         <div 
             className={cn(
                 "px-5",
-                { "hover:bg-white/50 pointer": hasChildren }
+                { "hover:bg-white/20 pointer": hasChildren }
             )}
         >
             <div
@@ -344,7 +357,7 @@ const useRemainingHeight = (ref, state) => {
         window.addEventListener('resize', handleResize)
         return () => window.removeEventListener('resize', handleResize)
     }, 
-    [ref, state])
+    [ref, state, handleResize])
 
     return height
 }
