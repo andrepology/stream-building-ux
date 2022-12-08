@@ -12,11 +12,19 @@ import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 // import bg image from public folder
 import bg from '../assets/bg.png'
 
+
+
 const StreamCover = ({className}) => {
+
+    const bgImage = {
+        backgroundImage: `url(${bg})`,
+        zIndex: -1,
+        backgroundSize: "cover",
+        
+    }
+
     return(
-        <div className={className}>
-            <img className = "rounded-xl" src={bg} alt = {"Stream Cover"} />
-        </div>
+        <div className={className} style={bgImage}/>
     )
 }
 
@@ -125,7 +133,7 @@ const useWidth = () => {
 
 
 
-const StreamHeader = ({ streamName, onClick = () => console.log("Clicked") }) => {
+const StreamHeader = ({ streamName, streamDescription, onClick = () => console.log("Clicked") }) => {
     // Simply renders the heading/Stream metadata
     // Can register onClick events for backwards nav
     // TODO: share, export functionality
@@ -148,40 +156,51 @@ const StreamHeader = ({ streamName, onClick = () => console.log("Clicked") }) =>
         <div
             onClick={() => setFocus(!isFocused)}
             style = { isFocused ? {height: width }: {}}
+            
             ref={ref}
             className={
                 cn(
-                    "bg-gray-50/60 transition-all duration-300 tracking-tight px-5 py-5 flex justify-between items-baseline cursor-pointer",
-                    " relative border-b border-gray-100",
-                    { "hover:bg-white/70": true },
+                    "relative transition-all duration-300 px-5 py-5",
+                    "hover:bg-gray-100/10 flex flex-col justify-between",
                     {"text-2xl leading-7 m-1 accordion-shadow rounded-xl px-5 py-5": isFocused},
                     {"text-md leading-6 px-5 py-2": !isFocused}
                 )
             }
         >
-            <StreamCover className = "absolute z-0 w-full h-full top-0 left-0 rounded-xl" />
-            <div
-                className="flex z-10 items-baseline gap-0.5 w-4/5"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-            >
-                {hover && (
-                    <MdKeyboardArrowRight
-                        size={12}
-                        onClick={onClick}
-                        className = "absolute left-1 top-7"
-                        style={{ transform: "rotate(180deg)" }}
-                    />
-                )}
-                {streamName}
-            </div>
+            <div className = "flex justify-between items-baseline cursor-pointer text-gray-700/70 tracking-tight">
+                <div
+                    className="flex z-10 items-baseline gap-0.5 w-4/5"
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
+                >
+                    {hover && (
+                        <MdKeyboardArrowRight
+                            size={12}
+                            onClick={onClick}
+                            className = "absolute left-1 top-7"
+                            style={{ transform: "rotate(180deg)" }}
+                        />
+                    )}
+                    {streamName}
+                </div>
 
-            <animated.div style={spin}>
-                <BiDotsVertical
-                    size={12}
-                    style={true ? { color: '#8e8a8a30' } : { color: '#b3bfcb' }}
-                />
-            </animated.div>
+                <animated.div style={spin}>
+                    <BiDotsVertical
+                        size={12}
+                        style={true ? { color: '#8e8a8a80' } : { color: '#b3bfcb' }}
+                    />
+                </animated.div>
+            </div>
+            <div className = "text-gray-700/50 tracking-tight leading-4 font-normal text-sm">
+                {isFocused && streamDescription}
+            </div>
+            <StreamCover 
+                className = {cn(
+                    "absolute z-0 w-full h-full top-0 left-0",
+                    {"rounded-xl opacity-70": isFocused},
+                    {"opacity-30": !isFocused}
+                )}
+            />
         </div >
 
     )
@@ -405,7 +424,7 @@ const Tabs = ({ open, toggleOpen }) => {
     return (
 
         <div 
-            style={{ backgroundColor: "#faf9fac8" }}
+            style={{ backgroundColor: "#faf9fac6"}}
             className={cn(
                 "pl-5 pt-3 pb-0 flex gap-4 items-baseline tracking-tighter",
             )}
@@ -467,13 +486,14 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
     return (
         <div
             ref={sidebarRef}
-            style = {{ backgroundColor: "#F4F1F4"}}
+            style = {open.view || open.seeds ? { backgroundColor: "#F4F1F4", boxShadow: "0px 0px 12px #efe6e6"} : {backgroundColor: "#F4F1F4"}}
             className={
                 cn(
-                    "w-full flex flex-col gap-0 p-0 z-0 rounded-xl border border-gray-200 border-opacity-100 ",
+                    "w-full flex flex-col gap-0 p-0 z-0 rounded-xl ",
                     "transition-shadow duration-400 ease-in-out",
                     { "backdrop-blur-sm overflow-y-scroll overflow-x-hidden": currentStream },
                     { "backdrop-blur-sm border-opacity-100 accordion-shadow ": inFocus },
+                    { "border border-gray-200 border-opacity-100 ": open.view || open.seeds },
                 )}
         >
             <div
@@ -484,7 +504,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
                 }
             >
 
-                <StreamHeader streamName={stream.name} />
+                <StreamHeader streamName={stream.name} streamDescription = {currentStream.description} />
 
                 <div
                     className={cn("transition-all duration-500", { "flex flex-row": false }, { "flex flex-col": true })}

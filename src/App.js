@@ -110,7 +110,7 @@ const useFilters = () => {
 
 function App() {
   const [streams, setStreams] = useState(sampleStreams)
-  const [currentStream, setStream] = useState("Tools For Thought");
+  const [currentStream, setStream] = useState({name: "Tools For Thought", description: "A stream about the tools we shape and the tools that shape us"});
 
   
   const [accounts, setAccounts] = useState([]);
@@ -353,7 +353,7 @@ function App() {
         {createTweetElements(tweets)}
       </Feed>
 
-      <BackdropMemo currentStream={currentStream} />
+      <BackdropMemo currentStream={currentStream.name} />
 
     </div>
 
