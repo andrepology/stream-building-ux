@@ -230,7 +230,6 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
                 <div
                     className={cn(
                         "grow py-2.5 text-sm text-gray-500/80 flex justify-between items-baseline",
-
                         { "text-gray-300": !isVisible },
                         { "pl-1": level === 1 },
                         { "pl-3": level === 2 },
@@ -241,7 +240,7 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
                         className={cn(
                             "flex gap-0.5 items-center",
                             { "font-light": !hasChildren },
-                            { "cursor-pointer text-gray-500/90": hasChildren },
+                            { "cursor-pointer text-gray-500/90": hasChildren && isVisible },
                         )}
                     >
                         <p>
