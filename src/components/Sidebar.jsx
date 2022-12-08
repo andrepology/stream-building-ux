@@ -167,7 +167,7 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
                 )
             }
         >
-            <div className = "flex justify-between items-baseline cursor-pointer text-gray-700/70 tracking-tight">
+            <div className = "flex justify-between items-baseline cursor-pointer text-gray-800/80 tracking-tight">
                 <div
                     className="flex z-10 items-baseline gap-0.5 w-4/5"
                     onMouseEnter={() => setHover(true)}
@@ -191,7 +191,7 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
                     />
                 </animated.div>
             </div>
-            <div className = "text-gray-700/50 tracking-tight leading-4 font-normal text-sm">
+            <div className = "text-gray-700/70 tracking-tight leading-4 font-normal text-sm">
                 {isFocused && streamDescription}
             </div>
             <StreamCover 
@@ -251,7 +251,7 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
         <div 
             className={cn(
                 "px-5",
-                { "hover:bg-white/20 pointer": hasChildren }
+                { "hover:bg-white/40 pointer": hasChildren }
             )}
         >
             <div
@@ -309,7 +309,7 @@ const SeedDrawer = ({ seeds }) => {
     // Renders a column of inline seeds
 
     return (
-        <div className="w-full h-full flex flex-col gap-2 px-5 pt-4">
+        <div className="w-full h-full flex flex-col gap-2 px-5 pt-4 pb-20">
             {seeds.map((seed, i) => (
                 <InlineEntity key={i} name={seed.name} kind={seed.kind} />
             ))}
@@ -348,7 +348,7 @@ const ContentFilters = ({ streamFilters, toggleFilters, viewConfig }) => {
     }
 
     return (
-        <div className="w-full h-full flex flex-col pt-4 pb-16">
+        <div className="w-full h-full flex flex-col pt-4 pb-20">
             {/* <ViewController
                 viewConfig={viewConfig}
             /> */}
@@ -414,24 +414,40 @@ const ViewController = ({ viewConfig }) => {
 const Tabs = ({ open, toggleOpen }) => {
     // Renders tabs for Seeds and View Controller
 
+    // inline style for animating font size
+    const fontAnim = (isActive) => (
+        isActive ?
+        { fontSize: "1.125rem" }
+        :
+        { fontSize: "1rem" }
+    )
+
     const activeStyle = (isActive) => (
         isActive ?
-            "text-gray-800/80 font-normal text-xl leading-8"
+            "text-gray-800/80 font-normal tracking-tighter text-xl leading-8"
             :
-            "text-gray-300/80 font-extralight text-lg leading-8 hover:text-gray-400"
+            "text-gray-400/60 font-light text-lg tracking-tighter leading-8 hover:text-gray-400"
+    )
+
+    const tabStyle = (isActive) => (
+        isActive ?
+            { backgroundColor: "#faf9fac6" }
+            :
+            { backgroundColor: "none" }
     )
 
     return (
 
         <div 
-            style={{ backgroundColor: "#faf9fac6"}}
+            style={tabStyle(open.seeds || open.view)}
             className={cn(
-                "pl-5 pt-3 pb-0 flex gap-4 items-baseline tracking-tighter",
+                "pl-5 pt-3 pb-0  flex gap-4 items-baseline",
             )}
         >
-            <div className="flex flex-col gap-0 cursor-pointer">
+            <div className="flex flex-col  gap-0 cursor-pointer">
                 <h1
-                    className={activeStyle(open.seeds)}
+                    // style= {fontAnim(open.seeds)}
+                    className={activeStyle(open.seeds) + " transition-all duration-500"}
                     onClick={() => toggleOpen("seeds")}
                 >
                     Seeds
@@ -440,7 +456,8 @@ const Tabs = ({ open, toggleOpen }) => {
             </div>
             <div className="flex flex-col gap-0 cursor-pointer">
                 <h1
-                    className={activeStyle(open.view)}
+                    // style= {fontAnim(open.view)}
+                    className={activeStyle(open.view) + " transition-all duration-300"}
                     onClick={() => toggleOpen("view")}
                 >
                     View
@@ -486,14 +503,13 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
     return (
         <div
             ref={sidebarRef}
-            style = {open.view || open.seeds ? { backgroundColor: "#F4F1F4", boxShadow: "0px 0px 12px #efe6e6"} : {backgroundColor: "#F4F1F4"}}
+            style = {open.view || open.seeds ? { backgroundColor: "#F4F1F4", boxShadow: "0px 0px 32px #E4DEDE"} : {backgroundColor: "#F4F1F4"}}
             className={
                 cn(
                     "w-full flex flex-col gap-0 p-0 z-0 rounded-xl ",
                     "transition-shadow duration-400 ease-in-out",
                     { "backdrop-blur-sm overflow-y-scroll overflow-x-hidden": currentStream },
-                    { "backdrop-blur-sm border-opacity-100 accordion-shadow ": inFocus },
-                    { "border border-gray-200 border-opacity-100 ": open.view || open.seeds },
+                    { "accordion-shadow ": inFocus },
                 )}
         >
             <div
@@ -514,7 +530,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
                     <Tabs open={open} toggleOpen={toggleOpen} />
 
                     <Accordion
-                        height={remainingHeight}
+                        // height={remainingHeight}
                         summary={<div></div>}
                         details={<SeedDrawer seeds={stream.seeds} />}
                         toggle={() => toggleOpen("seeds")}
@@ -523,7 +539,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
 
 
                     <Accordion
-                        height={remainingHeight}
+                        // height={remainingHeight}
                         summary={<div></div>}
                         details={<ContentFilters streamFilters={streamFilters} toggleFilters={toggleFilters} viewConfig={viewConfig} />}
                         toggle={() => toggleOpen("view")}
