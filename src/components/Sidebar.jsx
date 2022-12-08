@@ -21,6 +21,7 @@ const StreamCover = ({className}) => {
         backgroundImage: `url(${bg})`,
         zIndex: -1,
         backgroundSize: "cover",
+        
     }
 
     return(
@@ -156,7 +157,7 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
         height: width,
     }
 
-    const position = isFocused? "absolute left-1 top-9" : "absolute left-1 top-7"
+    const position = isFocused? "absolute left-1 top-7" : "absolute left-1 top-6"
 
     return (
         <div
@@ -167,14 +168,14 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
             
             className={
                 cn(
-                    "relative transition-all duration-300 px-5 py-5",
+                    "relative transition-all duration-300 pl-4 pr-4 py-4",
                     "hover:bg-gray-100/10 flex flex-col justify-between",
-                    {"text-2xl leading-9 m-0.5 rounded-xl px-5 py-5": isFocused},
-                    {"text-md leading-6 px-5 py-2": !isFocused}
+                    {"text-2xl text-gray-800/70 leading-9 m-0.5 rounded-xl px-5 py-5": isFocused},
+                    {"text-md font-semibold text-gray-800/90 leading-6 px-5 py-2": !isFocused}
                 )
             }
         >
-            <div className = "flex justify-between items-baseline cursor-pointer text-gray-800/80 tracking-tight">
+            <div className = "flex justify-between pl-0.5 items-baseline cursor-pointer  tracking-tight">
                 <div
                     className="flex z-10 items-baseline gap-0.5 w-4/5"
                     onMouseEnter={() => setHover(true)}
@@ -198,7 +199,7 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
                     />
                 </animated.div>
             </div>
-            <div className = "text-gray-700/70 tracking-tight leading-4 font-normal text-sm">
+            <div className = "text-gray-800/40 tracking-tight leading-4 font-normal text-sm">
                 {isFocused && streamDescription}
             </div>
             <StreamCover 
@@ -435,9 +436,9 @@ const Tabs = ({ open, toggleOpen }) => {
 
     const activeStyle = (isActive) => (
         isActive ?
-            "text-gray-800/80 font-normal tracking-tighter text-xl leading-8"
+            "text-gray-800/80 font-normal tracking-tighter text-2xl leading-8"
             :
-            "text-gray-400/60 font-light text-lg tracking-tighter leading-8 hover:text-gray-400"
+            "text-gray-400/60 font-light text-xl tracking-tighter leading-8 hover:text-gray-400"
     )
 
     const tabStyle = (isActive) => (
@@ -463,7 +464,7 @@ const Tabs = ({ open, toggleOpen }) => {
                 >
                     Seeds
                 </h1>
-                <div className={cn("h-1", { "border-b border-gray-400/60": open.seeds })} />
+                <div className={cn("h-1", { "border-b border-gray-400/50": open.seeds })} />
             </div>
             <div className="flex flex-col gap-0 cursor-pointer">
                 <h1
@@ -474,7 +475,7 @@ const Tabs = ({ open, toggleOpen }) => {
                     View
                 </h1>
                 <div
-                    className={cn("h-1", { "border-b border-gray-400/60": open.view })}
+                    className={cn("h-1", { "border-b border-gray-400/50": open.view })}
                 />
             </div>
         </div>
