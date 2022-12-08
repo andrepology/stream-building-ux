@@ -4,6 +4,15 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200..700&display=swap');
 
+@font-face {
+  font-family: 'GT Pressura';
+  src:  url('./assets/GT-Pressura-Extended-Medium-Trial.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
 body {
   margin: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

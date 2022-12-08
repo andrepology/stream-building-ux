@@ -159,6 +159,8 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
 
     const position = isFocused? "absolute left-1 top-7" : "absolute left-1 top-6"
 
+    const font = {fontFamily: "GT Pressura"}
+
     return (
         <div
             onClick={() => setFocus(!isFocused)}
@@ -170,7 +172,7 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
                 cn(
                     "relative transition-all duration-300 pl-4 pr-4 py-4",
                     "hover:bg-gray-100/10 flex flex-col justify-between",
-                    {"text-2xl text-gray-800/70 leading-9 m-0.5 rounded-xl px-5 py-5": isFocused},
+                    {"text-2xl text-gray-800/70 leading-8 m-0.5 rounded-xl px-5 py-5": isFocused},
                     {"text-md font-semibold text-gray-800/90 leading-6 px-5 py-2": !isFocused}
                 )
             }
@@ -178,6 +180,7 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
             <div className = "flex justify-between pl-0.5 items-baseline cursor-pointer  tracking-tight">
                 <div
                     className="flex z-10 items-baseline gap-0.5 w-4/5"
+                    style = {isFocused? font : {}}
                     onMouseEnter={() => setHover(true)}
                     onMouseLeave={() => setHover(false)}
                 >
