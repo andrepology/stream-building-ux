@@ -272,9 +272,10 @@ const ContextBuilder = ({ setOpenOverview, currentStream, relatedTweets, addEnti
 
 
 
-function Tweet({ tweet, isFocused,  setFocusedTweet, openOverview, setOpenOverview, zoom, currentStream, setStreams, sidebarTop = 80 }) {
+function Tweet({ tweet,  setFocusedTweet, openOverview, setOpenOverview, zoom, currentStream, setStreams, sidebarTop = 80 }) {
 
     const contextRef = useRef();
+
 
     const [isHovered, setHovered] = useState(false);
     const [tweetContent, setContent] = useState(null);
@@ -292,11 +293,8 @@ function Tweet({ tweet, isFocused,  setFocusedTweet, openOverview, setOpenOvervi
 
     const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 100, resize: 400 }});
     useEffect(() => {
-
-        console.log(focus)
         
         const distanceFromTop = bounds.top - sidebarTop
-        const distanceFromBottom = bounds.bottom - sidebarTop
 
         // if Tweet is below the Sidebar
         if (distanceFromTop > 0) {
@@ -315,6 +313,7 @@ function Tweet({ tweet, isFocused,  setFocusedTweet, openOverview, setOpenOvervi
             setFocus(focus)
         }
     }, [bounds.top])
+
 
 
     const { styles, attributes, update } = usePopper(ref?.current, contextRef?.current, {
@@ -336,7 +335,6 @@ function Tweet({ tweet, isFocused,  setFocusedTweet, openOverview, setOpenOvervi
     }, [])
 
 
-    
 
     const easeSetFocus = (e, time = 0) => {
         // use State to manage focus
@@ -409,6 +407,16 @@ function Tweet({ tweet, isFocused,  setFocusedTweet, openOverview, setOpenOvervi
     }
     const zoomStyle = zoomLevel[zoom];
 
+
+    
+    
+    const interactions = {
+        "Retweets": tweet.public_metrics.retweet_count,
+        "Likes": tweet.public_metrics.like_count,
+        "Replies": tweet.public_metrics.reply_count,
+    }
+    
+
     const relatedTweets = Array(5).fill(0).map(e => {
         return (
             <div className='card text-sm'>
@@ -416,49 +424,38 @@ function Tweet({ tweet, isFocused,  setFocusedTweet, openOverview, setOpenOvervi
             </div>
         )
     })
-
-
-    const interactions = {
-        "Retweets": tweet.public_metrics.retweet_count,
-        "Likes": tweet.public_metrics.like_count,
-        "Replies": tweet.public_metrics.reply_count,
-    }
-
-    
-    
-
     const rhysEntity = {
         name: "Rhys Lindmark",
         description: "Co-building the Wisdom Age @roote_. Hiring http://roote.co/careers. Prev @mitDCI @medialab. @EthereumDenver co-founder."
     }
 
-    const paddingX = (focus) => {
-        // focus is between 0 and 1 and defined as distance from the top of sidebar
-        const padding = 30 * (1 - focus) < 16 ? 16 : 30 * (1 - focus)
-        return padding
+    const focusStyle = {
+        opacity: focus,
+        transform: focus > 0.8? `scale(${1 + 0.05 * focus})` : `scale(1.00)`,
+        padding: focus > 0.8? `${18 + 10 * focus }px ${26 + focus * 8}px 24px` : '18px 24px 24px',
+        paddingTop: focus > 0.8? `${ 0.5 * focus }rem` : '0px 0px',
+        paddingBottom: focus > 0.8? `${ 2 * focus }rem` : '0px 0px',
     }
-    
+
+   const isFocused = focus > 0.8 ?? false
 
     return (
         <animated.div
-            className={cn(
-                { 'active-pad': isFocused },
-            )}
             onMouseEnter={(e) => easeSetHover(true)}
             onMouseLeave={(e) => easeSetHover(false)}
             ref = {ref}
-            
+            style = {{paddingTop: focusStyle.paddingTop, paddingBottom: focusStyle.paddingBottom}}
         >
 
             <div
                 className={cn(
-                    'rounded-xl tweet w-full relative transition-all duration-300 ease-in-out',
-                    { 'active backdrop-blur-sm': isFocused },
+                    'rounded-xl tweet w-full relative',
+                    { 'backdrop-blur-sm': isFocused },
                     { 'border border-purple-100': openOverview },
                     { 'shadow-content': isFocused && !openOverview },
                     { 'shadow-context': isFocused && openOverview },
                 )}
-                style={zoomStyle}
+                style={{transform: focusStyle.transform, padding: focusStyle.padding}}
                 onClick={e => easeSetFocus(e)}
                 ref={ref}
             // {...longPressedEvent}
@@ -519,7 +516,7 @@ function Tweet({ tweet, isFocused,  setFocusedTweet, openOverview, setOpenOvervi
                                 data-cy='date'
                                 className={cn(
                                     'text-gray-400 text-xs block pr-2',
-                                    'transition-opacity duration-300 ease-in-out',
+                                    'transition-opacity duration-100 ease-in-out',
                                     { "opacity-100": isFocused },
                                     { "opacity-0": !isFocused },
                                 )}
@@ -545,7 +542,7 @@ function Tweet({ tweet, isFocused,  setFocusedTweet, openOverview, setOpenOvervi
                         
                             <div 
                                 className='flex gap-3 items-center mb-1.5 text-xs text-gray-500'
-                                style = {{opacity: focus}}
+                                style = {{opacity: focusStyle.opacity}}
                             >
 
                                 <div className="flex items-center gap-1 ">

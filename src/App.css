@@ -76,7 +76,7 @@ body {
   
   
   .active-pad {
-    padding-top:0.5rem;
+    padding-top: 0.5rem;
     padding-bottom: 2rem;
   }
   
@@ -88,9 +88,6 @@ body {
     box-shadow: 396px 42px 256px 64px rgba(63, 63, 63, 0.15);
 }
 
-.active {
-  transform: scale(1.03);
-}
 
 .passive {
   opacity: 0.5;
