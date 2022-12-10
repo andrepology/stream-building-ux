@@ -23,7 +23,7 @@ const Feed = ({ children, openOverview }) => {
     <div className='h-screen w-screen overflow-y-scroll pl-24 flex justify-center z-10'>
       <animated.div 
         style={{ x, scale }} 
-        className='flex flex-col pl-6 gap-6 max-w-lg'
+        className='flex flex-col pl-6 gap-12 max-w-lg'
       >
         {/* Empty Space. To Replace with Dashboard */}
         <div className='h-12'/>

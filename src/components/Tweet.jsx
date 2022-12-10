@@ -291,7 +291,7 @@ function Tweet({ tweet,  setFocusedTweet, openOverview, setOpenOverview, zoom, c
     // a scalar value that represents how focused the Tweet is
     const [focus, setFocus] = useState(0)
 
-    const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 100, resize: 400 }});
+    const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 85, resize: 400 }});
     useEffect(() => {
         
         const distanceFromTop = bounds.top - sidebarTop
@@ -429,22 +429,24 @@ function Tweet({ tweet,  setFocusedTweet, openOverview, setOpenOverview, zoom, c
         description: "Co-building the Wisdom Age @roote_. Hiring http://roote.co/careers. Prev @mitDCI @medialab. @EthereumDenver co-founder."
     }
 
-    const focusStyle = {
-        opacity: focus,
-        transform: focus > 0.8? `scale(${1 + 0.05 * focus})` : `scale(1.00)`,
-        padding: focus > 0.8? `${18 + 10 * focus }px ${26 + focus * 8}px 24px` : '18px 24px 24px',
-        paddingTop: focus > 0.8? `${ 0.5 * focus }rem` : '0px 0px',
-        paddingBottom: focus > 0.8? `${ 2 * focus }rem` : '0px 0px',
-    }
+    
 
    const isFocused = focus > 0.8 ?? false
+
+   const focusStyle = {
+    opacity: focus,
+    transform: focus > 0.8? `scale(${1 + 0.05 * focus})` : `scale(1.00)`,
+    padding: focus > 0.8? `${18 + 10 * focus }px ${26 + focus * 8}px 24px` : '18px 24px 24px',
+    paddingTop: focus > 0.8? `${ 0 * focus }rem` : '0px 0px',
+    paddingBottom: isFocused? `${ 1 +  focus }rem` : '0px 0px',
+    }
 
     return (
         <animated.div
             onMouseEnter={(e) => easeSetHover(true)}
             onMouseLeave={(e) => easeSetHover(false)}
             ref = {ref}
-            style = {{paddingTop: focusStyle.paddingTop, paddingBottom: focusStyle.paddingBottom}}
+            // style = {{paddingTop: 0, paddingBottom: focusStyle.paddingBottom}}
         >
 
             <div
