@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@n8tb1t/use-scroll-position": "^2.0.3",
     "@popperjs/core": "^2.11.6",
     "@react-spring/web": "^9.5.5",
     "@testing-library/jest-dom": "^5.16.5",
@@ -14,6 +15,7 @@
     "react-nested-popper": "^1.1.0",
     "react-popper": "^2.3.0",
     "react-scripts": "5.0.1",
+    "react-use-measure": "^2.1.1",
     "timeago-react": "^3.0.5",
     "web-vitals": "^2.1.4"
   },

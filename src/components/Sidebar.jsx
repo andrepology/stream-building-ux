@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef, Children, cloneElement } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, Children, cloneElement } from "react";
 import cn from 'classnames'
 import { useSpring, animated, useTransition } from '@react-spring/web'
+import useMeasure from "react-use-measure";
 
 import EntityTag from "./EntityTag";
 
@@ -65,10 +66,6 @@ const AccordionSummary = ({ children, toggle, expanded }) => {
 
 const AccordionDetails = ({ refHeight, expanded, children }) => {
 
-    // TODO: smarter targetHeight
-    // TODO: height transition
-    
-
     const { minHeight, height, visibility } = useSpring({
         from: { minHeight: 0, height: 0, visibility: 0, y: 0 },
         to: {
@@ -76,7 +73,7 @@ const AccordionDetails = ({ refHeight, expanded, children }) => {
             height: expanded ? refHeight : 0,
             visibility: expanded ? 1 : 0,
         },
-        config: { friction: 16 },
+        config: { friction: 14 },
     })
 
     if (expanded) {
@@ -383,7 +380,7 @@ const useRemainingHeight = (ref, state) => {
     // create useCallback
     const handleResize = useCallback(() => {
         if (ref.current) {
-            setHeight( window.innerHeight - ref.current?.clientHeight - 2*26)
+            setHeight( window.innerHeight - ref.current?.clientHeight - 2*state.top)
         }
     }, [ref])
 
@@ -509,8 +506,22 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
     }
 
     // track remaining height for AccordionDetails
-    const sidebarRef = useRef()
-    const remainingHeight = useRemainingHeight(sidebarRef)
+
+    
+
+
+    const [ref, bounds] = useMeasure()
+
+
+    const [remainingHeight, setRemainingHeight] = useState(null)
+    useLayoutEffect(() => {
+        // calculate remaining height if bounds change
+        if (bounds.height) {
+            setRemainingHeight(window.innerHeight - bounds.height - 2*bounds.top)
+        }
+    }, [])
+
+    
 
 
     const visibleContentCount = streamFilters?.filter(filter => filter.isVisible).reduce((acc, filter) => acc + filter.count, 0)
@@ -519,7 +530,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
 
     return (
         <div
-            ref={sidebarRef}
+            ref={ref}
             style = {open.view || open.seeds ? { backgroundColor: "#f4f1f465", boxShadow: "0px 0px 32px #E4DEDE"} : {backgroundColor: "#f4f1f40"}}
             className={
                 cn(
@@ -547,7 +558,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
                     <Tabs open={open} toggleOpen={toggleOpen} />
 
                     <Accordion
-                        // height={remainingHeight}
+                        height={remainingHeight}
                         summary={<div></div>}
                         details={<SeedDrawer seeds={stream.seeds} />}
                         toggle={() => toggleOpen("seeds")}
@@ -556,7 +567,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
 
 
                     <Accordion
-                        // height={remainingHeight}
+                        height={remainingHeight}
                         summary={<div></div>}
                         details={<ContentFilters streamFilters={streamFilters} toggleFilters={toggleFilters} viewConfig={viewConfig} />}
                         toggle={() => toggleOpen("view")}

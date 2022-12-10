@@ -87,8 +87,6 @@ const useFilters = () => {
 
     nextFilters.forEach(filter => toggle(filter))
 
-    console.log(nextFilters)
-
     // Ensure parent counts are sum of children
     const updateCounts = (filter) => {
       if (filter.children?.length > 1) {
@@ -98,8 +96,6 @@ const useFilters = () => {
     }
 
     nextFilters.forEach(filter => updateCounts(filter))
-
-    console.log(nextFilters)
 
     setFilters(nextFilters)
 
@@ -280,12 +276,6 @@ function App() {
   }
 
   useEffect(() => {
-    // console.log("Computing Tweets to Render based on Filters")
-
-    const start = performance.now();
-
-
-    console.log("Filtering Tweets with Stream Filters", streamFilters)
 
     const nextTweets = tftTweets.filter(tweet => {
 
@@ -315,11 +305,6 @@ function App() {
     })
 
     setTweets(nextTweets)
-
-    const end = performance.now();
-
-    console.log(`Filtering took ${end - start} ms`);
-
 
   }, [streamFilters])
 

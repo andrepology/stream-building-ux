@@ -1,8 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
 import { usePopper } from 'react-popper';
 import TimeAgo from 'timeago-react';
 import cn from 'classnames';
 import { animated, useSpring, Transition } from '@react-spring/web'
+import { useScrollPosition } from '@n8tb1t/use-scroll-position';
+import useMeasure from 'react-use-measure';
 
 import { num } from '../utils'
 
@@ -269,14 +271,53 @@ const ContextBuilder = ({ setOpenOverview, currentStream, relatedTweets, addEnti
 }
 
 
-function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOverview, zoom, currentStream, setStreams }) {
 
-    const tweetRef = useRef();
+function Tweet({ tweet, isFocused,  setFocusedTweet, openOverview, setOpenOverview, zoom, currentStream, setStreams, sidebarTop = 80 }) {
+
     const contextRef = useRef();
 
     const [isHovered, setHovered] = useState(false);
+    const [tweetContent, setContent] = useState(null);
+    useEffect(() => {
 
-    const { styles, attributes, update } = usePopper(tweetRef?.current, contextRef?.current, {
+        // convert \\n to <br>
+        const content = tweet.html.replace(/\\n/g, '<br/>');
+        setContent(content);
+
+    }, [tweet.html])
+
+
+    // a scalar value that represents how focused the Tweet is
+    const [focus, setFocus] = useState(0)
+
+    const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 100, resize: 400 }});
+    useEffect(() => {
+
+        console.log(focus)
+        
+        const distanceFromTop = bounds.top - sidebarTop
+        const distanceFromBottom = bounds.bottom - sidebarTop
+
+        // if Tweet is below the Sidebar
+        if (distanceFromTop > 0) {
+            
+            // scale focus[0,1] based on remaining distance from top
+            const dist = 1 - (distanceFromTop / (window.innerHeight - sidebarTop)) 
+            // bound dist between 0 and 1
+            const focus = dist < 0 ? 0 : dist > 1 ? 1 : dist
+            setFocus(focus)
+
+        } else {
+            // scale opacity based on distance from bottom
+            // scale based on distance from bottom to top of screen
+            const dist = bounds.bottom / (bounds.height)
+            const focus = dist < 0 ? 0 : dist > 1 ? 1 : dist
+            setFocus(focus)
+        }
+    }, [bounds.top])
+
+
+    const { styles, attributes, update } = usePopper(ref?.current, contextRef?.current, {
         placement: 'right-start',
         position: 'fixed',
         modifiers: [
@@ -289,6 +330,13 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
         ],
     });
 
+    const dummyInteractions = useRef()
+    useEffect(() => {
+        dummyInteractions.current = Math.floor(Math.random() * 10)
+    }, [])
+
+
+    
 
     const easeSetFocus = (e, time = 0) => {
         // use State to manage focus
@@ -377,21 +425,19 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
     }
 
     
-    const [tweetContent, setContent] = useState(null);
-    useEffect(() => {
-
-        console.log("Editing Tweet")
-        // convert \\n to <br>
-        const content = tweet.html.replace(/\\n/g, '<br/>');
-        setContent(content);
-
-    }, [tweet.html])
-
+    
 
     const rhysEntity = {
         name: "Rhys Lindmark",
         description: "Co-building the Wisdom Age @roote_. Hiring http://roote.co/careers. Prev @mitDCI @medialab. @EthereumDenver co-founder."
     }
+
+    const paddingX = (focus) => {
+        // focus is between 0 and 1 and defined as distance from the top of sidebar
+        const padding = 30 * (1 - focus) < 16 ? 16 : 30 * (1 - focus)
+        return padding
+    }
+    
 
     return (
         <animated.div
@@ -400,6 +446,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
             )}
             onMouseEnter={(e) => easeSetHover(true)}
             onMouseLeave={(e) => easeSetHover(false)}
+            ref = {ref}
             
         >
 
@@ -413,7 +460,7 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
                 )}
                 style={zoomStyle}
                 onClick={e => easeSetFocus(e)}
-                ref={tweetRef}
+                ref={ref}
             // {...longPressedEvent}
             >
                 <article
@@ -494,14 +541,17 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
                         />
 
                         {/* Tagged Entity Buttons :: only on focus */}
-                        {isFocused && (
+                        {true && (
                         
-                            <div className='flex gap-3 items-center mb-1.5 text-xs text-gray-500'>
+                            <div 
+                                className='flex gap-3 items-center mb-1.5 text-xs text-gray-500'
+                                style = {{opacity: focus}}
+                            >
 
                                 <div className="flex items-center gap-1 ">
                                     <p className='text-gray-300'> Interactions</p>
                                     <OverlapIcon />
-                                    <span className='text-gray-500 font-medium pr-1 flex items-center'> 5</span> 
+                                    <span className='text-gray-500 font-medium pr-1 flex items-center'>{dummyInteractions.current}</span> 
                                 </div>
 
                                 <div className='flex items-center gap-0.5 text-gray-300'>
