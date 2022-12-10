@@ -437,8 +437,7 @@ function Tweet({ tweet,  setFocusedTweet, openOverview, setOpenOverview, zoom, c
     opacity: focus,
     transform: focus > 0.8? `scale(${1 + 0.05 * focus})` : `scale(1.00)`,
     padding: focus > 0.8? `${18 + 10 * focus }px ${26 + focus * 8}px 24px` : '18px 24px 24px',
-    paddingTop: focus > 0.8? `${ 0 * focus }rem` : '0px 0px',
-    paddingBottom: isFocused? `${ 1 +  focus }rem` : '0px 0px',
+    
     }
 
     return (
