@@ -36,7 +36,7 @@ const InlineEntity = ({ name, kind }) => {
     return (
         <div className={
             cn(
-                "w-full pl-2 pr-1 py-1.5 max-w-96 items-center inline-flex justify-between bg-white/0 hover:bg-white/80 rounded-lg  border-opacity-0 hover:border-opacity-0")
+                "w-full pl-2 pr-1 py-1.5 max-w-96 items-center inline-flex justify-between  hover:bg-white/80 rounded-lg  border-opacity-0 hover:border-opacity-0")
         }>
             <div className="text-sm text-gray-500">
                 {name}
@@ -154,6 +154,7 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
 
     const focusStyle = {
         boxShadow: "0px 28px 32px -28px #d2d1d1",
+        backgroundColor: "#faf9fa5a",
         height: width,
     }
 
@@ -167,13 +168,15 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
             style = { isFocused ? focusStyle: {}}
             
             ref={ref}
+
+
             
             className={
                 cn(
                     "relative transition-all duration-300 pl-4 pr-4 py-4",
                     "hover:bg-gray-100/10 flex flex-col justify-between",
-                    {"text-2xl text-gray-800/70 leading-8 m-0.5 rounded-xl px-5 py-5": isFocused},
-                    {"text-md font-semibold text-gray-800/90 leading-6 px-5 py-2": !isFocused}
+                    {"text-3xl text-gray-800/80 leading-8 m-0.5 rounded-xl px-5 py-5": isFocused},
+                    {"text-md font-semibold text-gray-800/60 leading-6 px-5": !isFocused}
                 )
             }
         >
@@ -208,8 +211,8 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
             <StreamCover 
                 className = {cn(
                     "absolute z-0 w-full transition-all duration-300 h-full top-0 left-0",
-                    {"rounded-xl opacity-70": isFocused},
-                    {"opacity-10": !isFocused}
+                    {"rounded-xl opacity-100": isFocused},
+                    {"opacity-0": !isFocused}
                 )}
             />
         </div >
@@ -283,8 +286,7 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
                     <div
                         className={cn(
                             "flex gap-0.5 items-center",
-                            { "font-light": !hasChildren },
-                            { "cursor-pointer text-gray-700/90": hasChildren && isVisible },
+                            { "cursor-pointer text-gray-700/60":  isVisible },
                         )}
                     >
                         <p>
@@ -446,7 +448,7 @@ const Tabs = ({ open, toggleOpen }) => {
 
     const tabStyle = (isActive) => (
         isActive ?
-            { backgroundColor: "#faf9fac6" }
+            { backgroundColor: "#faf9fa5a" }
             :
             { backgroundColor: "none" }
     )
@@ -456,7 +458,7 @@ const Tabs = ({ open, toggleOpen }) => {
         <div 
             style={tabStyle(open.seeds || open.view)}
             className={cn(
-                "pl-5 pt-3 pb-0  flex gap-4 items-baseline",
+                "pl-5 pt-2 pb-0  flex gap-4 items-baseline",
             )}
         >
             <div className="flex flex-col  gap-0 cursor-pointer">
@@ -467,7 +469,7 @@ const Tabs = ({ open, toggleOpen }) => {
                 >
                     Seeds
                 </h1>
-                <div className={cn("h-1", { "border-b border-gray-400/50": open.seeds })} />
+                <div className={cn("h-1", { "border-b border-gray-400/50": false })} />
             </div>
             <div className="flex flex-col gap-0 cursor-pointer">
                 <h1
@@ -478,7 +480,7 @@ const Tabs = ({ open, toggleOpen }) => {
                     View
                 </h1>
                 <div
-                    className={cn("h-1", { "border-b border-gray-400/50": open.view })}
+                    className={cn("h-1", { "border-b border-gray-400/50": false })}
                 />
             </div>
         </div>
@@ -518,12 +520,12 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
     return (
         <div
             ref={sidebarRef}
-            style = {open.view || open.seeds ? { backgroundColor: "#F4F1F4", boxShadow: "0px 0px 32px #E4DEDE"} : {backgroundColor: "#F4F1F4"}}
+            style = {open.view || open.seeds ? { backgroundColor: "#f4f1f465", boxShadow: "0px 0px 32px #E4DEDE"} : {backgroundColor: "#f4f1f40"}}
             className={
                 cn(
                     "w-full flex flex-col gap-0 p-0 z-0 rounded-xl ",
                     "transition-shadow duration-400 ease-in-out",
-                    { "backdrop-blur-sm overflow-y-scroll overflow-x-hidden": currentStream },
+                    { "overflow-y-scroll overflow-x-hidden": currentStream },
                     { "accordion-shadow ": inFocus },
                 )}
         >

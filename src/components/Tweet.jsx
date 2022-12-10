@@ -13,6 +13,13 @@ import {IoAdd} from 'react-icons/io5'
 import EntityTag from './EntityTag';
 
 
+import LikeIcon from '../icons/like.jsx'
+import ReplyIcon from '../icons/reply.jsx'
+import RetweetIcon from '../icons/retweet.jsx'
+import OverlapIcon from '../icons/overlap.jsx'
+
+
+
 const Tooltip = ({ title, children, className }) => {
     // a tooltip positioned with popper
 
@@ -489,20 +496,25 @@ function Tweet({ tweet, isFocused, setFocusedTweet, openOverview, setOpenOvervie
                         {/* Tagged Entity Buttons :: only on focus */}
                         {isFocused && (
                         
-                            <div className='flex items-baseline mb-1.5 text-xs text-gray-500'>
+                            <div className='flex gap-3 items-center mb-1.5 text-xs text-gray-500'>
 
-                                <div className="pr-4">
-                                    <p className='text-gray-300'> Interactions <span className='text-gray-500 pr-1'>5</span> </p>
+                                <div className="flex items-center gap-1 ">
+                                    <p className='text-gray-300'> Interactions</p>
+                                    <OverlapIcon />
+                                    <span className='text-gray-500 font-medium pr-1 flex items-center'> 5</span> 
                                 </div>
 
-
-                                <div className='flex gap-3 text-gray-300'>
-                                    {Object.entries(interactions).map(([interaction, ct]) => {
-                                        return (
-                                            <p>{interaction}<span className='text-gray-500 pl-1'>{ct}</span></p>
-                                        )
-                                    }
-                                    )}
+                                <div className='flex items-center gap-0.5 text-gray-300'>
+                                    <LikeIcon/>
+                                    <span className='text-gray-500 pl-1'>{interactions.Likes}</span>
+                                </div>
+                                <div className='flex items-center gap-0.5 text-gray-300'>
+                                    <ReplyIcon/>
+                                    <span className='text-gray-500 pl-1'>{interactions.Replies}</span>
+                                </div>
+                                <div className='flex items-center gap-0.5 text-gray-300'>
+                                    <RetweetIcon/>
+                                    <span className='text-gray-500 pl-1'>{interactions.Retweets}</span>
                                 </div>
                             </div>
                         )}

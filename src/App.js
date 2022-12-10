@@ -46,7 +46,7 @@ const StreamBackdrop = ({ currentStream }) => {
 
   return (
     <animated.div
-      className='fixed top-0 left-36 tracking-tighter text-gray-200/40 font-bold text-8xl z-0'
+      className='fixed top-4 left-36 tracking-tighter text-gray-200/40 font-bold text-8xl z-0'
       style={props}
     >
       {currentStream || 'Tweetscape'}
@@ -58,7 +58,7 @@ const streamIsSame = (prevStream, nextStream) => {
   return prevStream == nextStream
 }
 
-const BackdropMemo = memo(StreamBackdrop, streamIsSame)
+const BackdropMemo = memo(StreamBackdrop)
 
 // obj of streams: seeds
 const sampleStreams = [
@@ -328,7 +328,7 @@ function App() {
   return (
 
     <div className="app-bg h-screen w-screen flex justify-center">
-      <div className='w-56 fixed top-6 left-6 z-20'>
+      <div className='w-56 fixed top-20 left-20 z-20'>
         <StreamSidebar
           zoomLevel={setSidebarZoomLevel(focusedTweet)}
           inFocus={focusedTweet !== null}
