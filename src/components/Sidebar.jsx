@@ -155,7 +155,7 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
         height: width,
     }
 
-    const position = isFocused? "absolute left-1 top-9" : "absolute left-1 top-6"
+    const position = isFocused? "absolute left-1 top-9" : "absolute left-1 top-3.5"
 
     const font = {fontFamily: "GT Pressura"}
 
@@ -166,11 +166,9 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
             
             ref={ref}
 
-
-            
             className={
                 cn(
-                    "relative transition-all duration-300 pl-4 pr-4 py-4",
+                    "relative transition-all duration-300 pl-4 pr-4 py-2",
                     "hover:bg-gray-100/10 flex flex-col justify-between",
                     {"text-3xl text-gray-800/80 leading-8 m-0.5 rounded-xl px-5 py-5": isFocused},
                     {"text-md font-semibold text-gray-800/60 leading-6 px-5": !isFocused}
