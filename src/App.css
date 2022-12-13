@@ -30,6 +30,7 @@ body {
   background-color: #fafafa;
   border: 1px solid #F2F2F2;
   padding: 18px 24px 24px;
+  border-radius: 12px;
   transition: all 0.3s ease-in-out;
 }
 
@@ -85,7 +86,7 @@ body {
   }
   
   .shadow-context {
-    box-shadow: 396px 42px 256px 64px rgba(63, 63, 63, 0.15);
+    box-shadow: 456px 128px 256px 96px rgba(63, 63, 63, 0.10);
 }
 
 

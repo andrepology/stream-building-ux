@@ -57,7 +57,7 @@ const AccordionSummary = ({ children, toggle, expanded }) => {
         <div
             onClick={() => toggle()}
         >
-            {Children.map(children, child => cloneElement(child, { expanded: expanded }))}
+            {Children.map(children, child => cloneElement(child, { expanded: expanded}))}
         </div>
     )
 

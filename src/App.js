@@ -8,22 +8,22 @@ import Tweet from './components/Tweet';
 import './App.css';
 
 import tftTweets from './components/sample';
+import entities from './components/entities'
 
 
 const Feed = ({ children, openOverview }) => {
 
   // TODO: push based on amount of space on screen
   const { x, scale } = useSpring({
-    x: openOverview ? -100 : 0,
-    scale: openOverview ? 0.6 : 1,
+    x: openOverview ? -500 : 0,
     config: { friction: 20 }
   });
 
   return (
     <div className='h-screen w-screen overflow-y-scroll pl-24 flex justify-center z-10'>
       <animated.div 
-        style={{ x, scale }} 
-        className='flex flex-col pl-6 gap-12 max-w-lg'
+        style={{ x }} 
+        className='flex flex-col pl-6 gap-6 max-w-lg'
       >
         {/* Empty Space. To Replace with Dashboard */}
         <div className='h-12'/>
@@ -32,8 +32,6 @@ const Feed = ({ children, openOverview }) => {
     </div>
   )
 }
-
-const TweetMemo = memo(Tweet);
 
 
 const StreamBackdrop = ({ currentStream }) => {
@@ -54,11 +52,8 @@ const StreamBackdrop = ({ currentStream }) => {
   )
 }
 
-const streamIsSame = (prevStream, nextStream) => {
-  return prevStream == nextStream
-}
 
-const BackdropMemo = memo(StreamBackdrop)
+const BackdropMemo = memo(StreamBackdrop, (prevProps, nextProps) => prevProps.currentStream === nextProps.currentStream)
 
 // obj of streams: seeds
 const sampleStreams = [
@@ -156,6 +151,8 @@ function App() {
   useEffect(() => {
     // console.log('Tallying Feed Statistics');
 
+    
+
     // time performance of tallying
     const start = performance.now();
     
@@ -206,9 +203,9 @@ function App() {
         tally.Tweets.Quotes += 1;
       }
 
-      const nEntities = tweet['entities.annotations'].length
+      const nEntities = tweet['entities'].length
       if (nEntities > 0) {
-        tally.Entities.Count += tweet['entities.annotations'].length
+        tally.Entities.Count += tweet['entities'].length
       }
     })
 
@@ -280,7 +277,6 @@ function App() {
     const nextTweets = tftTweets.filter(tweet => {
 
       // check if tweet meets filter criteria
-      
       return streamFilters.some(filter => {
         if (filter.name === "Tweets") {
 
@@ -308,6 +304,7 @@ function App() {
 
   }, [streamFilters])
 
+  const memoTweets = useMemo(() => createTweetElements(tweets), [tweets, openOverview, focusedTweet])
   
 
   return (
@@ -335,7 +332,7 @@ function App() {
         openOverview={openOverview}
         filters = {streamFilters}
       >
-        {createTweetElements(tweets)}
+        {memoTweets}
       </Feed>
 
       <BackdropMemo currentStream={currentStream.name} />

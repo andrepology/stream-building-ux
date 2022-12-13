@@ -6,13 +6,14 @@ import { animated, useSpring, Transition } from '@react-spring/web'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import useMeasure from 'react-use-measure';
 
-import { num } from '../utils'
+
 
 import { GrFormClose } from 'react-icons/gr';
 import VerifiedIcon from '../icons/verified.jsx'
 import {IoAdd} from 'react-icons/io5'
 
 import EntityTag from './EntityTag';
+
 
 
 import LikeIcon from '../icons/like.jsx'
@@ -44,19 +45,15 @@ const Tooltip = ({ title, children, className }) => {
 }
 
 
-const EntityPopup = ({ isFocused, update, setOpenOverview, openOverview, entity }) => {
+const EntityPopup = ({ update, setOpenOverview, openOverview, entity, setEntity }) => {
 
-    const { name, description } = entity
+    const { entity_group, word } = entity
 
     const entityRef = useRef();
     const previewRef = useRef();
     const [isHovered, setHovered] = useState(false);
 
-    const inspectEntity = () => {
-        setHovered(true);
-        setOpenOverview(true);
-    }
-
+    
     const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
 
     // measure distance from mouse and entity
@@ -82,7 +79,14 @@ const EntityPopup = ({ isFocused, update, setOpenOverview, openOverview, entity 
 
 
     const handleClick = () => {
-        update()
+
+        try {
+            update()
+        } catch (e) {
+            console.log(e)
+        }
+
+        setEntity()
         setOpenOverview(true)
     }
 
@@ -92,33 +96,32 @@ const EntityPopup = ({ isFocused, update, setOpenOverview, openOverview, entity 
                 ref={entityRef}
                 id="ENTITY"
                 className={cn(
-                    'bg-white border border-gray-200 px-1 py-0.5 text-gray-500 text-sm tracking-tight rounded-md max-content',
-                    { 'border border-gray-400': openOverview })}
+                    'bg-gray-50 px-1 py-0.5 text-gray-500 text-sm flex tracking-tight rounded-md max-content',
+                   )}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
                 onMouseMove={e => isHovered && onMouseMove(e)}
                 onClick={() => handleClick()}
             >
-                {name}
+                {word}
             </button>
 
             <div ref={previewRef} style={{ ...styles.popper }} {...attributes.popper}>
                 {isHovered && !openOverview && (
-                    // TODO 
+                     
                     <div className={"tweet relative shadow-2xl flex flex-col gap-7 w-80 max-w-80"}>
                         <div className="inline-flex w-full items-center justify-between">
-                            <p className='text-xl leading-7'>{name}</p>
-                            <EntityTag kind="concept" />
+                            <p className='text-xl leading-7'>{word}</p>
+                            <EntityTag kind={entity_group} />
                         </div>
 
                         <p className='text-lg leading-5 text-gray-600 tracking-tight'>
-                            {description}
+                            {"lorem ipsum this is a description"}
                         </p>    
 
                     </div>
                 )}
             </div>
-
         </div>
     )
 }
@@ -171,11 +174,11 @@ const useLongPress = (
 };
 
 
-const ContextBuilder = ({ setOpenOverview, currentStream, relatedTweets, addEntityToStream, entity }) => {
+const ContextBuilder = ({ openOverview, currentStream, addEntityToStream, entity }) => {
 
     // a spring that pushes the context builder up when the overview is open
     const { x } = useSpring({
-        x: setOpenOverview ? 112 : 0,
+        x: openOverview ? 550 : 0,
     })
 
     const metadata = {
@@ -188,21 +191,24 @@ const ContextBuilder = ({ setOpenOverview, currentStream, relatedTweets, addEnti
 
     return (
         <animated.div
-            style={{x: 112}} 
-            className='flex flex-col gap-2 w-128'
+            style={{x}} 
+            className='flex flex-col gap-2 rounded-xl w-128'
         >
             <div className='tweet flex flex-col gap-7'>
                 <div className='flex items-center justify-between p-1 rounded-lg'>
                     <div className='flex gap-2 items-center'>
                         <h1 className='text-xl tracking-tight text-gray-800'>
-                            {entity.name}
+                            {entity.word}
                         </h1>
-                        <p className="text-gray-400 text-sm leading-6 tracking-tight">
-                            @{entity.name}
-                        </p>
+
+                        {entity.entity_group === "PER" && (
+                            <p className="text-gray-400 text-sm leading-6 tracking-tight">
+                                @{entity.word}
+                            </p>
+                        )}
                     </div>
 
-                    <EntityTag kind="person" />
+                    <EntityTag kind={entity.entity_group} />
                 </div>
 
                 <div className='flex gap-4'>
@@ -259,10 +265,10 @@ const ContextBuilder = ({ setOpenOverview, currentStream, relatedTweets, addEnti
 
             <div className='flex flex-col gap-1'>
                 <div className='mx-auto flex hover:bg-gray-300/30 px-1.5 py-1 rounded-md items-center gap-1 text-center text-xs text-gray-600/80'>
-                    <span className='text-base font-semibold inline-block'>5</span> Tweets
+                    {/* <span className='text-base font-semibold inline-block'>5</span> Tweets */}
                 </div>
                 <div className='transition-all duration-500 flex flex-col gap-6'>
-                    {relatedTweets}
+                    {""}
                 </div>
             </div>
 
@@ -272,10 +278,11 @@ const ContextBuilder = ({ setOpenOverview, currentStream, relatedTweets, addEnti
 
 
 
-function Tweet({ tweet,  setFocusedTweet, openOverview, setOpenOverview, zoom, currentStream, setStreams, sidebarTop = 80 }) {
+function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, currentStream, setStreams, sidebarTop = 80 }) {
 
     const contextRef = useRef();
 
+    const [selectedEntity, setEntity] = useState(null);
 
     const [isHovered, setHovered] = useState(false);
     const [tweetContent, setContent] = useState(null);
@@ -314,7 +321,13 @@ function Tweet({ tweet,  setFocusedTweet, openOverview, setOpenOverview, zoom, c
         }
     }, [bounds.top])
 
+    useEffect(() => {
+        if (focus > 0.8) {
+            setFocusedTweet(tweet.id)
+        }
+    }, [focus])
 
+    
 
     const { styles, attributes, update } = usePopper(ref?.current, contextRef?.current, {
         placement: 'right-start',
@@ -396,20 +409,7 @@ function Tweet({ tweet,  setFocusedTweet, openOverview, setOpenOverview, zoom, c
 
     }
 
-
-    const zoomLevel = {
-        '1': { opacity: 1, zIndex: 7 },
-        '0': { opacity: 1, zIndex: 6 },
-        '-1': { opacity: 0.8, zIndex: 5 },
-        '-2': { opacity: 0.7, zIndex: 4 },
-        '-3': { opacity: 0.5, zIndex: 3 },
-        '-4': { opacity: 0, zIndex: 2 }
-    }
-    const zoomStyle = zoomLevel[zoom];
-
-
-    
-    
+        
     const interactions = {
         "Retweets": tweet.public_metrics.retweet_count,
         "Likes": tweet.public_metrics.like_count,
@@ -426,15 +426,14 @@ function Tweet({ tweet,  setFocusedTweet, openOverview, setOpenOverview, zoom, c
     })
     const rhysEntity = {
         name: "Rhys Lindmark",
+        type: "Account",
         description: "Co-building the Wisdom Age @roote_. Hiring http://roote.co/careers. Prev @mitDCI @medialab. @EthereumDenver co-founder."
     }
-
-    
 
    const isFocused = focus > 0.8 ?? false
 
    const focusStyle = {
-    opacity: focus,
+    opacity: 0.2 + focus > 1? 1 : 0.2 + focus ,
     transform: focus > 0.8? `scale(${1 + 0.05 * focus})` : `scale(1.00)`,
     padding: focus > 0.8? `${18 + 10 * focus }px ${26 + focus * 8}px 24px` : '18px 24px 24px',
     
@@ -444,7 +443,11 @@ function Tweet({ tweet,  setFocusedTweet, openOverview, setOpenOverview, zoom, c
         <animated.div
             onMouseEnter={(e) => easeSetHover(true)}
             onMouseLeave={(e) => easeSetHover(false)}
+            onClick  = {() => {
+                openOverview && setOpenOverview(false)
+            }}
             ref = {ref}
+            className = "relative"
             // style = {{paddingTop: 0, paddingBottom: focusStyle.paddingBottom}}
         >
 
@@ -456,7 +459,7 @@ function Tweet({ tweet,  setFocusedTweet, openOverview, setOpenOverview, zoom, c
                     { 'shadow-content': isFocused && !openOverview },
                     { 'shadow-context': isFocused && openOverview },
                 )}
-                style={{transform: focusStyle.transform, padding: focusStyle.padding}}
+                style={{transform: focusStyle.transform, padding: focusStyle.padding, opacity: focusStyle.opacity}}
                 onClick={e => easeSetFocus(e)}
                 ref={ref}
             // {...longPressedEvent}
@@ -539,11 +542,10 @@ function Tweet({ tweet,  setFocusedTweet, openOverview, setOpenOverview, zoom, c
                         />
 
                         {/* Tagged Entity Buttons :: only on focus */}
-                        {true && (
+                        {isFocused && (
                         
                             <div 
                                 className='flex gap-3 items-center mb-1.5 text-xs text-gray-500'
-                                style = {{opacity: focusStyle.opacity}}
                             >
 
                                 <div className="flex items-center gap-1 ">
@@ -588,6 +590,29 @@ function Tweet({ tweet,  setFocusedTweet, openOverview, setOpenOverview, zoom, c
 
             </div>
 
+            {/* Entity Popups */}
+            {focus > 0.8 && !openOverview && (
+                <div className='absolute' style = {{top: 24, left: bounds.width + 32}}>
+                    <div className='flex flex-col gap-1'>
+                        {tweet.entities?.map((entity, i) => {
+                            return(
+                                <EntityPopup 
+                                    key={i}
+                                    isFocused = {isFocused}
+                                    update = {update}
+                                    openOverview = {openOverview}
+                                    setOpenOverview = {setOpenOverview}
+                                    entity = {entity}
+                                    setEntity = {() => setEntity(entity)}
+                                />
+                            )
+                        })
+                        }
+                    </div>
+                </div>
+            )}
+        
+
             {/* Context Building */}
             <div
                 ref={contextRef}
@@ -595,15 +620,15 @@ function Tweet({ tweet,  setFocusedTweet, openOverview, setOpenOverview, zoom, c
                 {...attributes.popper}
 
             >
-                {isFocused && openOverview ? (
+                {openOverview && isFocused ? (
                     <ContextBuilder
-                        setOpenOverview={setOpenOverview}
+                        openOverview={openOverview}
                         currentStream={currentStream}
                         relatedTweets={relatedTweets}
                         addEntityToStream={addEntityToStream}
-                        entity={rhysEntity}
+                        entity={selectedEntity}
                     />
-                ) : () => null}
+                ) : null}
             </div>
 
         </animated.div>
