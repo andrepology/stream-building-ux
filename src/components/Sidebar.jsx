@@ -535,7 +535,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
                     "w-full flex flex-col gap-0 p-0 z-0 rounded-xl ",
                     "transition-shadow duration-400 ease-in-out",
                     { "overflow-y-scroll overflow-x-hidden": currentStream },
-                    { "accordion-shadow ": inFocus },
+                    { "accordion-shadow backdrop-blur-lg ": open.view || open.seeds}
                 )}
         >
             <div

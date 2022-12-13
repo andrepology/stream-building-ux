@@ -198,17 +198,17 @@ const ContextBuilder = ({ openOverview, currentStream, addEntityToStream, entity
                 <div className='flex items-center justify-between p-1 rounded-lg'>
                     <div className='flex gap-2 items-center'>
                         <h1 className='text-xl tracking-tight text-gray-800'>
-                            {entity.word}
+                            {entity.word !== undefined ? entity.word : entity.name}
                         </h1>
 
-                        {entity.entity_group === "PER" && (
+                        {entity.entity_group === "ACCOUNT" && (
                             <p className="text-gray-400 text-sm leading-6 tracking-tight">
-                                @{entity.word}
+                                @{entity.word !== undefined ? entity.word : entity.username}
                             </p>
                         )}
                     </div>
 
-                    <EntityTag kind={entity.entity_group} />
+                    <EntityTag kind={entity.entity_group ?? "ACCOUNT"} />
                 </div>
 
                 {entity.description && (
@@ -437,9 +437,9 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
 
    const focusStyle = {
     opacity: 0.2 + focus > 1? 1 : 0.2 + focus ,
-    transform: focus > 0.8? `scale(${1 + 0.05 * focus})` : `scale(1.00)`,
-    padding: focus > 0.8? `${18 + 10 * focus }px ${26 + focus * 8}px 24px` : '18px 24px 24px',
-    
+    transform: isFocused? `scale(${1 + 0.05 * focus})` : `scale(1.00)`,
+    padding: isFocused? `${18 + 10 * focus }px ${26 + focus * 8}px 24px` : '18px 24px 24px',
+    paddingBottom : isFocused ? `${24 * focus }px` : '0px',
     }
 
     return (
@@ -451,7 +451,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
             }}
             ref = {ref}
             className = "relative"
-            // style = {{paddingTop: 0, paddingBottom: focusStyle.paddingBottom}}
+            style = {{paddingTop: 0, paddingBottom: 0}}
         >
 
             <div
@@ -483,18 +483,15 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                     >
                         <div className = "flex justify-between items-baseline">
 
-                            <div className='flex items-baseline gap-1'>
-                                <a
-                                    href={
-                                        tweet?.author
-                                            ? `https://twitter.com/${tweet.author.username}`
-                                            : ''
-                                    }
-                                    target='_blank'
-                                    rel='noopener noreferrer'
+                            <div className='flex items-baseline gap-1 max-w-xs'>
+                                <p
+                                    onClick = {() => {
+                                        setEntity({...tweet.author, entity_group: "ACCOUNT"})
+                                        setOpenOverview(true)
+                                    }}
                                     style = {{fontFamily: "GT Pressura", fontWeight: "normal"}}
                                     className={cn(
-                                        'hover:underline block text-gray-800 tracking-tight text-lg leading-5 min-w-0 shrink truncate',
+                                        'hover:underline cursor-pointer block text-gray-800 tracking-tight text-lg leading-5 min-w-0 shrink truncate',
                                         {
                                             'h-4 w-40 mt-1 mb-1.5 bg-gray-200/50 dark:bg-gray-700/50 animate-pulse rounded':
                                                 !tweet,
@@ -502,7 +499,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                                     )}
                                 >
                                     {tweet?.author?.name}
-                                </a>
+                                </p>
                                 {tweet?.author?.verified && (
                                     <span className='block peer pl-0.5 h-5'>
                                         <VerifiedIcon className='h-5 w-5 fill-sky-500 dark:fill-current' />
