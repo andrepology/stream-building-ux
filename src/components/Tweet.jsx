@@ -211,14 +211,17 @@ const ContextBuilder = ({ openOverview, currentStream, addEntityToStream, entity
                     <EntityTag kind={entity.entity_group} />
                 </div>
 
-                <div className='flex gap-4'>
-                    <div className='h-28 basis-1/4 bg-gray-100 rounded-lg' />
-                    <div className='basis-3/4 text-lg tracking-tight text-gray-600 rounded-lg ml-2'>
-                        {entity.description}
+                {entity.description && (
+                    <div className='flex gap-4'>
+                        <div className='h-28 basis-1/4 bg-gray-100 rounded-lg' />
+                        <div className='basis-3/4 text-lg tracking-tight text-gray-600 rounded-lg ml-2'>
+                            {entity.description}
+                        </div>
                     </div>
-                </div>
+                )}
 
-                <div className='pt-6 border-t flex'>
+
+                <div className='pt-6 border-t border-gray-100 flex'>
                     <div className='basis-1/4 text-xs tracking-tight leading-4 text-gray-500'>
                         Recent Interactions and Topics
                     </div>
@@ -235,7 +238,7 @@ const ContextBuilder = ({ openOverview, currentStream, addEntityToStream, entity
 
                 </div>
 
-                <div className='flex justify-between tracking-tight items-center border-t pt-6 text-xs text-gray-400/70'>
+                <div className='flex justify-between tracking-tight items-center  border-gray-100 pt-6 text-xs text-gray-400/70'>
 
                     <div>
                         <p className='text-xs text-gray-500'> <span className='text-sm pr-1'>5</span> Stream Followers </p>
