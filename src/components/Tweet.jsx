@@ -22,6 +22,122 @@ import RetweetIcon from '../icons/retweet.jsx'
 import OverlapIcon from '../icons/overlap.jsx'
 
 
+const Account = ({entity, currentStream, addEntityToStream}) => {
+
+    const metadata = {
+        "Tweets/Week": "~11",
+        "Followers": 5386,
+        "Following": 1663,
+    }
+
+    const interactions = ["Roote", "Housing Strategy", "woki", "supermodular.xyz"]
+
+    return (
+        <div className='tweet rounded-xl w-full flex flex-col gap-6'>
+            <div className='flex items-center justify-between p-1 rounded-lg'>
+                <div className='flex gap-2 items-baseline'>
+                    <h1 
+                        style = {{fontFamily: "GT Pressura", fontWeight: "normal"}}
+                        className='text-lg font-medium tracking-tight text-gray-800'
+                    >
+                        {entity.name}
+                    </h1>
+
+                    
+                    <p className="text-gray-400 text-sm leading-6 tracking-tight">
+                        @{entity.username}
+                    </p>
+                
+                </div>
+
+                <EntityTag kind={entity.entity_group ?? "ACCOUNT"} />
+            </div>
+
+            {entity.description && (
+                <div className='flex gap-6'>
+                    
+                    <img className='h-24 basis-1/4 bg-gray-100 rounded-lg' src = ""/>   
+                    
+                    <div className='basis-3/4 text-md leading-5 tracking-tight text-gray-600'>
+                        {entity.description}
+                    </div>
+                </div>
+            )}
+
+
+            <div className='pt-3 border-t border-gray-100 flex gap-6'>
+                <div className='basis-1/4 text-xs tracking-tight leading-4 text-gray-400'>
+                    Followed By These Accounts in <span className = "text-gray-600"> {currentStream.name} </span> 
+                </div>
+                <div className='basis-3/4 inline-flex text-center items-center gap-2 flex-wrap'>
+                    {interactions.map((e, i) => {
+                        return (
+                            <div key={i} className='bg-gray-100 rounded-lg px-2 py-1 text-xs tracking-tight leading-4 text-gray-500'>
+                                {e}
+                            </div>
+                        )
+                    })
+                    }
+                </div>
+
+            </div>
+
+            <div className='flex justify-between tracking-tight items-center  border-gray-100 pt-3 text-xs text-gray-400/70'>
+
+                <div>
+                    <p className='text-xs text-gray-500'> <span className='text-sm pr-1'>5</span> Stream Followers </p>
+                </div>
+
+                <div className='flex gap-3'>
+                    {Object.entries(metadata).map(([mt, ct]) => {
+                        return (
+                            <p> <span className='text-sm text-gray-500 pr-1'>{ct}</span>{mt}</p>
+                        )
+                    }
+                    )}
+                </div>
+            </div>
+
+
+            {currentStream?.length && (
+                <button
+                    onClick={(e) => addEntityToStream(e, "Rhys Lindmark")}
+                    className='rounded-full bg-gray-200 p-2 '
+                >
+                    <p>Add to {currentStream} </p>
+                </button>
+            )}
+        </div>
+
+    )
+
+
+}
+
+const Entity = ({ entity }) => {
+    return null
+}
+
+
+const Content = ({ entity, entity_type }) => {
+    // A Controller to render a Tweet, Account or Entity based on the entity_type
+
+    switch (entity_type) {
+        case "tweet":
+            return <Tweet entity={entity} />
+        case "account":
+            return <Account entity={entity} />
+        case "entity":
+            return <Entity entity={entity} />
+        default:
+            return <div></div>
+    }
+
+
+
+}
+
+
 
 const Tooltip = ({ title, children, className }) => {
     // a tooltip positioned with popper
@@ -281,7 +397,7 @@ const ContextBuilder = ({ openOverview, currentStream, addEntityToStream, entity
 
 
 
-function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, currentStream, setStreams, sidebarTop = 80 }) {
+function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, currentStream, addEntityToStream, sidebarTop = 80 }) {
 
     const contextRef = useRef();
 
@@ -393,26 +509,6 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
     const longPressedEvent = useLongPress(easeSetFocus, easeSetFocus);
 
 
-    const addEntityToStream = (evt, entity) => {
-        evt.preventDefault();
-        evt.stopPropagation();
-
-        setStreams(prevState => {
-
-            const newState = prevState.map((e,i) =>{
-                if (currentStream === e.name) {
-                    // push seed to current stream
-                    return {...e, seeds: e.seeds.concat([entity])}
-                }
-                return e
-            })
-
-            return newState
-        })
-
-    }
-
-        
     const interactions = {
         "Retweets": tweet.public_metrics.retweet_count,
         "Likes": tweet.public_metrics.like_count,
@@ -427,11 +523,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
             </div>
         )
     })
-    const rhysEntity = {
-        name: "Rhys Lindmark",
-        type: "Account",
-        description: "Co-building the Wisdom Age @roote_. Hiring http://roote.co/careers. Prev @mitDCI @medialab. @EthereumDenver co-founder."
-    }
+    
 
    const isFocused = focus > 0.8 ?? false
 
@@ -577,9 +669,12 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                         {isFocused && (
                             <div 
                                 // center icon below
-                                className='h-8 w-8 flex items-center justify-center rounded-lg bg-gray-200/40'
+                                onClick={(e) => addEntityToStream(e, tweet)}
+                                className='h-8 w-8 flex cursor-pointer items-center justify-center rounded-lg bg-gray-200/40 hover:bg-gray-200'
                             > 
-                                <IoAdd /> 
+                                <IoAdd
+                                    className='h-5 w-5 text-gray-500 hover:text-gray-800 '
+                                /> 
                             </div>
                         )}
                             
@@ -641,4 +736,5 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
 
 }
 
+export {Account} 
 export default Tweet

@@ -17,7 +17,6 @@ import bg from '../assets/bg.png'
 
 const StreamCover = ({className}) => {
 
-
     const bgImage = {
         backgroundImage: `url(${bg})`,
         zIndex: -1,
@@ -34,12 +33,16 @@ const StreamCover = ({className}) => {
 
 const InlineEntity = ({ name, kind }) => {
 
+    // A width-constrained entity tag
+    // Useful for rendering seeds
+
+
     return (
         <div className={
             cn(
                 "w-full pl-2 pr-1 py-1.5 max-w-96 items-center inline-flex justify-between  hover:bg-white/80 rounded-lg  border-opacity-0 hover:border-opacity-0")
         }>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm whitespace-nowrap truncate  text-gray-500">
                 {name}
             </div>
 
@@ -66,21 +69,31 @@ const AccordionSummary = ({ children, toggle, expanded }) => {
 
 const AccordionDetails = ({ refHeight, expanded, children }) => {
 
+    const [ref, bounds] = useMeasure()
+    const heightToFill  = useRef()
+
+    useEffect(() => {
+        
+        heightToFill.current = window.innerHeight - bounds.bottom
+    
+    }, [refHeight, bounds.bottom])
+    
     const { minHeight, height, visibility } = useSpring({
         from: { minHeight: 0, height: 0, visibility: 0, y: 0 },
         to: {
-            minHeight: expanded ? refHeight : 0,
-            height: expanded ? refHeight : 0,
+            minHeight: expanded ? heightToFill.current : 0,
+            height: expanded ? heightToFill.current : 0,
             visibility: expanded ? 1 : 0,
         },
-        config: { friction: 14 },
+        config: { friction: 24 },
     })
 
     if (expanded) {
         return (
             <animated.div
                 className={"overflow-y-scroll w-full flex flex-col items-center"}
-                style={refHeight ? { minHeight } : {}}
+                style={refHeight ? { minHeight, height } : {}}
+                ref = {ref}
             >
                 <animated.div className="w-full " style={refHeight ? { visibility, height } : {}}> 
                     {children}
@@ -483,7 +496,7 @@ const Tabs = ({ open, toggleOpen }) => {
     )
 }
 
-const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFilters, viewConfig }) => {
+const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, viewConfig }) => {
     // Renders a Stream object, its metadata, View Controller and Seeds
     // TODO: handles two states. Seeds, and View Controller
 
@@ -503,10 +516,6 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
         setOpen(nextOpen)
     }
 
-    // track remaining height for AccordionDetails
-
-    
-
 
     const [ref, bounds] = useMeasure()
 
@@ -517,7 +526,7 @@ const StreamSidebar = ({ stream, inFocus, currentStream, streamFilters, toggleFi
         if (bounds.height) {
             setRemainingHeight(window.innerHeight - bounds.height - 2*bounds.top)
         }
-    }, [])
+    }, [open, bounds])
 
     
 

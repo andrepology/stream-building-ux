@@ -1,9 +1,11 @@
-import { useState, useEffect, memo, useMemo, useCallback } from 'react';
+import { useState, useEffect, memo, useMemo, useCallback, Children, useRef } from 'react';
 import cn from 'classnames';
 import { useSpring, animated } from '@react-spring/web'
+import axios from 'axios';
+
 
 import {StreamSidebar} from './components/Sidebar';
-import Tweet from './components/Tweet';
+import Tweet, {Account} from './components/Tweet';
 
 import './App.css';
 
@@ -27,7 +29,9 @@ const Feed = ({ children, openOverview }) => {
       >
         {/* Empty Space. To Replace with Dashboard */}
         <div className='h-12'/>
-        {children}
+        {
+          children
+        }
       </animated.div>
     </div>
   )
@@ -64,6 +68,7 @@ const sampleStreams = [
 
 const useFilters = () => {
   const [streamFilters, setFilters ] = useState([]);
+
   const toggleFilters = (filterName) => {
     // toggle filter with name = key visibilty
     // all children share same state
@@ -82,7 +87,7 @@ const useFilters = () => {
 
     nextFilters.forEach(filter => toggle(filter))
 
-    // Ensure parent counts are sum of children
+    // Ensure parent counts are sum of active children
     const updateCounts = (filter) => {
       if (filter.children?.length > 1) {
         filter.count = filter.children?.filter(child => child.isVisible).reduce((acc, child) => acc + child.count, 0)
@@ -102,15 +107,28 @@ const useFilters = () => {
 function App() {
   const [streams, setStreams] = useState(sampleStreams)
   const [currentStream, setStream] = useState({name: "Tools For Thought", description: "A stream about the tools we shape and the tools that shape us"});
-
   
+  
+  const [topics, setTopics] = useState(null);
+  useEffect(() => {
+    axios.get('./json/clusters.json')
+      .then(res => {
+        setTopics(res.data)
+      })
+  }, [])
+
+
+
+
   const [accounts, setAccounts] = useState([]);
   const [tweets, setTweets] = useState([]);
   const [entities, setEntities] = useState([]);
 
   const [focusedTweet, setFocusedTweet] = useState(null);
+  const [currentTopic, setCurrentTopic] = useState(null);
   const [openOverview, setOpenOverview] = useState(false);
 
+  // TODO: move to useFilters
   const [viewConfig, setViewConfig] = useState({
     zoom: {
       topic: true,
@@ -150,8 +168,6 @@ function App() {
   // Tally Feed statistics on a change of currentStream or streamFiltersx 
   useEffect(() => {
     // console.log('Tallying Feed Statistics');
-
-    
 
     // time performance of tallying
     const start = performance.now();
@@ -209,7 +225,7 @@ function App() {
       }
     })
 
-    setAccounts(nextAccounts.filter(acc => acc.username in accounts))
+    setAccounts(prev => nextAccounts.filter(acc => accounts.has(acc.username)))
 
     tally.Tweets.Count = tally.Tweets.Standalone + tally.Tweets.Replies + tally.Tweets.Retweets + tally.Tweets.Quotes;
     tally.Accounts.Count = accounts.size
@@ -240,14 +256,44 @@ function App() {
 
     setFilters(filterState)
 
-
-
   }, [currentStream])
 
+  const addEntityToStream = (evt, entity) => {
+    
+    // This is essentially a form submission to an action
+    evt.preventDefault();
+    evt.stopPropagation();
+
+
+    const entityObject = {
+      id: entity.id,
+      name: entity.html || entity.name,
+      kind: entity.html ? "Tweet" : "Account"
+    }
+
+
+    // For now, just update client state
+    setStreams(prevState => {
+        
+        const newState = prevState.map((e,i) =>{
+
+
+            if (currentStream.name === e.name) {
+                
+                // push seed to current stream
+                return {...e, seeds: e.seeds.concat([entityObject])}
+            }
+            return e
+        })
+
+        return newState
+    })
+
+    
+
+}
 
   const createTweetElements = (tweets) => {
-
-    console.log("rendering tweets")
     
     const elems = tweets.map((tweet) => {
 
@@ -257,12 +303,15 @@ function App() {
         <Tweet
           key={tweet.id}
           tweet={tweet}
+
+
           isFocused={inFocus}
           setFocusedTweet={setFocusedTweet}
           zoom={setTweetZoomLevel(focusedTweet, tweet.id)}
-          streams={streams}
-          setStreams={setStreams}
+          
+          addEntityToStream = {addEntityToStream}
           currentStream={currentStream}
+          
           openOverview={openOverview}
           setOpenOverview={setOpenOverview}
         />
@@ -271,6 +320,28 @@ function App() {
 
     return elems
   }
+
+  const createAccountElements = (accounts) => {
+      
+      console.log("rendering accounts", accounts)
+  
+      const elems = accounts.map((account, i) => {
+        return (
+          <Account
+            key={i}
+            entity={account}
+            currentStream={currentStream}
+            addEntityToStream = {addEntityToStream}
+          />
+        )
+      })
+  
+      return elems
+  }
+
+  const memoAccounts = useMemo(() => createAccountElements(accounts), [accounts, openOverview, focusedTweet])
+  const memoTweets = useMemo(() => createTweetElements(tweets), [tweets, openOverview, focusedTweet])
+
 
   useEffect(() => {
 
@@ -295,17 +366,17 @@ function App() {
               return tweet.quote
             }
           })
-        }
-      
+        } 
       })
     })
 
-    setTweets(nextTweets)
+    setTweets(nextTweets)    
+
+    console.log(streamFilters)
 
   }, [streamFilters])
 
-  const memoTweets = useMemo(() => createTweetElements(tweets), [tweets, openOverview, focusedTweet])
-  
+
 
   return (
 
@@ -333,6 +404,7 @@ function App() {
         filters = {streamFilters}
       >
         {memoTweets}
+        {streamFilters[1]?.isVisible? memoAccounts : null}
       </Feed>
 
       <BackdropMemo currentStream={currentStream.name} />
