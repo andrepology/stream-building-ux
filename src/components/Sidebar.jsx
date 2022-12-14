@@ -74,7 +74,7 @@ const AccordionDetails = ({ refHeight, expanded, children }) => {
 
     useEffect(() => {
         
-        heightToFill.current = window.innerHeight - bounds.bottom
+        heightToFill.current = window.innerHeight - bounds.bottom + 156
     
     }, [refHeight, bounds.bottom])
     
@@ -521,7 +521,7 @@ const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, vi
 
 
     const [remainingHeight, setRemainingHeight] = useState(null)
-    useLayoutEffect(() => {
+    useEffect(() => {
         // calculate remaining height if bounds change
         if (bounds.height) {
             setRemainingHeight(window.innerHeight - bounds.height - 2*bounds.top)
