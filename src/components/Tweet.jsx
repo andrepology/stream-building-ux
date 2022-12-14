@@ -543,7 +543,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
             }}
             ref = {ref}
             className = "relative"
-            style = {{paddingTop: 0, paddingBottom: 0}}
+            style = {{paddingTop: 0, paddingBottom: 0, zIndex: 10}}
         >
 
             <div

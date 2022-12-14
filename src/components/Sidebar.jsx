@@ -144,7 +144,7 @@ const useWidth = () => {
 
 
 
-const StreamHeader = ({ streamName, streamDescription, onClick = () => console.log("Clicked") }) => {
+const StreamHeader = ({ streamName, streamDescription, onClick = () => console.log("Clicked") , isFocused}) => {
     // Simply renders the heading/Stream metadata
     // Can register onClick events for backwards nav
     // TODO: share, export functionality
@@ -158,15 +158,20 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
     })
     
     const [hover, setHover] = useState(false)
-    const [isFocused, setFocus] = useState(false)
+    
 
+    
     const [ref, width] = useWidth()
 
-    const focusStyle = {
-        boxShadow: "0px 28px 32px -28px #d2d1d1",
-        backgroundColor: "#faf9fa5a",
-        height: width,
-    }
+    const focusStyle = isFocused ?
+        {
+            boxShadow: "0px 28px 32px -28px #d2d1d1",
+            backgroundColor: "#faf9fa5a",
+            height: width,
+        } : 
+        {
+            backgroundColor: "#faf9fa5a",
+        }
 
     const position = isFocused? "absolute left-1 top-9" : "absolute left-1 top-3.5"
 
@@ -174,8 +179,8 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
 
     return (
         <div
-            onClick={() => setFocus(!isFocused)}
-            style = { isFocused ? focusStyle: {}}
+            onClick={() => onClick()}
+            style = { focusStyle }
             
             ref={ref}
 
@@ -515,6 +520,11 @@ const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, vi
         }
         setOpen(nextOpen)
     }
+    const [isFocused, setFocus] = useState(false)
+
+    const toggle = () => {
+        setFocus(!isFocused)
+    }
 
 
     const [ref, bounds] = useMeasure()
@@ -555,7 +565,7 @@ const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, vi
                 }
             >
 
-                <StreamHeader streamName={stream.name} streamDescription = {currentStream.description} />
+                <StreamHeader isFocused={isFocused} onClick={toggle} streamName={stream.name} streamDescription = {currentStream.description} />
 
                 <div
                     className={cn("transition-all duration-500", { "flex flex-row": false }, { "flex flex-col": true })}
@@ -582,6 +592,16 @@ const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, vi
 
                     />
                 </div>
+
+                <StreamCover 
+                    className = {cn(
+                        "absolute z-0 w-full h-full top-0 left-0",
+                        {"opacity-10 blur-xl" : open.view || open.seeds},
+                        {"opacity-70 blur-xl" : !(open.view || open.seeds || isFocused),
+                        "opacity-0 blur-none" : isFocused
+                    }
+                    )}
+                />
 
 
             </div>
