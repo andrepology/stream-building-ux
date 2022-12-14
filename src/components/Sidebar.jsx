@@ -184,7 +184,7 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
                     "relative transition-all duration-300 pl-4 pr-4 py-2",
                     "hover:bg-gray-100/10 flex flex-col justify-between",
                     {"text-3xl text-gray-800/80 leading-8 m-0.5 rounded-xl px-5 py-5": isFocused},
-                    {"text-md font-semibold text-gray-800/60 leading-6 px-5": !isFocused}
+                    {"text-md font-medium text-gray-800/60 leading-6 px-5": !isFocused}
                 )
             }
         >

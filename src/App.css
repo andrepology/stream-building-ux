@@ -25,6 +25,11 @@ body {
 }
 
 
+.tweet-bg {
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.94) 100%);
+}
+
+
 
 .tweet {
   background-color: #fafafa;

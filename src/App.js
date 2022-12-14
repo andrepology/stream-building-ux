@@ -11,6 +11,11 @@ import './App.css';
 
 import tftTweets from './components/sample';
 import entities from './components/entities'
+import { MdOutlineTonality } from 'react-icons/md';
+
+
+import { IoAdd } from 'react-icons/io5';
+import EntityTag from './components/EntityTag';
 
 
 const Feed = ({ children, openOverview }) => {
@@ -104,20 +109,75 @@ const useFilters = () => {
   return [streamFilters, setFilters, toggleFilters]
 }
 
+
+
+const Topic = ({ topic, addEntityToStream }) => {
+
+  // remove quotation marks from title
+  const title = topic.title.replace(/['"]+/g, '')
+
+  return (
+    <div className='px-6 py-6 tweet-bg rounded-xl relative flex justify-between items-center'>
+
+      <div className='flex flex-col gap-6'>
+        <div
+          className='text-xl leading-6 font-medium text-gray-600'
+          style={{ fontFamily: "GT Pressura" }}
+        >
+          {title}
+        </div>
+        <div className='text-sm text-gray-600/80'>{topic.summary}</div>
+        <div className='flex gap-1 flex-wrap w-3/5'>
+          {
+            topic.keywords.split(",").map((e, i) => {
+
+              return (
+                <div className='text-xs text-gray-400 bg-gray-50 rounded-md px-1.5 py-0.5 cursor-pointer' onClick={() => addEntityToStream(e)}>{e}</div>
+              )
+
+            })
+          }
+
+        </div>
+      </div>
+
+      <div className='flex flex-col justify-between items-center h-full'>
+        <EntityTag className="relative top-2" kind={"Topic"} />
+
+        {true && (
+            <div 
+                // center icon below
+                onClick={(e) => addEntityToStream(e, {name: title, kind: "Topic"})}
+                className='h-8 w-8 flex cursor-pointer items-center justify-center rounded-lg bg-gray-200/40 hover:bg-gray-200'
+            > 
+                <IoAdd
+                    className='h-5 w-5 text-gray-500 hover:text-gray-800 '
+                /> 
+            </div>
+        )}
+      </div>
+
+
+
+
+    </div>
+  )
+
+}
+
+
 function App() {
   const [streams, setStreams] = useState(sampleStreams)
   const [currentStream, setStream] = useState({name: "Tools For Thought", description: "A stream about the tools we shape and the tools that shape us"});
   
   
-  const [topics, setTopics] = useState(null);
+  const [streamTopics, setTopics] = useState([]);
   useEffect(() => {
     axios.get('./json/clusters.json')
       .then(res => {
         setTopics(res.data)
       })
   }, [])
-
-
 
 
   const [accounts, setAccounts] = useState([]);
@@ -165,98 +225,128 @@ function App() {
     }
   }
 
-  // Tally Feed statistics on a change of currentStream or streamFiltersx 
+  // Tally Feed statistics on a change of currentStream or streamFilters 
   useEffect(() => {
-    // console.log('Tallying Feed Statistics');
+    console.log('Tallying Feed Statistics');
 
     // time performance of tallying
-    const start = performance.now();
-    
-    const tally = {
-      Tweets: {
-        Count: 0,
-        Standalone: 0,
-        Replies: 0,
-        Retweets: 0,
-        Quotes: 0
-      },
-      Accounts : {
-        Count: 0,
-      },
-      Media: {
-        Count: 0,
-        Images: 0,
-        Videos: 0,
-      },
-      Entities: {
-        Count: 0
+    // const start = performance.now();
+
+    const tallyContent = async () => {
+
+      const tally = {
+        Topics: {
+          Count: 0
+        },
+        Tweets: {
+          Count: 0,
+          Standalone: 0,
+          Replies: 0,
+          Retweets: 0,
+          Quotes: 0
+        },
+        Accounts: {
+          Count: 0,
+        },
+        Media: {
+          Count: 0,
+          Images: 0,
+          Videos: 0,
+        },
+        Entities: {
+          Count: 0
+        },
+        
       }
-    }
 
-    const accounts = new Set()
-    const nextAccounts = []
+      const accounts = new Set()
+      var nextAccounts = []
 
-    tftTweets.forEach(tweet => {
+      tftTweets.forEach(tweet => {
 
-      accounts.add(tweet.author.username)
-      nextAccounts.push(tweet.author)
+        accounts.add(tweet.author.username)
+        nextAccounts.push(tweet.author)
 
-      tweet.media.forEach(media => {
-        if (media.type === "photo") {
-          tally.Media.Images += 1
-        } else if (media.type === "video") {
-          tally.Media.Videos += 1
+        tweet.media.forEach(media => {
+          if (media.type === "photo") {
+            tally.Media.Images += 1
+          } else if (media.type === "video") {
+            tally.Media.Videos += 1
+          }
+        })
+
+        if (tweet.standalone === true) {
+          tally.Tweets.Standalone += 1;
+        } else if (tweet.reply === true) {
+          tally.Tweets.Replies += 1;
+        } else if (tweet.rt === true) {
+          tally.Tweets.Retweets += 1;
+        } else if (tweet.quote === true) {
+          tally.Tweets.Quotes += 1;
+        }
+
+        const nEntities = tweet['entities'].length
+        if (nEntities > 0) {
+          tally.Entities.Count += tweet['entities'].length
         }
       })
 
-      if (tweet.standalone === true) {
-        tally.Tweets.Standalone += 1;
-      } else if (tweet.reply === true) {
-        tally.Tweets.Replies += 1;
-      } else if (tweet.rt === true) {
-        tally.Tweets.Retweets += 1;
-      } else if (tweet.quote === true) {
-        tally.Tweets.Quotes += 1;
+      // fetch, tally and save topics
+      const getClusterCount = async () => {
+        const data = await fetch('./json/clusters.json').then(res => res.json())
+        const numClusters = Object.keys(data).length
+
+        return numClusters
+
       }
 
-      const nEntities = tweet['entities'].length
-      if (nEntities > 0) {
-        tally.Entities.Count += tweet['entities'].length
-      }
-    })
+      // set topics count
+      tally.Topics.Count = await getClusterCount()
+      tally.Tweets.Count = tally.Tweets.Standalone + tally.Tweets.Replies + tally.Tweets.Retweets + tally.Tweets.Quotes;
+      tally.Accounts.Count = accounts.size
+      tally.Media.Count = tally.Media.Images + tally.Media.Videos
 
-    setAccounts(prev => nextAccounts.filter(acc => accounts.has(acc.username)))
+      return { tally: tally, accounts: nextAccounts.filter(acc => accounts.has(acc.username)) }
 
-    tally.Tweets.Count = tally.Tweets.Standalone + tally.Tweets.Replies + tally.Tweets.Retweets + tally.Tweets.Quotes;
-    tally.Accounts.Count = accounts.size
-    tally.Media.Count = tally.Media.Images + tally.Media.Videos
-    
-    const end = performance.now();
-    
-    // console.log(`Tallying took ${end - start} ms`);
-
-    // TODO: pls refactor this to one schema lol
-    var filterState = []
-    for (const k in tally) {
-      filterState.push({
-        name: k,
-        count: tally[k].Count,
-        isVisible: true,
-        children: Object.entries(tally[k]).filter((k, v) => {
-          if (k !== "Count") {
-            return (k, v)
-          }
-        }).map(a => {
-          return { name: a[0], count: a[1], isVisible: true }
-        })
-      })
     }
 
+    const transformTally = async (tally) => {
+      var filterState = []
+      for (const k in tally) {
+
+        filterState.push({
+          name: k,
+          count: tally[k].Count,
+          isVisible: true,
+          children: Object.entries(tally[k]).filter((k, v) => {
+            if (k !== "Count") {
+              return (k, v)
+            }
+          }).map(a => {
+            return { name: a[0], count: a[1], isVisible: true }
+          })
+        })
+      }
+      return filterState
+    }
+
+    const transform = async () => {
+      const { tally, accounts } = await tallyContent()
+      const filterState = await transformTally(tally)
+      setFilters(filterState)
+      setAccounts(accounts)
+    }
+
+
+    transform()
+
+    // const end = performance.now();
     // console.log(`Transforming took ${performance.now() - end} ms`, filterState);
 
-    setFilters(filterState)
 
   }, [currentStream])
+
+
 
   const addEntityToStream = (evt, entity) => {
     
@@ -268,7 +358,7 @@ function App() {
     const entityObject = {
       id: entity.id,
       name: entity.html || entity.name,
-      kind: entity.html ? "Tweet" : "Account"
+      kind: entity.kind? entity.kind : entity.html ? "Tweet" : "Account"
     }
 
 
@@ -322,9 +412,7 @@ function App() {
   }
 
   const createAccountElements = (accounts) => {
-      
-      console.log("rendering accounts", accounts)
-  
+
       const elems = accounts.map((account, i) => {
         return (
           <Account
@@ -339,10 +427,32 @@ function App() {
       return elems
   }
 
+
+
+  const createTopicElements = (topics) => {
+
+    const topicObj = Object.values(topics)
+
+    const elems = topicObj.map((topic, i) => {
+      return (
+        <Topic
+          key={i}
+          topic={topic}
+          addEntityToStream={addEntityToStream}
+        />
+      )
+    })
+
+    return elems
+  }
+
+
+  const memoTopics = useMemo(() => createTopicElements(streamTopics), [streamTopics, openOverview, focusedTweet])
   const memoAccounts = useMemo(() => createAccountElements(accounts), [accounts, openOverview, focusedTweet])
   const memoTweets = useMemo(() => createTweetElements(tweets), [tweets, openOverview, focusedTweet])
 
 
+  // can probably not use useEffect and have a single memoized function that returns the filtered tweets
   useEffect(() => {
 
     const nextTweets = tftTweets.filter(tweet => {
@@ -371,9 +481,6 @@ function App() {
     })
 
     setTweets(nextTweets)    
-
-    console.log(streamFilters)
-
   }, [streamFilters])
 
 
@@ -404,7 +511,8 @@ function App() {
         filters = {streamFilters}
       >
         {memoTweets}
-        {streamFilters[1]?.isVisible? memoAccounts : null}
+        {streamFilters[2]?.isVisible? memoAccounts : null}
+        {streamFilters[0]?.isVisible? memoTopics : null}
       </Feed>
 
       <BackdropMemo currentStream={currentStream.name} />

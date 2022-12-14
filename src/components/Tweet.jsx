@@ -607,7 +607,6 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                             </div>
 
 
-
                             <p
                                 data-cy='date'
                                 className={cn(
