@@ -596,9 +596,9 @@ const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, vi
                 <StreamCover 
                     className = {cn(
                         "absolute z-0 w-full h-full top-0 left-0",
-                        {"opacity-10 blur-xl" : open.view || open.seeds},
+                        {"opacity-20 blur-2xl" : open.view || open.seeds},
                         {"opacity-70 blur-xl" : !(open.view || open.seeds || isFocused),
-                        "opacity-0 blur-none" : isFocused
+                        "opacity-0 blur-none" : isFocused && !(open.view || open.seeds)
                     }
                     )}
                 />
