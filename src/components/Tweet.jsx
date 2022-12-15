@@ -686,11 +686,11 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
 
             {/* Entity Popups */}
             {focus > 0.8 && !openOverview && tweet.entities?.length > 0 && (
-                <div className='absolute flex flex-col gap-11' style = {{top: 24, left: bounds.width + 32}}>
+                <div className='absolute flex flex-col gap-6 w-56 ' style = {{top: 32, left: bounds.width + 32}}>
                     <p className='text-sm leading-4 tracking-tight text-gray-400 font-normal'>Related to this Tweet</p>
                     <div className='flex flex-col gap-4'>
                         <p className='text-xs text-gray-400 leading-5 tracking-tight'> <span className ="text-sm text-gray-500" >{tweet.entities?.length}</span> Entities</p>
-                        <div className='flex flex-col gap-1'>
+                        <div className='flex max-w-20 flex-wrap gap-1'>
                             {tweet.entities?.map((entity, i) => {
                                 return(
                                     <EntityPopup 
