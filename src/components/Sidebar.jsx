@@ -186,14 +186,14 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
 
             className={
                 cn(
-                    "relative transition-all duration-300 pl-4 pr-4 py-2",
+                    "relative transition-all rounded-xl duration-300 pl-4 pr-4 py-2",
                     "hover:bg-gray-100/10 flex flex-col justify-between",
-                    {"text-3xl text-gray-800/80 leading-8 m-0.5 rounded-xl px-5 py-5": isFocused},
-                    {"text-md font-medium text-gray-800/60 leading-6 px-5": !isFocused}
+                    {"text-3xl text-gray-900/90 leading-8 m-0.5 rounded-xl px-5 py-5": isFocused},
+                    {"text-md font-medium text-gray-900/70 leading-6 px-5": !isFocused}
                 )
             }
         >
-            <div className = "flex justify-between pl-0.5 items-baseline cursor-pointer  tracking-tight">
+            <div className = "flex justify-between pl-0.5 items-baseline cursor-pointer tracking-tight">
                 <div
                     className="flex z-10 items-baseline gap-0.5 w-4/5"
                     style = {isFocused? font : {}}
@@ -278,8 +278,8 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
     return (
         <div 
             className={cn(
-                "px-5",
-                { "hover:bg-white/40 pointer": hasChildren }
+                "px-3 mx-2 rounded-lg",
+                { "hover:bg-white/40 cursor-pointer": hasChildren }
             )}
         >
             <div
@@ -299,17 +299,17 @@ const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasCh
                     <div
                         className={cn(
                             "flex gap-0.5 items-center",
-                            { "cursor-pointer text-gray-700/60":  isVisible },
+                            { "cursor-pointer text-gray-700/50":  isVisible },
                         )}
                     >
-                        <p>
+                        <p >
                             {quantity}
                         </p>
                     </div>
                     {isVisible &&
                         <div 
                             style = {opacity}
-                            className="rounded-full px-2 h-4 flex items-center justify-center text-gray-600 text-xs"
+                            className="rounded-full px-2 h-4 flex items-center justify-center text-gray-800/80 text-xs"
                         >
                             {count}
                         </div>
