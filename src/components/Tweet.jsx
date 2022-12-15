@@ -689,7 +689,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                 <div className='absolute flex flex-col gap-6 w-56 ' style = {{top: 32, left: bounds.width + 32}}>
                     <p className='text-sm leading-4 tracking-tight text-gray-400 font-normal'>Related to this Tweet</p>
                     <div className='flex flex-col gap-4'>
-                        <p className='text-xs text-gray-400 leading-5 tracking-tight'> <span className ="text-sm text-gray-500" >{tweet.entities?.length}</span> Entities</p>
+                        <p className='text-xs text-gray-400 leading-5 tracking-tight'> <span className =" text-gray-500" >{tweet.entities?.length}</span> Entities</p>
                         <div className='flex max-w-20 flex-wrap gap-1'>
                             {tweet.entities?.map((entity, i) => {
                                 return(
