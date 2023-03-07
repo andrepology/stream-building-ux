@@ -3,10 +3,13 @@ import cn from 'classnames'
 import { useSpring, animated, useTransition } from '@react-spring/web'
 import useMeasure from "react-use-measure";
 
-import EntityTag from "./EntityTag";
+import ContentTag from "./ContentTag";
 
 import { MdKeyboardArrowRight } from 'react-icons/md'
 import { BiDotsVertical, BiCaretRight } from 'react-icons/bi'
+import {IoIosCheckmark} from 'react-icons/io'
+
+
 import { useCallback } from "react";
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 
@@ -15,43 +18,41 @@ import bg from '../assets/bg.png'
 
 
 
-const StreamCover = ({className}) => {
+const StreamCover = ({ className }) => {
 
     const bgImage = {
         backgroundImage: `url(${bg})`,
         zIndex: -1,
         backgroundSize: "cover",
-        
+
     }
 
-    return(
-        <div className={className} style={bgImage}/>
+    return (
+        <div className={className} style={bgImage} />
     )
 }
 
 
 
-const InlineEntity = ({ name, kind }) => {
+const InlineContent = ({ name, kind }) => {
 
     // A width-constrained entity tag
     // Useful for rendering seeds
 
-
     return (
         <div className={
             cn(
-                "w-full pl-2 pr-1 py-1.5 max-w-96 items-center inline-flex justify-between  hover:bg-white/80 rounded-lg  border-opacity-0 hover:border-opacity-0")
+                "pl-3 pr-2.5 py-2 max-w-96 items-baseline inline-flex justify-between bg-white/55 rounded-md")
         }>
-            <div className="text-sm whitespace-nowrap truncate  text-gray-500">
+            <p className="whitespace-nowrap truncate text-gray-200">
                 {name}
-            </div>
+            </p>
 
-            <EntityTag kind={kind} />
+            <ContentTag kind={kind} />
 
         </div>
     )
 }
-
 
 
 const AccordionSummary = ({ children, toggle, expanded }) => {
@@ -60,24 +61,23 @@ const AccordionSummary = ({ children, toggle, expanded }) => {
         <div
             onClick={() => toggle()}
         >
-            {Children.map(children, child => cloneElement(child, { expanded: expanded}))}
+            {Children.map(children, child => cloneElement(child, { expanded: expanded }))}
         </div>
     )
 
 }
 
-
 const AccordionDetails = ({ refHeight, expanded, children }) => {
 
     const [ref, bounds] = useMeasure()
-    const heightToFill  = useRef()
+    const heightToFill = useRef()
 
     useEffect(() => {
-        
+
         heightToFill.current = window.innerHeight - bounds.bottom + 156
-    
+
     }, [refHeight, bounds.bottom])
-    
+
     const { minHeight, height, visibility } = useSpring({
         from: { minHeight: 0, height: 0, visibility: 0, y: 0 },
         to: {
@@ -93,9 +93,9 @@ const AccordionDetails = ({ refHeight, expanded, children }) => {
             <animated.div
                 className={"overflow-y-scroll w-full flex flex-col items-center"}
                 style={refHeight ? { minHeight, height } : {}}
-                ref = {ref}
+                ref={ref}
             >
-                <animated.div className="w-full " style={refHeight ? { visibility, height } : {}}> 
+                <animated.div className="w-full " style={refHeight ? { visibility, height } : {}}>
                     {children}
                 </animated.div>
             </animated.div>
@@ -103,21 +103,23 @@ const AccordionDetails = ({ refHeight, expanded, children }) => {
     } else { return null }
 }
 
-const Accordion = ({ height, summary, details, toggle, open = null }) => {
+const Accordion = ({  height, summary, details, toggle, tabs = null }) => {
     // renders a controlled accordion with animated expand/collapse
 
-    // fallback if not controlled by parent
+    // Fallback if not controlled by parent
     const [expanded, setExpanded] = useState(false)
+
+    const detailsToggle = toggle ? () => toggle() : () => setExpanded(!expanded)
+    const istabs = tabs ?? expanded
+
     
-    const detailsToggle = toggle? () => toggle() : () => setExpanded(!expanded)
-    const isOpen = open !== null ? open : expanded
 
     return (
         <div>
-            <AccordionSummary toggle={detailsToggle} expanded={isOpen}>
-                {summary}
+            <AccordionSummary toggle={detailsToggle} expanded={istabs}>
+                {cloneElement(summary, { expanded: istabs })}
             </AccordionSummary>
-            <AccordionDetails refHeight={height ?? null} expanded={isOpen} >
+            <AccordionDetails refHeight={height ?? null} expanded={istabs} >
                 {details}
             </AccordionDetails>
         </div>
@@ -143,89 +145,63 @@ const useWidth = () => {
 }
 
 
+const StreamHeader = ({ streamName, streamDescription, onClick = () => console.log("Clicked"), isFocused }) => {
 
-const StreamHeader = ({ streamName, streamDescription, onClick = () => console.log("Clicked") , isFocused}) => {
-    // Simply renders the heading/Stream metadata
+    // Simply renders the Heading and Stream metadata
     // Can register onClick events for backwards nav
     // TODO: share, export functionality
 
-    // onFocus make square
-
-    
     const spin = useSpring({
         config: { friction: 5 },
         transform: true ? "rotate(180deg)" : "rotate(0deg)"
     })
-    
-    const [hover, setHover] = useState(false)
-    
 
-    
+    const [hover, setHover] = useState(false)
     const [ref, width] = useWidth()
 
-    const focusStyle = isFocused ?
-        {
-            boxShadow: "0px 28px 32px -28px #d2d1d1",
-            backgroundColor: "#faf9fa5a",
-            height: width,
-        } : 
-        {
-            backgroundColor: "#faf9fa5a",
-        }
 
-    const position = isFocused? "absolute left-1 top-9" : "absolute left-1 top-3.5"
-
-    const font = {fontFamily: "GT Pressura"}
+    const font = { fontFamily: "GT Pressura" }
 
     return (
         <div
-            onClick={() => onClick()}
-            style = { focusStyle }
-            
             ref={ref}
-
+            onClick={() => onClick()}
             className={
                 cn(
-                    "relative transition-all rounded-xl duration-300 pl-4 pr-4 py-2",
-                    "hover:bg-gray-100/10 flex flex-col justify-between",
-                    {"text-3xl text-gray-900/90 leading-8 m-0.5 rounded-xl px-5 py-5": isFocused},
-                    {"text-md font-medium text-gray-900/70 leading-6 px-5": !isFocused}
+                    "relative bg-white/20 hover:bg-white/35 rounded-md px-4.5 pt-3 pb-2.5",
+                    "flex flex-col justify-between",
+                    { "text-xl text-gray-100 leading-8 m-0.5 rounded-xl bg-white/35 hover:bg-white/35": isFocused },
+                    { "text-md font-medium text-gray-100 leading-6": !isFocused }
                 )
             }
         >
-            <div className = "flex justify-between pl-0.5 items-baseline cursor-pointer tracking-tight">
+            <div className="flex justify-between items-baseline cursor-pointer tracking-tight">
                 <div
-                    className="flex z-10 items-baseline gap-0.5 w-4/5"
-                    style = {isFocused? font : {}}
+                    className="z-10 w-4/5 text-base"
+                    style={isFocused ? font : {}}
                     onMouseEnter={() => setHover(true)}
                     onMouseLeave={() => setHover(false)}
                 >
-                    {hover && (
-                        <MdKeyboardArrowRight
-                            size={12}
-                            onClick={onClick}
-                            className = {"transition-all duration-300 " + position}
-                            style={{ transform: "rotate(180deg)" }}
-                        />
-                    )}
                     {streamName}
                 </div>
 
                 <animated.div style={spin}>
                     <BiDotsVertical
                         size={12}
-                        style={true ? { color: '#8e8a8a80' } : { color: '#b3bfcb' }}
+                        className={"text-gray-300"}
                     />
                 </animated.div>
             </div>
-            <div className = "text-gray-800/40 tracking-tight leading-4 font-normal text-sm">
+
+            <div className="text-gray-200 tracking-normal leading-4 font-normal text-sm">
                 {isFocused && streamDescription}
             </div>
-            <StreamCover 
-                className = {cn(
-                    "absolute z-0 w-full transition-all duration-300 h-full top-0 left-0",
-                    {"rounded-xl opacity-100": isFocused},
-                    {"opacity-0": !isFocused}
+
+            <StreamCover
+                className={cn(
+                    "absolute rounded-md z-0 w-full transition-all duration-300 h-full top-0 left-0",
+                    { "opacity-100": isFocused },
+                    { "opacity-0": !isFocused }
                 )}
             />
         </div >
@@ -234,15 +210,35 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
 }
 
 
-const StreamSummary = ({ quantity = "Seeds", count = 5, noBorder = false, expanded }) => {
+const ContentIndicator = ({ contentType }) => {
+    // simply renders a small circle icon with the color of the contentType
 
-
+    const colorType = {
+        "accounts": "bg-author-base",
+        "tweets": "bg-tweet-base",
+        "media": "bg-media-base",
+        "collections": "bg-collection-base",
+        "communities": "bg-community-base",
+        "entities": "bg-entity-base",
+        "default": "bg-gray-400"
+    }
 
     return (
-        <div 
+        <div className={cn(
+            "w-1.5 h-1.5 rounded-full",
+            colorType[contentType.toLowerCase()] ?? colorType["default"]
+        )} />
+    )
+}
+
+
+const StreamSummary = ({ quantity = "Seeds", count = 5, noBorder = false, expanded }) => {
+
+    return (
+        <div
             className={cn(
                 "py-3 text-sm text-gray-500/80 flex justify-between items-center",
-                {"border-b border-gray-100": !noBorder}
+                { "border-b border-gray-100": !noBorder }
             )}
         >
             <div className="flex gap-0.5 items-center">
@@ -263,113 +259,255 @@ const StreamSummary = ({ quantity = "Seeds", count = 5, noBorder = false, expand
 }
 
 
-const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasChildren, level }) => {
+const Filter = ({ quantity = "Seeds", count = 5, toggleFilters, isVisible, hasChildren, level, idx = null }) => {
 
     const [isHovered, setHover] = useState(false)
-
 
     const eyeCon = isVisible ?
         <HiOutlineEye size={12} style={{ color: '#b3bfcb' }} />
         :
         <HiOutlineEyeOff size={12} style={{ color: '#b3bfcb' }} />
 
-    const opacity = {opacity: 1 - (level - 1)*0.55}
+    const opacity = { opacity: 1 - (level - 1) * 0.55 }
+    // if level is odd add bottom margin
+    const separation = idx && idx % 2 !== 0 ? { marginBottom: "0.75rem" } : {}
 
     return (
-        <div 
+        <div
+            style = {separation}
             className={cn(
-                "px-3 mx-2 rounded-lg",
-                { "hover:bg-white/40 cursor-pointer": hasChildren }
+                "w-full",
+                { "hover:bg-white/55 cursor-pointer": hasChildren }
             )}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
         >
             <div
-                className="flex  items-center gap-0 border-b border-gray-300/30"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
+                className={cn(
+                    "ml-5 pl-1.5 pr-2 mr-4 pt-2.5 pb-3",
+                    "flex items-center gap-0 border-b border-gray-400/35"
+                )}
             >
+
                 <div
                     className={cn(
-                        "grow py-2.5 text-sm flex justify-between items-baseline",
-                        { "text-gray-300": !isVisible },
-                        { "pl-1": level === 1 },
-                        { "pl-3": level === 2 },
+                        "grow text-sm flex justify-between items-baseline",
+                        { "text-gray-400": !isVisible },
+                        { "text-gray-100": level === 1 },
+                        { "text-gray-200": level === 2 },
+                        { "pl-4.5": level === 2 },
 
                     )}
                 >
+
+                    <p>
+                        {quantity}
+                    </p>
+
                     <div
-                        className={cn(
-                            "flex gap-0.5 items-center",
-                            { "cursor-pointer text-gray-700/50":  isVisible },
-                        )}
+                        style={opacity}
+                        className="flex items-center gap-1.5"
                     >
-                        <p >
-                            {quantity}
-                        </p>
+                        {isVisible &&
+                            <p className="small">
+                                {count}
+                            </p>
+                        }   
+                        {
+                            isVisible ?
+                                isHovered ? (
+                                    <div className={"cursor-pointer"} onClick={() => toggleFilters(quantity)}>
+                                        {eyeCon}
+                                    </div>
+                                ) : level === 1 ? <ContentIndicator contentType={quantity} /> : <div className="w-1.5" />
+                                :
+                                <div className="px-2" onClick={() => toggleFilters(quantity)}>
+                                    {eyeCon}
+                                </div>
+
+
+                        }
+
+
                     </div>
-                    {isVisible &&
-                        <div 
-                            style = {opacity}
-                            className="rounded-full px-2 h-4 flex items-center justify-center text-gray-800/80 text-xs"
-                        >
-                            {count}
-                        </div>
-                    }
+                
+
                 </div>
 
-                {isVisible ?
-                    isHovered && (
-                        <div onClick={() => toggleFilters(quantity)}>
-                            {eyeCon}
-                        </div>
-                    )
-                    :
-                    <div className="px-2" onClick={() => toggleFilters(quantity)}>
-                        {eyeCon}
-                    </div>
-                }
+
             </div>
+
         </div>
 
     )
 
 }
 
+
+const ViewHeader = ({ expanded }) => {
+
+    // hover state
+    const [isHovered, setHover] = useState(false)
+
+    return (
+        <div
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            className=" cursor-pointer flex gap-1 items-center pl-4.5 pr-3 pt-3 pb-2"
+        >
+            <BiCaretRight
+                // Rotate if expanded
+                style={expanded ? { transform: "rotate(90deg)" } : {}}
+                size={8}
+                className={cn(
+                    "absolute left-2 text-gray-400",
+                    { "text-gray-300": isHovered }
+                )}
+            />
+            <p
+                className={
+                    cn(
+                        "small font-normal text-gray-300",
+                        { "text-gray-200": isHovered }
+                    )}>
+                View Controls
+            </p>
+        </div>
+
+    )
+}
+
+const ViewControls = () => {
+    return (
+        <div className="pb-3">
+            <Control controlName={"Zoom"} value="Forest" />
+            <Control controlName={"Scope"} value="Near" />
+            <Control controlName={"Range"} value="Day" />
+        </div>
+    )
+
+}
+
+
+const ViewController = ({ view, setView }) => {
+
+    return (
+        <div className="sticky bg-white/35 border-b border-gray-500">
+            <Accordion
+                summary={<ViewHeader />}
+                details={<ViewControls />}
+            />
+        </div>
+    )
+
+}
+
+const StatusHeader = ({ status, setStatus, expanded }) => {
+
+    const [isHovered, setHover] = useState(false)
+
+    return (
+        <div className="flex justify-between cursor-pointer items-baseline pl-4.5 pr-3 pt-3 pb-2">
+            <div className="flex gap-1 items-center">
+                <BiCaretRight
+                    // Rotate if expanded
+                    style={expanded ? { transform: "rotate(90deg)" } : {}}
+                    size={8}
+                    className={cn(
+                        "absolute left-2 text-gray-400",
+                        { "text-gray-300": isHovered }
+                    )}
+                />
+                <p
+                    className={
+                        cn(
+                            "small font-normal text-gray-300",
+                            { "text-gray-200": isHovered }
+                        )}>
+                    Status
+                </p>
+            </div>
+            <div className="flex gap-1 items-center">
+
+                <p
+                    className={
+                        cn(
+                        "small font-normal text-gray-300/55",
+                        { "text-gray-200": isHovered }
+                    )}>
+                    Indexed
+                </p>
+                <IoIosCheckmark
+                        size={12}
+                        className = "text-gray-300/55 bg-gray-500 rounded-full"
+                />
+
+            </div>
+        </div>
+    )
+}
+
+
+const StatusIndicator = () => {
+    return (
+        <div>
+        </div>
+    )
+}
+
+
+const StatusViewer = ({ status, setStatus }) => {
+
+    return (
+        <div className="bg-white/35 border-b border-gray-500">
+            <Accordion
+                summary={<StatusHeader />}
+                details={<StatusIndicator />}
+            />
+        </div>
+
+    )
+}
 
 const SeedDrawer = ({ seeds }) => {
     // Renders a column of inline seeds
 
     return (
-        <div className="w-full h-full flex flex-col gap-2 px-5 pt-4 pb-20">
-            {seeds.map((seed, i) => (
-                <InlineEntity key={i} name={seed.name} kind={seed.kind} />
-            ))}
-        </div>
+        <>
+            <StatusViewer />
+            <div className="pl-3 pr-3 pt-4 pb-20">
+                <p className="pl-2 pb-2 caption text-gray-300">Added <span className = "text-gray-200">Today</span></p>
+                <div className="flex flex-col gap-2.5">
+                    {seeds.map((seed, i) => (
+                        <InlineContent key={i} name={seed.name} kind={seed.kind} />
+                    ))}
+                </div>
+            </div>
+        </>
     )
 }
 
-const ContentFilters = ({ streamFilters, toggleFilters, viewConfig }) => {
-    // TODO: recursively renders feed toggles
+const ContentFilters = ({ streamFilters, toggleFilters }) => {
 
-
+    // recursively renders Content filters
 
     const renderFilters = (streamFilters, level) => {
         if (typeof (streamFilters) == "object" && streamFilters.length > 0) {
 
-            return (            
-                <div className="w-full font-normal">
+            return (
+                <div className={"w-full font-normal"}>
                     {streamFilters.map((filter, i) => {
-
                         return (
                             <Accordion
                                 key={i}
-                                summary={<Filter isVisible={filter.isVisible} quantity={filter.name} count={filter.count} toggleFilters={toggleFilters} hasChildren={filter.children?.length > 0} level = {level} />}
+                                summary={<Filter isVisible={filter.isVisible} quantity={filter.name} count={filter.count} toggleFilters={toggleFilters} hasChildren={filter.children?.length > 0} level={level} idx = {i} />}
                                 details={renderFilters(filter.children, level + 1)}
                             />
                         )
                     }
                     )}
                 </div>
-            
+
             )
         } else {
             return null
@@ -378,10 +516,9 @@ const ContentFilters = ({ streamFilters, toggleFilters, viewConfig }) => {
     }
 
     return (
-        <div className="w-full h-full flex flex-col pt-4 pb-20">
-            {/* <ViewController
-                viewConfig={viewConfig}
-            /> */}
+        <div className="flex flex-col gap-3 pb-16">
+            <ViewController />
+
             {renderFilters(streamFilters, 1)}
         </div>
     )
@@ -396,7 +533,7 @@ const useRemainingHeight = (ref, state) => {
     // create useCallback
     const handleResize = useCallback(() => {
         if (ref.current) {
-            setHeight( window.innerHeight - ref.current?.clientHeight - 2*state.top)
+            setHeight(window.innerHeight - ref.current?.clientHeight - 2 * state.top)
         }
     }, [ref])
 
@@ -405,140 +542,108 @@ const useRemainingHeight = (ref, state) => {
         handleResize()
         window.addEventListener('resize', handleResize)
         return () => window.removeEventListener('resize', handleResize)
-    }, 
-    [ref, state, handleResize])
+    },
+        [ref, state, handleResize])
 
     return height
 }
 
-const Control = ({ controlName, value, form }) => {
+const Control = ({ controlName, value, formOptions }) => {
 
     return (
-        <div className="flex flex-col gap-0 pt-3 pb-2 pl-6 pr-2 ">
-            <label className="text-xxs uppercase tracking-wider text-gray-400/80">{controlName}</label>
-            <div className="flex justify-between">
-                <div className="text-gray-500">
-                    {value}
-                </div>
-                <div className="text-gray-500">
-                    {form}
+        <div className="flex flex-col gap-0 pt-2 pb-1 pl-6 pr-4.5 ">
+            <p className="caption text-gray-400" >{controlName}</p>
+            <div className="flex justify-between py-1">
+                <p className="text-gray-100">{value}</p>
+                <div className="flex gap-1.5">
+                    {formOptions}
                 </div>
             </div>
         </div>
     )
 }
 
-const ViewController = ({ viewConfig }) => {
-    // Renders form controls for a ViewConfig object
 
-    return (
-        <div className="flex flex-col">
-            <Control controlName={"Limit"} value={"Day"} form={"T"} />
-            <Control controlName={"Recommend"} value={"On"} form={"T"} />
-            <Control controlName={"Zoom"} value={"Tweet"} form={"T"} />
-        </div>
-    )
-
-}
-
-const Tabs = ({ open, toggleOpen }) => {
+const Tabs = ({ tabs, toggleTabs }) => {
     // Renders tabs for Seeds and View Controller
 
-    // inline style for animating font size
-    const fontAnim = (isActive) => (
-        isActive ?
-        { fontSize: "1.125rem" }
-        :
-        { fontSize: "1rem" }
-    )
+    const isOpen = Object.values(tabs).includes(true)
 
-    const activeStyle = (isActive) => (
-        isActive ?
-            "text-gray-800/80 font-normal tracking-tighter text-2xl leading-8"
-            :
-            "text-gray-400/60 font-light text-xl tracking-tighter leading-8 hover:text-gray-400"
-    )
+    const activeStyle = (isActive) => {
+        let baseStyle = "cursor-pointer tracking-tighter leading-5 transition-all duration-200"
 
-    const tabStyle = (isActive) => (
-        isActive ?
-            { backgroundColor: "#faf9fa5a" }
+        let addition = isActive ?
+            "text-gray-100 hover:text-gray-100/70 font-normal "
             :
-            { backgroundColor: "none" }
-    )
+            "text-gray-300/50 font-normal hover:text-gray-300/90"
+
+        return baseStyle + " " + addition
+    }
+
 
     return (
-
-        <div 
-            style={tabStyle(open.seeds || open.view)}
-            className={cn(
-                "pl-5 pt-2 pb-0  flex gap-4 items-baseline",
-            )}
+        <div
+            className={
+                cn(
+                    "pl-4.5 pt-2.5 pb-3 pr-3.5 flex gap-4 items-baseline",
+                    { "bg-white/35": isOpen },
+                )
+            }
         >
-            <div className="flex flex-col  gap-0 cursor-pointer">
-                <h1
-                    // style= {fontAnim(open.seeds)}
-                    className={activeStyle(open.seeds) + " transition-all duration-200"}
-                    onClick={() => toggleOpen("seeds")}
-                >
-                    Seeds
-                </h1>
-                <div className={cn("h-1", { "border-b border-gray-400/50": false })} />
-            </div>
-            <div className="flex flex-col gap-0 cursor-pointer">
-                <h1
-                    // style= {fontAnim(open.view)}
-                    className={activeStyle(open.view) + " transition-all duration-300"}
-                    onClick={() => toggleOpen("view")}
-                >
-                    View
-                </h1>
-                <div
-                    className={cn("h-1", { "border-b border-gray-400/50": false })}
-                />
-            </div>
+
+            <h2
+                className={activeStyle(tabs.seeds)}
+                onClick={() => toggleTabs("seeds")}
+            >
+                Crumbs
+            </h2>
+            <h2
+                className={activeStyle(tabs.view)}
+                onClick={() => toggleTabs("view")}
+            >
+                View
+            </h2>
         </div>
 
     )
 }
 
 const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, viewConfig }) => {
-    // Renders a Stream object, its metadata, View Controller and Seeds
-    // TODO: handles two states. Seeds, and View Controller
 
-    const [open, setOpen] = useState({ seeds: false, view: false })
-    const toggleOpen = (key) => {
-        // ensure only one is open at a time
-        const nextOpen = {...open}
+    // Renders a Stream object, its metadata, View Controller and Seeds
+
+    const [tabs, setTabs] = useState({ seeds: false, view: false })
+    const isOpen = tabs.seeds || tabs.view
+
+    const toggleTabs = (key) => {
+        // ensure only one is tabs at a time
+        const nextTabs = { ...tabs }
 
         // set rest to false
-        for (let [k, v] of Object.entries(nextOpen)) {
+        for (let [k, v] of Object.entries(nextTabs)) {
             if (k !== key) {
-                nextOpen[k] = false
+                nextTabs[k] = false
             } else if (k === key) {
-                nextOpen[k] = !v
+                nextTabs[k] = !v
             }
         }
-        setOpen(nextOpen)
+        setTabs(nextTabs)
     }
+
     const [isFocused, setFocus] = useState(false)
 
     const toggle = () => {
         setFocus(!isFocused)
     }
 
-
     const [ref, bounds] = useMeasure()
-
-
     const [remainingHeight, setRemainingHeight] = useState(null)
     useEffect(() => {
         // calculate remaining height if bounds change
         if (bounds.height) {
-            setRemainingHeight(window.innerHeight - bounds.height - 2*bounds.top)
+            setRemainingHeight(window.innerHeight - bounds.height - 2 * bounds.top)
         }
-    }, [open, bounds])
-
-    
+    }, [tabs, bounds])
 
 
     const visibleContentCount = streamFilters?.filter(filter => filter.isVisible).reduce((acc, filter) => acc + filter.count, 0)
@@ -548,65 +653,59 @@ const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, vi
     return (
         <div
             ref={ref}
-            style = {open.view || open.seeds ? { backgroundColor: "#f4f1f465", boxShadow: "0px 0px 32px #E4DEDE"} : {backgroundColor: "#f4f1f40"}}
             className={
                 cn(
-                    "w-full flex flex-col gap-0 p-0 z-0 rounded-xl ",
+                    "w-full flex flex-col gap-0 rounded-md ",
                     "transition-shadow duration-400 ease-in-out",
                     { "overflow-y-scroll overflow-x-hidden": currentStream },
-                    { "accordion-shadow backdrop-blur-lg ": open.view || open.seeds}
+                    { "shadow-subdue border border-white/55": isOpen }
                 )}
         >
+
+            <StreamHeader
+                isFocused={isFocused}
+                onClick={toggle}
+                streamName={stream.name}
+                streamDescription={currentStream.description}
+            />
+
             <div
-                className={
-                    cn(
-                        "flex flex-col rounded-xl gap-0 font-medium text-sm text-gray-500"
-                    )
-                }
+                className={"flex flex-col"}
+                onMouseEnter={() => setRow(!row)}
+                onMouseLeave={() => setRow(!row)}
             >
+                <Tabs tabs={tabs} toggleTabs={toggleTabs} />
 
-                <StreamHeader isFocused={isFocused} onClick={toggle} streamName={stream.name} streamDescription = {currentStream.description} />
-
-                <div
-                    className={cn("transition-all duration-500", { "flex flex-row": false }, { "flex flex-col": true })}
-                    onMouseEnter={() => setRow(!row)}
-                    onMouseLeave={() => setRow(!row)}
-                >
-                    <Tabs open={open} toggleOpen={toggleOpen} />
-
-                    <Accordion
-                        height={remainingHeight}
-                        summary={<div></div>}
-                        details={<SeedDrawer seeds={stream.seeds} />}
-                        toggle={() => toggleOpen("seeds")}
-                        open={open["seeds"]}
-                    />
-
-
-                    <Accordion
-                        height={remainingHeight}
-                        summary={<div></div>}
-                        details={<ContentFilters streamFilters={streamFilters} toggleFilters={toggleFilters} viewConfig={viewConfig} />}
-                        toggle={() => toggleOpen("view")}
-                        open={open["view"]}
-
-                    />
-                </div>
-
-                <StreamCover 
-                    className = {cn(
-                        "absolute z-0 w-full h-full top-0 left-0",
-                        {"opacity-20 blur-2xl" : open.view || open.seeds},
-                        {"opacity-70 blur-xl" : !(open.view || open.seeds || isFocused),
-                        "opacity-0 blur-none" : isFocused && !(open.view || open.seeds)
-                    }
-                    )}
+                <Accordion
+                    height={remainingHeight}
+                    summary={<div></div>}
+                    details={<SeedDrawer seeds={stream.seeds} />}
+                    toggle={() => toggleTabs("seeds")}
+                    tabs={tabs["seeds"]}
                 />
 
+                <Accordion
+                    height={remainingHeight}
+                    summary={<div></div>}
+                    details={<ContentFilters streamFilters={streamFilters} toggleFilters={toggleFilters} viewConfig={viewConfig} />}
+                    toggle={() => toggleTabs("view")}
+                    tabs={tabs["view"]}
 
+                />
             </div>
+
+            <StreamCover
+                className={cn(
+                    "absolute z-0 w-full h-full top-0 left-0",
+                    { "opacity-20 blur-2xl": tabs.view || tabs.seeds },
+                    {
+                        "opacity-70 blur-xl": !(tabs.view || tabs.seeds || isFocused),
+                        "opacity-0 blur-none": isFocused && !(tabs.view || tabs.seeds)
+                    }
+                )}
+            />
         </div>
     )
 }
 
-export { Accordion, AccordionSummary, AccordionDetails, InlineEntity, StreamSidebar }
+export { Accordion, AccordionSummary, AccordionDetails, InlineContent, StreamSidebar }

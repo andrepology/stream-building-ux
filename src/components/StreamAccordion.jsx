@@ -3,7 +3,7 @@ import cn from 'classnames'
 import { MdKeyboardArrowRight } from 'react-icons/md'
 import { useSpring, animated, useTransition } from '@react-spring/web'
 
-import EntityTag from "./EntityTag";
+import ContentTag from "./ContentTag";
 
 const AccordionSummary = ({ streamName, isOpen, setStream }) => {
 
@@ -53,7 +53,7 @@ const InlineEntity = ({ name, kind }) => {
                 {name}
             </div>
 
-            <EntityTag kind={kind} />
+            <ContentTag kind={kind} />
 
         </div>
     )

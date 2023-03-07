@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200..700&display=swap');
 
 @font-face {
@@ -18,6 +19,32 @@
   font-style: normal;
 }
 
+
+
+@layer base {
+  h1 {
+    @apply text-xl tracking-tightest leading-6
+  }
+  h2 {
+    @apply text-lg tracking-tightest leading-5
+  }
+  h3 {
+    @apply text-base tracking-tighter leading-4
+  }
+  p {
+    @apply text-sm tracking-normal leading-4 font-normal
+  }
+}
+
+@layer components {
+  .small {
+    @apply text-xs tracking-wide leading-4 font-medium
+  }
+
+  .caption {
+    @apply text-2xs tracking-wider leading-4 font-semibold uppercase
+  }
+}
 
 
 

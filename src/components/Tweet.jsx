@@ -12,7 +12,7 @@ import { GrFormClose } from 'react-icons/gr';
 import VerifiedIcon from '../icons/verified.jsx'
 import {IoAdd} from 'react-icons/io5'
 
-import EntityTag from './EntityTag';
+import ContentTag from './ContentTag';
 
 
 
@@ -50,7 +50,7 @@ const Account = ({entity, currentStream, addEntityToStream}) => {
                 
                 </div>
 
-                <EntityTag kind={entity.entity_group ?? "ACCOUNT"} />
+                <ContentTag kind={entity.entity_group ?? "ACCOUNT"} />
             </div>
 
             {entity.description && (
@@ -228,7 +228,7 @@ const EntityPopup = ({ update, setOpenOverview, openOverview, entity, setEntity 
                     <div className={"tweet relative shadow-2xl flex flex-col gap-7 w-80 max-w-80"}>
                         <div className="inline-flex w-full items-center justify-between">
                             <p className='text-xl leading-7'>{word}</p>
-                            <EntityTag kind={entity_group} />
+                            <ContentTag kind={entity_group} />
                         </div>
 
                         <p className='text-lg leading-5 text-gray-600 tracking-tight'>
@@ -324,7 +324,7 @@ const ContextBuilder = ({ openOverview, currentStream, addEntityToStream, entity
                         )}
                     </div>
 
-                    <EntityTag kind={entity.entity_group ?? "ACCOUNT"} />
+                    <ContentTag kind={entity.entity_group ?? "ACCOUNT"} />
                 </div>
 
                 {entity.description && (
@@ -397,13 +397,16 @@ const ContextBuilder = ({ openOverview, currentStream, addEntityToStream, entity
 
 
 
-function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, currentStream, addEntityToStream, sidebarTop = 80 }) {
+function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, currentStream, addEntityToStream, sidebarTop = 86 }) {
 
     const contextRef = useRef();
 
     const [selectedEntity, setEntity] = useState(null);
 
     const [isHovered, setHovered] = useState(false);
+    // a scalar value that represents how focused the Tweet is
+    const [focus, setFocus] = useState(0)
+
     const [tweetContent, setContent] = useState(null);
     useEffect(() => {
 
@@ -414,10 +417,8 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
     }, [tweet.html])
 
 
-    // a scalar value that represents how focused the Tweet is
-    const [focus, setFocus] = useState(0)
-
-    const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 85, resize: 400 }});
+    
+    const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 80, resize: 400 }});
     useEffect(() => {
         
         const distanceFromTop = bounds.top - sidebarTop
@@ -435,19 +436,19 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
             // scale opacity based on distance from bottom
             // scale based on distance from bottom to top of screen
             const dist = bounds.bottom / (bounds.height)
-            const focus = dist < 0 ? 0 : dist > 1 ? 1 : dist
+            const focus = 0
             setFocus(focus)
         }
     }, [bounds.top])
 
     useEffect(() => {
-        if (focus > 0.8) {
+        if (focus > 0.9) {
             setFocusedTweet(tweet.id)
         }
     }, [focus])
 
     
-
+    
     const { styles, attributes, update } = usePopper(ref?.current, contextRef?.current, {
         placement: 'right-start',
         position: 'fixed',
@@ -465,8 +466,6 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
     useEffect(() => {
         dummyInteractions.current = Math.floor(Math.random() * 10)
     }, [])
-
-
 
     const easeSetFocus = (e, time = 0) => {
         // use State to manage focus
@@ -548,16 +547,17 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
 
             <div
                 className={cn(
-                    'rounded-xl tweet w-full relative',
+                    'rounded-xl tweet relative',
                     { 'backdrop-blur-sm': isFocused },
                     { 'border border-purple-100': openOverview },
                     { 'shadow-content': isFocused && !openOverview },
                     { 'shadow-context': isFocused && openOverview },
                 )}
                 style={{transform: focusStyle.transform, padding: focusStyle.padding, opacity: focusStyle.opacity}}
+                
                 onClick={e => easeSetFocus(e)}
                 ref={ref}
-            // {...longPressedEvent}
+                // {...longPressedEvent}
             >
                 <article
                     className={cn(
@@ -640,7 +640,6 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                             >
 
                                 <div className="flex items-center gap-1 ">
-                                    <p className='text-gray-300'> Interactions</p>
                                     <OverlapIcon />
                                     <span className='text-gray-500 font-medium pr-1 flex items-center'>{dummyInteractions.current}</span> 
                                 </div>
@@ -663,7 +662,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                     </header>
 
                     <div className='flex flex-col justify-between items-center'>
-                        <EntityTag className="relative top-2" kind={"Tweet"} />
+                        <ContentTag className="relative top-2" kind={"Tweet"} />
 
                         {isFocused && (
                             <div 
@@ -685,11 +684,10 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
             </div>
 
             {/* Entity Popups */}
-            {focus > 0.8 && !openOverview && tweet.entities?.length > 0 && (
+            {isFocused && !openOverview && tweet.entities?.length > 0 && (
                 <div className='absolute flex flex-col gap-6 w-56 ' style = {{top: 32, left: bounds.width + 32}}>
-                    <p className='text-sm leading-4 tracking-tight text-gray-400 font-normal'>Related to this Tweet</p>
+                    <p className='caption text-gray-400'>Related Content</p>
                     <div className='flex flex-col gap-4'>
-                        <p className='text-xs text-gray-400 leading-5 tracking-tight'> <span className =" text-gray-500" >{tweet.entities?.length}</span> Entities</p>
                         <div className='flex max-w-20 flex-wrap gap-1'>
                             {tweet.entities?.map((entity, i) => {
                                 return(

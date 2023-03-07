@@ -15,7 +15,7 @@ import { MdOutlineTonality } from 'react-icons/md';
 
 
 import { IoAdd } from 'react-icons/io5';
-import EntityTag from './components/EntityTag';
+import ContentTag from './components/ContentTag';
 
 
 const Feed = ({ children, openOverview }) => {
@@ -27,7 +27,7 @@ const Feed = ({ children, openOverview }) => {
   });
 
   return (
-    <div className='h-screen w-screen overflow-y-scroll pl-24 flex justify-center z-10'>
+    <div className='h-screen w-screen overflow-y-scroll flex pl-96 z-10'>
       <animated.div 
         style={{ x }} 
         className='flex flex-col pl-6 gap-6 max-w-lg'
@@ -142,7 +142,7 @@ const Topic = ({ topic, addEntityToStream }) => {
       </div>
 
       <div className='flex flex-col justify-between items-center h-full'>
-        <EntityTag className="relative top-2" kind={"Topic"} />
+        <ContentTag className="absolute top-" kind={"Topic"} />
 
         {true && (
             <div 
@@ -203,7 +203,11 @@ function App() {
       new: true,
       relevant: false
     },
-    recommendations: true
+    scope: {
+      crumbs: true,
+      near: false,
+      far: false
+    }
   });
 
   const [streamFilters, setFilters, toggleFilters] = useFilters();
@@ -235,9 +239,6 @@ function App() {
     const tallyContent = async () => {
 
       const tally = {
-        Topics: {
-          Count: 0
-        },
         Tweets: {
           Count: 0,
           Standalone: 0,
@@ -245,8 +246,14 @@ function App() {
           Retweets: 0,
           Quotes: 0
         },
+        Topics: {
+          Count: 0
+        },
         Accounts: {
           Count: 0,
+        },
+        Communities: {
+          Count: 0
         },
         Media: {
           Count: 0,
@@ -447,6 +454,8 @@ function App() {
   }
 
 
+  // TODO: sorting and randomising order of Feed
+
   const memoTopics = useMemo(() => createTopicElements(streamTopics), [streamTopics, openOverview, focusedTweet])
   const memoAccounts = useMemo(() => createAccountElements(accounts), [accounts, openOverview, focusedTweet])
   const memoTweets = useMemo(() => createTweetElements(tweets), [tweets, openOverview, focusedTweet])
@@ -484,9 +493,7 @@ function App() {
   }, [streamFilters])
 
 
-
   return (
-
     <div className="app-bg h-screen w-screen flex justify-center">
       <div className='w-56 fixed top-20 left-20 z-20'>
         <StreamSidebar
