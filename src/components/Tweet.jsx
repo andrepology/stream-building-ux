@@ -10,9 +10,10 @@ import useMeasure from 'react-use-measure';
 
 import { GrFormClose } from 'react-icons/gr';
 import VerifiedIcon from '../icons/verified.jsx'
-import {IoAdd} from 'react-icons/io5'
+import { IoAdd } from 'react-icons/io5'
 
 import ContentTag from './ContentTag';
+import { ContentThumbnail } from './ContentTag';
 
 
 
@@ -22,7 +23,7 @@ import RetweetIcon from '../icons/retweet.jsx'
 import OverlapIcon from '../icons/overlap.jsx'
 
 
-const Account = ({entity, currentStream, addEntityToStream}) => {
+const Account = ({ entity, currentStream, addEntityToStream }) => {
 
     const metadata = {
         "Tweets/Week": "~11",
@@ -36,18 +37,18 @@ const Account = ({entity, currentStream, addEntityToStream}) => {
         <div className='tweet rounded-xl w-full flex flex-col gap-6'>
             <div className='flex items-center justify-between p-1 rounded-lg'>
                 <div className='flex gap-2 items-baseline'>
-                    <h1 
-                        style = {{fontFamily: "GT Pressura", fontWeight: "normal"}}
+                    <h1
+                        style={{ fontFamily: "GT Pressura", fontWeight: "normal" }}
                         className='text-lg font-medium tracking-tight text-gray-800'
                     >
                         {entity.name}
                     </h1>
 
-                    
+
                     <p className="text-gray-400 text-sm leading-6 tracking-tight">
                         @{entity.username}
                     </p>
-                
+
                 </div>
 
                 <ContentTag kind={entity.entity_group ?? "ACCOUNT"} />
@@ -55,9 +56,9 @@ const Account = ({entity, currentStream, addEntityToStream}) => {
 
             {entity.description && (
                 <div className='flex gap-6'>
-                    
-                    <img className='h-24 basis-1/4 bg-gray-100 rounded-lg' src = ""/>   
-                    
+
+                    <img className='h-24 basis-1/4 bg-gray-100 rounded-lg' src="" />
+
                     <div className='basis-3/4 text-md leading-5 tracking-tight text-gray-600'>
                         {entity.description}
                     </div>
@@ -67,7 +68,7 @@ const Account = ({entity, currentStream, addEntityToStream}) => {
 
             <div className='pt-3 border-t border-gray-100 flex gap-6'>
                 <div className='basis-1/4 text-xs tracking-tight leading-4 text-gray-400'>
-                    Followed By These Accounts in <span className = "text-gray-600"> {currentStream.name} </span> 
+                    Followed By These Accounts in <span className="text-gray-600"> {currentStream.name} </span>
                 </div>
                 <div className='basis-3/4 inline-flex text-center items-center gap-2 flex-wrap'>
                     {interactions.map((e, i) => {
@@ -161,7 +162,7 @@ const Tooltip = ({ title, children, className }) => {
 }
 
 
-const EntityPopup = ({ update, setOpenOverview, openOverview, entity, setEntity }) => {
+const ContentPreview = ({ update, setOpenOverview, openOverview, entity, setEntity }) => {
 
     const { entity_group, word } = entity
 
@@ -169,9 +170,7 @@ const EntityPopup = ({ update, setOpenOverview, openOverview, entity, setEntity 
     const previewRef = useRef();
     const [isHovered, setHovered] = useState(false);
 
-    
     const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
-
     // measure distance from mouse and entity
     const onMouseMove = (e) => {
         const { x, y } = e.nativeEvent;
@@ -193,7 +192,6 @@ const EntityPopup = ({ update, setOpenOverview, openOverview, entity, setEntity 
     });
 
 
-
     const handleClick = () => {
 
         try {
@@ -208,32 +206,33 @@ const EntityPopup = ({ update, setOpenOverview, openOverview, entity, setEntity 
 
     return (
         <div>
-            <button
+
+            <div
                 ref={entityRef}
                 id="ENTITY"
-                className={cn(
-                    'bg-gray-50 px-1 py-0.5 text-gray-500 text-sm flex tracking-tight rounded-md max-content',
-                   )}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
                 onMouseMove={e => isHovered && onMouseMove(e)}
                 onClick={() => handleClick()}
             >
-                {word}
-            </button>
+
+                <ContentThumbnail
+                    name={word}
+                />
+            </div>
 
             <div ref={previewRef} style={{ ...styles.popper }} {...attributes.popper}>
                 {isHovered && !openOverview && (
-                     
-                    <div className={"tweet relative shadow-2xl flex flex-col gap-7 w-80 max-w-80"}>
-                        <div className="inline-flex w-full items-center justify-between">
-                            <p className='text-xl leading-7'>{word}</p>
+
+                    <div className={"card px-3 py-3.5 bg-white relative shadow-subdue flex flex-col gap-4 w-64 max-w-80"}>
+                        <div className="inline-flex items-center justify-between">
+                            <h3 className='text-gray-100 font-semibold leading-6'>{word}</h3>
                             <ContentTag kind={entity_group} />
                         </div>
 
-                        <p className='text-lg leading-5 text-gray-600 tracking-tight'>
-                            {"lorem ipsum this is a description"}
-                        </p>    
+                        <p className='text text-gray-100'>
+                            {"lorem ipsum for a description"}
+                        </p>
 
                     </div>
                 )}
@@ -307,7 +306,7 @@ const ContextBuilder = ({ openOverview, currentStream, addEntityToStream, entity
 
     return (
         <animated.div
-            style={{x}} 
+            style={{ x }}
             className='flex flex-col gap-2 rounded-xl w-128'
         >
             <div className='tweet flex flex-col gap-7'>
@@ -342,7 +341,7 @@ const ContextBuilder = ({ openOverview, currentStream, addEntityToStream, entity
                         Recent Interactions and Topics
                     </div>
                     <div className='basis-2/4  inline-flex text-center items-center gap-2 flex-wrap'>
-                        {interactions.map((e,i) => {
+                        {interactions.map((e, i) => {
                             return (
                                 <div key={i} className='bg-gray-100 rounded-lg px-2 py-1 text-xs tracking-tight leading-4 text-gray-500'>
                                     {e}
@@ -419,16 +418,16 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
     }, [tweet.html])
 
     // set the focus of the Tweet based on its position in the viewport
-    const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 80, resize: 400 }});
+    const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 80, resize: 400 } });
     useEffect(() => {
-        
+
         const distanceFromTop = bounds.top - sidebarTop
 
         // if Tweet is below the Sidebar
         if (distanceFromTop > 0) {
-            
+
             // scale focus[0,1] based on remaining distance from top
-            const dist = 1 - (distanceFromTop / (window.innerHeight - sidebarTop)) 
+            const dist = 1 - (distanceFromTop / (window.innerHeight - sidebarTop))
             // bound dist between 0 and 1
             const focus = dist < 0 ? 0 : dist > 1 ? 1 : dist
             setFocus(focus)
@@ -440,15 +439,15 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
             const focus = 0
             setFocus(focus)
 
-            if ( focus > 0.9) {
+            if (focus > 0.9) {
                 setFocusedTweet(tweet.id)
             }
 
         }
     }, [bounds.top])
 
-    
-    
+
+
     const { styles, attributes, update } = usePopper(ref?.current, contextRef?.current, {
         placement: 'right-start',
         position: 'fixed',
@@ -513,7 +512,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
         "Likes": tweet.public_metrics.like_count,
         "Replies": tweet.public_metrics.reply_count,
     }
-    
+
 
     const relatedTweets = Array(5).fill(0).map(e => {
         return (
@@ -522,68 +521,64 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
             </div>
         )
     })
-    
 
-   
 
-   const isFocused = focus > 0.8 ?? false
+    const isFocused = focus > 0.85 ?? false
 
-   const focusStyle = {
-    opacity: 0.2 + focus > 1? 1 : 0.2 + focus ,
-    transform: isFocused? `scale(${1 + 0.05 * focus})` : `scale(1.00)`,
-    padding: isFocused? `${18 + 10 * focus }px ${26 + focus * 8}px 24px` : '18px 24px 24px',
-    paddingBottom : isFocused ? `${24 * focus }px` : '0px',
+    const focusStyle = {
+        opacity: 0 + focus > 1 ? 1 : 0.1 + focus,
+        transform: isFocused ? `scale(${1 + 0.1 * focus})` : `scale(1.00)`,
+        padding: isFocused ? `${12 + 16 * focus}px ${22 + focus * 8}px 24px` : '12px 12px 16px',
     }
 
     return (
         <animated.div
             onMouseEnter={(e) => easeSetHover(true)}
             onMouseLeave={(e) => easeSetHover(false)}
-            onClick  = {() => {
+            onClick={() => {
                 openOverview && setOpenOverview(false)
             }}
-            ref = {ref}
-            className = "relative"
-            style = {{paddingTop: 0, paddingBottom: 0, zIndex: 10}}
+            ref={ref}
+            className="relative"
+            style={{ paddingTop: 0, paddingBottom: 0, zIndex: 10 }}
         >
 
             <div
                 className={cn(
-                    'rounded-xl tweet relative',
-                    { 'backdrop-blur-sm': isFocused },
-                    { 'border border-purple-100': openOverview },
-                    { 'shadow-content': isFocused && !openOverview },
+                    'card relative',
+                    { 'bg-bg border-none': !isFocused },
+                    { 'backdrop-blur-sm shadow-focus mb-10': isFocused },
+                    //{ 'shadow-content': isFocused && !openOverview },
                     { 'shadow-context': isFocused && openOverview },
                 )}
-                style={{transform: focusStyle.transform, padding: focusStyle.padding, opacity: focusStyle.opacity}}
-                
+                style={{ transform: focusStyle.transform, padding: focusStyle.padding, opacity: focusStyle.opacity }}
+
                 onClick={e => easeSetFocus(e)}
                 ref={ref}
-                // {...longPressedEvent}
+            // {...longPressedEvent}
             >
                 <article
                     className={cn(
-                        'relative min-h-full flex flex-1 min-w-0 rounded-xl',
+                        'relative min-h-full flex flex-1 min-w-56 rounded-xl',
                     )}
-
                 >
                     {/* Tweet Header (Author, @handle, timestamp) and Content */}
-                    <header 
+                    <header
                         className={cn(
                             'flex flex-col w-full h-full relative',
-                            { 'gap-3' : !isFocused},
-                            { 'gap-6' : isFocused},
+                            { 'gap-3': !isFocused },
+                            { 'gap-6': isFocused },
                         )}
                     >
-                        <div className = "flex justify-between items-baseline">
+                        <div className="flex justify-between items-baseline">
 
                             <div className='flex items-baseline gap-1 max-w-xs'>
                                 <p
-                                    onClick = {() => {
-                                        setEntity({...tweet.author, entity_group: "ACCOUNT"})
+                                    onClick={() => {
+                                        setEntity({ ...tweet.author, entity_group: "ACCOUNT" })
                                         setOpenOverview(true)
                                     }}
-                                    style = {{fontFamily: "GT Pressura", fontWeight: "normal"}}
+                                    style={{ fontFamily: "GT Pressura", fontWeight: "normal" }}
                                     className={cn(
                                         'hover:underline cursor-pointer block text-gray-800 tracking-tight text-lg leading-5 min-w-0 shrink truncate',
                                         {
@@ -622,8 +617,8 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                             </p>
 
                         </div>
-                        
-                        
+
+
                         {/* Tweet Content */}
                         <p
                             data-cy='text'
@@ -635,28 +630,28 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                         />
 
 
-                        {/* Tagged Entity Buttons :: only on focus */}
+                        {/* Interaction Metrics */}
                         {isFocused && (
-                        
-                            <div 
+
+                            <div
                                 className='flex gap-3 items-center mb-1.5 text-xs text-gray-500'
                             >
 
                                 <div className="flex items-center gap-1 ">
                                     <OverlapIcon />
-                                    <span className='text-gray-500 font-medium pr-1 flex items-center'>{dummyInteractions.current}</span> 
+                                    <span className='text-gray-500 font-medium pr-1 flex items-center'>{dummyInteractions.current}</span>
                                 </div>
 
                                 <div className='flex items-center gap-0.5 text-gray-300'>
-                                    <LikeIcon/>
+                                    <LikeIcon />
                                     <span className='text-gray-500 pl-1'>{interactions.Likes}</span>
                                 </div>
                                 <div className='flex items-center gap-0.5 text-gray-300'>
-                                    <ReplyIcon/>
+                                    <ReplyIcon />
                                     <span className='text-gray-500 pl-1'>{interactions.Replies}</span>
                                 </div>
                                 <div className='flex items-center gap-0.5 text-gray-300'>
-                                    <RetweetIcon/>
+                                    <RetweetIcon />
                                     <span className='text-gray-500 pl-1'>{interactions.Retweets}</span>
                                 </div>
                             </div>
@@ -665,43 +660,43 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                     </header>
 
                     <div className='flex flex-col justify-between items-center'>
-                        <ContentTag className="relative top-2" kind={"Tweet"} />
+                        <ContentTag className="relative top-1.5" kind={"tweet"} />
 
                         {isFocused && (
-                            <div 
+                            <div
                                 // center icon below
                                 onClick={(e) => addEntityToStream(e, tweet)}
-                                className='h-8 w-8 flex cursor-pointer items-center justify-center rounded-lg bg-gray-200/40 hover:bg-gray-200'
-                            > 
+                                className='h-9 w-9 flex cursor-pointer items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300'
+                            >
                                 <IoAdd
-                                    className='h-5 w-5 text-gray-500 hover:text-gray-800 '
-                                /> 
+                                    size={22}
+
+                                />
                             </div>
                         )}
-                            
+
                     </div>
                 </article>
-
-
-
             </div>
+
 
             {/* Entity Popups */}
             {isFocused && !openOverview && tweet.entities?.length > 0 && (
-                <div className='absolute flex flex-col gap-6 w-56 ' style = {{top: 32, left: bounds.width + 32}}>
-                    <p className='caption text-gray-400'>Related Content</p>
+                <div className='absolute flex flex-col gap-5 w-56 ' style={{ top: 32, left: bounds.width + 56 }}>
+                    <p className='caption leading-3 text-gray-300/90 pl-2 pb-1.5 border-b border-gray-500'>Related Content</p>
+
                     <div className='flex flex-col gap-4'>
-                        <div className='flex max-w-20 flex-wrap gap-1'>
+                        <div className='flex max-w-20 flex-wrap gap-2'>
                             {tweet.entities?.map((entity, i) => {
-                                return(
-                                    <EntityPopup 
+                                return (
+                                    <ContentPreview
                                         key={i}
-                                        isFocused = {isFocused}
-                                        update = {update}
-                                        openOverview = {openOverview}
-                                        setOpenOverview = {setOpenOverview}
-                                        entity = {entity}
-                                        setEntity = {() => setEntity(entity)}
+                                        isFocused={isFocused}
+                                        update={update}
+                                        openOverview={openOverview}
+                                        setOpenOverview={setOpenOverview}
+                                        entity={entity}
+                                        setEntity={() => setEntity(entity)}
                                     />
                                 )
                             })
@@ -710,7 +705,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                     </div>
                 </div>
             )}
-        
+
 
             {/* Context Building */}
             <div
@@ -736,5 +731,5 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
 
 }
 
-export {Account} 
+export { Account }
 export default Tweet

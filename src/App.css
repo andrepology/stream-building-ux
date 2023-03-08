@@ -2,100 +2,68 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html,
 body {
-    margin: 0;
-    min-height: 100vh;
-    height: 100%;
-    text-rendering: optimizeSpeed;
-    line-height: 1.35;
-    overflow: hidden;
-    box-sizing: border-box;
+  margin: 0;
+  min-height: 100vh;
+  height: 100%;
+  text-rendering: optimizeSpeed;
+  line-height: 1.35;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 
 
 .app-bg {
-  background-color: #F5F3F5;
+  background-color: #F3F1F3;
+}
+
+.accordion-shadow {
+  box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.05);
+}
+
+.bg-radial {
+  background: linear-gradient(-45deg, #d6ab9e1c, #fb9ec217, #c1e7f42d, #88f6dc24);
+  background-size: 400% 400%;
+  border: 1px solid #e9e9e975;
+  animation: rotateBg 15s ease infinite;
+}
+
+@keyframes rotateBg {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 
-.tweet-bg {
-  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.94) 100%);
+.active-pad {
+  padding-top: 0.5rem;
+  padding-bottom: 2rem;
 }
 
-
-
-.tweet {
-  background-color: #fafafa;
-  border: 1px solid #F2F2F2;
-  padding: 18px 24px 24px;
-  border-radius: 12px;
-  transition: all 0.3s ease-in-out;
+.shadow-content {
+  box-shadow: 0px 64px 256px rgba(77, 77, 77, 0.2)
 }
 
-.tweet-focus {
-  background-color: #fafafa08;
-  border: 1px solid #F2F2F2;
-  border-radius: 12px;
-  padding: 36px 48px;
-  transition: all 0.3s ease-in-out;
-  }
-  
-  .card {
-    background-color: #fafafa;
-    border: 1px solid #eaeaea;
-    border-radius: 12px;
-    padding: 12px;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .accordion-shadow {
-    box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.05);
-  }
-  
-  .bg-radial {
-    background: linear-gradient(-45deg, #d6ab9e1c, #fb9ec217, #c1e7f42d, #88f6dc24);
-    background-size: 400% 400%;
-    border: 1px solid #e9e9e975;
-    animation: rotateBg 15s ease infinite;
-  }
-  
-  @keyframes rotateBg {
-    0% {
-      background-position: 0% 50%;
-    }
-  
-    50% {
-      background-position: 100% 50%;
-    }
-  
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-  
-  
-  .active-pad {
-    padding-top:0.5rem;
-    padding-bottom: 2rem;
-  }
-  
-  .shadow-content {
-    box-shadow: 0px 0px 40px rgba(77, 77, 77, 0.2)
-  }
-  
-  .shadow-context {
-    box-shadow: 456px 128px 256px 96px rgba(63, 63, 63, 0.10);
+.shadow-context {
+  box-shadow: 456px 128px 256px 96px rgba(63, 63, 63, 0.10);
 }
 
 
 .passive {
   opacity: 0.5;
 }
-

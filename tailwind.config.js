@@ -51,6 +51,7 @@ module.exports = {
     fontSize:
     {
       "2xs": "0.5rem",
+      "sxy": "0.625rem",
       "xs": "0.75rem",
       "sm": "0.875rem",
       "base": "1rem",
@@ -65,13 +66,14 @@ module.exports = {
     {
       'focus': '0px 36px 42px -4px rgba(77,77,77,0.15)',
       'subdue': '0px 6px 52px -8px rgba(228,222,222,1)'
+
     },
     borderRadius:
     {
       none: '0',
       xs: '0.25rem',
       sm: '0.3rem',
-      DEFAULT: '0.375',
+      base: '0.375',
       md: '0.75rem',
       lg: '2rem',
       full: '9999px'
@@ -83,6 +85,7 @@ module.exports = {
       tight: '-0.015',
       normal: '-0.005',
       wide: '0.025em',
+      "wide_more": '0.05em',
       wider: '0.125em',
     },
     extend: {

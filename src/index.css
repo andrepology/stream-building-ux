@@ -44,6 +44,11 @@
   .caption {
     @apply text-2xs tracking-wider leading-4 font-semibold uppercase
   }
+
+  .card {
+    @apply border bg-white/55 border-white/95 shadow-subdue rounded-md transition-all duration-300
+  }
+
 }
 
 

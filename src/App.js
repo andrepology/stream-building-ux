@@ -447,7 +447,7 @@ function App() {
 
       <Rnd
         minWidth={'56px'}
-        minHeight={'28px'}
+        minHeight={'128px'}
         bounds="window"
         className='z-50'
 
@@ -485,7 +485,6 @@ function App() {
           }
         }
 
-
         disableDragging
         
         onResize={
@@ -516,7 +515,6 @@ function App() {
           toggleFilters={toggleFilters}
 
           viewConfig={viewConfig}
-
         />
       </div>
 
