@@ -24,7 +24,6 @@ const StreamCover = ({ className }) => {
         backgroundImage: `url(${bg})`,
         zIndex: -1,
         backgroundSize: "cover",
-
     }
 
     return (
@@ -168,10 +167,10 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
             onClick={() => onClick()}
             className={
                 cn(
-                    "relative bg-white/20 hover:bg-white/35 rounded-md px-4.5 pt-3 pb-2.5",
+                    "relative bg-white/35 hover:bg-white/35 rounded-md px-4.5 pt-3 pb-2.5",
                     "flex flex-col justify-between",
                     { "text-xl text-gray-100 leading-8 m-0.5 rounded-xl bg-white/35 hover:bg-white/35": isFocused },
-                    { "text-md font-medium text-gray-100 leading-6": !isFocused }
+                    { "text-md font-medium text-gray-100 leading-6 border border-white/10": !isFocused }
                 )
             }
         >
@@ -632,7 +631,7 @@ const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, vi
 
     const [isFocused, setFocus] = useState(false)
 
-    const toggle = () => {
+    const toggleFocus = () => {
         setFocus(!isFocused)
     }
 
@@ -646,16 +645,13 @@ const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, vi
     }, [tabs, bounds])
 
 
-    const visibleContentCount = streamFilters?.filter(filter => filter.isVisible).reduce((acc, filter) => acc + filter.count, 0)
-
-    const [row, setRow] = useState(true)
-
     return (
         <div
             ref={ref}
+            style = {{ width: 238 }}
             className={
                 cn(
-                    "w-full flex flex-col gap-0 rounded-md ",
+                    "flex flex-col gap-0 rounded-md ",
                     "transition-shadow duration-400 ease-in-out",
                     { "overflow-y-scroll overflow-x-hidden": currentStream },
                     { "shadow-subdue border border-white/55": isOpen }
@@ -664,15 +660,13 @@ const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, vi
 
             <StreamHeader
                 isFocused={isFocused}
-                onClick={toggle}
+                onClick={toggleFocus}
                 streamName={stream.name}
                 streamDescription={currentStream.description}
             />
 
             <div
                 className={"flex flex-col"}
-                onMouseEnter={() => setRow(!row)}
-                onMouseLeave={() => setRow(!row)}
             >
                 <Tabs tabs={tabs} toggleTabs={toggleTabs} />
 
