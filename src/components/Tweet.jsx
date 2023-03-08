@@ -404,9 +404,11 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
     const [selectedEntity, setEntity] = useState(null);
 
     const [isHovered, setHovered] = useState(false);
-    // a scalar value that represents how focused the Tweet is
+
+    // a scalar value [0,1] that represents how focused the Tweet is
     const [focus, setFocus] = useState(0)
 
+    // format and set tweet content
     const [tweetContent, setContent] = useState(null);
     useEffect(() => {
 
@@ -416,8 +418,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
 
     }, [tweet.html])
 
-
-    
+    // set the focus of the Tweet based on its position in the viewport
     const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 80, resize: 400 }});
     useEffect(() => {
         
@@ -438,14 +439,13 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
             const dist = bounds.bottom / (bounds.height)
             const focus = 0
             setFocus(focus)
+
+            if ( focus > 0.9) {
+                setFocusedTweet(tweet.id)
+            }
+
         }
     }, [bounds.top])
-
-    useEffect(() => {
-        if (focus > 0.9) {
-            setFocusedTweet(tweet.id)
-        }
-    }, [focus])
 
     
     
@@ -523,6 +523,8 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
         )
     })
     
+
+   
 
    const isFocused = focus > 0.8 ?? false
 
@@ -631,6 +633,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                                 { 'h-12 w-full': !tweet },
                             )}
                         />
+
 
                         {/* Tagged Entity Buttons :: only on focus */}
                         {isFocused && (

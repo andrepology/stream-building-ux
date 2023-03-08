@@ -3,15 +3,19 @@ import cn from 'classnames';
 import { useSpring, animated } from '@react-spring/web'
 import axios from 'axios';
 
+import { Rnd } from 'react-rnd';
 
-import {StreamSidebar} from './components/Sidebar';
-import Tweet, {Account} from './components/Tweet';
+import Masks from './assets/Masks.png';
+
+import { StreamSidebar } from './components/Sidebar';
+import Tweet, { Account } from './components/Tweet';
 
 import './App.css';
 
 import tftTweets from './components/sample';
 import entities from './components/entities'
 import { MdOutlineTonality } from 'react-icons/md';
+
 
 
 import { IoAdd } from 'react-icons/io5';
@@ -27,13 +31,13 @@ const Feed = ({ children, openOverview }) => {
   });
 
   return (
-    <div className='h-screen w-screen overflow-y-scroll flex pl-96 z-10'>
-      <animated.div 
-        style={{ x }} 
+    <div className='h-screen w-screen overflow-y-scroll flex justify-center z-10'>
+      <animated.div
+        style={{ x }}
         className='flex flex-col pl-6 gap-6 max-w-lg'
       >
         {/* Empty Space. To Replace with Dashboard */}
-        <div className='h-12'/>
+        <div className='h-12' />
         {
           children
         }
@@ -43,36 +47,48 @@ const Feed = ({ children, openOverview }) => {
 }
 
 
-const StreamBackdrop = ({ currentStream }) => {
-  const props = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    config: { duration: 500 },
-    reset: true
-  })
+const StreamBackdrop = ({ currentStream, sidebarTop }) => {
+  
+  const bgImage = {
+    backgroundImage: `url(${Masks})`,
+    zIndex: 0,
+    backgroundSize: "cover",
+  } 
 
   return (
-    <animated.div
-      className='fixed top-4 left-36 tracking-tighter text-gray-200/40 font-bold text-8xl z-0'
-      style={props}
-    >
-      {currentStream || 'Tweetscape'}
-    </animated.div>
+    <>
+      <div
+        className='absolute tracking-tighter text-gray-500/40 font-semibold z-0'
+        style = {{
+          top: sidebarTop,
+          fontSize: '5rem',
+          // disable cursor selection
+          userSelect: 'none',
+          z: '-1'
+        }}
+      >
+        {currentStream || 'trails.social'}
+      </div>
+      <div
+        style={bgImage}
+        className = {"fixed top-0 left-0 w-screen h-screen z-10"}
+      /> 
+    </>
   )
 }
 
 
-const BackdropMemo = memo(StreamBackdrop, (prevProps, nextProps) => prevProps.currentStream === nextProps.currentStream)
+const BackdropMemo = memo(StreamBackdrop, (prevProps, nextProps) => prevProps.currentStream == nextProps.currentStream)
 
 // obj of streams: seeds
 const sampleStreams = [
-  { name: 'Tools For Thought', seeds: [{name: 'Alex Xu', kind: 'person'}, {name: 'Tana Inc.', kind : 'Organization'}] },
+  { name: 'Tools For Thought', seeds: [{ name: 'Alex Xu', kind: 'person' }, { name: 'Tana Inc.', kind: 'Organization' }] },
   { name: 'Human In The Loop', seeds: ['Andy Matuschak', 'CMU_HCI'] },
   { name: 'Biochemistry Geeks', seeds: [''] }
 ];
 
 const useFilters = () => {
-  const [streamFilters, setFilters ] = useState([]);
+  const [streamFilters, setFilters] = useState([]);
 
   const toggleFilters = (filterName) => {
     // toggle filter with name = key visibilty
@@ -81,13 +97,13 @@ const useFilters = () => {
     const nextFilters = [...streamFilters]
 
     const toggle = (filter) => {
-        if (filter.name === filterName) {
-          let nextState = !filter.isVisible
-          filter.isVisible = nextState
-          filter.children?.forEach(child => child.isVisible = nextState)
-        } else if (filter.children) {
-            filter.children.forEach(child => toggle(child))
-        }
+      if (filter.name === filterName) {
+        let nextState = !filter.isVisible
+        filter.isVisible = nextState
+        filter.children?.forEach(child => child.isVisible = nextState)
+      } else if (filter.children) {
+        filter.children.forEach(child => toggle(child))
+      }
     }
 
     nextFilters.forEach(filter => toggle(filter))
@@ -104,73 +120,17 @@ const useFilters = () => {
 
     setFilters(nextFilters)
 
-  } 
+  }
 
   return [streamFilters, setFilters, toggleFilters]
 }
 
 
-
-const Topic = ({ topic, addEntityToStream }) => {
-
-  // remove quotation marks from title
-  const title = topic.title.replace(/['"]+/g, '')
-
-  return (
-    <div className='px-6 py-6 tweet-bg rounded-xl relative flex justify-between items-center'>
-
-      <div className='flex flex-col gap-6'>
-        <div
-          className='text-xl leading-6 font-medium text-gray-600'
-          style={{ fontFamily: "GT Pressura" }}
-        >
-          {title}
-        </div>
-        <div className='text-sm text-gray-600/80'>{topic.summary}</div>
-        <div className='flex gap-1 flex-wrap w-3/5'>
-          {
-            topic.keywords.split(",").map((e, i) => {
-
-              return (
-                <div className='text-xs text-gray-400 bg-gray-50 rounded-md px-1.5 py-0.5 cursor-pointer' onClick={() => addEntityToStream(e)}>{e}</div>
-              )
-
-            })
-          }
-
-        </div>
-      </div>
-
-      <div className='flex flex-col justify-between items-center h-full'>
-        <ContentTag className="absolute top-" kind={"Topic"} />
-
-        {true && (
-            <div 
-                // center icon below
-                onClick={(e) => addEntityToStream(e, {name: title, kind: "Topic"})}
-                className='h-8 w-8 flex cursor-pointer items-center justify-center rounded-lg bg-gray-200/40 hover:bg-gray-200'
-            > 
-                <IoAdd
-                    className='h-5 w-5 text-gray-500 hover:text-gray-800 '
-                /> 
-            </div>
-        )}
-      </div>
-
-
-
-
-    </div>
-  )
-
-}
-
-
 function App() {
   const [streams, setStreams] = useState(sampleStreams)
-  const [currentStream, setStream] = useState({name: "Tools For Thought", description: "A stream about the tools we shape and the tools that shape us"});
-  
-  
+  const [currentStream, setStream] = useState({ name: "Tools For Thought", description: "A stream about the tools we shape and the tools that shape us" });
+
+
   const [streamTopics, setTopics] = useState([]);
   useEffect(() => {
     axios.get('./json/clusters.json')
@@ -185,7 +145,6 @@ function App() {
   const [entities, setEntities] = useState([]);
 
   const [focusedTweet, setFocusedTweet] = useState(null);
-  const [currentTopic, setCurrentTopic] = useState(null);
   const [openOverview, setOpenOverview] = useState(false);
 
   // TODO: move to useFilters
@@ -211,6 +170,14 @@ function App() {
   });
 
   const [streamFilters, setFilters, toggleFilters] = useFilters();
+
+  const [size, setSize] = useState({
+    width: 160,
+    height: 224,
+    x: 0,
+    y: 0
+  })
+
 
   const setSidebarZoomLevel = (focusedTweet) => {
     return (focusedTweet === null) ? "-3" : "1";
@@ -263,7 +230,7 @@ function App() {
         Entities: {
           Count: 0
         },
-        
+
       }
 
       const accounts = new Set()
@@ -354,9 +321,8 @@ function App() {
   }, [currentStream])
 
 
-
   const addEntityToStream = (evt, entity) => {
-    
+
     // This is essentially a form submission to an action
     evt.preventDefault();
     evt.stopPropagation();
@@ -365,50 +331,53 @@ function App() {
     const entityObject = {
       id: entity.id,
       name: entity.html || entity.name,
-      kind: entity.kind? entity.kind : entity.html ? "Tweet" : "Account"
+      kind: entity.kind ? entity.kind : entity.html ? "Tweet" : "Account"
     }
 
 
     // For now, just update client state
     setStreams(prevState => {
-        
-        const newState = prevState.map((e,i) =>{
+
+      const newState = prevState.map((e, i) => {
 
 
-            if (currentStream.name === e.name) {
-                
-                // push seed to current stream
-                return {...e, seeds: e.seeds.concat([entityObject])}
-            }
-            return e
-        })
+        if (currentStream.name === e.name) {
 
-        return newState
+          // push seed to current stream
+          return { ...e, seeds: e.seeds.concat([entityObject]) }
+        }
+        return e
+      })
+
+      return newState
     })
 
-    
 
-}
+
+  }
 
   const createTweetElements = (tweets) => {
-    
+
     const elems = tweets.map((tweet) => {
 
       const inFocus = focusedTweet === tweet.id;
+
 
       return (
         <Tweet
           key={tweet.id}
           tweet={tweet}
 
+          sidebarTop={size.height}
+
 
           isFocused={inFocus}
           setFocusedTweet={setFocusedTweet}
           zoom={setTweetZoomLevel(focusedTweet, tweet.id)}
-          
-          addEntityToStream = {addEntityToStream}
+
+          addEntityToStream={addEntityToStream}
           currentStream={currentStream}
-          
+
           openOverview={openOverview}
           setOpenOverview={setOpenOverview}
         />
@@ -420,31 +389,12 @@ function App() {
 
   const createAccountElements = (accounts) => {
 
-      const elems = accounts.map((account, i) => {
-        return (
-          <Account
-            key={i}
-            entity={account}
-            currentStream={currentStream}
-            addEntityToStream = {addEntityToStream}
-          />
-        )
-      })
-  
-      return elems
-  }
-
-
-
-  const createTopicElements = (topics) => {
-
-    const topicObj = Object.values(topics)
-
-    const elems = topicObj.map((topic, i) => {
+    const elems = accounts.map((account, i) => {
       return (
-        <Topic
+        <Account
           key={i}
-          topic={topic}
+          entity={account}
+          currentStream={currentStream}
           addEntityToStream={addEntityToStream}
         />
       )
@@ -456,9 +406,8 @@ function App() {
 
   // TODO: sorting and randomising order of Feed
 
-  const memoTopics = useMemo(() => createTopicElements(streamTopics), [streamTopics, openOverview, focusedTweet])
   const memoAccounts = useMemo(() => createAccountElements(accounts), [accounts, openOverview, focusedTweet])
-  const memoTweets = useMemo(() => createTweetElements(tweets), [tweets, openOverview, focusedTweet])
+  const memoTweets = useCallback(createTweetElements(tweets), [tweets])
 
 
   // can probably not use useEffect and have a single memoized function that returns the filtered tweets
@@ -485,17 +434,75 @@ function App() {
               return tweet.quote
             }
           })
-        } 
+        }
       })
     })
 
-    setTweets(nextTweets)    
+    setTweets(nextTweets)
   }, [streamFilters])
 
 
   return (
     <div className="app-bg h-screen w-screen flex justify-center">
-      <div className='w-56 fixed top-20 left-20 z-20'>
+
+      <Rnd
+        minWidth={'56px'}
+        minHeight={'28px'}
+        bounds="window"
+        className='z-50'
+
+        dragGrid = {[56, 56]}
+        default={{
+          x: 0,
+          y: 0,
+          width: size.width,
+          height: size.height,
+        }}
+        size = {
+          {
+            width: size.width,
+            height: size.height,
+          }
+        }
+        position = {
+          {
+            x: size.x,
+            y: size.y,
+          }
+        }
+
+        resizeHandleComponent={
+          {
+            bottom: <div className="bg-white/55 hover:bg-white/95 absolute top-4.5 right-4 w-6 h-6 rounded-full cursor-grab" ></div>
+          }
+        }
+
+        enableResizing={
+          {
+            top: false,
+            bottom: true,
+            left: false,
+          }
+        }
+
+
+        disableDragging
+        
+        onResize={
+          (e, dir, ref, delta, pos) => {
+            setSize(
+              {
+                width: ref.style.width,
+                height: ref.style.height,
+                x: ref.style.x,
+                y: ref.style.y
+              }
+            )
+          }
+        }
+      />
+
+      <div className="fixed z-40" style={{ top: size.height, left: size.x + size.width }}>
         <StreamSidebar
           zoomLevel={setSidebarZoomLevel(focusedTweet)}
           inFocus={focusedTweet !== null}
@@ -505,13 +512,14 @@ function App() {
           stream={streams[0]}
           streamContent={tweets.length}
 
-          streamFilters = {streamFilters}
-          toggleFilters = {toggleFilters}
+          streamFilters={streamFilters}
+          toggleFilters={toggleFilters}
 
-          viewConfig = {viewConfig}
+          viewConfig={viewConfig}
 
         />
       </div>
+
 
       <Feed 
         openOverview={openOverview}
@@ -519,10 +527,9 @@ function App() {
       >
         {memoTweets}
         {streamFilters[2]?.isVisible? memoAccounts : null}
-        {streamFilters[0]?.isVisible? memoTopics : null}
       </Feed>
 
-      <BackdropMemo currentStream={currentStream.name} />
+      <BackdropMemo currentStream={currentStream.name} sidebarTop = {size.height - 64} />
 
     </div>
 
