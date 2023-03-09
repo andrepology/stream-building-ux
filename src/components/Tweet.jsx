@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
+import { useState, useEffect, useRef, useCallback, cloneElement } from 'react';
 import { usePopper } from 'react-popper';
 import TimeAgo from 'timeago-react';
 import cn from 'classnames';
@@ -21,6 +21,18 @@ import LikeIcon from '../icons/like.jsx'
 import ReplyIcon from '../icons/reply.jsx'
 import RetweetIcon from '../icons/retweet.jsx'
 import OverlapIcon from '../icons/overlap.jsx'
+
+
+
+const Metric = ({ icon, count, title = null, iconSize = 14 }) => {
+
+    return (
+        <div className="flex items-center gap-1 p-1 ">
+            {cloneElement(icon, { className: 'text-gray-400', size: { iconSize } })}
+            <span className='text-gray-200/80 font-light text-xs'>{count}</span>
+        </div>
+    )
+}
 
 
 const Account = ({ entity, currentStream, addEntityToStream }) => {
@@ -224,7 +236,7 @@ const ContentPreview = ({ update, setOpenOverview, openOverview, entity, setEnti
             <div ref={previewRef} style={{ ...styles.popper }} {...attributes.popper}>
                 {isHovered && !openOverview && (
 
-                    <div className={"card px-3 py-3.5 bg-white relative shadow-subdue flex flex-col gap-4 w-64 max-w-80"}>
+                    <div className={" card px-3 py-3.5 bg-white relative shadow-subdue flex flex-col gap-4 w-64 max-w-80"}>
                         <div className="inline-flex items-center justify-between">
                             <h3 className='text-gray-100 font-semibold leading-6'>{word}</h3>
                             <ContentTag kind={entity_group} />
@@ -559,55 +571,49 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
             >
                 <article
                     className={cn(
-                        'relative min-h-full flex flex-1 min-w-56 rounded-xl',
+                        'min-w-full flex',
                     )}
                 >
                     {/* Tweet Header (Author, @handle, timestamp) and Content */}
                     <header
                         className={cn(
-                            'flex flex-col w-full h-full relative',
-                            { 'gap-3': !isFocused },
-                            { 'gap-6': isFocused },
+                            'flex flex-col grow gap-4 min-w-56',
                         )}
                     >
-                        <div className="flex justify-between items-baseline">
+                        <div className="flex gap-2 items-baseline">
 
-                            <div className='flex items-baseline gap-1 max-w-xs'>
-                                <p
+                            <div className='flex shrink max-w-3/5 items-baseline gap-2'>
+                                <h2
                                     onClick={() => {
                                         setEntity({ ...tweet.author, entity_group: "ACCOUNT" })
                                         setOpenOverview(true)
                                     }}
                                     style={{ fontFamily: "GT Pressura", fontWeight: "normal" }}
                                     className={cn(
-                                        'hover:underline cursor-pointer block text-gray-800 tracking-tight text-lg leading-5 min-w-0 shrink truncate',
-                                        {
-                                            'h-4 w-40 mt-1 mb-1.5 bg-gray-200/50 dark:bg-gray-700/50 animate-pulse rounded':
-                                                !tweet,
-                                        }
+                                        'hover:underline cursor-pointer truncate shrink text-gray-100 ',
                                     )}
                                 >
                                     {tweet?.author?.name}
-                                </p>
-                                {tweet?.author?.verified && (
+                                </h2>
+                                {/* {tweet?.author?.verified && (
                                     <span className='block peer pl-0.5 h-5'>
                                         <VerifiedIcon className='h-5 w-5 fill-sky-500 dark:fill-current' />
                                     </span>
-                                )}
+                                )} */}
 
-                                <p
+                                {/* <p
                                     data-cy='author'
                                     className={cn('text-gray-400 text-sm block flex-none')}
                                 >
                                     {tweet?.author ? `@${tweet.author.username}` : ''}
-                                </p>
+                                </p> */}
                             </div>
 
 
                             <p
                                 data-cy='date'
                                 className={cn(
-                                    'text-gray-400 text-xs block pr-2',
+                                    'text-gray-300/55 text-xs block pr-2',
                                     'transition-opacity duration-100 ease-in-out',
                                     { "opacity-100": isFocused },
                                     { "opacity-0": !isFocused },
@@ -623,37 +629,39 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                         <p
                             data-cy='text'
                             dangerouslySetInnerHTML={{ __html: tweetContent ?? '' }}
-                            className={cn(
-                                'text-md tracking-tight leading-5 text-gray-600',
+                            className={cn("text-gray-100 font-normal leading-5",
                                 { 'h-12 w-full': !tweet },
                             )}
                         />
-
 
                         {/* Interaction Metrics */}
                         {isFocused && (
 
                             <div
-                                className='flex gap-3 items-center mb-1.5 text-xs text-gray-500'
+                                className='flex gap-3 pt-5 items-center mb-1.5 text-xs text-gray-500'
                             >
 
-                                <div className="flex items-center gap-1 ">
-                                    <OverlapIcon />
-                                    <span className='text-gray-500 font-medium pr-1 flex items-center'>{dummyInteractions.current}</span>
-                                </div>
+                                <Metric
+                                    icon={<OverlapIcon />}
+                                    count={dummyInteractions.current}
+                                />
 
-                                <div className='flex items-center gap-0.5 text-gray-300'>
-                                    <LikeIcon />
-                                    <span className='text-gray-500 pl-1'>{interactions.Likes}</span>
-                                </div>
-                                <div className='flex items-center gap-0.5 text-gray-300'>
-                                    <ReplyIcon />
-                                    <span className='text-gray-500 pl-1'>{interactions.Replies}</span>
-                                </div>
-                                <div className='flex items-center gap-0.5 text-gray-300'>
-                                    <RetweetIcon />
-                                    <span className='text-gray-500 pl-1'>{interactions.Retweets}</span>
-                                </div>
+                                <Metric
+                                    icon={<LikeIcon />}
+                                    count={interactions.Likes}
+                                />
+
+                                <Metric
+                                    icon={<ReplyIcon />}
+                                    count={interactions.Replies}
+                                />
+
+                                <Metric
+                                    icon={<RetweetIcon />}
+                                    count={interactions.Retweets}
+                                />
+
+
                             </div>
                         )}
 
@@ -682,11 +690,11 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
 
             {/* Entity Popups */}
             {isFocused && !openOverview && tweet.entities?.length > 0 && (
-                <div className='absolute flex flex-col gap-5 w-56 ' style={{ top: 32, left: bounds.width + 56 }}>
+                <div className='absolute flex flex-col gap-3 w-56 ' style={{ top: 32, left: bounds.width + 56 }}>
                     <p className='caption leading-3 text-gray-300/90 pl-2 pb-1.5 border-b border-gray-500'>Related Content</p>
 
-                    <div className='flex flex-col gap-4'>
-                        <div className='flex max-w-20 flex-wrap gap-2'>
+                    <div className='flex flex-col gap-6'>
+                        <div className='flex max-w-20 flex-wrap gap-2.5'>
                             {tweet.entities?.map((entity, i) => {
                                 return (
                                     <ContentPreview
