@@ -11,13 +11,11 @@ import Masks from './assets/Masks.png';
 import { StreamSidebar } from './components/Sidebar';
 import Tweet, { Account, Card } from './components/Tweet';
 
-import { FixedSizeGrid } from 'react-window';
+import { VariableSizeGrid } from 'react-window';
 
 import './App.css';
 
 import tftTweets from './components/sample';
-
-
 
 
 
@@ -59,7 +57,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
       className='h-screen w-full overflow-y-scroll flex flex-col gap-2 p-12 z-10'
       style={{position: 'relative', left: offsetLeft, top: 0}}
     >
-      <FixedSizeGrid
+      <VariableSizeGrid
 
         ref = {gridRef}
 
@@ -69,10 +67,10 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
         height = {window.innerHeight}
 
         columnCount = {nCols}
-        columnWidth = {300}
+        columnWidth = {() => 312}
 
         rowCount = {nRows}
-        rowHeight = {150}
+        rowHeight = {() => 400}
 
         itemData = {{
           sampleContent,
@@ -97,7 +95,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
             />
           )}
         }    
-      </FixedSizeGrid>
+      </VariableSizeGrid>
     </div>
   )
 }
