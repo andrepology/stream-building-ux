@@ -127,51 +127,7 @@ const Account = ({ entity, currentStream, addEntityToStream }) => {
 
 }
 
-const Entity = ({ entity }) => {
-    return null
-}
 
-
-const Content = ({ entity, entity_type }) => {
-    // A Controller to render a Tweet, Account or Entity based on the entity_type
-
-    switch (entity_type) {
-        case "tweet":
-            return <Tweet entity={entity} />
-        case "account":
-            return <Account entity={entity} />
-        case "entity":
-            return <Entity entity={entity} />
-        default:
-            return <div></div>
-    }
-
-
-
-}
-
-
-
-const Tooltip = ({ title, children, className }) => {
-    // a tooltip positioned with popper
-
-    const [isHovered, setHovered] = useState(false);
-
-    return (
-        <div
-            className={className + " absolute z-10"}
-            onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-
-            {children}
-            {isHovered && (
-                <div className="bg-black text-white rounded-full px-2 py-1 text-xs">
-                    {title}
-                </div>
-            )}
-        </div>
-
-    )
-}
 
 
 const ContentPreview = ({ update, setOpenOverview, openOverview, entity, setEntity }) => {
@@ -406,6 +362,57 @@ const ContextBuilder = ({ openOverview, currentStream, addEntityToStream, entity
     )
 }
 
+const ContentHeader = ({ content, contentType, isFocused }) => {
+
+
+    return (
+        <div className='flex justify-between items-baseline'>
+            <div className="flex-1 flex-row gap-2">
+
+                <div className='flex w-4/5 items-baseline gap-2'>
+                    <h2
+                        style={{ fontFamily: "GT Pressura", fontWeight: "normal" }}
+                        className={cn(
+                            'hover:underline cursor-pointer truncate shrink text-gray-100 ',
+                        )}
+                    >
+                        {content?.author?.name}
+                    </h2>
+                    {/* {tweet?.author?.verified && (
+                                        <span className='block peer pl-0.5 h-5'>
+                                            <VerifiedIcon className='h-5 w-5 fill-sky-500 dark:fill-current' />
+                                        </span>
+                                    )} */}
+
+                    {/* <p
+                                        data-cy='author'
+                                        className={cn('text-gray-400 text-sm block flex-none')}
+                                    >
+                                        {tweet?.author ? `@${tweet.author.username}` : ''}
+                                    </p> */}
+                </div>
+
+
+                <p
+                    data-cy='date'
+                    className={cn(
+                        'text-gray-300/55 text-xs block pr-2',
+                        'transition-opacity duration-100 ease-in-out',
+                        { "opacity-100": isFocused },
+                        { "opacity-0": !isFocused },
+                    )}
+                >
+                    <TimeAgo datetime={content.created_at} locale='en' />
+                </p>
+
+            </div>
+            <ContentTag className="shrink" kind={"tweet"} />
+        </div>
+    )
+
+
+}
+
 
 
 function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, currentStream, addEntityToStream, sidebarTop = 86 }) {
@@ -457,8 +464,6 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
 
         }
     }, [bounds.top])
-
-
 
     const { styles, attributes, update } = usePopper(ref?.current, contextRef?.current, {
         placement: 'right-start',
@@ -544,7 +549,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
     }
 
     return (
-        <animated.div
+        <div
             onMouseEnter={(e) => easeSetHover(true)}
             onMouseLeave={(e) => easeSetHover(false)}
             onClick={() => {
@@ -571,65 +576,19 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
             >
                 <article
                     className={cn(
-                        'min-w-full flex',
+                        'min-w-full flex flex-col grow gap-4 min-w-56',
                     )}
                 >
-                    {/* Tweet Header (Author, @handle, timestamp) and Content */}
-                    <header
-                        className={cn(
-                            'flex flex-col grow gap-4 min-w-56',
-                        )}
-                    >
-                        <div className="flex gap-2 items-baseline">
+                    {/* Tweet ContentHeader (Author, @handle, timestamp) and  */}
 
-                            <div className='flex shrink max-w-3/5 items-baseline gap-2'>
-                                <h2
-                                    onClick={() => {
-                                        setEntity({ ...tweet.author, entity_group: "ACCOUNT" })
-                                        setOpenOverview(true)
-                                    }}
-                                    style={{ fontFamily: "GT Pressura", fontWeight: "normal" }}
-                                    className={cn(
-                                        'hover:underline cursor-pointer truncate shrink text-gray-100 ',
-                                    )}
-                                >
-                                    {tweet?.author?.name}
-                                </h2>
-                                {/* {tweet?.author?.verified && (
-                                    <span className='block peer pl-0.5 h-5'>
-                                        <VerifiedIcon className='h-5 w-5 fill-sky-500 dark:fill-current' />
-                                    </span>
-                                )} */}
-
-                                {/* <p
-                                    data-cy='author'
-                                    className={cn('text-gray-400 text-sm block flex-none')}
-                                >
-                                    {tweet?.author ? `@${tweet.author.username}` : ''}
-                                </p> */}
-                            </div>
+                    <ContentHeader content={tweet} contentType = {tweet} isFocused = {isFocused} />
 
 
-                            <p
-                                data-cy='date'
-                                className={cn(
-                                    'text-gray-300/55 text-xs block pr-2',
-                                    'transition-opacity duration-100 ease-in-out',
-                                    { "opacity-100": isFocused },
-                                    { "opacity-0": !isFocused },
-                                )}
-                            >
-                                <TimeAgo datetime={tweet.created_at} locale='en' />
-                            </p>
-
-                        </div>
-
-
-                        {/* Tweet Content */}
+                    {/* Content */}
                         <p
                             data-cy='text'
                             dangerouslySetInnerHTML={{ __html: tweetContent ?? '' }}
-                            className={cn("text-gray-100 font-normal leading-5",
+                        className={cn("text-gray-100 font-normal leading-5 pr-12",
                                 { 'h-12 w-full': !tweet },
                             )}
                         />
@@ -637,6 +596,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                         {/* Interaction Metrics */}
                         {isFocused && (
 
+                        <div className='flex justify-between items-center'>
                             <div
                                 className='flex gap-3 pt-5 items-center mb-1.5 text-xs text-gray-500'
                             >
@@ -663,14 +623,6 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
 
 
                             </div>
-                        )}
-
-                    </header>
-
-                    <div className='flex flex-col justify-between items-center'>
-                        <ContentTag className="relative top-1.5" kind={"tweet"} />
-
-                        {isFocused && (
                             <div
                                 // center icon below
                                 onClick={(e) => addEntityToStream(e, tweet)}
@@ -681,14 +633,15 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
 
                                 />
                             </div>
+                        </div>
                         )}
 
-                    </div>
+
                 </article>
             </div>
 
 
-            {/* Entity Popups */}
+            {/* Context Building */}
             {isFocused && !openOverview && tweet.entities?.length > 0 && (
                 <div className='absolute flex flex-col gap-3 w-56 ' style={{ top: 32, left: bounds.width + 56 }}>
                     <p className='caption leading-3 text-gray-300/90 pl-2 pb-1.5 border-b border-gray-500'>Related Content</p>
@@ -733,7 +686,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
                 ) : null}
             </div>
 
-        </animated.div>
+        </div>
     );
 
 

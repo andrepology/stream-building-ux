@@ -42,7 +42,7 @@
   }
 
   .caption {
-    @apply text-2xs tracking-wider leading-4 font-semibold uppercase
+    @apply text-2xs tracking-wider leading-4 font-semibold uppercase 
   }
 
   .card {

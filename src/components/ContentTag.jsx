@@ -21,7 +21,7 @@ const ContentTag = ({ kind, className = null }) => {
 
     return (
         <div
-            className={className + ' caption cursor-default truncate leading-3 rounded-full px-1.5 py-0.5  ' + color}
+            className={className + ' caption inline-block h-4 cursor-default truncate leading-3 rounded-full px-1.5 py-0.5  ' + color}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
         >
