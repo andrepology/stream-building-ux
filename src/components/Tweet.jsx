@@ -562,7 +562,7 @@ function Tweet({ tweet, setFocusedContent, openOverview, setOpenOverview, zoom, 
 
             <div
                 className={cn(
-                    'card relative',
+                    'card relative max-w-md',
                     { 'bg-bg border-none': !isFocused },
                     { 'backdrop-blur-sm shadow-focus mb-10': isFocused },
                     //{ 'shadow-content': isFocused && !openOverview },

@@ -16,21 +16,19 @@ import tftTweets from './components/sample';
 
 
 
-const Feed = ({ children, openOverview }) => {
+const Feed = ({ children, offsetLeft }) => {
 
   // accepts children and returns a list of content in a chosen order
    
   return (
-    <div className='h-screen w-screen overflow-y-scroll flex justify-center z-10'>
-      <div
-        className='flex flex-col pl-6 gap-6 max-w-lg'
-      >
-        {/* Empty Space. To Replace with Dashboard */}
-        <div className='h-12' />
+    <div 
+      className='h-screen w-screen overflow-y-scroll flex flex-col gap-2 overflow-visible p-12 z-10'
+      style={{position: 'absolute', left: offsetLeft, top: 0}}
+    >
+      
         {
           children
         }
-      </div>
     </div>
   )
 }
@@ -335,7 +333,7 @@ function App() {
   // TODO: sorting and randomising order of Feed
 
   const memoAccounts = useMemo(() => createAccountElements(accounts), [accounts, openOverview, focusedContent])
-  const memoTweets = useMemo(() => createTweetElements(tweets), [tweets, size])
+  const memoTweets = useMemo(() => createTweetElements(tweets), [tweets, size, focusedContent])
 
   // can probably not use useEffect and have a single memoized function that returns the filtered tweets
   useEffect(() => {
@@ -447,6 +445,7 @@ function App() {
       <Feed 
         openOverview={openOverview}
         filters = {streamFilters}
+        offsetLeft = {size.width + 240}
       >
         {memoTweets}
         {streamFilters[2]?.isVisible? memoAccounts : null}
