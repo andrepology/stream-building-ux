@@ -407,7 +407,7 @@ function App() {
   // TODO: sorting and randomising order of Feed
 
   const memoAccounts = useMemo(() => createAccountElements(accounts), [accounts, openOverview, focusedTweet])
-  const memoTweets = useCallback(createTweetElements(tweets), [tweets])
+  const memoTweets = useMemo(() => createTweetElements(tweets), [tweets, size])
 
 
   // can probably not use useEffect and have a single memoized function that returns the filtered tweets
@@ -473,14 +473,14 @@ function App() {
 
         resizeHandleComponent={
           {
-            bottom: <div className="bg-white/55 hover:bg-white/95 absolute top-4.5 right-4 w-6 h-6 rounded-full cursor-grab" ></div>
+            bottomRight: <div className="bg-white/55 hover:bg-white/95 absolute top-4.5 right-4 w-6 h-6 rounded-full cursor-grab" ></div>
           }
         }
 
         enableResizing={
           {
             top: false,
-            bottom: true,
+            bottomRight: true,
             left: false,
           }
         }
@@ -491,17 +491,17 @@ function App() {
           (e, dir, ref, delta, pos) => {
             setSize(
               {
-                width: ref.style.width,
-                height: ref.style.height,
-                x: ref.style.x,
-                y: ref.style.y
+                width: parseInt(ref.style.width),
+                height: parseInt(ref.style.height),
+                x: parseInt(ref.style.x),
+                y: parseInt(ref.style.y)
               }
             )
           }
         }
       />
 
-      <div className="fixed z-40" style={{ top: size.height, left: size.x + size.width }}>
+      <div className="fixed z-40" style={{ top: size.height, left: size.width }}>
         <StreamSidebar
           zoomLevel={setSidebarZoomLevel(focusedTweet)}
           inFocus={focusedTweet !== null}

@@ -20,6 +20,8 @@
     "react-rnd": "^10.4.1",
     "react-scripts": "5.0.1",
     "react-use-measure": "^2.1.1",
+    "react-virtualized-auto-sizer": "^1.0.7",
+    "react-window": "^1.8.8",
     "timeago-react": "^3.0.5",
     "web-vitals": "^2.1.4",
     "webpack": "^5.75.0"
