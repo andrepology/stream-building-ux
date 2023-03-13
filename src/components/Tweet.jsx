@@ -643,9 +643,8 @@ function Tweet({ tweet, setFocusedContent, openOverview, setOpenOverview, zoom, 
 
             {/* Context Building */}
             {isFocused && !openOverview && tweet.entities?.length > 0 && (
-                <div className='absolute flex flex-col gap-3 w-56 ' style={{ top: 32, left: bounds.width + 56 }}>
+                <div className='absolute flex flex-col gap-3 w-56 ' style={{ top: 32, left: bounds.x + 44 }}>
                     <p className='caption leading-3 text-gray-300/90 pl-2 pb-1.5 border-b border-gray-500'>Related Content</p>
-
                     <div className='flex flex-col gap-6'>
                         <div className='flex max-w-20 flex-wrap gap-2.5'>
                             {tweet.entities?.map((entity, i) => {

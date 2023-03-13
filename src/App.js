@@ -22,8 +22,8 @@ const Feed = ({ children, offsetLeft }) => {
    
   return (
     <div 
-      className='h-screen w-screen overflow-y-scroll flex flex-col gap-2 overflow-visible p-12 z-10'
-      style={{position: 'absolute', left: offsetLeft, top: 0}}
+      className='h-screen w-full overflow-y-scroll flex flex-col gap-2 p-12 z-10'
+      style={{position: 'relative', left: offsetLeft, top: 0}}
     >
       
         {
