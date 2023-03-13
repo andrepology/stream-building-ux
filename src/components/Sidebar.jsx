@@ -161,9 +161,15 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
 
     const font = { fontFamily: "GT Pressura" }
 
+    const hoverStyle = {
+        transform: hover ? "translateX(-2px) translateY(-2px)" : "translateX(0px)",
+        transition: "transform 0.2s ease-in-out",
+    }
+
     return (
         <div
             ref={ref}
+            style={hoverStyle}
             onClick={() => onClick()}
             className={
                 cn(
@@ -653,7 +659,7 @@ const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, vi
                 cn(
                     "flex flex-col gap-0 rounded-md ",
                     "transition-shadow duration-400 ease-in-out",
-                    { "overflow-y-scroll overflow-x-hidden": currentStream },
+                    { "overflow-visible": currentStream },
                     { "shadow-subdue border border-white/55": isOpen }
                 )}
         >

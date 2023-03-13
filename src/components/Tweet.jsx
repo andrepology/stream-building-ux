@@ -844,7 +844,7 @@ const Card = ({ content, style, setFocusedContent, focusedContent, sidebarTop = 
     const [focus, setFocus] = useState(0)
 
     // set the focus of the Tweet based on its position in the viewport
-    const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 80, resize: 400 } });
+    const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 20, resize: 20 } });
     useEffect(() => {
 
 
@@ -862,8 +862,9 @@ const Card = ({ content, style, setFocusedContent, focusedContent, sidebarTop = 
         } else {
             // scale opacity based on distance from bottom
             // scale based on distance from bottom to top of screen
-            const dist = bounds.bottom / (bounds.height)
-            const focus = 0.1
+            const dist = bounds.bottom / (sidebarTop)
+            // scale focus based on remaining distance
+            const focus = dist - 0.45
             setFocus(focus)
 
             if (focus > 0.9) {
@@ -884,7 +885,7 @@ const Card = ({ content, style, setFocusedContent, focusedContent, sidebarTop = 
         <div
             // absolutely position by Grid
             style={style}
-            className="relative overflow-visible"
+            className="relative"
         >
             <div
                 // ref to measure Content position
