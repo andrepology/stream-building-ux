@@ -395,6 +395,9 @@ function App() {
   }, [streamFilters])
 
 
+  const [isResizing, setIsResizing] = useState(false)
+
+
   return (
     <div className="app-bg h-screen w-screen flex justify-center">
 
@@ -426,7 +429,7 @@ function App() {
 
         resizeHandleComponent={
           {
-            bottomRight: <div className="bg-white/55 hover:bg-white/95 absolute top-4.5 right-4 w-6 h-6 rounded-full cursor-grab" ></div>
+            bottomRight: <div className="bg-white/55 hover:bg-white/95 absolute top-6 right-4 w-6 h-6 rounded-full cursor-grab" ></div>
           }
         }
 
@@ -439,7 +442,19 @@ function App() {
         }
 
         disableDragging
-        
+
+        onResizeStart={
+          () => {
+            setIsResizing(true)
+          }
+        }
+
+        onResizeStop = {
+          () => {
+            setIsResizing(false)
+          }
+        }
+
         onResize={
           (e, dir, ref, delta, pos) => {
             setSize(
@@ -457,6 +472,7 @@ function App() {
       <div className="fixed z-40" style={{ top: size.height, left: size.width }}>
         <StreamSidebar
           inFocus={focusedContent !== null}
+          isResizing = {isResizing}
 
           setStream={setStream}
           currentStream={currentStream}

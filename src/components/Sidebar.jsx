@@ -18,12 +18,13 @@ import bg from '../assets/bg.png'
 
 
 
-const StreamCover = ({ className }) => {
+const StreamCover = ({ className, imageOpacity }) => {
 
     const bgImage = {
         backgroundImage: `url(${bg})`,
         zIndex: -1,
         backgroundSize: "cover",
+        opacity: imageOpacity,
     }
 
     return (
@@ -144,7 +145,7 @@ const useWidth = () => {
 }
 
 
-const StreamHeader = ({ streamName, streamDescription, onClick = () => console.log("Clicked"), isFocused }) => {
+const StreamHeader = ({ streamName, streamDescription, isResizing, onClick = () => console.log("Clicked"), isFocused }) => {
 
     // Simply renders the Heading and Stream metadata
     // Can register onClick events for backwards nav
@@ -162,7 +163,7 @@ const StreamHeader = ({ streamName, streamDescription, onClick = () => console.l
     const font = { fontFamily: "GT Pressura" }
 
     const hoverStyle = {
-        transform: hover ? "translateX(-2px) translateY(-2px)" : "translateX(0px)",
+        transform: hover || isResizing ? "translateX(-4px) translateY(-4px)" : "translateX(0px)",
         transition: "transform 0.2s ease-in-out",
     }
 
@@ -613,7 +614,7 @@ const Tabs = ({ tabs, toggleTabs }) => {
     )
 }
 
-const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, viewConfig }) => {
+const StreamSidebar = ({ stream, isResizing, currentStream, streamFilters, toggleFilters, viewConfig }) => {
 
     // Renders a Stream object, its metadata, View Controller and Seeds
 
@@ -666,6 +667,7 @@ const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, vi
 
             <StreamHeader
                 isFocused={isFocused}
+                isResizing={isResizing}
                 onClick={toggleFocus}
                 streamName={stream.name}
                 streamDescription={currentStream.description}
@@ -696,13 +698,15 @@ const StreamSidebar = ({ stream, currentStream, streamFilters, toggleFilters, vi
 
             <StreamCover
                 className={cn(
-                    "absolute z-0 w-full h-full top-0 left-0",
+                    "absolute z-0 w-full h-full top-0 overflow-visible left-0 transition-all duration-300",
                     { "opacity-20 blur-2xl": tabs.view || tabs.seeds },
                     {
                         "opacity-70 blur-xl": !(tabs.view || tabs.seeds || isFocused),
-                        "opacity-0 blur-none": isFocused && !(tabs.view || tabs.seeds)
-                    }
+                        "opacity-0 blur-none": isFocused && !(tabs.view || tabs.seeds),
+                        "opacity-0": isResizing,
+                    },
                 )}
+                imageOpacity = {isResizing ? 0 : 0.5}
             />
         </div>
     )
