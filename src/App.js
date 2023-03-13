@@ -13,27 +13,16 @@ import Tweet, { Account } from './components/Tweet';
 import './App.css';
 
 import tftTweets from './components/sample';
-import entities from './components/entities'
-import { MdOutlineTonality } from 'react-icons/md';
 
-
-
-import { IoAdd } from 'react-icons/io5';
-import ContentTag from './components/ContentTag';
 
 
 const Feed = ({ children, openOverview }) => {
 
-  // TODO: push based on amount of space on screen
-  const { x, scale } = useSpring({
-    x: openOverview ? -500 : 0,
-    config: { friction: 20 }
-  });
-
+  // accepts children and returns a list of content in a chosen order
+   
   return (
     <div className='h-screen w-screen overflow-y-scroll flex justify-center z-10'>
-      <animated.div
-        style={{ x }}
+      <div
         className='flex flex-col pl-6 gap-6 max-w-lg'
       >
         {/* Empty Space. To Replace with Dashboard */}
@@ -41,44 +30,11 @@ const Feed = ({ children, openOverview }) => {
         {
           children
         }
-      </animated.div>
+      </div>
     </div>
   )
 }
 
-
-const StreamBackdrop = ({ currentStream, sidebarTop }) => {
-  
-  const bgImage = {
-    backgroundImage: `url(${Masks})`,
-    zIndex: 0,
-    backgroundSize: "cover",
-  } 
-
-  return (
-    <>
-      <div
-        className='absolute tracking-tighter text-gray-500/40 font-semibold z-0'
-        style = {{
-          top: sidebarTop,
-          fontSize: '5rem',
-          // disable cursor selection
-          userSelect: 'none',
-          z: '-1'
-        }}
-      >
-        {currentStream || 'trails.social'}
-      </div>
-      <div
-        style={bgImage}
-        className = {"fixed top-0 left-0 w-screen h-screen z-10"}
-      /> 
-    </>
-  )
-}
-
-
-const BackdropMemo = memo(StreamBackdrop, (prevProps, nextProps) => prevProps.currentStream == nextProps.currentStream)
 
 // obj of streams: seeds
 const sampleStreams = [
@@ -131,20 +87,11 @@ function App() {
   const [currentStream, setStream] = useState({ name: "Tools For Thought", description: "A stream about the tools we shape and the tools that shape us" });
 
 
-  const [streamTopics, setTopics] = useState([]);
-  useEffect(() => {
-    axios.get('./json/clusters.json')
-      .then(res => {
-        setTopics(res.data)
-      })
-  }, [])
-
-
   const [accounts, setAccounts] = useState([]);
   const [tweets, setTweets] = useState([]);
-  const [entities, setEntities] = useState([]);
+  
 
-  const [focusedTweet, setFocusedTweet] = useState(null);
+  const [focusedContent, setFocusedContent] = useState(null);
   const [openOverview, setOpenOverview] = useState(false);
 
   // TODO: move to useFilters
@@ -178,23 +125,6 @@ function App() {
     y: 0
   })
 
-
-  const setSidebarZoomLevel = (focusedTweet) => {
-    return (focusedTweet === null) ? "-3" : "1";
-  }
-
-  const setTweetZoomLevel = (focusedTweet, id) => {
-    switch (focusedTweet) {
-      case null:
-        return "0";
-      default:
-        if (focusedTweet !== id) {
-          return "-3";
-        } else {
-          return "0";
-        }
-    }
-  }
 
   // Tally Feed statistics on a change of currentStream or streamFilters 
   useEffect(() => {
@@ -360,7 +290,7 @@ function App() {
 
     const elems = tweets.map((tweet) => {
 
-      const inFocus = focusedTweet === tweet.id;
+      const inFocus = focusedContent === tweet.id;
 
 
       return (
@@ -372,8 +302,7 @@ function App() {
 
 
           isFocused={inFocus}
-          setFocusedTweet={setFocusedTweet}
-          zoom={setTweetZoomLevel(focusedTweet, tweet.id)}
+          setFocusedContent={setFocusedContent}
 
           addEntityToStream={addEntityToStream}
           currentStream={currentStream}
@@ -403,12 +332,10 @@ function App() {
     return elems
   }
 
-
   // TODO: sorting and randomising order of Feed
 
-  const memoAccounts = useMemo(() => createAccountElements(accounts), [accounts, openOverview, focusedTweet])
+  const memoAccounts = useMemo(() => createAccountElements(accounts), [accounts, openOverview, focusedContent])
   const memoTweets = useMemo(() => createTweetElements(tweets), [tweets, size])
-
 
   // can probably not use useEffect and have a single memoized function that returns the filtered tweets
   useEffect(() => {
@@ -503,8 +430,7 @@ function App() {
 
       <div className="fixed z-40" style={{ top: size.height, left: size.width }}>
         <StreamSidebar
-          zoomLevel={setSidebarZoomLevel(focusedTweet)}
-          inFocus={focusedTweet !== null}
+          inFocus={focusedContent !== null}
 
           setStream={setStream}
           currentStream={currentStream}
@@ -517,7 +443,6 @@ function App() {
           viewConfig={viewConfig}
         />
       </div>
-
 
       <Feed 
         openOverview={openOverview}
@@ -534,5 +459,37 @@ function App() {
 
   );
 }
+
+const StreamBackdrop = ({ currentStream, sidebarTop }) => {
+  
+  const bgImage = {
+    backgroundImage: `url(${Masks})`,
+    zIndex: 0,
+    backgroundSize: "cover",
+  } 
+
+  return (
+    <>
+      <div
+        className='absolute tracking-tighter text-gray-500/40 font-semibold z-0'
+        style = {{
+          top: sidebarTop,
+          fontSize: '5rem',
+          // disable cursor selection
+          userSelect: 'none',
+          z: '-1'
+        }}
+      >
+        {currentStream || 'trails.social'}
+      </div>
+      <div
+        style={bgImage}
+        className = {"fixed top-0 left-0 w-screen h-screen z-10"}
+      /> 
+    </>
+  )
+}
+
+const BackdropMemo = memo(StreamBackdrop, (prevProps, nextProps) => prevProps.currentStream == nextProps.currentStream)
 
 export default App;
