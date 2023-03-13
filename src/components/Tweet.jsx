@@ -415,7 +415,7 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
 
 
 
-function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, currentStream, addEntityToStream, sidebarTop = 86 }) {
+function Tweet({ tweet, setFocusedContent, openOverview, setOpenOverview, zoom, currentStream, addEntityToStream, sidebarTop = 86 }) {
 
     const contextRef = useRef();
 
@@ -459,7 +459,7 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
             setFocus(focus)
 
             if (focus > 0.9) {
-                setFocusedTweet(tweet.id)
+                setFocusedContent(tweet.id)
             }
 
         }
@@ -497,11 +497,11 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
         // add delay
         setTimeout(async () => {
             if (isFocused) {
-                setFocusedTweet(null);
+                setFocusedContent(null);
                 if (openOverview) setOpenOverview(false);
                 return
             }
-            setFocusedTweet(tweet.id);
+            setFocusedContent(tweet.id);
             if (openOverview) setOpenOverview(false);
             setTimeout(() => {
                 update();
@@ -692,5 +692,153 @@ function Tweet({ tweet, setFocusedTweet, openOverview, setOpenOverview, zoom, cu
 
 }
 
-export { Account }
+
+
+
+
+function Card({ content, setFocusedContent, openOverview, addEntityToStream, sidebarTop = 86 }) {
+
+    const contextRef = useRef();
+
+    // a scalar value [0,1] that represents how focused the Tweet is
+    const [focus, setFocus] = useState(0)
+
+   
+    // set the focus of the Tweet based on its position in the viewport
+    const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 80, resize: 400 } });
+    useEffect(() => {
+
+        const distanceFromTop = bounds.top - sidebarTop
+
+        // if Tweet is below the Sidebar
+        if (distanceFromTop > 0) {
+
+            // scale focus[0,1] based on remaining distance from top
+            const dist = 1 - (distanceFromTop / (window.innerHeight - sidebarTop))
+            // bound dist between 0 and 1
+            const focus = dist < 0 ? 0 : dist > 1 ? 1 : dist
+            setFocus(focus)
+
+        } else {
+            // scale opacity based on distance from bottom
+            // scale based on distance from bottom to top of screen
+            const dist = bounds.bottom / (bounds.height)
+            const focus = 0
+            setFocus(focus)
+
+            if (focus > 0.9) {
+                setFocusedContent(content.id)
+            }
+
+        }
+    }, [bounds.top])
+
+    const { styles, attributes, update } = usePopper(ref?.current, contextRef?.current, {
+        placement: 'right-start',
+        position: 'fixed',
+        modifiers: [
+            {
+                name: 'offset',
+                options: {
+                    offset: [0, 0],
+                },
+            },
+        ],
+    });
+
+    const isFocused = focus > 0.85 ?? false
+
+    const focusStyle = {
+        opacity: 0 + focus > 1 ? 1 : 0.1 + focus,
+        transform: isFocused ? `scale(${1 + 0.1 * focus})` : `scale(1.00)`,
+        padding: isFocused ? `${12 + 16 * focus}px ${22 + focus * 8}px 24px` : '12px 12px 16px',
+    }
+
+    return (
+        <div
+            ref={ref}
+            className="relative"
+            style={{ paddingTop: 0, paddingBottom: 0, zIndex: 10 }}
+        >
+
+            <div
+                className={cn(
+                    'card relative min-w-full flex flex-col grow gap-4 min-w-56',
+                    { 'bg-bg border-none': !isFocused },
+                    { 'backdrop-blur-sm shadow-focus mb-10': isFocused },
+                    //{ 'shadow-content': isFocused && !openOverview },
+                    { 'shadow-context': isFocused && openOverview },
+                )}
+                style={{ transform: focusStyle.transform, padding: focusStyle.padding, opacity: focusStyle.opacity }}
+                ref={ref}
+            >
+                
+                    {/* Tweet ContentHeader (Author, @handle, timestamp) and  */}
+                    <ContentHeader content={content} contentType = {content} isFocused = {isFocused} />
+
+
+                    {/* Content */}
+                    <p
+                        data-cy='text'
+                    className={cn("text-gray-100 font-normal leading-5 pr-12",
+                            { 'h-12 w-full': !content },
+                        )}
+                    >
+                        {test}
+                    </p>
+
+                    {/* Interaction Metrics */}
+                    {isFocused && (
+
+                    <div className='flex justify-between items-center'>
+                        <div
+                            className='flex gap-3 pt-5 items-center mb-1.5 text-xs text-gray-500'
+                        >
+
+                            <Metric
+                                icon={<OverlapIcon />}
+                                count={12}
+                            />
+
+                            <Metric
+                                icon={<LikeIcon />}
+                                count={2}
+                            />
+
+                            <Metric
+                                icon={<ReplyIcon />}
+                                count={3}
+                            />
+
+                            <Metric
+                                icon={<RetweetIcon />}
+                                count={4}
+                            />
+
+
+                        </div>
+                        <div
+                            // center icon below
+                            onClick={(e) => addEntityToStream(e, content)}
+                            className='h-9 w-9 flex cursor-pointer items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300'
+                        >
+                            <IoAdd
+                                size={22}
+
+                            />
+                        </div>
+                    </div>
+                    )}
+            </div>
+
+
+        </div>
+    );
+
+}
+
+
+
+
+export { Account, Card }
 export default Tweet

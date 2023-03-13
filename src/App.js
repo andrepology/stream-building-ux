@@ -8,7 +8,7 @@ import { Rnd } from 'react-rnd';
 import Masks from './assets/Masks.png';
 
 import { StreamSidebar } from './components/Sidebar';
-import Tweet, { Account } from './components/Tweet';
+import Tweet, { Account, Card } from './components/Tweet';
 
 import './App.css';
 
