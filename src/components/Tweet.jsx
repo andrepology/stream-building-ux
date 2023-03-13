@@ -415,16 +415,11 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
 
 
 
-function Tweet({ tweet, setFocusedContent, openOverview, setOpenOverview, zoom, currentStream, addEntityToStream, sidebarTop = 86 }) {
+function Tweet({ tweet, setFocusedContent, openOverview, setOpenOverview, zoom, currentStream, addEntityToStream, isFocused }) {
 
     const contextRef = useRef();
 
     const [selectedEntity, setEntity] = useState(null);
-
-    const [isHovered, setHovered] = useState(false);
-
-    // a scalar value [0,1] that represents how focused the Tweet is
-    const [focus, setFocus] = useState(0)
 
     // format and set tweet content
     const [tweetContent, setContent] = useState(null);
@@ -436,34 +431,6 @@ function Tweet({ tweet, setFocusedContent, openOverview, setOpenOverview, zoom, 
 
     }, [tweet.html])
 
-    // set the focus of the Tweet based on its position in the viewport
-    const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 80, resize: 400 } });
-    useEffect(() => {
-
-        const distanceFromTop = bounds.top - sidebarTop
-
-        // if Tweet is below the Sidebar
-        if (distanceFromTop > 0) {
-
-            // scale focus[0,1] based on remaining distance from top
-            const dist = 1 - (distanceFromTop / (window.innerHeight - sidebarTop))
-            // bound dist between 0 and 1
-            const focus = dist < 0 ? 0 : dist > 1 ? 1 : dist
-            setFocus(focus)
-
-        } else {
-            // scale opacity based on distance from bottom
-            // scale based on distance from bottom to top of screen
-            const dist = bounds.bottom / (bounds.height)
-            const focus = 0
-            setFocus(focus)
-
-            if (focus > 0.9) {
-                setFocusedContent(tweet.id)
-            }
-
-        }
-    }, [bounds.top])
 
     const { styles, attributes, update } = usePopper(ref?.current, contextRef?.current, {
         placement: 'right-start',
@@ -483,53 +450,11 @@ function Tweet({ tweet, setFocusedContent, openOverview, setOpenOverview, zoom, 
         dummyInteractions.current = Math.floor(Math.random() * 10)
     }, [])
 
-    const easeSetFocus = (e, time = 0) => {
-        // use State to manage focus
-        e.preventDefault();
-        e.stopPropagation();
-
-
-        if (e.target.id === 'ENTITY') return;
-        if (e.target.id === 'INSPECT') return;
-
-
-
-        // add delay
-        setTimeout(async () => {
-            if (isFocused) {
-                setFocusedContent(null);
-                if (openOverview) setOpenOverview(false);
-                return
-            }
-            setFocusedContent(tweet.id);
-            if (openOverview) setOpenOverview(false);
-            setTimeout(() => {
-                update();
-            }, 300)
-            return
-        }, time);
-    };
-
-    const easeSetHover = (hover, time = 500) => {
-
-        if (!hover) {
-            setTimeout(async () => {
-                setHovered(false);
-                return
-            }, time)
-        }
-        setHovered(true)
-    };
-
-    const longPressedEvent = useLongPress(easeSetFocus, easeSetFocus);
-
-
     const interactions = {
         "Retweets": tweet.public_metrics.retweet_count,
         "Likes": tweet.public_metrics.like_count,
         "Replies": tweet.public_metrics.reply_count,
     }
-
 
     const relatedTweets = Array(5).fill(0).map(e => {
         return (
@@ -540,107 +465,83 @@ function Tweet({ tweet, setFocusedContent, openOverview, setOpenOverview, zoom, 
     })
 
 
-    const isFocused = focus > 0.85 ?? false
-
-    const focusStyle = {
-        opacity: 0 + focus > 1 ? 1 : 0.1 + focus,
-        transform: isFocused ? `scale(${1 + 0.1 * focus})` : `scale(1.00)`,
-        padding: isFocused ? `${12 + 16 * focus}px ${22 + focus * 8}px 24px` : '12px 12px 16px',
-    }
-
     return (
         <div
-            onMouseEnter={(e) => easeSetHover(true)}
-            onMouseLeave={(e) => easeSetHover(false)}
+            
             onClick={() => {
                 openOverview && setOpenOverview(false)
             }}
-            ref={ref}
+            
             className="relative"
             style={{ paddingTop: 0, paddingBottom: 0, zIndex: 10 }}
         >
 
-            <div
+            
+            <article
                 className={cn(
-                    'card relative max-w-md',
-                    { 'bg-bg border-none': !isFocused },
-                    { 'backdrop-blur-sm shadow-focus mb-10': isFocused },
-                    //{ 'shadow-content': isFocused && !openOverview },
-                    { 'shadow-context': isFocused && openOverview },
+                    'min-w-full flex flex-col grow gap-4 min-w-56',
                 )}
-                style={{ transform: focusStyle.transform, padding: focusStyle.padding, opacity: focusStyle.opacity }}
-
-                onClick={e => easeSetFocus(e)}
-                ref={ref}
-            // {...longPressedEvent}
             >
-                <article
-                    className={cn(
-                        'min-w-full flex flex-col grow gap-4 min-w-56',
-                    )}
-                >
-                    {/* Tweet ContentHeader (Author, @handle, timestamp) and  */}
+                {/* Tweet ContentHeader (Author, @handle, timestamp) and  */}
 
-                    <ContentHeader content={tweet} contentType = {tweet} isFocused = {isFocused} />
+                <ContentHeader content={tweet} contentType = {tweet} isFocused = {isFocused} />
 
 
-                    {/* Content */}
-                        <p
-                            data-cy='text'
-                            dangerouslySetInnerHTML={{ __html: tweetContent ?? '' }}
-                        className={cn("text-gray-100 font-normal leading-5 pr-12",
-                                { 'h-12 w-full': !tweet },
-                            )}
-                        />
-
-                        {/* Interaction Metrics */}
-                        {isFocused && (
-
-                        <div className='flex justify-between items-center'>
-                            <div
-                                className='flex gap-3 pt-5 items-center mb-1.5 text-xs text-gray-500'
-                            >
-
-                                <Metric
-                                    icon={<OverlapIcon />}
-                                    count={dummyInteractions.current}
-                                />
-
-                                <Metric
-                                    icon={<LikeIcon />}
-                                    count={interactions.Likes}
-                                />
-
-                                <Metric
-                                    icon={<ReplyIcon />}
-                                    count={interactions.Replies}
-                                />
-
-                                <Metric
-                                    icon={<RetweetIcon />}
-                                    count={interactions.Retweets}
-                                />
-
-
-                            </div>
-                            <div
-                                // center icon below
-                                onClick={(e) => addEntityToStream(e, tweet)}
-                                className='h-9 w-9 flex cursor-pointer items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300'
-                            >
-                                <IoAdd
-                                    size={22}
-
-                                />
-                            </div>
-                        </div>
+                {/* Content */}
+                    <p
+                        data-cy='text'
+                        dangerouslySetInnerHTML={{ __html: tweetContent ?? '' }}
+                    className={cn("text-gray-100 font-normal leading-5 pr-12",
+                            { 'h-12 w-full': !tweet },
                         )}
+                    />
+
+                    {/* Interaction Metrics */}
+                    {isFocused && (
+
+                    <div className='flex justify-between items-center'>
+                        <div
+                            className='flex gap-3 pt-5 items-center mb-1.5 text-xs text-gray-500'
+                        >
+
+                            <Metric
+                                icon={<OverlapIcon />}
+                                count={dummyInteractions.current}
+                            />
+
+                            <Metric
+                                icon={<LikeIcon />}
+                                count={interactions.Likes}
+                            />
+
+                            <Metric
+                                icon={<ReplyIcon />}
+                                count={interactions.Replies}
+                            />
+
+                            <Metric
+                                icon={<RetweetIcon />}
+                                count={interactions.Retweets}
+                            />
 
 
-                </article>
-            </div>
+                        </div>
+                        <div
+                            // center icon below
+                            onClick={(e) => addEntityToStream(e, tweet)}
+                            className='h-9 w-9 flex cursor-pointer items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300'
+                        >
+                            <IoAdd
+                                size={22}
+
+                            />
+                        </div>
+                    </div>
+                    )}
 
 
+            </article>
+        
             {/* Context Building */}
             {isFocused && !openOverview && tweet.entities?.length > 0 && (
                 <div className='absolute flex flex-col gap-3 w-56 ' style={{ top: 32, left: bounds.x + 44 }}>
@@ -836,6 +737,26 @@ const OldCard = ({ content, style, setFocusedContent, openOverview, addEntityToS
 }
 
 
+
+
+
+const renderContent = (content, isFocused) => {
+        switch (content.type) {
+            case 'tweet':
+                return (
+                    <Tweet
+                        tweet={content.tweet}
+                        isFocused={isFocused}
+                    />
+                )
+            default:
+                return (
+                    <div/>
+                )
+        }
+}
+
+
 const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, sidebarTop = 256 }) => {
 
     const isFocused = content?.id === focusedContent
@@ -882,6 +803,8 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
         transition: `all ${ 0.2 * focus}s ease-in-out`
     }
 
+
+
     return (
         <div
             // absolutely position by Grid
@@ -896,8 +819,7 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
                 className="card relative flex flex-col gap-4 min-w-56"
             >
 
-                {content.id}
-                <p>{String(isFocused)}</p>
+                {() => renderContent(content)}
 
             </div>
 

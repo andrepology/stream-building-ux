@@ -26,8 +26,33 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
   // accepts children and returns a list of content in a chosen order
 
-
+  const gridRef = useRef()
   const [focusedContent, setFocusedContent] = useState("0.0");
+
+  const [sampleContent , setSampleContent] = useState([])
+  // load tftTweets into sample Content
+  useEffect(() => {
+
+    const tweets = tftTweets.map(tweet => {
+      return {
+        id: tweet.id,
+        content: tweet,
+        type: 'tweet'
+      }
+    })
+
+
+    setSampleContent(tweets)
+    // console.log(tftTweets)
+  }, [])
+
+  // const scrollTo = (pos = 200) => {
+  //   gridRef.current.scrollToItem(200, "center")
+  // } 
+
+  const nCols = 1
+  const nRows = Math.ceil(sampleContent.length / nCols)
+
    
   return (
     <div 
@@ -36,28 +61,42 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
     >
       <FixedSizeGrid
 
+        ref = {gridRef}
+
         style={{overflow: 'visible'}}
 
         width = {window.innerWidth - offsetLeft}
         height = {window.innerHeight}
 
-        columnCount = {1}
+        columnCount = {nCols}
         columnWidth = {300}
 
-        rowCount = {1000}
+        rowCount = {nRows}
         rowHeight = {150}
+
+        itemData = {{
+          sampleContent,
+        }}
         
       >
-        {({ columnIndex, rowIndex, style }) => (
-          <Card 
-            isResizing={isResizing}
-            content = {{id: `${rowIndex}.${columnIndex}`}} 
-            style = {style} 
-            focusedContent = {focusedContent} 
-            setFocusedContent = {setFocusedContent}
-            sidebarTop = {sidebarTop}
-          />
-        )}
+        {({ data, columnIndex, rowIndex, style }) => {
+
+          const content = nCols > 1 ? data.sampleContent[rowIndex][columnIndex] : data.sampleContent[rowIndex]
+
+          return (
+            <Card 
+
+              content = {content} 
+              
+              isResizing={isResizing}
+
+              style = {style} 
+              focusedContent = {focusedContent} 
+              setFocusedContent = {setFocusedContent}
+              sidebarTop = {sidebarTop}
+            />
+          )}
+        }    
       </FixedSizeGrid>
     </div>
   )
