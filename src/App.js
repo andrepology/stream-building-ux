@@ -43,7 +43,7 @@ const Feed = ({ children, offsetLeft, sidebarTop }) => {
         columnCount = {1}
         columnWidth = {300}
 
-        rowCount = {children[0]?.length}
+        rowCount = {1000}
         rowHeight = {150}
         
       >

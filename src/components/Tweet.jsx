@@ -848,7 +848,7 @@ const Card = ({ content, style, setFocusedContent, focusedContent, sidebarTop = 
     useEffect(() => {
 
 
-        const distanceFromTop = bounds.top - sidebarTop
+        const distanceFromTop = bounds.top - sidebarTop + 16
 
         // if Tweet is below the Sidebar
         if (distanceFromTop > 0) {
@@ -863,7 +863,7 @@ const Card = ({ content, style, setFocusedContent, focusedContent, sidebarTop = 
             // scale opacity based on distance from bottom
             // scale based on distance from bottom to top of screen
             const dist = bounds.bottom / (bounds.height)
-            const focus = 0
+            const focus = 0.1
             setFocus(focus)
 
             if (focus > 0.9) {
@@ -877,6 +877,7 @@ const Card = ({ content, style, setFocusedContent, focusedContent, sidebarTop = 
         opacity: focus > 0.55 ? 1 : 0.1 + focus,
         transform: !isFocused ? `scale(${1 + 0.1 * focus})` : `scale(1.00)`,
         padding: isFocused ? `${12 + 16 * focus}px ${22 + focus * 8}px 24px` : '12px 12px 16px',
+        transition: `all ${ 0.2 * focus}s ease-in-out`
     }
 
     return (
