@@ -10,25 +10,53 @@ import Masks from './assets/Masks.png';
 import { StreamSidebar } from './components/Sidebar';
 import Tweet, { Account, Card } from './components/Tweet';
 
+import { FixedSizeGrid } from 'react-window';
+
 import './App.css';
 
 import tftTweets from './components/sample';
 
 
 
-const Feed = ({ children, offsetLeft }) => {
+
+
+
+const Feed = ({ children, offsetLeft, sidebarTop }) => {
 
   // accepts children and returns a list of content in a chosen order
+
+
+  const [focusedContent, setFocusedContent] = useState("0.0");
    
   return (
     <div 
       className='h-screen w-full overflow-y-scroll flex flex-col gap-2 p-12 z-10'
       style={{position: 'relative', left: offsetLeft, top: 0}}
     >
-      
-        {
-          children
-        }
+      <FixedSizeGrid
+
+        style={{overflow: 'visible'}}
+
+        width = {window.innerWidth - offsetLeft}
+        height = {window.innerHeight}
+
+        columnCount = {1}
+        columnWidth = {300}
+
+        rowCount = {children[0]?.length}
+        rowHeight = {150}
+        
+      >
+        {({ columnIndex, rowIndex, style }) => (
+          <Card 
+            content = {{id: `${rowIndex}.${columnIndex}`}} 
+            style = {style} 
+            focusedContent = {focusedContent} 
+            setFocusedContent = {setFocusedContent}
+            sidebarTop = {sidebarTop}
+          />
+        )}
+      </FixedSizeGrid>
     </div>
   )
 }
@@ -446,6 +474,7 @@ function App() {
         openOverview={openOverview}
         filters = {streamFilters}
         offsetLeft = {size.width + 240}
+        sidebarTop = {size.height}
       >
         {memoTweets}
         {streamFilters[2]?.isVisible? memoAccounts : null}

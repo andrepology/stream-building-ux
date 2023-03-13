@@ -402,7 +402,7 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
                         { "opacity-0": !isFocused },
                     )}
                 >
-                    <TimeAgo datetime={content.created_at} locale='en' />
+                    <TimeAgo datetime={content?.created_at} locale='en' />
                 </p>
 
             </div>
@@ -695,14 +695,13 @@ function Tweet({ tweet, setFocusedContent, openOverview, setOpenOverview, zoom, 
 
 
 
-function Card({ content, setFocusedContent, openOverview, addEntityToStream, sidebarTop = 86 }) {
+const OldCard = ({ content, style, setFocusedContent, openOverview, addEntityToStream, sidebarTop = 86 }) => {
 
     const contextRef = useRef();
 
     // a scalar value [0,1] that represents how focused the Tweet is
     const [focus, setFocus] = useState(0)
 
-   
     // set the focus of the Tweet based on its position in the viewport
     const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 80, resize: 400 } });
     useEffect(() => {
@@ -757,7 +756,7 @@ function Card({ content, setFocusedContent, openOverview, addEntityToStream, sid
         <div
             ref={ref}
             className="relative"
-            style={{ paddingTop: 0, paddingBottom: 0, zIndex: 10 }}
+            style={{ paddingTop: 0, paddingBottom: 0, zIndex: 10 } + style}
         >
 
             <div
@@ -833,6 +832,75 @@ function Card({ content, setFocusedContent, openOverview, addEntityToStream, sid
 
         </div>
     );
+
+}
+
+
+const Card = ({ content, style, setFocusedContent, focusedContent, sidebarTop = 256 }) => {
+
+    const isFocused = content?.id === focusedContent
+
+    // a scalar value [0,1] that represents how focused the Tweet is
+    const [focus, setFocus] = useState(0)
+
+    // set the focus of the Tweet based on its position in the viewport
+    const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 80, resize: 400 } });
+    useEffect(() => {
+
+
+        const distanceFromTop = bounds.top - sidebarTop
+
+        // if Tweet is below the Sidebar
+        if (distanceFromTop > 0) {
+
+            // scale focus[0,1] based on remaining distance from top
+            const dist = 1 - (distanceFromTop / (window.innerHeight - sidebarTop))
+            // bound dist between 0 and 1
+            const focus = dist < 0 ? 0 : dist > 1 ? 1 : dist
+            setFocus(focus)
+
+        } else {
+            // scale opacity based on distance from bottom
+            // scale based on distance from bottom to top of screen
+            const dist = bounds.bottom / (bounds.height)
+            const focus = 0
+            setFocus(focus)
+
+            if (focus > 0.9) {
+                setFocusedContent(content.id)
+            }
+
+        }
+    }, [bounds.top])
+
+    const focusStyle = {
+        opacity: focus > 0.55 ? 1 : 0.1 + focus,
+        transform: !isFocused ? `scale(${1 + 0.1 * focus})` : `scale(1.00)`,
+        padding: isFocused ? `${12 + 16 * focus}px ${22 + focus * 8}px 24px` : '12px 12px 16px',
+    }
+
+    return (
+        <div
+            // absolutely position by Grid
+            style={style}
+            className="relative overflow-visible"
+        >
+            <div
+                // ref to measure Content position
+                ref = {ref}
+                style={focusStyle}
+                className="card relative flex flex-col gap-4 min-w-56"
+            >
+
+                {content.id}
+                <p>{String(isFocused)}</p>
+
+            </div>
+
+        </div>
+
+    )
+
 
 }
 
