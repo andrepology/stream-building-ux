@@ -836,9 +836,10 @@ const OldCard = ({ content, style, setFocusedContent, openOverview, addEntityToS
 }
 
 
-const Card = ({ content, style, setFocusedContent, focusedContent, sidebarTop = 256 }) => {
+const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, sidebarTop = 256 }) => {
 
     const isFocused = content?.id === focusedContent
+    const toggleFocus  = () => setFocusedContent(isFocused ? null : content.id)
 
     // a scalar value [0,1] that represents how focused the Tweet is
     const [focus, setFocus] = useState(0)
@@ -876,8 +877,8 @@ const Card = ({ content, style, setFocusedContent, focusedContent, sidebarTop = 
 
     const focusStyle = {
         opacity: focus > 0.55 ? 1 : 0.1 + focus,
-        transform: !isFocused ? `scale(${1 + 0.1 * focus})` : `scale(1.00)`,
-        padding: isFocused ? `${12 + 16 * focus}px ${22 + focus * 8}px 24px` : '12px 12px 16px',
+        transform: isFocused ? `scale(${1 + 0.1 * focus})` : `scale(1.00)`,
+        padding: isFocused ? `${12 + 16 * focus}px ${12 + focus * 8}px 24px` : '12px 12px 16px',
         transition: `all ${ 0.2 * focus}s ease-in-out`
     }
 
@@ -886,11 +887,12 @@ const Card = ({ content, style, setFocusedContent, focusedContent, sidebarTop = 
             // absolutely position by Grid
             style={style}
             className="relative"
+            onClick={toggleFocus}
         >
             <div
                 // ref to measure Content position
                 ref = {ref}
-                style={focusStyle}
+                style={isResizing? {opacity: 0.1} : focusStyle}
                 className="card relative flex flex-col gap-4 min-w-56"
             >
 

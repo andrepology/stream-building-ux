@@ -1,9 +1,10 @@
-import { useState, useEffect, memo, useMemo, useCallback, Children, useRef } from 'react';
+import { useState, useEffect, useCallback, memo, useMemo, Children, useRef } from 'react';
 import cn from 'classnames';
 import { useSpring, animated } from '@react-spring/web'
 import axios from 'axios';
 
 import { Rnd } from 'react-rnd';
+import debounce from 'lodash.debounce';
 
 import Masks from './assets/Masks.png';
 
@@ -21,7 +22,7 @@ import tftTweets from './components/sample';
 
 
 
-const Feed = ({ children, offsetLeft, sidebarTop }) => {
+const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
   // accepts children and returns a list of content in a chosen order
 
@@ -49,6 +50,7 @@ const Feed = ({ children, offsetLeft, sidebarTop }) => {
       >
         {({ columnIndex, rowIndex, style }) => (
           <Card 
+            isResizing={isResizing}
             content = {{id: `${rowIndex}.${columnIndex}`}} 
             style = {style} 
             focusedContent = {focusedContent} 
@@ -150,6 +152,7 @@ function App() {
     x: 0,
     y: 0
   })
+
 
 
   // Tally Feed statistics on a change of currentStream or streamFilters 
@@ -491,6 +494,7 @@ function App() {
         filters = {streamFilters}
         offsetLeft = {size.width + 240}
         sidebarTop = {size.height}
+        isResizing = {isResizing}
       >
         {memoTweets}
         {streamFilters[2]?.isVisible? memoAccounts : null}

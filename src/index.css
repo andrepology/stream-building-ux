@@ -46,7 +46,7 @@
   }
 
   .card {
-    @apply border bg-white/55 border-white/95 shadow-subdue rounded-md transition-all duration-300 p-3
+    @apply border bg-white/55 border-white/95 shadow-subdue rounded-md p-3
   }
 
 }
