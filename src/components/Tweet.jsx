@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, cloneElement } from 'react';
+import { useState, useEffect, useRef, useCallback, cloneElement, memo } from 'react';
 import { usePopper } from 'react-popper';
 import TimeAgo from 'timeago-react';
 import cn from 'classnames';
@@ -362,10 +362,10 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
 
 
     return (
-        <div className='flex justify-between items-baseline'>
-            <div className="flex-1 flex-row gap-2">
+        <div className='relative min-w-full flex justify-between items-baseline'>
+            <div className="shrink w-4/6 flex flex-row gap-2">
 
-                <div className='flex w-4/5 items-baseline gap-2'>
+                <div className='flex shrink w-5/6 items-baseline gap-2'>
                     <h2
                         style={{ fontFamily: "GT Pressura", fontWeight: "normal" }}
                         className={cn(
@@ -392,7 +392,7 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
                 <p
                     data-cy='date'
                     className={cn(
-                        'text-gray-300/55 text-xs block pr-2',
+                        'text-gray-300/55 text-xs inline-block pr-2',
                         'transition-opacity duration-100 ease-in-out',
                         { "opacity-100": isFocused },
                         { "opacity-0": !isFocused },
@@ -402,7 +402,7 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
                 </p>
 
             </div>
-            <ContentTag className="shrink" kind={"tweet"} />
+            <ContentTag className="inline-block" kind={"tweet"} />
         </div>
     )
 
@@ -411,7 +411,7 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
 
 
 
-function Tweet({ tweet, setFocusedContent, openOverview, setOpenOverview, zoom, currentStream, addEntityToStream, isFocused }) {
+function Tweet({ tweet, openOverview, setOpenOverview, addEntityToStream, isFocused }) {
 
     const contextRef = useRef();
 
@@ -460,7 +460,6 @@ function Tweet({ tweet, setFocusedContent, openOverview, setOpenOverview, zoom, 
             }}
             
             className="relative"
-            style={{ paddingTop: 0, paddingBottom: 0, zIndex: 10 }}
         >
 
             
