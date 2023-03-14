@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, memo, useMemo, Children, useRef } from 'react';
+import { useState, useEffect, useCallback, memo, useMemo, forwardRef, useRef } from 'react';
 import cn from 'classnames';
 import { useSpring, animated } from '@react-spring/web'
 import axios from 'axios';
@@ -18,8 +18,18 @@ import './App.css';
 
 import tftTweets from './components/sample';
 
+const GUTTER = 32
 
-
+const innerElementType = forwardRef(({ style, ...rest }, ref) => (
+  <div
+    ref={ref}
+    style={{
+      ...style,
+      paddingTop: GUTTER
+    }}
+    {...rest}
+  />
+));
 
 const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
@@ -35,6 +45,10 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
         type: 'tweet'
       }
     })
+
+    // duplicate tweets 100 times
+  
+    
 
 
     setSampleContent(tweets)
@@ -56,7 +70,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
     gridRef.current.resetAfterRowIndex(index)
   }
 
-  const getRowSize = index => rowSizes.current[index] || 200
+  const getRowSize = index => rowSizes.current[index] + GUTTER || 200
 
   console.log(rowSizes.current)
 
@@ -83,6 +97,8 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
         rowCount = {nRows}
         rowHeight = {getRowSize}
+
+        innerElementType = {innerElementType}
 
         itemData = {
           sampleContent}
