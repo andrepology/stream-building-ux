@@ -365,7 +365,7 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
         <div className='relative min-w-full flex justify-between items-baseline'>
             <div className="shrink w-4/6 flex flex-row gap-2">
 
-                <div className='flex shrink w-5/6 items-baseline gap-2'>
+                <div className='flex shrink w-/6 items-baseline gap-2'>
                     <h2
                         style={{ fontFamily: "GT Pressura", fontWeight: "normal" }}
                         className={cn(
@@ -550,8 +550,9 @@ const renderContent = (content, isFocused) => {
 }
 
 
-const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, sidebarTop = 256 }) => {
+const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, setRowSize, index, sidebarTop = 256 }) => {
 
+    const cardRef = useRef()
     const isFocused = content?.id === focusedContent
     const toggleFocus  = () => setFocusedContent(isFocused ? null : content.id)
 
@@ -561,8 +562,6 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
     // set the focus of the Tweet based on its position in the viewport
     const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 20, resize: 20 } });
     useEffect(() => {
-
-
         const distanceFromTop = bounds.top - sidebarTop + 16
 
         // if Tweet is below the Sidebar
@@ -585,13 +584,24 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
         }
     }, [bounds.top])
 
+
+    useEffect(() => {
+        if (cardRef.current) {
+            const cardHeight = cardRef.current.getBoundingClientRect().height
+
+            console.log("measuring", cardHeight)
+
+            setRowSize(index, cardHeight)
+        }
+    }, [index, setRowSize, cardRef.current])
+
+
     const focusStyle = {
         opacity: focus > 0.55 ? 1 : 0.1 + focus,
-        transform: focus > 0.55 ? `scale(${1 + 0.1 * focus})` : `scale(1.00)`,
+        transform: focus > 0.55 ? `scale(${1 + 0.01 * focus})` : `scale(1.00)`,
         // padding: focus > 0.55 ? `${2 + 16 * focus}px ${12 + focus * 8}px 12px` : '12px 12px 16px',
         transition: `all ${ 0.2 * focus}s ease-in-out`
     }
-
 
     const contentBody = renderContent(content, isFocused)
 
@@ -601,15 +611,20 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
             style={style}
             className="relative"
             onClick={toggleFocus}
+
         >
             <div
                 // ref to measure Content position
-                ref = {ref}
-                style={isResizing? {opacity: 0.1} : focusStyle}
+                // style={isResizing? {opacity: 0.1} : focusStyle}
                 className="card relative flex flex-col gap-4 min-w-56"
+                ref={cardRef}
             >
 
-                {contentBody}
+                <Tweet
+                    
+                    tweet={content.content}
+                    isFocused={isFocused}
+                />
 
             </div>
 

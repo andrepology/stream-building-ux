@@ -4,6 +4,7 @@ import { useSpring, animated } from '@react-spring/web'
 import axios from 'axios';
 
 import { Rnd } from 'react-rnd';
+
 import debounce from 'lodash.debounce';
 
 import Masks from './assets/Masks.png';
@@ -23,10 +24,6 @@ import tftTweets from './components/sample';
 const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
   // accepts children and returns a list of content in a chosen order
-
-  const gridRef = useRef()
-  const [focusedContent, setFocusedContent] = useState("0.0");
-
   const [sampleContent , setSampleContent] = useState([])
   // load tftTweets into sample Content
   useEffect(() => {
@@ -44,42 +41,59 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
     // console.log(tftTweets)
   }, [])
 
-  // const scrollTo = (pos = 200) => {
-  //   gridRef.current.scrollToItem(200, "center")
-  // } 
 
+  const [focusedContent, setFocusedContent] = useState("0.0");
+  
+  // Dynamically sizing rows
+  const gridRef = useRef()
+  const rowSizes = useRef({})
+
+  const setRowSize =(index, size) => {
+
+    console.log("setting", index, size)
+
+    rowSizes.current = {...rowSizes.current, [index]: size}
+    gridRef.current.resetAfterRowIndex(index)
+  }
+
+  const getRowSize = index => rowSizes.current[index] || 200
+
+  console.log(rowSizes.current)
+
+  const remainingWidth = window.innerWidth - offsetLeft
   const nCols = 1
   const nRows = Math.ceil(sampleContent.length / nCols)
 
-   
+  
   return (
     <div 
-      className='z-10'
+      className='z-10 pl-6'
       style={{position: 'relative', overflow: 'visible', left: offsetLeft, top: 0}}
     >
       <VariableSizeGrid
 
         ref = {gridRef}
 
-        style={{overflowX: 'visible', overflowY: 'scroll'}}
-
-        width = {window.innerWidth - offsetLeft}
+        width = {window.innerWidth}
         height = {window.innerHeight}
+        style={{overflowX: 'visible', overflowY: 'scroll', }}
 
         columnCount = {nCols}
-        columnWidth = {() => 312}
+        columnWidth = {() => 400}
 
         rowCount = {nRows}
-        rowHeight = {() => 400}
+        rowHeight = {getRowSize}
 
-        itemData = {{
-          sampleContent,
-        }}
+        itemData = {
+          sampleContent}
         
       >
         {({ data, columnIndex, rowIndex, style }) => {
 
-          const content = nCols > 1 ? data.sampleContent[rowIndex][columnIndex] : data.sampleContent[rowIndex]
+          
+          const index = rowIndex * nCols + columnIndex
+          const content = nCols > 1 ? data[index] : data[rowIndex]
+          
 
           return (
             <Card 
@@ -89,6 +103,9 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
               style = {style} 
               
               isResizing={isResizing}
+              setRowSize = {setRowSize}
+              index = {rowIndex}
+
               focusedContent = {focusedContent} 
               setFocusedContent = {setFocusedContent}
               sidebarTop = {sidebarTop}
@@ -440,10 +457,10 @@ function App() {
 
   return (
     <div className="app-bg h-screen w-screen">
-
       <Rnd
         minWidth={'56px'}
         minHeight={'128px'}
+
         bounds="window"
         className='z-50'
 
@@ -529,7 +546,7 @@ function App() {
       <Feed 
         openOverview={openOverview}
         filters = {streamFilters}
-        offsetLeft = {size.width + 240}
+        offsetLeft = {size.width + 236}
         sidebarTop = {size.height}
         isResizing = {isResizing}
       >
