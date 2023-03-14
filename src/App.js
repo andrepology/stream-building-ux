@@ -54,14 +54,14 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
    
   return (
     <div 
-      className='h-screen w-full overflow-y-scroll flex flex-col gap-2 p-12 z-10'
-      style={{position: 'relative', left: offsetLeft, top: 0}}
+      className='z-10'
+      style={{position: 'relative', overflow: 'visible', left: offsetLeft, top: 0}}
     >
       <VariableSizeGrid
 
         ref = {gridRef}
 
-        style={{overflow: 'visible'}}
+        style={{overflowX: 'visible', overflowY: 'scroll'}}
 
         width = {window.innerWidth - offsetLeft}
         height = {window.innerHeight}
@@ -86,9 +86,9 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
               content = {content} 
               
-              isResizing={isResizing}
-
               style = {style} 
+              
+              isResizing={isResizing}
               focusedContent = {focusedContent} 
               setFocusedContent = {setFocusedContent}
               sidebarTop = {sidebarTop}
@@ -439,7 +439,7 @@ function App() {
 
 
   return (
-    <div className="app-bg h-screen w-screen flex justify-center">
+    <div className="app-bg h-screen w-screen">
 
       <Rnd
         minWidth={'56px'}

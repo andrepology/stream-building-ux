@@ -34,7 +34,6 @@ const Metric = ({ icon, count, title = null, iconSize = 14 }) => {
     )
 }
 
-
 const Account = ({ entity, currentStream, addEntityToStream }) => {
 
     const metadata = {
@@ -126,9 +125,6 @@ const Account = ({ entity, currentStream, addEntityToStream }) => {
 
 
 }
-
-
-
 
 const ContentPreview = ({ update, setOpenOverview, openOverview, entity, setEntity }) => {
 
@@ -577,25 +573,23 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
             const dist = 1 - (distanceFromTop / (window.innerHeight - sidebarTop))
             // bound dist between 0 and 1
             const focus = dist < 0 ? 0 : dist > 1 ? 1 : dist
+
             setFocus(focus)
 
         } else {
             const dist = bounds.bottom / (sidebarTop)
             // scale focus based on remaining distance
             const focus = dist - 0.45
-            setFocus(focus)
 
-            if (focus > 0.9) {
-                setFocusedContent(content.id)
-            }
+            setFocus(focus)
 
         }
     }, [bounds.top])
 
     const focusStyle = {
         opacity: focus > 0.55 ? 1 : 0.1 + focus,
-        transform: isFocused ? `scale(${1 + 0.05 * focus})` : `scale(1.00)`,
-        padding: isFocused ? `${2 + 16 * focus}px ${12 + focus * 8}px 12px` : '12px 12px 16px',
+        transform: focus > 0.55 ? `scale(${1 + 0.1 * focus})` : `scale(1.00)`,
+        // padding: focus > 0.55 ? `${2 + 16 * focus}px ${12 + focus * 8}px 12px` : '12px 12px 16px',
         transition: `all ${ 0.2 * focus}s ease-in-out`
     }
 
@@ -626,7 +620,6 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
 
 
 }
-
 
 
 
