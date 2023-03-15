@@ -63,6 +63,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
   // Dynamically sizing rows
   const gridRef = useRef()
   const rowSizes = useRef({})
+  const rowFocus = useRef({})
 
   const setRowSize =(index, size) => {
 
@@ -70,9 +71,13 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
     gridRef.current.resetAfterRowIndex(index)
   }
 
+  const setRowFocus = (index, focus) => {
+    rowFocus.current = {...rowFocus.current, [index]: focus}
+  }
+
   const getRowSize = index => rowSizes.current[index] + GUTTER || 200
 
-  console.log(rowSizes.current)
+  
 
   const remainingWidth = window.innerWidth - offsetLeft
   const nCols = 1
@@ -93,7 +98,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
         style={{overflowX: 'visible', overflowY: 'scroll', }}
 
         columnCount = {nCols}
-        columnWidth = {() => 400}
+        columnWidth = {() => Math.min(442, remainingWidth)}
 
         rowCount = {nRows}
         rowHeight = {getRowSize}
@@ -120,6 +125,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
               
               isResizing={isResizing}
               setRowSize = {setRowSize}
+              setRowFocus = {setRowFocus}
               index = {rowIndex}
 
               focusedContent = {focusedContent} 

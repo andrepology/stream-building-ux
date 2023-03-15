@@ -365,7 +365,7 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
         <div className='relative min-w-full flex justify-between items-baseline'>
             <div className="shrink w-4/6 flex flex-row gap-2">
 
-                <div className='flex shrink w-/6 items-baseline gap-2'>
+                <div className='flex shrink w-5/6 items-baseline gap-2'>
                     <h2
                         style={{ fontFamily: "GT Pressura", fontWeight: "normal" }}
                         className={cn(
@@ -414,8 +414,6 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
 function Tweet({ tweet, openOverview, setOpenOverview, addEntityToStream, isFocused }) {
 
     const contextRef = useRef();
-
-    const [selectedEntity, setEntity] = useState(null);
 
     // format and set tweet content
     const [tweetContent, setContent] = useState(null);
@@ -550,7 +548,7 @@ const renderContent = (content, isFocused) => {
 }
 
 
-const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, setRowSize, index, sidebarTop = 256 }) => {
+const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, setRowFocus, setRowSize, index, sidebarTop = 256 }) => {
 
     const cardRef = useRef()
 
@@ -583,7 +581,10 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
             setFocus(focus)
 
         }
-    }, [bounds.top])
+
+        setRowFocus(index, focus)
+
+    }, [bounds.top, sidebarTop, bounds.bottom, isResizing])
 
     // measuring height of Card
     useEffect(() => {
@@ -597,9 +598,11 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
     const focusStyle = {
         opacity: focus > 0.55 ? 1 : 0.05 + focus,
         transform: focus > 0.55 ? `scale(${1 + 0.01 * focus})` : `scale(1.00)`,
-        padding: focus > 0.55 ? `${2 + 16 * focus}px ${12 + focus * 8}px 12px` : '12px 12px 16px',
+        padding: focus > 0.55 ? `${12 + 4 * focus}px ${12 + focus * 4}px 16px` : '12px 12px 16px',
         transition: `all ${ 0.2 * focus}s ease-in-out`
     }
+
+    const yMargin = 22
 
     const contentBody = renderContent(content, isFocused)
 
@@ -608,8 +611,8 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
             // absolutely position by Grid
             style={{
                 ...style, 
-                top: style.top + 22,
-                height: style.height - 22 
+                top: style.top + yMargin,
+                height: style.height - yMargin 
             }}
             ref = {focusRef}
             className="relative"
@@ -617,8 +620,8 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
 
         >
             <div
-                className="card relative flex flex-col gap-4 min-w-56"
-                // style={focusStyle}
+                className="card relative flex flex-col gap-4 min-w-24"
+                style={isResizing? {opacity: 0.1} : focusStyle}
                 ref={cardRef}
             >
 
