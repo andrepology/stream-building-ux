@@ -553,14 +553,15 @@ const renderContent = (content, isFocused) => {
 const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, setRowSize, index, sidebarTop = 256 }) => {
 
     const cardRef = useRef()
+
     const isFocused = content?.id === focusedContent
     const toggleFocus  = () => setFocusedContent(isFocused ? null : content.id)
 
-    // a scalar value [0,1] that represents how focused the Tweet is
+    // a scalar value [0,1] that represents how focused the Card is
     const [focus, setFocus] = useState(0)
 
-    // set the focus of the Tweet based on its position in the viewport
-    const [ref, bounds] = useMeasure({ scroll: true, debounce: { scroll: 20, resize: 20 } });
+    // set the focus of the Card based on its position in the viewport
+    const [focusRef, bounds] = useMeasure({ scroll: true, debounce: { scroll: 20, resize: 20 } });
     useEffect(() => {
         const distanceFromTop = bounds.top - sidebarTop + 16
 
@@ -584,13 +585,10 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
         }
     }, [bounds.top])
 
-
+    // measuring height of Card
     useEffect(() => {
         if (cardRef.current) {
             const cardHeight = cardRef.current.getBoundingClientRect().height
-
-            console.log("measuring", cardHeight)
-
             setRowSize(index, cardHeight)
         }
     }, [index, setRowSize, cardRef.current])
@@ -608,23 +606,23 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
     return (
         <div
             // absolutely position by Grid
-            style={style}
+            style={{
+                ...style, 
+                top: style.top + 32,
+                height: style.height - 32 
+            }}
+            ref = {focusRef}
             className="relative"
             onClick={toggleFocus}
 
         >
             <div
-                // ref to measure Content position
-                // style={isResizing? {opacity: 0.1} : focusStyle}
                 className="card relative flex flex-col gap-4 min-w-56"
+                // style={focusStyle}
                 ref={cardRef}
             >
 
-                <Tweet
-                    
-                    tweet={content.content}
-                    isFocused={isFocused}
-                />
+                {contentBody}
 
             </div>
 
