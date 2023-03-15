@@ -77,8 +77,6 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
   const getRowSize = index => rowSizes.current[index] + GUTTER || 200
 
-  
-
   const remainingWidth = window.innerWidth - offsetLeft
   const nCols = 1
   const nRows = Math.ceil(sampleContent.length / nCols)
@@ -128,8 +126,8 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
               setRowFocus = {setRowFocus}
               index = {rowIndex}
 
-              focusedContent = {focusedContent} 
-              setFocusedContent = {setFocusedContent}
+              //focusedContent = {focusedContent} 
+              // setFocusedContent = {setFocusedContent}
               sidebarTop = {sidebarTop}
             />
           )}
@@ -223,12 +221,11 @@ function App() {
   const [streamFilters, setFilters, toggleFilters] = useFilters();
 
   const [size, setSize] = useState({
-    width: 160,
+    width: 56,
     height: 224,
     x: 0,
     y: 0
   })
-
 
 
   // Tally Feed statistics on a change of currentStream or streamFilters 

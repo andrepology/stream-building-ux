@@ -649,7 +649,7 @@ const StreamSidebar = ({ stream, isResizing, currentStream, streamFilters, toggl
         if (bounds.height) {
             setRemainingHeight(window.innerHeight - bounds.height - 2 * bounds.top)
         }
-    }, [tabs, bounds])
+    }, [tabs, bounds.x, bounds.y])
 
 
     return (

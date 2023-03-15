@@ -363,9 +363,9 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
 
     return (
         <div className='relative min-w-full flex justify-between items-baseline'>
-            <div className="shrink w-4/6 flex flex-row gap-2">
+            <div className="shrink w-4/6 flex flex-col gap-2">
 
-                <div className='flex shrink w-5/6 items-baseline gap-2'>
+                <div className='flex shrink w-3/5 items-baseline gap-2'>
                     <h2
                         style={{ fontFamily: "GT Pressura", fontWeight: "normal" }}
                         className={cn(
@@ -411,9 +411,12 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
 
 
 
-function Tweet({ tweet, openOverview, setOpenOverview, addEntityToStream, isFocused }) {
+function Tweet({ tweet, openOverview, setOpenOverview, addEntityToStream }) {
 
     const contextRef = useRef();
+
+
+    const [isFocused, setFocused] = useState(false);
 
     // format and set tweet content
     const [tweetContent, setContent] = useState(null);
@@ -454,9 +457,8 @@ function Tweet({ tweet, openOverview, setOpenOverview, addEntityToStream, isFocu
     return (
         <div
             onClick={() => {
-                openOverview && setOpenOverview(false)
+                setFocused(!isFocused)
             }}
-            
             className="relative"
         >
 
@@ -581,10 +583,14 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
             setFocus(focus)
 
         }
+    
+    }, [bounds, sidebarTop, isResizing])
 
+    useEffect(() => {
+        // set Row Focus
         setRowFocus(index, focus)
 
-    }, [bounds.top, sidebarTop, bounds.bottom, isResizing])
+    }, [focus, index, setRowFocus])
 
     // measuring height of Card
     useEffect(() => {
@@ -592,7 +598,7 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
             const cardHeight = cardRef.current.getBoundingClientRect().height
             setRowSize(index, cardHeight)
         }
-    }, [index, setRowSize, cardRef.current])
+    }, [index, cardRef.current])
 
 
     const focusStyle = {
