@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, cloneElement, memo } from 'react';
+import { useState, useMemo,  useEffect, useRef, useCallback, cloneElement, memo } from 'react';
 import { usePopper } from 'react-popper';
 import TimeAgo from 'timeago-react';
 import cn from 'classnames';
@@ -549,13 +549,30 @@ const renderContent = (content, isFocused) => {
         }
 }
 
+const ContentSwitch = memo(({ content, focusedContent }) => {
+    // memoizes focus and content and renders content correctly
 
-const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, setRowFocus, setRowSize, index, sidebarTop = 256 }) => {
+    const isFocused = useCallback(() => {
+        return content?.id === focusedContent
+    }, [content, focusedContent])
+
+    const memoContent = useMemo(() => {
+        return content.content
+    }, [content.content])
+    
+
+    return (
+        <Tweet
+            tweet={memoContent}
+            isFocused={isFocused}
+        />
+    )
+})
+
+
+const Card = ({ children, style, setFocusedContent, focusedContent, isResizing, setRowFocus, setRowSize, index, sidebarTop = 256 }) => {
 
     const cardRef = useRef()
-
-    const isFocused = content?.id === focusedContent
-    const toggleFocus  = () => setFocusedContent(isFocused ? null : content.id)
 
     // a scalar value [0,1] that represents how focused the Card is
     const [focus, setFocus] = useState(0)
@@ -610,8 +627,6 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
 
     const yMargin = 22
 
-    const contentBody = renderContent(content, isFocused)
-
     return (
         <div
             // absolutely position by Grid
@@ -622,17 +637,13 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
             }}
             ref = {focusRef}
             className="relative"
-            onClick={toggleFocus}
-
         >
             <div
                 className="card relative flex flex-col gap-4 min-w-24"
-                style={isResizing? {opacity: 0.1} : focusStyle}
+                // style={isResizing? {opacity: 0.1} : focusStyle}
                 ref={cardRef}
             >
-
-                {contentBody}
-
+                {children}
             </div>
 
         </div>
@@ -644,7 +655,7 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
 
 
 
-export { Account, Card }
+export { Account, Card, ContentSwitch }
 export default Tweet
 
 
