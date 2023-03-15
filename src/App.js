@@ -18,7 +18,7 @@ import './App.css';
 
 import tftTweets from './components/sample';
 
-const GUTTER = 32
+const GUTTER = 22
 
 const innerElementType = forwardRef(({ style, ...rest }, ref) => (
   <div
@@ -46,13 +46,15 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
       }
     })
 
-    // duplicate tweets 100 times
-  
-    
+    // make copies of tweets to make manyTweets
+    const manyTweets = []
+    for (let i = 0; i < 10000; i++) {
+      manyTweets.push(...tweets)
+    }
 
+    setSampleContent(manyTweets)
 
-    setSampleContent(tweets)
-    // console.log(tftTweets)
+    console.log(manyTweets.length)
   }, [])
 
 
@@ -63,8 +65,6 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
   const rowSizes = useRef({})
 
   const setRowSize =(index, size) => {
-
-    console.log("setting", index, size)
 
     rowSizes.current = {...rowSizes.current, [index]: size}
     gridRef.current.resetAfterRowIndex(index)

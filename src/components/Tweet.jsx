@@ -595,9 +595,9 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
 
 
     const focusStyle = {
-        opacity: focus > 0.55 ? 1 : 0.1 + focus,
+        opacity: focus > 0.55 ? 1 : 0.05 + focus,
         transform: focus > 0.55 ? `scale(${1 + 0.01 * focus})` : `scale(1.00)`,
-        // padding: focus > 0.55 ? `${2 + 16 * focus}px ${12 + focus * 8}px 12px` : '12px 12px 16px',
+        padding: focus > 0.55 ? `${2 + 16 * focus}px ${12 + focus * 8}px 12px` : '12px 12px 16px',
         transition: `all ${ 0.2 * focus}s ease-in-out`
     }
 
@@ -608,8 +608,8 @@ const Card = ({ content, style, setFocusedContent, focusedContent, isResizing, s
             // absolutely position by Grid
             style={{
                 ...style, 
-                top: style.top + 32,
-                height: style.height - 32 
+                top: style.top + 22,
+                height: style.height - 22 
             }}
             ref = {focusRef}
             className="relative"
