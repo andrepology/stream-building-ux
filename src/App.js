@@ -46,15 +46,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
       }
     })
 
-    // make copies of tweets to make manyTweets
-    const manyTweets = []
-    for (let i = 0; i < 10000; i++) {
-      manyTweets.push(...tweets)
-    }
-
-    setSampleContent(manyTweets)
-
-    console.log(manyTweets.length)
+    setSampleContent(tweets)
   }, [])
 
 
@@ -68,7 +60,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
   const setRowSize =(index, size) => {
 
     rowSizes.current = {...rowSizes.current, [index]: size}
-    gridRef.current.resetAfterRowIndex(index)
+    gridRef.current.resetAfterRowIndex(0)
   }
 
   const setRowFocus = (index, focus) => {
@@ -118,6 +110,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
             <Card 
 
               content = {content} 
+              
               
               style = {style} 
               

@@ -608,7 +608,7 @@ const Card = ({ children, style, setFocusedContent, focusedContent, isResizing, 
             const cardHeight = cardRef.current.getBoundingClientRect().height
             setRowSize(index, cardHeight)
         }
-    }, [index, cardRef.current])
+    }, [index, setRowSize, cardRef.current])
 
 
     const focusStyle = {
