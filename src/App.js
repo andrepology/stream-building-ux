@@ -10,7 +10,7 @@ import debounce from 'lodash.debounce';
 import Masks from './assets/Masks.png';
 
 import { StreamSidebar } from './components/Sidebar';
-import Tweet, { Account, Card } from './components/Tweet';
+import Tweet, { Account, Card, ContentSwitch } from './components/Tweet';
 
 import { VariableSizeGrid } from 'react-window';
 
@@ -129,7 +129,9 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
               //focusedContent = {focusedContent} 
               // setFocusedContent = {setFocusedContent}
               sidebarTop = {sidebarTop}
-            />
+            >
+              <ContentSwitch content={content} focusedContent = {focusedContent} />
+            </Card>
           )}
         }    
       </VariableSizeGrid>

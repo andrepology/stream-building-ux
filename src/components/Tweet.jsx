@@ -1,4 +1,4 @@
-import { useState, useMemo,  useEffect, useRef, useCallback, cloneElement, memo } from 'react';
+import { useState, useEffect, useRef, useCallback, cloneElement, memo } from 'react';
 import { usePopper } from 'react-popper';
 import TimeAgo from 'timeago-react';
 import cn from 'classnames';
@@ -549,25 +549,18 @@ const renderContent = (content, isFocused) => {
         }
 }
 
-const ContentSwitch = memo(({ content, focusedContent }) => {
-    // memoizes focus and content and renders content correctly
+const ContentSwitch = ({ content, focusedContent }) => {
 
-    const isFocused = useCallback(() => {
-        return content?.id === focusedContent
-    }, [content, focusedContent])
-
-    const memoContent = useMemo(() => {
-        return content.content
-    }, [content.content])
-    
+    const isFocused = content?.id === focusedContent
 
     return (
         <Tweet
-            tweet={memoContent}
+            tweet={content.content}
             isFocused={isFocused}
         />
     )
-})
+}
+
 
 
 const Card = ({ children, style, setFocusedContent, focusedContent, isResizing, setRowFocus, setRowSize, index, sidebarTop = 256 }) => {
@@ -643,7 +636,9 @@ const Card = ({ children, style, setFocusedContent, focusedContent, isResizing, 
                 // style={isResizing? {opacity: 0.1} : focusStyle}
                 ref={cardRef}
             >
+
                 {children}
+
             </div>
 
         </div>
