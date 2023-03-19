@@ -60,12 +60,22 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
   const setRowSize =(index, size) => {
 
     rowSizes.current = {...rowSizes.current, [index]: size}
-    gridRef.current.resetAfterRowIndex(0)
+    gridRef.current.resetAfterRowIndex(0, false)
   }
 
   const setRowFocus = (index, focus) => {
     rowFocus.current = {...rowFocus.current, [index]: focus}
   }
+
+  const [startedScoll, setStartedScroll] = useState(false)
+  
+  const onScroll = () => {
+    if (!startedScoll) {
+      setStartedScroll(true)
+    }
+  }
+
+  const gridTop = startedScoll? 0  : sidebarTop - GUTTER
 
   const getRowSize = index => rowSizes.current[index] + GUTTER || 200
 
@@ -77,7 +87,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
   return (
     <div 
       className='z-10 pl-6'
-      style={{position: 'relative', overflow: 'visible', left: offsetLeft, top: 0}}
+      style={{position: 'relative', overflow: 'visible', left: offsetLeft, top: gridTop}}
     >
       <VariableSizeGrid
 
@@ -93,7 +103,11 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
         rowCount = {nRows}
         rowHeight = {getRowSize}
 
+        onScroll = {(scrollTop) => }
+
         innerElementType = {innerElementType}
+
+        overscanRowCount = {5}
 
         itemData = {
           sampleContent}
@@ -122,9 +136,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
               //focusedContent = {focusedContent} 
               // setFocusedContent = {setFocusedContent}
               sidebarTop = {sidebarTop}
-            >
-              <ContentSwitch content={content} focusedContent = {focusedContent} />
-            </Card>
+            />
           )}
         }    
       </VariableSizeGrid>
