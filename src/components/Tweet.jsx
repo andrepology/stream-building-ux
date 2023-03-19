@@ -6,6 +6,7 @@ import { animated, useSpring, Transition } from '@react-spring/web'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import useMeasure from 'react-use-measure';
 
+import { areEqual } from 'react-window';
 
 
 import { GrFormClose } from 'react-icons/gr';
@@ -363,17 +364,17 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
 
     return (
         <div className='relative min-w-full flex justify-between items-baseline'>
-            <div className="shrink w-4/6 flex flex-col gap-2">
+            <div className="shrink w-4/6 flex gap-4">
 
                 <div className='flex shrink w-3/5 items-baseline gap-2'>
-                    <h2
+                    <h3
                         style={{ fontFamily: "GT Pressura", fontWeight: "normal" }}
                         className={cn(
-                            'hover:underline cursor-pointer truncate shrink text-gray-100 ',
+                            'hover:underline cursor-pointer text-base truncate shrink text-gray-100 ',
                         )}
                     >
                         {content?.author?.name}
-                    </h2>
+                    </h3>
                     {/* {tweet?.author?.verified && (
                                         <span className='block peer pl-0.5 h-5'>
                                             <VerifiedIcon className='h-5 w-5 fill-sky-500 dark:fill-current' />
@@ -465,7 +466,7 @@ function Tweet({ tweet, openOverview, setOpenOverview, addEntityToStream }) {
             
             <article
                 className={cn(
-                    'flex flex-col gap-4',
+                    'flex flex-col gap-2',
                 )}
             >
                 {/* Tweet ContentHeader (Author, @handle, timestamp) and  */}
@@ -563,7 +564,7 @@ const ContentSwitch = ({ content, focusedContent }) => {
 
 
 
-const Card = ({ children, style, setFocusedContent, focusedContent, isResizing, setRowFocus, setRowSize, index, sidebarTop = 256 }) => {
+const Card = ({ content, style, index, isResizing, setRowFocus, setRowSize, sidebarTop = 256 }) => {
 
     const cardRef = useRef()
 
@@ -623,22 +624,24 @@ const Card = ({ children, style, setFocusedContent, focusedContent, isResizing, 
     return (
         <div
             // absolutely position by Grid
+            key = {content.id}
             style={{
                 ...style, 
                 top: style.top + yMargin,
-                height: style.height - yMargin 
+                height: style.height - yMargin,
+                transition: `top 0.5s ease-in-out`
             }}
             ref = {focusRef}
-            className="relative"
+            // className="relative"
         >
             <div
-                className="card relative flex flex-col gap-4 min-w-24"
+                className="card flex flex-col gap-2 min-w-24"
                 // style={isResizing? {opacity: 0.1} : focusStyle}
                 ref={cardRef}
             >
-
-                {children}
-
+                <Tweet 
+                    tweet={content.content}
+                />
             </div>
 
         </div>

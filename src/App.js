@@ -103,7 +103,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
         rowCount = {nRows}
         rowHeight = {getRowSize}
 
-        onScroll = {(scrollTop) => }
+        // onScroll = {(scrollTop) => }
 
         innerElementType = {innerElementType}
 
