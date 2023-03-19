@@ -34,6 +34,9 @@ const innerElementType = forwardRef(({ style, ...rest }, ref) => (
 const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
   // accepts children and returns a list of content in a chosen order
+  // manages their focus
+
+
   const [sampleContent , setSampleContent] = useState([])
   // load tftTweets into sample Content
   useEffect(() => {
@@ -67,11 +70,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
     rowFocus.current = {...rowFocus.current, [index]: focus}
   }
 
-  const scrollToCard = (index) => {
-    gridRef.current.scrollToItem({rowIndex: index, columnIndex: 0, align: 'start'})
-  }
-
-
+  
   const getRowSize = index => rowSizes.current[index] + GUTTER || 200
 
   const remainingWidth = window.innerWidth - offsetLeft
@@ -126,11 +125,11 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
               setRowFocus = {setRowFocus}
 
               index = {rowIndex}
-              scrollToCard = {scrollToCard}
 
 
-              // focusedContent = {focusedContent} 
-              // setFocusedContent = {setFocusedContent}
+              focusedContent = {focusedContent} 
+              setFocusedContent = {setFocusedContent}
+              
               sidebarTop = {sidebarTop}
             />
           )}
@@ -524,13 +523,23 @@ function App() {
 
         onResizeStart={
           () => {
-            setIsResizing(true)
+            debounce(
+              () => {
+                setIsResizing(true)
+              },
+              3000
+            )
           }
         }
 
         onResizeStop = {
           () => {
-            setIsResizing(false)
+            debounce(
+              () => {
+                setIsResizing(false)
+              },
+              3000
+            )
           }
         }
 

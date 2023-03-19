@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, cloneElement, memo } from 'react';
+import { useState, useEffect, useRef, useCallback, cloneElement, memo, useLayoutEffect } from 'react';
 import { usePopper } from 'react-popper';
 import TimeAgo from 'timeago-react';
 import cn from 'classnames';
@@ -368,9 +368,8 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
 
                 <div className='flex shrink w-3/5 items-baseline gap-2'>
                     <h3
-                        style={{ fontFamily: "GT Pressura", fontWeight: "normal" }}
                         className={cn(
-                            'hover:underline cursor-pointer text-base truncate shrink text-gray-100 ',
+                            'hover:underline font-display cursor-pointer text-base truncate shrink text-gray-100 ',
                         )}
                     >
                         {content?.author?.name}
@@ -415,7 +414,6 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
 function Tweet({ tweet, openOverview, setOpenOverview, addEntityToStream }) {
 
     const contextRef = useRef();
-
 
     const [isFocused, setFocused] = useState(false);
 
@@ -564,7 +562,7 @@ const ContentSwitch = ({ content, focusedContent }) => {
 
 
 
-const Card = ({ content, style, index, isResizing, setRowFocus, setRowSize, sidebarTop = 256 }) => {
+const Card = ({ content, style, index, isResizing,  setRowFocus, setRowSize, sidebarTop = 256 }) => {
 
     const cardRef = useRef()
 
@@ -604,25 +602,33 @@ const Card = ({ content, style, index, isResizing, setRowFocus, setRowSize, side
     }, [focus, index, setRowFocus])
 
     // measuring height of Card
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (cardRef.current) {
             const cardHeight = cardRef.current.getBoundingClientRect().height
             setRowSize(index, cardHeight)
         }
-    }, [index, setRowSize, cardRef.current])
+    }, [index, setRowSize, focus])
+
 
 
     const focusStyle = {
         opacity: focus > 0.55 ? 1 : 0.05 + focus,
         transform: focus > 0.55 ? `scale(${1 + 0.01 * focus})` : `scale(1.00)`,
         padding: focus > 0.55 ? `${12 + 4 * focus}px ${12 + focus * 4}px 16px` : '12px 12px 16px',
-        transition: `all ${ 0.2 * focus}s ease-in-out`
+        transition: `all ${ 0.1 * focus}s ease-in-out`
     }
 
     const yMargin = 22
 
+    const forceFocus = () => {
+        // set Focus to 1 and scroll to the top of the sidebar
+        setFocus(1)
+        window.scrollTo({top: sidebarTop, behavior: 'smooth'})
+    }
+
     return (
         <div
+
             // absolutely position by Grid
             key = {content.id}
             style={{
@@ -636,7 +642,7 @@ const Card = ({ content, style, index, isResizing, setRowFocus, setRowSize, side
         >
             <div
                 className="card flex flex-col gap-2 min-w-24"
-                // style={isResizing? {opacity: 0.1} : focusStyle}
+                style={isResizing? {opacity: 0.1} : focusStyle}
                 ref={cardRef}
             >
                 <Tweet 
