@@ -534,7 +534,7 @@ function App() {
       />
       
 
-      <BackdropMemo currentStream={currentStream.name} sidebarTop = {size.height - 64} />
+      <StreamBackdrop currentStream={currentStream.name} sidebarTop = {size.height - 64} />
 
     </div>
 
@@ -553,16 +553,16 @@ const StreamBackdrop = ({ currentStream, sidebarTop }) => {
   return (
     <>
       <div
-        className='absolute tracking-tighter text-gray-500/40 font-semibold z-0'
+        className='absolute tracking-tighter text-gray-500/60 font-semibold z-0'
         style = {{
           top: sidebarTop,
+          left: '400px',
           fontSize: '5rem',
-          // disable cursor selection
           userSelect: 'none',
-          z: '-1'
+          zIndex: '1'
         }}
       >
-        {currentStream || 'trails.social'}
+        {'trails.social'}
       </div>
       <div
         style={bgImage}

@@ -174,7 +174,7 @@ const StreamHeader = ({ streamName, streamDescription, isResizing, isOpen }) => 
             // onClick={() => onClick()}
             className={
                 cn(
-                    "relative bg-white/35 hover:bg-white/35 rounded-md px-4.5 pt-3 pb-2.5",
+                    "relative select-none bg-white/35 hover:bg-white/35 rounded-md px-4.5 pt-3 pb-2.5",
                     "flex flex-col justify-between",
                     // { "text-xl text-gray-100 leading-8 m-0.5 rounded-xl bg-white/35 hover:bg-white/35": isFocused },
                     { "text-md font-medium text-gray-100 leading-6 border border-white/10": true }

@@ -465,7 +465,7 @@ const Card = forwardRef((props, ref) => {
     const tweet = content.content
 
     const openContext = isFocused && !isResizing
-    const offsetLeft = style.width + style.left
+    const offsetLeft = bounds.width + 22
 
 
     return (
@@ -510,6 +510,7 @@ const Card = forwardRef((props, ref) => {
 
 function ContextBuilder(offsetLeft, tweet, isFocused) {
 
+    
     const contextWidth = Math.min(window.innerWidth - offsetLeft - 32, 256)
 
     return (
