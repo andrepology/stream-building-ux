@@ -127,7 +127,7 @@ const Account = ({ entity, currentStream, addEntityToStream }) => {
 
 }
 
-const ContentPreview = ({ update, setOpenOverview, openOverview, entity, setEntity }) => {
+const ContentLink = ({ update, setOpenOverview, openOverview, entity, setEntity }) => {
 
     const { entity_group, word } = entity
 
@@ -574,6 +574,8 @@ const Card = forwardRef((props, ref) => {
     const isFocused = distFromSidebar > 0 && focus > 0.75
     const tweet = content.content
 
+    const openContext = isFocused && !isResizing
+
     return (
         <div
             key = {content.id}
@@ -597,6 +599,29 @@ const Card = forwardRef((props, ref) => {
             >
                 <Tweet tweet={tweet} isFocused={isFocused} />
             </div>
+
+            {/* Context Building */}
+            {openContext && tweet.entities?.length > 0 && (
+                <div className='absolute flex flex-col gap-3 w-56 ' style={{ top: 16, left: style.width + style.left }}>
+                    <p className='caption leading-3 text-gray-300/90 pl-2 pb-1.5 border-b border-gray-500'>Related Content</p>
+                    <div className='flex flex-col gap-6'>
+                        <div className='flex max-w-20 flex-wrap gap-2.5'>
+                            {tweet.entities?.map((entity, i) => {
+                                return (
+                                    <ContentLink
+                                        key={i}
+                                        isFocused={isFocused}
+                                        entity={entity}
+                                    />
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
+
             
 
         </div>
@@ -623,7 +648,7 @@ export default Tweet
 //             <div className='flex max-w-20 flex-wrap gap-2.5'>
 //                 {tweet.entities?.map((entity, i) => {
 //                     return (
-//                         <ContentPreview
+//                         <ContentLink
 //                             key={i}
 //                             isFocused={isFocused}
 //                             update={update}
