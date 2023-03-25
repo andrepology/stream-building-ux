@@ -477,7 +477,30 @@ const MetricsFooter = ({ tweet, isFocused }) => {
 
 const Tweet = forwardRef(({ tweet, isFocused }, ref) => {
 
-    
+    return (
+        <div
+            ref={ref}
+        >
+
+            {/* Tweet ContentHeader (Author, @handle, timestamp)  */}
+            <ContentHeader content={tweet} contentType={tweet} isFocused={isFocused} />
+
+
+            {/* Content */}
+            <p
+                data-cy='text'
+                dangerouslySetInnerHTML={{ __html: tweet.html ?? '' }}
+                className={cn("text-gray-100 font-normal leading-5 pr-12",
+                    { 'h-12 w-full': !tweet.html },
+                )}
+            />
+
+            {/* Interaction Metrics */}
+            <MetricsFooter isFocused={isFocused} tweet={tweet} />
+        </div>
+    )
+
+
     
 })
 
@@ -571,22 +594,7 @@ const Card = forwardRef((props, ref) => {
                 style={isResizing? {opacity: 0.1} : focusStyle}
                 ref={cardRef}
             >
-
-                    {/* Tweet ContentHeader (Author, @handle, timestamp)  */}
-                    <ContentHeader content={tweet} contentType={tweet} isFocused={isFocused} />
-
-
-                    {/* Content */}
-                    <p
-                        data-cy='text'
-                        dangerouslySetInnerHTML={{ __html: tweet.html ?? '' }}
-                        className={cn("text-gray-100 font-normal leading-5 pr-12",
-                            { 'h-12 w-full': !tweet.html },
-                        )}
-                    />
-
-                    {/* Interaction Metrics */}
-                    <MetricsFooter isFocused={isFocused} tweet={tweet} />
+                <Tweet tweet={tweet} isFocused={isFocused} />
             </div>
 
         </div>
