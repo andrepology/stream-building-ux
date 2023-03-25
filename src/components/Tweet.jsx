@@ -402,7 +402,7 @@ const Tweet = forwardRef(({ tweet, isFocused }, ref) => {
 
 const Card = forwardRef((props, ref) => {
 
-    const { content, isScrolling, style, index, isResizing, setRowSize, gridRef, sidebarTop = 256 } = props
+    const { content, style, index, isResizing, setRowSize, gridRef, sidebarTop = 256 } = props
 
     const cardRef = useRef()
 
@@ -419,7 +419,7 @@ const Card = forwardRef((props, ref) => {
         if (cardRef.current) {
 
             const cardHeight = cardRef.current.getBoundingClientRect().height
-            setRowSize(index, cardHeight + 12*isFocused)
+            setRowSize(index, cardHeight + 16*isFocused)
 
             gridRef?.current?.resetAfterRowIndex(index, false)
 
@@ -454,7 +454,7 @@ const Card = forwardRef((props, ref) => {
         opacity: focus > focusThreshold ? 1 : 0.1 + focus * 0.5,
         transform: focus > focusThreshold ? `scale(${1 + 0.05 * focus})` : `scale(1.00)`,
         padding: '12px 12px 16px',
-        transition: `all ${0.3 * focus}s ease-in-out`,
+        transition: `all ${0.2 * focus}s ease-in-out`,
         boxShadow: focus > focusThreshold ? `0px ${focus*42}px 42px -4px rgba(77,77,77,0.15)` : 'none',
         
     }
