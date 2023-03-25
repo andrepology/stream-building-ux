@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, memo, useMemo, forwardRef, useRef } from 'react';
 import cn from 'classnames';
 import { useSpring, animated } from '@react-spring/web'
-import axios from 'axios';
+
+import { queryDB } from './api/vectorRetrieval';
 
 import { Rnd } from 'react-rnd';
 
@@ -35,6 +36,7 @@ const Grab = ({ isResizing} ) => {
 
 
 
+
 const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
   // accepts children and returns a list of content in a chosen order
@@ -57,8 +59,19 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
 
   const [sampleContent , setSampleContent] = useState([])
+
+  
   // load tftTweets into sample Content
   useEffect(() => {
+
+    const fetchMemory = async () => {
+      const tweetIDs = await queryDB().then(tweets => tweets.map(t => t.id))
+    
+      return tweetIDs
+    }
+
+    const ids  = fetchMemory()
+
 
     const tweets = tftTweets.map(tweet => {
       return {
