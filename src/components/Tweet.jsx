@@ -433,7 +433,7 @@ const MetricsFooter = ({ tweet, isFocused }) => {
             { 'opacity-100': isFocused }
         )}>
             <div
-                className='flex gap-3 pt-5 items-center mb-1.5 text-xs text-gray-500'
+                className='flex gap-3 items-center text-xs text-gray-500'
             >
 
                 <Metric
@@ -481,7 +481,7 @@ const Tweet = forwardRef(({ tweet, isFocused }, ref) => {
     return (
         <div
             ref={ref}
-            className = "flex flex-col gap-2"
+            className = "flex flex-col gap-4"
         >
 
             {/* ContentHeader (Author, @handle, timestamp)  */}
@@ -553,11 +553,6 @@ const Card = forwardRef((props, ref) => {
     }, [bounds, sidebarTop, isResizing])
 
 
-    // measuring height of Card
-    useLayoutEffect(() => {
-        
-    }, [index, setRowSize, focus, bounds.height, isScrolling])
-
 
     const focusThreshold = 0.80
     const focusStyle = {
@@ -592,7 +587,6 @@ const Card = forwardRef((props, ref) => {
         >
             <div
                 className={cn("card min-w-24",
-                    { 'shadow-focus': isFocused },
                 )}
                 style={isResizing? {opacity: 0.1} : focusStyle}
                 ref={cardRef}
