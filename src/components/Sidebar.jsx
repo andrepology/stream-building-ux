@@ -145,7 +145,7 @@ const useWidth = () => {
 }
 
 
-const StreamHeader = ({ streamName, streamDescription, isResizing, onClick = () => console.log("Clicked"), isFocused }) => {
+const StreamHeader = ({ streamName, streamDescription, isResizing, isOpen }) => {
 
     // Simply renders the Heading and Stream metadata
     // Can register onClick events for backwards nav
@@ -163,7 +163,7 @@ const StreamHeader = ({ streamName, streamDescription, isResizing, onClick = () 
     const font = { fontFamily: "GT Pressura" }
 
     const hoverStyle = {
-        transform: hover || isResizing ? "translateX(-4px) translateY(-4px)" : "translateX(0px)",
+        transform: !isOpen && (hover || isResizing) ? "translateX(-4px) translateY(-4px)" : "translateX(0px)",
         transition: "transform 0.2s ease-in-out",
     }
 
@@ -171,20 +171,20 @@ const StreamHeader = ({ streamName, streamDescription, isResizing, onClick = () 
         <div
             ref={ref}
             style={hoverStyle}
-            onClick={() => onClick()}
+            // onClick={() => onClick()}
             className={
                 cn(
                     "relative bg-white/35 hover:bg-white/35 rounded-md px-4.5 pt-3 pb-2.5",
                     "flex flex-col justify-between",
-                    { "text-xl text-gray-100 leading-8 m-0.5 rounded-xl bg-white/35 hover:bg-white/35": isFocused },
-                    { "text-md font-medium text-gray-100 leading-6 border border-white/10": !isFocused }
+                    // { "text-xl text-gray-100 leading-8 m-0.5 rounded-xl bg-white/35 hover:bg-white/35": isFocused },
+                    { "text-md font-medium text-gray-100 leading-6 border border-white/10": true }
                 )
             }
-        >
-            <div className="flex justify-between items-baseline cursor-pointer tracking-tight">
+            >
+            <div className="flex justify-between items-baseline tracking-tight">
                 <div
                     className="z-10 w-4/5 text-base"
-                    style={isFocused ? font : {}}
+                    // style={isFocused ? font : {}}
                     onMouseEnter={() => setHover(true)}
                     onMouseLeave={() => setHover(false)}
                 >
@@ -200,14 +200,14 @@ const StreamHeader = ({ streamName, streamDescription, isResizing, onClick = () 
             </div>
 
             <div className="text-gray-200 tracking-normal leading-4 font-normal text-sm">
-                {isFocused && streamDescription}
+                {false && streamDescription}
             </div>
 
             <StreamCover
                 className={cn(
                     "absolute rounded-md z-0 w-full transition-all duration-300 h-full top-0 left-0",
-                    { "opacity-100": isFocused },
-                    { "opacity-0": !isFocused }
+                    { "opacity-100": false },
+                    { "opacity-0": true }
                 )}
             />
         </div >
@@ -644,7 +644,7 @@ const StreamSidebar = ({ stream, isResizing, currentStream, streamFilters, toggl
 
     const [ref, bounds] = useMeasure()
     const [remainingHeight, setRemainingHeight] = useState(null)
-    useEffect(() => {
+    useLayoutEffect(() => {
         // calculate remaining height if bounds change
         if (bounds.height) {
             setRemainingHeight(window.innerHeight - bounds.height - 2 * bounds.top)
@@ -666,9 +666,8 @@ const StreamSidebar = ({ stream, isResizing, currentStream, streamFilters, toggl
         >
 
             <StreamHeader
-                isFocused={isFocused}
+                isOpen = {isOpen}
                 isResizing={isResizing}
-                onClick={toggleFocus}
                 streamName={stream.name}
                 streamDescription={currentStream.description}
             />
@@ -706,7 +705,7 @@ const StreamSidebar = ({ stream, isResizing, currentStream, streamFilters, toggl
                         "opacity-0": isResizing,
                     },
                 )}
-                imageOpacity = {isResizing ? 0 : 0.5}
+                imageOpacity = {isResizing ? 0 : isOpen ? 0.2 : 0.7}
             />
         </div>
     )

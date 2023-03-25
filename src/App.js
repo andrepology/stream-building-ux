@@ -140,9 +140,6 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
               setGUTTER = {setGUTTER}
 
 
-              // onClick, set focusedContent
-              // onClick = {() => setFocusedContent([...focusedContent, String(index)])}
-              
               sidebarTop = {sidebarTop}
             />
           )}
@@ -534,30 +531,13 @@ function App() {
 
         disableDragging
 
-        onResizeStart={
-          () => {
-            debounce(
-              () => {
-                setIsResizing(true)
-              },
-              3000
-            )
-          }
-        }
+        onResizeStart={() => setIsResizing(true)}
 
-        onResizeStop = {
-          () => {
-            debounce(
-              () => {
-                setIsResizing(false)
-              },
-              3000
-            )
-          }
-        }
+        onResizeStop = {() => setIsResizing(false)}
 
         onResize={
           (e, dir, ref, delta, pos) => {
+
             setSize(
               {
                 width: parseInt(ref.style.width),
