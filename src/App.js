@@ -20,6 +20,19 @@ import tftTweets from './components/sample';
 
 
 
+const Grab = ({ isResizing} ) => {
+   
+  return (
+    <div className="bg-gray-400/20 hover:bg-gray-600/95 absolute top-6 right-4 w-6 h-6 rounded-full cursor-grab">
+      <div className={cn(
+          "w-3 h-3 hover:w-5 hover:h-5 rounded-full bg-white/55 m-auto hover:mt-0.5 mt-1.5",
+          
+        )}/>
+    </div>
+  )
+
+}
+
 
 
 const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
@@ -63,7 +76,6 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
   // Dynamically sizing rows
   const gridRef = useRef()
   const rowSizes = useRef({})
-  const rowFocus = useRef({})
 
   const setRowSize =(index, size) => {
 
@@ -71,15 +83,13 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
     gridRef.current.resetAfterRowIndex(0, false)
   }
 
-  const setRowFocus = (index, focus) => {
-    rowFocus.current = {...rowFocus.current, [index]: focus}
-  }
-
   
   const getRowSize = index => rowSizes.current[index] + GUTTER || 200
-
-  const remainingWidth = window.innerWidth - offsetLeft
+  
   const nCols = 1
+  const remainingWidth = window.innerWidth - offsetLeft
+  const colWidth = Math.min(480, remainingWidth/nCols)
+
   const nRows = Math.ceil(sampleContent.length / nCols)
 
   console.log("feed rerendered")
@@ -93,12 +103,12 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
         ref = {gridRef}
 
-        width = {window.innerWidth}
+        width = {remainingWidth}
         height = {window.innerHeight}
         style={{overflowX: 'visible', overflowY: 'scroll', }}
 
-        columnCount = {1}
-        columnWidth = {() => Math.min(480, remainingWidth)}
+        columnCount = {nCols}
+        columnWidth = {() => colWidth}
 
         rowCount = {nRows}
         rowHeight = {getRowSize}
@@ -131,15 +141,12 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
               
               isResizing={isResizing}
               setRowSize = {setRowSize}
-              setRowFocus = {setRowFocus}
+              getRowSize = {getRowSize}
+              
 
               gridRef = {gridRef}
 
               index = {rowIndex}
-
-              setGUTTER = {setGUTTER}
-
-
               sidebarTop = {sidebarTop}
             />
           )}
@@ -400,52 +407,6 @@ function App() {
 
   }
 
-  const createTweetElements = (tweets) => {
-
-    const elems = tweets.map((tweet) => {
-
-      const inFocus = focusedContent === tweet.id;
-
-
-      return (
-        <Tweet
-          key={tweet.id}
-          tweet={tweet}
-
-          sidebarTop={size.height}
-
-
-          isFocused={inFocus}
-          setFocusedContent={setFocusedContent}
-
-          addEntityToStream={addEntityToStream}
-          currentStream={currentStream}
-
-          openOverview={openOverview}
-          setOpenOverview={setOpenOverview}
-        />
-      )
-    })
-
-    return elems
-  }
-
-  const createAccountElements = (accounts) => {
-
-    const elems = accounts.map((account, i) => {
-      return (
-        <Account
-          key={i}
-          entity={account}
-          currentStream={currentStream}
-          addEntityToStream={addEntityToStream}
-        />
-      )
-    })
-
-    return elems
-  }
-
   // TODO: sorting and randomising order of Feed
 
   // can probably not use useEffect and have a single memoized function that returns the filtered tweets
@@ -514,7 +475,7 @@ function App() {
 
         resizeHandleComponent={
           {
-            bottomRight: <div className="bg-white/55 hover:bg-white/95 absolute top-6 right-4 w-6 h-6 rounded-full cursor-grab" ></div>
+            bottomRight: <Grab isResizing={isResizing} />
           }
         }
 
