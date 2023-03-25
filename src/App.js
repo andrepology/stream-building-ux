@@ -41,6 +41,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
   // manages their focus
 
   const [GUTTER, setGUTTER] = useState(22)
+  const scrollDelta = useRef(0)
 
   const innerElementType = forwardRef(({ style, ...rest }, ref) => (
     <div
@@ -144,7 +145,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
               getRowSize = {getRowSize}
               
 
-              gridRef = {gridRef}
+              ref = {gridRef}
 
               index = {rowIndex}
               sidebarTop = {sidebarTop}
@@ -572,6 +573,5 @@ const StreamBackdrop = ({ currentStream, sidebarTop, sidebarLeft }) => {
   )
 }
 
-const BackdropMemo = memo(StreamBackdrop, (prevProps, nextProps) => prevProps.currentStream == nextProps.currentStream)
 
 export default App;
