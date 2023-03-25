@@ -534,7 +534,7 @@ function App() {
       />
       
 
-      <StreamBackdrop currentStream={currentStream.name} sidebarTop = {size.height - 64} />
+      <StreamBackdrop currentStream={currentStream.name} sidebarLeft = {size.width} sidebarTop = {size.height} />
 
     </div>
 
@@ -542,7 +542,7 @@ function App() {
   );
 }
 
-const StreamBackdrop = ({ currentStream, sidebarTop }) => {
+const StreamBackdrop = ({ currentStream, sidebarTop, sidebarLeft }) => {
   
   const bgImage = {
     backgroundImage: `url(${Masks})`,
@@ -555,8 +555,8 @@ const StreamBackdrop = ({ currentStream, sidebarTop }) => {
       <div
         className='absolute tracking-tighter text-gray-500/60 font-semibold z-0'
         style = {{
-          top: sidebarTop,
-          left: '400px',
+          top: sidebarTop - 64,
+          left: sidebarLeft + 156,
           fontSize: '5rem',
           userSelect: 'none',
           zIndex: '1'
