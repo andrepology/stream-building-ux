@@ -53,7 +53,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
   }, [])
 
 
-  const [focusedContent, setFocusedContent] = useState("0.0");
+  const [focusedContent, setFocusedContent] = useState([]);
   
   // Dynamically sizing rows
   const gridRef = useRef()
@@ -77,6 +77,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
   const nCols = 1
   const nRows = Math.ceil(sampleContent.length / nCols)
 
+  console.log("feed rerendered")
   
   return (
     <div 
@@ -127,8 +128,8 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
               index = {rowIndex}
 
 
-              focusedContent = {focusedContent} 
-              setFocusedContent = {setFocusedContent}
+              // onClick, set focusedContent
+              onClick = {() => setFocusedContent([...focusedContent, String(index)])}
               
               sidebarTop = {sidebarTop}
             />
