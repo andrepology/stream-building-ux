@@ -181,7 +181,7 @@ const StreamHeader = ({ streamName, streamDescription, isResizing, isOpen }) => 
                 )
             }
             >
-            <div className="flex justify-between items-baseline tracking-tight">
+            <div className="flex relative justify-between items-baseline tracking-tight">
                 <div
                     className="z-10 w-4/5 text-base"
                     // style={isFocused ? font : {}}
@@ -210,6 +210,11 @@ const StreamHeader = ({ streamName, streamDescription, isResizing, isOpen }) => 
                     { "opacity-0": true }
                 )}
             />
+
+            <textarea 
+                className="absolute w-full h-20 text-lg py-8 px-4 bottom-12 left-0 bg-white/0"
+            />
+
         </div >
 
     )
