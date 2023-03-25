@@ -428,7 +428,6 @@ const MetricsFooter = ({ tweet, isFocused }) => {
 
 
     return (
-
         <div className={cn(
             'flex justify-between transition-all duration-500 opacity-0 items-center',
             { 'opacity-100': isFocused }
@@ -460,13 +459,12 @@ const MetricsFooter = ({ tweet, isFocused }) => {
             <div
                 // center icon below
                 className={cn(
-                    'h-9 w-9 flex cursor-pointer opacity-0 items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300',
+                    'h-9 w-9 flex cursor-pointer opacity-100 items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300',
                     
                 )}
             >
                 <IoAdd
                     size={22}
-
                 />
             </div>
         </div>
@@ -483,6 +481,7 @@ const Tweet = forwardRef(({ tweet, isFocused }, ref) => {
     return (
         <div
             ref={ref}
+            className = "flex flex-col gap-2"
         >
 
             {/* ContentHeader (Author, @handle, timestamp)  */}
@@ -590,7 +589,7 @@ const Card = forwardRef((props, ref) => {
             ref={focusRef}
         >
             <div
-                className={cn("card flex flex-col gap-2 min-w-24",
+                className={cn("card min-w-24",
                     { 'shadow-focus': isFocused },
                 )}
                 style={isResizing? {opacity: 0.1} : focusStyle}
@@ -598,6 +597,7 @@ const Card = forwardRef((props, ref) => {
             >
                 <Tweet tweet={tweet} isFocused={isFocused} />
             </div>
+            
 
         </div>
 
