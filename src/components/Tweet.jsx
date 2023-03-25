@@ -254,111 +254,6 @@ const useLongPress = (
 };
 
 
-const ContextBuilder = ({ openOverview, currentStream, addEntityToStream, entity }) => {
-
-    // a spring that pushes the context builder up when the overview is open
-    const { x } = useSpring({
-        x: openOverview ? 550 : 0,
-    })
-
-    const metadata = {
-        "Tweets/Week": "~11",
-        "Followers": 5386,
-        "Following": 1663,
-    }
-
-    const interactions = ["Roote", "Housing Strategy", "woki", "supermodular.xyz"]
-
-    return (
-        <animated.div
-            style={{ x }}
-            className='flex flex-col gap-2 rounded-xl w-128'
-        >
-            <div className='tweet flex flex-col gap-7'>
-                <div className='flex items-center justify-between p-1 rounded-lg'>
-                    <div className='flex gap-2 items-center'>
-                        <h1 className='text-xl tracking-tight text-gray-800'>
-                            {entity.word !== undefined ? entity.word : entity.name}
-                        </h1>
-
-                        {entity.entity_group === "ACCOUNT" && (
-                            <p className="text-gray-400 text-sm leading-6 tracking-tight">
-                                @{entity.word !== undefined ? entity.word : entity.username}
-                            </p>
-                        )}
-                    </div>
-
-                    <ContentTag kind={entity.entity_group ?? "ACCOUNT"} />
-                </div>
-
-                {entity.description && (
-                    <div className='flex gap-4'>
-                        <div className='h-28 basis-1/4 bg-gray-100 rounded-lg' />
-                        <div className='basis-3/4 text-lg tracking-tight text-gray-600 rounded-lg ml-2'>
-                            {entity.description}
-                        </div>
-                    </div>
-                )}
-
-
-                <div className='pt-6 border-t border-gray-100 flex'>
-                    <div className='basis-1/4 text-xs tracking-tight leading-4 text-gray-500'>
-                        Recent Interactions and Topics
-                    </div>
-                    <div className='basis-2/4  inline-flex text-center items-center gap-2 flex-wrap'>
-                        {interactions.map((e, i) => {
-                            return (
-                                <div key={i} className='bg-gray-100 rounded-lg px-2 py-1 text-xs tracking-tight leading-4 text-gray-500'>
-                                    {e}
-                                </div>
-                            )
-                        })
-                        }
-                    </div>
-
-                </div>
-
-                <div className='flex justify-between tracking-tight items-center  border-gray-100 pt-6 text-xs text-gray-400/70'>
-
-                    <div>
-                        <p className='text-xs text-gray-500'> <span className='text-sm pr-1'>5</span> Stream Followers </p>
-                    </div>
-
-                    <div className='flex gap-3'>
-                        {Object.entries(metadata).map(([mt, ct]) => {
-                            return (
-                                <p> <span className='text-sm text-gray-500 pr-1'>{ct}</span>{mt}</p>
-                            )
-                        }
-                        )}
-                    </div>
-                </div>
-
-
-                {currentStream?.length && (
-                    <button
-                        onClick={(e) => addEntityToStream(e, "Rhys Lindmark")}
-                        className='rounded-full bg-gray-200 p-2 '
-                    >
-                        <p>Add to {currentStream} </p>
-                    </button>
-                )}
-            </div>
-
-
-            <div className='flex flex-col gap-1'>
-                <div className='mx-auto flex hover:bg-gray-300/30 px-1.5 py-1 rounded-md items-center gap-1 text-center text-xs text-gray-600/80'>
-                    {/* <span className='text-base font-semibold inline-block'>5</span> Tweets */}
-                </div>
-                <div className='transition-all duration-500 flex flex-col gap-6'>
-                    {""}
-                </div>
-            </div>
-
-        </animated.div>
-    )
-}
-
 const ContentHeader = ({ content, contentType, isFocused }) => {
 
 
@@ -570,6 +465,8 @@ const Card = forwardRef((props, ref) => {
     const tweet = content.content
 
     const openContext = isFocused && !isResizing
+    const offsetLeft = style.width + style.left
+
 
     return (
         <div
@@ -592,27 +489,12 @@ const Card = forwardRef((props, ref) => {
                 ref={cardRef}
             >
                 <Tweet tweet={tweet} isFocused={isFocused} />
+                {/* Context Building */}
+                {openContext && tweet.entities?.length > 0 && (
+                    ContextBuilder(offsetLeft, tweet, isFocused)
+                )}
             </div>
 
-            {/* Context Building */}
-            {openContext && tweet.entities?.length > 0 && (
-                <div className='absolute flex flex-col gap-3 w-56 ' style={{ top: 16, left: style.width + style.left }}>
-                    <p className='caption leading-3 text-gray-300/90 pl-2 pb-1.5 border-b border-gray-500'>Related Content</p>
-                    <div className='flex flex-col gap-6'>
-                        <div className='flex max-w-20 flex-wrap gap-2.5'>
-                            {tweet.entities?.map((entity, i) => {
-                                return (
-                                    <ContentLink
-                                        key={i}
-                                        isFocused={isFocused}
-                                        entity={entity}
-                                    />
-                                )
-                            })}
-                        </div>
-                    </div>
-                </div>
-            )}
 
 
 
@@ -626,53 +508,37 @@ const Card = forwardRef((props, ref) => {
 })
 
 
+function ContextBuilder(offsetLeft, tweet, isFocused) {
+
+    const contextWidth = Math.min(window.innerWidth - offsetLeft - 32, 256)
+
+    return (
+        <div 
+            className={cn(
+                'absolute flex flex-col gap-3 w-56 transition-all duration-300',
+                isFocused ? 'opacity-100' : 'opacity-0'
+            )}
+            style={{ top: 16, left: offsetLeft + 16, width: contextWidth }}
+        >
+            <p className='caption leading-3 text-gray-300/90 pl-2 pb-1.5 border-b border-gray-500'>Related Content</p>
+            <div className='flex flex-col gap-6'>
+                <div className='flex max-w-20 flex-wrap gap-2.5'>
+                    {tweet.entities?.map((entity, i) => {
+                        return (
+                            <ContentLink
+                                key={i}
+                                isFocused={isFocused}
+                                entity={entity} />
+                        );
+                    })}
+                </div>
+            </div>
+        </div>
+    )
+
+}
+
 
 export { Account, Card, ContentSwitch }
 export default Tweet
 
-
-
-
-
-// {/* TODO: move to Card. Context Building */}
-// {isFocused && !openOverview && tweet.entities?.length > 0 && (
-//     <div className='absolute flex flex-col gap-3 w-56 ' style={{ top: 32, left: 44 }}>
-//         <p className='caption leading-3 text-gray-300/90 pl-2 pb-1.5 border-b border-gray-500'>Related Content</p>
-//         <div className='flex flex-col gap-6'>
-//             <div className='flex max-w-20 flex-wrap gap-2.5'>
-//                 {tweet.entities?.map((entity, i) => {
-//                     return (
-//                         <ContentLink
-//                             key={i}
-//                             isFocused={isFocused}
-//                             update={update}
-//                             openOverview={openOverview}
-//                             setOpenOverview={setOpenOverview}
-//                             entity={entity}
-//                             setEntity={() => setEntity(entity)}
-//                         />
-//                     )
-//                 })
-//                 }
-//             </div>
-//         </div>
-//     </div>
-// )}
-
-
-// {/* Context Building */}
-// <div
-//     ref={contextRef}
-//     style={{ ...styles.popper, zIndex: 100 }}
-//     {...attributes.popper}
-
-// >
-//     {openOverview && isFocused ? (
-//         <ContextBuilder
-//             openOverview={openOverview}
-//             currentStream={currentStream}
-//             addEntityToStream={addEntityToStream}
-//             entity={selectedEntity}
-//         />
-//     ) : null}
-// </div>
