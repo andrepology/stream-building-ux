@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, cloneElement, memo, useLayoutEffect } from 'react';
+import { useState, useEffect, useRef, useCallback, cloneElement, memo, useLayoutEffect, forwardRef } from 'react';
 import { usePopper } from 'react-popper';
 import TimeAgo from 'timeago-react';
 import cn from 'classnames';
@@ -525,7 +525,9 @@ const ContentSwitch = ({ content, focusedContent }) => {
 
 
 
-const Card = ({ content, style, index, isResizing, setRowSize, sidebarTop = 256 }) => {
+const Card = forwardRef((props, ref) => {
+
+    const { content, setGUTTER, isScrolling, style, index, isResizing, setRowSize, gridRef, sidebarTop = 256 } = props
 
     const cardRef = useRef()
 
@@ -533,24 +535,36 @@ const Card = ({ content, style, index, isResizing, setRowSize, sidebarTop = 256 
     const [focus, setFocus] = useState(0)
 
     // set the focus of the Card based on its position in the viewport
-    const [focusRef, bounds] = useMeasure({ scroll: true, debounce: { scroll: 20, resize: 20 } });
-    useEffect(() => {
-        const distanceFromTop = bounds.top - sidebarTop + 16
+    const [focusRef, bounds] = useMeasure({ scroll: true, debounce: { scroll: 10, resize: 10 } });
+
+    const distFromSidebar = bounds.top - sidebarTop + 16
+
+    useLayoutEffect(() => {
+
+        if (cardRef.current) {
+
+            const cardHeight = cardRef.current.getBoundingClientRect().height
+            setRowSize(index, cardHeight + 12*isFocused)
+
+            gridRef?.current?.resetAfterRowIndex(index, false)
+
+        }
+        
 
         // if Tweet is below the Sidebar
-        if (distanceFromTop > 0) {
+        if (distFromSidebar > 0) {
 
-            // scale focus[0,1] based on remaining distance from top
-            const dist = 1 - (distanceFromTop / (window.innerHeight - sidebarTop))
-            // bound dist between 0 and 1
-            const focus = dist < 0 ? 0 : dist > 1 ? 1 : dist
-
+            // scale focus[0,1] based on distance from sidebar
+            let remainingDistance = window.innerHeight - sidebarTop
+            let focus = 1 - (distFromSidebar / remainingDistance)
             setFocus(focus)
+            
 
         } else {
-            const dist = bounds.bottom / (sidebarTop)
-            // scale focus based on remaining distance
-            const focus = dist - 0.45
+            // above the Sidebar
+
+            let remainingDistance = sidebarTop
+            let focus = (bounds.top / remainingDistance)
 
             setFocus(focus)
 
@@ -558,34 +572,27 @@ const Card = ({ content, style, index, isResizing, setRowSize, sidebarTop = 256 
     
     }, [bounds, sidebarTop, isResizing])
 
-    
 
     // measuring height of Card
     useLayoutEffect(() => {
-        if (cardRef.current) {
-            const cardHeight = cardRef.current.getBoundingClientRect().height
-            setRowSize(index, cardHeight)
-        }
-    }, [index, setRowSize, focus])
+        
+    }, [index, setRowSize, focus, bounds.height, isScrolling])
 
 
-
+    const focusThreshold = 0.80
     const focusStyle = {
-        opacity: focus > 0.55 ? 1 : 0.05 + focus,
-        transform: focus > 0.55 ? `scale(${1 + 0.01 * focus})` : `scale(1.00)`,
-        padding: focus > 0.55 ? `${12 + 4 * focus}px ${12 + focus * 4}px 16px` : '12px 12px 16px',
-        transition: `all ${ 0.1 * focus}s ease-in-out`
+        opacity: focus > focusThreshold ? 1 : 0.1 + focus * 0.5,
+        transform: focus > focusThreshold ? `scale(${1 + 0.05 * focus})` : `scale(1.00)`,
+        padding: '12px 12px 16px',
+        transition: `all ${0.3 * focus}s ease-in-out`,
+        boxShadow: focus > focusThreshold ? `0px ${focus*42}px 42px -4px rgba(77,77,77,0.15)` : 'none',
+        
     }
 
     const yMargin = 22
 
-    const forceFocus = () => {
-        // set Focus to 1 and scroll to the top of the sidebar
-        setFocus(1)
-        window.scrollTo({top: sidebarTop, behavior: 'smooth'})
-    }
-
-    const isFocused = focus > 0.85
+    const isFocused = distFromSidebar > 0 && focus > 0.85
+    const tweet = content.content.html
 
     return (
         <div
@@ -595,20 +602,66 @@ const Card = ({ content, style, index, isResizing, setRowSize, sidebarTop = 256 
                 ...style, 
                 top: style.top + yMargin,
                 height: style.height - yMargin,
-                transition: `top 0.5s ease-in-out`
+                width: style.width - yMargin,
+                left: style.left + 2 * yMargin,
+                transition: `top ${0.3}s ease-in-out`
             }}
-            ref = {focusRef}
-            // className="relative"
+            ref={focusRef}
         >
             <div
-                className="card flex flex-col gap-2 min-w-24"
+                className={cn("card flex flex-col gap-2 min-w-24",
+                    { 'shadow-focus': isFocused },
+                )}
                 style={isResizing? {opacity: 0.1} : focusStyle}
                 ref={cardRef}
             >
-                <Tweet 
-                    tweet={content.content}
-                    isFocused = {isFocused}
-                />
+                <div
+                    className={cn(
+                        'flex flex-col gap-2',
+                    )}
+                >
+                    {/* Tweet ContentHeader (Author, @handle, timestamp) and  */}
+                    <ContentHeader content={tweet} contentType={tweet} isFocused={isFocused} />
+
+
+                    {/* Content */}
+                    <p
+                        data-cy='text'
+                        dangerouslySetInnerHTML={{ __html: tweet ?? '' }}
+                        className={cn("text-gray-100 font-normal leading-5 pr-12",
+                            { 'h-12 w-full': !tweet },
+                        )}
+                    />
+
+                    {/* Interaction Metrics */}
+                    {true && (
+
+                        <div className={cn(
+                            'flex justify-between transition-all opacity-100 items-center',
+                            { 'opacity-0': !isFocused}
+                        )}>
+                            <div
+                                className='flex gap-3 pt-5 items-center mb-1.5 text-xs text-gray-500'
+                            >
+
+
+
+                            </div>
+                            <div
+                                // center icon below
+                                className={cn(
+                                    'h-9 w-9 flex cursor-pointer opacity-0 items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300',
+                                    { 'opacity-100': isFocused}
+                                    )}
+                            >
+                                <IoAdd
+                                    size={22}
+
+                                />
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
 
         </div>
@@ -616,7 +669,7 @@ const Card = ({ content, style, index, isResizing, setRowSize, sidebarTop = 256 
     )
 
 
-}
+})
 
 
 

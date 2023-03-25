@@ -18,23 +18,28 @@ import './App.css';
 
 import tftTweets from './components/sample';
 
-const GUTTER = 22
 
-const innerElementType = forwardRef(({ style, ...rest }, ref) => (
-  <div
-    ref={ref}
-    style={{
-      ...style,
-      paddingTop: GUTTER
-    }}
-    {...rest}
-  />
-));
+
+
 
 const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
   // accepts children and returns a list of content in a chosen order
   // manages their focus
+
+  const [GUTTER, setGUTTER] = useState(22)
+
+  const innerElementType = forwardRef(({ style, ...rest }, ref) => (
+    <div
+      ref={ref}
+      style={{
+        ...style,
+        paddingTop: GUTTER,
+        paddingRight: GUTTER,
+      }}
+      {...rest}
+    />
+  ));
 
 
   const [sampleContent , setSampleContent] = useState([])
@@ -92,11 +97,13 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
         height = {window.innerHeight}
         style={{overflowX: 'visible', overflowY: 'scroll', }}
 
-        columnCount = {nCols}
-        columnWidth = {() => Math.min(442, remainingWidth)}
+        columnCount = {1}
+        columnWidth = {() => Math.min(480, remainingWidth)}
 
         rowCount = {nRows}
         rowHeight = {getRowSize}
+
+        useIsScrolling
 
 
         innerElementType = {innerElementType}
@@ -106,7 +113,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
         itemData = {sampleContent}
         
       >
-        {({ data, columnIndex, rowIndex, style }) => {
+        {({ data, columnIndex, rowIndex, style, isScrolling }) => {
 
           
           const index = rowIndex * nCols + columnIndex
@@ -118,6 +125,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
               content = {content} 
               
+              isScrolling = {isScrolling}
               
               style = {style} 
               
@@ -125,11 +133,15 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
               setRowSize = {setRowSize}
               setRowFocus = {setRowFocus}
 
+              gridRef = {gridRef}
+
               index = {rowIndex}
+
+              setGUTTER = {setGUTTER}
 
 
               // onClick, set focusedContent
-              onClick = {() => setFocusedContent([...focusedContent, String(index)])}
+              // onClick = {() => setFocusedContent([...focusedContent, String(index)])}
               
               sidebarTop = {sidebarTop}
             />
