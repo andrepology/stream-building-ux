@@ -397,118 +397,6 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
 
 
 
-function Tweet({ tweet, addEntityToStream, isFocused }) {
-
-    const contextRef = useRef();
-
-
-    // format and set tweet content
-    const [tweetContent, setContent] = useState(null);
-    useEffect(() => {
-
-        // convert \\n to <br>
-        const content = tweet.html.replace(/\\n/g, '<br/>');
-        setContent(content);
-
-    }, [tweet.html])
-
-
-    const ref = useRef();
-    const { styles, attributes, update } = usePopper(ref?.current, contextRef?.current, {
-        placement: 'right-start',
-        position: 'fixed',
-        modifiers: [
-            {
-                name: 'offset',
-                options: {
-                    offset: [0, 0],
-                },
-            },
-        ],
-    });
-
-    const dummyInteractions = useRef()
-    useEffect(() => {
-        dummyInteractions.current = Math.floor(Math.random() * 10)
-    }, [])
-
-    const interactions = {
-        "Retweets": tweet.public_metrics.retweet_count,
-        "Likes": tweet.public_metrics.like_count,
-        "Replies": tweet.public_metrics.reply_count,
-    }
-
-    return (
-        
-
-        <div
-            className={cn(
-                'flex flex-col gap-2',
-            )}
-        >
-            {/* Tweet ContentHeader (Author, @handle, timestamp) and  */}
-            <ContentHeader content={tweet} contentType = {tweet} isFocused = {isFocused} />
-
-
-            {/* Content */}
-                <p
-                    data-cy='text'
-                    dangerouslySetInnerHTML={{ __html: tweetContent ?? '' }}
-                className={cn("text-gray-100 font-normal leading-5 pr-12",
-                        { 'h-12 w-full': !tweet },
-                    )}
-                />
-
-                {/* Interaction Metrics */}
-                {isFocused && (
-
-                <div className='flex justify-between items-center'>
-                    <div
-                        className='flex gap-3 pt-5 items-center mb-1.5 text-xs text-gray-500'
-                    >
-
-                        <Metric
-                            icon={<OverlapIcon />}
-                            count={dummyInteractions.current}
-                        />
-
-                        <Metric
-                            icon={<LikeIcon />}
-                            count={interactions.Likes}
-                        />
-
-                        <Metric
-                            icon={<ReplyIcon />}
-                            count={interactions.Replies}
-                        />
-
-                        <Metric
-                            icon={<RetweetIcon />}
-                            count={interactions.Retweets}
-                        />
-
-
-                    </div>
-                    <div
-                        // center icon below
-                        onClick={(e) => addEntityToStream(e, tweet)}
-                        className='h-9 w-9 flex cursor-pointer items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300'
-                    >
-                        <IoAdd
-                            size={22}
-
-                        />
-                    </div>
-                </div>
-                )}
-        </div>
-
-
-    );
-
-
-}
-
 
 
 const ContentSwitch = ({ content, focusedContent }) => {
@@ -524,10 +412,78 @@ const ContentSwitch = ({ content, focusedContent }) => {
 }
 
 
+const MetricsFooter = ({ tweet, isFocused }) => {
+
+    const dummyInteractions = useRef()
+    useEffect(() => {
+        dummyInteractions.current = Math.floor(Math.random() * 10)
+    }, [])
+
+    const interactions = {
+        "Retweets": tweet.public_metrics.retweet_count,
+        "Likes": tweet.public_metrics.like_count,
+        "Replies": tweet.public_metrics.reply_count,
+    }
+
+
+
+    return (
+
+        <div className={cn(
+            'flex justify-between transition-all opacity-100 items-center',
+            { 'opacity-0': !isFocused }
+        )}>
+            <div
+                className='flex gap-3 pt-5 items-center mb-1.5 text-xs text-gray-500'
+            >
+
+                <Metric
+                    icon={<OverlapIcon />}
+                    count={dummyInteractions.current}
+                />
+
+                <Metric
+                    icon={<LikeIcon />}
+                    count={interactions.Likes}
+                />
+
+                <Metric
+                    icon={<ReplyIcon />}
+                    count={interactions.Replies}
+                />
+
+                <Metric
+                    icon={<RetweetIcon />}
+                    count={interactions.Retweets}
+                />
+            </div>
+            <div
+                // center icon below
+                className={cn(
+                    'h-9 w-9 flex cursor-pointer opacity-0 items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300',
+                    
+                )}
+            >
+                <IoAdd
+                    size={22}
+
+                />
+            </div>
+        </div>
+    )
+}
+
+
+
+const Tweet = forwardRef(({ tweet, isFocused }, ref) => {
+
+    
+    
+})
 
 const Card = forwardRef((props, ref) => {
 
-    const { content, setGUTTER, isScrolling, style, index, isResizing, setRowSize, gridRef, sidebarTop = 256 } = props
+    const { content, isScrolling, style, index, isResizing, setRowSize, gridRef, sidebarTop = 256 } = props
 
     const cardRef = useRef()
 
@@ -592,7 +548,7 @@ const Card = forwardRef((props, ref) => {
     const yMargin = 22
 
     const isFocused = distFromSidebar > 0 && focus > 0.85
-    const tweet = content.content.html
+    const tweet = content.content
 
     return (
         <div
@@ -615,53 +571,22 @@ const Card = forwardRef((props, ref) => {
                 style={isResizing? {opacity: 0.1} : focusStyle}
                 ref={cardRef}
             >
-                <div
-                    className={cn(
-                        'flex flex-col gap-2',
-                    )}
-                >
-                    {/* Tweet ContentHeader (Author, @handle, timestamp) and  */}
+
+                    {/* Tweet ContentHeader (Author, @handle, timestamp)  */}
                     <ContentHeader content={tweet} contentType={tweet} isFocused={isFocused} />
 
 
                     {/* Content */}
                     <p
                         data-cy='text'
-                        dangerouslySetInnerHTML={{ __html: tweet ?? '' }}
+                        dangerouslySetInnerHTML={{ __html: tweet.html ?? '' }}
                         className={cn("text-gray-100 font-normal leading-5 pr-12",
-                            { 'h-12 w-full': !tweet },
+                            { 'h-12 w-full': !tweet.html },
                         )}
                     />
 
                     {/* Interaction Metrics */}
-                    {true && (
-
-                        <div className={cn(
-                            'flex justify-between transition-all opacity-100 items-center',
-                            { 'opacity-0': !isFocused}
-                        )}>
-                            <div
-                                className='flex gap-3 pt-5 items-center mb-1.5 text-xs text-gray-500'
-                            >
-
-
-
-                            </div>
-                            <div
-                                // center icon below
-                                className={cn(
-                                    'h-9 w-9 flex cursor-pointer opacity-0 items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300',
-                                    { 'opacity-100': isFocused}
-                                    )}
-                            >
-                                <IoAdd
-                                    size={22}
-
-                                />
-                            </div>
-                        </div>
-                    )}
-                </div>
+                    <MetricsFooter isFocused={isFocused} tweet={tweet} />
             </div>
 
         </div>
