@@ -430,8 +430,8 @@ const MetricsFooter = ({ tweet, isFocused }) => {
     return (
 
         <div className={cn(
-            'flex justify-between transition-all opacity-100 items-center',
-            { 'opacity-0': !isFocused }
+            'flex justify-between transition-all duration-500 opacity-0 items-center',
+            { 'opacity-100': isFocused }
         )}>
             <div
                 className='flex gap-3 pt-5 items-center mb-1.5 text-xs text-gray-500'
@@ -477,21 +477,23 @@ const MetricsFooter = ({ tweet, isFocused }) => {
 
 const Tweet = forwardRef(({ tweet, isFocused }, ref) => {
 
+    const parsedContent = tweet.html.replace(/\\n/g, '<br/>');
+
+
     return (
         <div
             ref={ref}
         >
 
-            {/* Tweet ContentHeader (Author, @handle, timestamp)  */}
+            {/* ContentHeader (Author, @handle, timestamp)  */}
             <ContentHeader content={tweet} contentType={tweet} isFocused={isFocused} />
 
 
-            {/* Content */}
+            {/* ContentBody (either text or text + image if any) */}
             <p
                 data-cy='text'
-                dangerouslySetInnerHTML={{ __html: tweet.html ?? '' }}
+                dangerouslySetInnerHTML={{ __html: parsedContent }}
                 className={cn("text-gray-100 font-normal leading-5 pr-12",
-                    { 'h-12 w-full': !tweet.html },
                 )}
             />
 
@@ -570,7 +572,7 @@ const Card = forwardRef((props, ref) => {
 
     const yMargin = 22
 
-    const isFocused = distFromSidebar > 0 && focus > 0.85
+    const isFocused = distFromSidebar > 0 && focus > 0.75
     const tweet = content.content
 
     return (

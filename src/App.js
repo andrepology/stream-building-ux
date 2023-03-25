@@ -448,9 +448,6 @@ function App() {
 
   // TODO: sorting and randomising order of Feed
 
-  const memoAccounts = useMemo(() => createAccountElements(accounts), [accounts, openOverview, focusedContent])
-  const memoTweets = useMemo(() => createTweetElements(tweets), [tweets, size, focusedContent])
-
   // can probably not use useEffect and have a single memoized function that returns the filtered tweets
   useEffect(() => {
 
@@ -573,10 +570,8 @@ function App() {
         offsetLeft = {size.width + 236}
         sidebarTop = {size.height}
         isResizing = {isResizing}
-      >
-        {memoTweets}
-        {streamFilters[2]?.isVisible? memoAccounts : null}
-      </Feed>
+      />
+      
 
       <BackdropMemo currentStream={currentStream.name} sidebarTop = {size.height - 64} />
 
