@@ -66,6 +66,11 @@ const Feed = ({ content, offsetLeft, sidebarTop, isResizing }) => {
   const rowSizes = useRef({})
 
 
+  // scrollToTop on rerender
+  useEffect(() => {
+    gridRef?.current?.scrollToItem({rowIndex: 0, columnIndex: 0})
+  }, [content])
+  
   
   const setRowSize =(index, size) => {
 
@@ -277,16 +282,19 @@ const Chat = ({chatHistory, setHistory}) => {
   )
 }
 
+const tweets = tftTweets.map(tweet => {
+  return {
+    id: parseFloat(tweet.id),
+    content: tweet,
+    type: 'tweet'
+  }
+})
 
 function App() {
   const [streams, setStreams] = useState(sampleStreams)
   const [currentStream, setStream] = useState({ name: "Trails For Thought", description: "A stream about the tools we shape and the tools that shape us" });
 
-
-  
-
   const [focusedContent, setFocusedContent] = useState(null);
-  const [openOverview, setOpenOverview] = useState(false);
 
   // TODO: move to useFilters
   const [viewConfig, setViewConfig] = useState({
@@ -480,35 +488,22 @@ function App() {
   }
 
   // TODO: sorting and randomising order of Feed
-
   const [sampleContent , setSampleContent] = useState([])
-  
+  const loadMemory = async (query = "what are some interface possibilites for spatial thinking?", k = 1000 ) => {
+    const similarTweets = await queryDB(query, k)
+    const tweetIDs = similarTweets.map(tweet => parseFloat(tweet.id))
+
+    // filter all by tweetIDs retrieved
+    const filteredTweets = tweets.filter(tweet => tweetIDs.includes(tweet.id))
+
+    setSampleContent(filteredTweets)
+    
+    return filteredTweets
+  }
+
   // load tftTweets into sample Content
   useEffect(() => {
-
-
-    const tweets = tftTweets.map(tweet => {
-      return {
-        id: parseFloat(tweet.id),
-        content: tweet,
-        type: 'tweet'
-      }
-    })
-
-    const loadMemory = async () => {
-      const similarTweets = await queryDB("what are some interface possibilites for spatial thinking?", 5)
-      const tweetIDs = similarTweets.map(tweet => parseFloat(tweet.id))
-
-      // filter all by tweetIDs retrieved
-      const filteredTweets = tweets.filter(tweet => tweetIDs.includes(tweet.id))
-
-      setSampleContent(filteredTweets)
-      
-      return filteredTweets
-    }
-
     loadMemory()
-
   }, [])
 
 
@@ -550,33 +545,21 @@ function App() {
   const [isResizing, setIsResizing] = useState(false)
   const [chatHistory, setHistory] = useState([{time: new Date(), message: "Welcome to the chat!", agent: "system"}])
 
-  // when chat history updates, make a new query
+  // Makes requests again to VDB
   useEffect(() => {
+    if (chatHistory.length > 1) {
 
-    const loadMemory = async (query, k) => {
-      const similarTweets = await queryDB(query, k)
-      const tweetIDs = similarTweets.map(tweet => parseFloat(tweet.id))
+      const lastMessage = chatHistory[chatHistory.length - 1]
+      const lastAgent = lastMessage.agent
+      const lastMessageText = lastMessage.message
 
-      // filter all by tweetIDs retrieved
-      const filteredTweets = tftTweets.filter(tweet => tweetIDs.includes(tweet.id))
-
-      // setSampleContent(filteredTweets)
-      
-      return filteredTweets
+      // if message is from user, make a query
+      if (lastAgent === "human") {
+        const query = lastMessageText
+        const k = 5
+        loadMemory(query, k)
+      }
     }
-
-    // get most recent message
-    const lastMessage = chatHistory[chatHistory.length - 1]
-
-    // if message is from user, make a query
-    console.log("updating memory")
-    const query = lastMessage.message
-
-    loadMemory(query,5)
-
-    
-    
-
   }, [chatHistory])
 
 
