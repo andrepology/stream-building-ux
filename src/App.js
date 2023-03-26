@@ -17,7 +17,7 @@ import { VariableSizeGrid } from 'react-window';
 
 import './App.css';
 
-import tftTweets from './components/sample';
+import tftTweets from './static/sample.json'
 
 
 
@@ -37,13 +37,13 @@ const Grab = ({ isResizing} ) => {
 
 
 
-const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
+const Feed = ({ content, offsetLeft, sidebarTop, isResizing }) => {
 
-  // accepts children and returns a list of content in a chosen order
+  // accepts content and renders a grid of content in a chosen order
   // manages their focus
 
   const [GUTTER, setGUTTER] = useState(22)
-  const scrollDelta = useRef(0)
+  
 
   const innerElementType = forwardRef(({ style, ...rest }, ref) => (
     <div
@@ -58,35 +58,6 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
   ));
 
 
-  const [sampleContent , setSampleContent] = useState([])
-
-  
-  // load tftTweets into sample Content
-  useEffect(() => {
-
-    const fetchMemory = async () => {
-      const tweetIDs = await queryDB().then(tweets => tweets.map(t => t.id))
-    
-      return tweetIDs
-    }
-
-    const ids  = fetchMemory()
-
-
-    const tweets = tftTweets.map(tweet => {
-      return {
-        id: tweet.id,
-        content: tweet,
-        type: 'tweet'
-      }
-    })
-
-    setSampleContent(tweets)
-  }, [])
-
-
-  const [focusedContent, setFocusedContent] = useState([]);
-  
   // Dynamically sizing rows
   const gridRef = useRef()
   const rowSizes = useRef({})
@@ -94,7 +65,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
   const setRowSize =(index, size) => {
 
     rowSizes.current = {...rowSizes.current, [index]: size}
-    gridRef.current.resetAfterRowIndex(0, false)
+    gridRef?.current?.resetAfterRowIndex(0, false)
   }
 
   
@@ -104,9 +75,10 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
   const remainingWidth = window.innerWidth - offsetLeft
   const colWidth = Math.min(480, remainingWidth/nCols)
 
-  const nRows = Math.ceil(sampleContent.length / nCols)
+  const nRows = Math.ceil(content?.length / nCols)
 
-  console.log("feed rerendered")
+  // only render if there is content to render
+  if (!content) return null
   
   return (
     <div 
@@ -134,7 +106,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
         overscanRowCount = {1}
 
-        itemData = {sampleContent}
+        itemData = {content}
         
       >
         {({ data, columnIndex, rowIndex, style, isScrolling }) => {
@@ -173,7 +145,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
 // obj of streams: seeds
 const sampleStreams = [
-  { name: 'Tools For Thought', seeds: [{ name: 'Alex Xu', kind: 'person' }, { name: 'Tana Inc.', kind: 'Organization' }] },
+  { name: 'Trails For Thought', seeds: [{ name: 'Alex Xu', kind: 'person' }, { name: 'Tana Inc.', kind: 'Organization' }] },
   { name: 'Human In The Loop', seeds: ['Andy Matuschak', 'CMU_HCI'] },
   { name: 'Biochemistry Geeks', seeds: [''] }
 ];
@@ -216,14 +188,87 @@ const useFilters = () => {
   return [streamFilters, setFilters, toggleFilters]
 }
 
+const Dialog = ({chatMessage}) => {
+  // render a dialog bubble
+  const {message, time, agent} = chatMessage
+
+  return (
+    <div className="flex items-baseline gap-6">
+      <div className="w-6 h-6 text-center rounded-full bg-gray-400/20">
+        {agent[0]}
+      </div>
+      <p 
+        // wrap text to not overflow
+        className="w-full break-all"
+      >{message}</p>
+    </div>
+  )
+}
+
+const MessageStream = ({chatHistory}) => {
+
+  // render a stream of messages
+  return (
+    <div className="relative w-full -left-8 flex flex-col gap-2">
+      {chatHistory.map((message, i) => <Dialog chatMessage={message} key={i}/>)}
+    </div>
+  )
+
+}
+
+const Chat = ({chatHistory, setHistory}) => {
+
+  const [input, setInput] = useState('')
+  const updateHistory = (newMessage) => {
+    setHistory([...chatHistory, newMessage])
+  }
+
+  const submitRequest = (e) => {
+
+    e.preventDefault()
+
+    updateHistory({time: new Date(), message: input, agent: "human"})
+    setInput('')
+  }
+
+  // render chat history based on agent input
+  return (
+    <div 
+      className="fixed top-56 flex flex-col gap-4"
+      style = {{width: 238}}
+    >
+      <MessageStream chatHistory={chatHistory}/>
+      <form 
+        onSubmit={(e) => submitRequest(e)}
+        className="flex shadow-subdue h-12 justify-between border border-white/55 bg-white/35 rounded-md pl-3.5 pr-2 py-2 resize-none w-full"
+      >
+        <input 
+          placeholder='Type a message...'
+          value = {input}
+          onChange = {e => setInput(e.target.value)}
+          className="w-4/5 bg-white/0 text-md text-gray-900 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 "
+        />
+        {input.length > 0 && (
+          
+            <button 
+              // submit with enter key
+
+              type = "submit"
+              className="shrink rounded-sm w-8 h-8 bg-white/95"
+            />
+          
+        )}
+      </form>
+    </div>
+  )
+}
+
 
 function App() {
   const [streams, setStreams] = useState(sampleStreams)
-  const [currentStream, setStream] = useState({ name: "Tools For Thought", description: "A stream about the tools we shape and the tools that shape us" });
+  const [currentStream, setStream] = useState({ name: "Trails For Thought", description: "A stream about the tools we shape and the tools that shape us" });
 
 
-  const [accounts, setAccounts] = useState([]);
-  const [tweets, setTweets] = useState([]);
   
 
   const [focusedContent, setFocusedContent] = useState(null);
@@ -373,7 +418,6 @@ function App() {
       const { tally, accounts } = await tallyContent()
       const filterState = await transformTally(tally)
       setFilters(filterState)
-      setAccounts(accounts)
     }
 
 
@@ -423,11 +467,44 @@ function App() {
 
   // TODO: sorting and randomising order of Feed
 
+  const [sampleContent , setSampleContent] = useState([])
+  
+  // load tftTweets into sample Content
+  useEffect(() => {
+
+
+    const tweets = tftTweets.map(tweet => {
+      return {
+        id: parseFloat(tweet.id),
+        content: tweet,
+        type: 'tweet'
+      }
+    })
+
+    const loadMemory = async () => {
+      const similarTweets = await queryDB("what are some interface possibilites for spatial thinking?", 100)
+      const tweetIDs = similarTweets.map(tweet => parseFloat(tweet.id))
+
+      // filter all by tweetIDs retrieved
+      const filteredTweets = tweets.filter(tweet => tweetIDs.includes(tweet.id))
+
+      setSampleContent(filteredTweets)
+      
+      return filteredTweets
+    }
+
+    loadMemory()
+
+  }, [])
+
+
+
   // can probably not use useEffect and have a single memoized function that returns the filtered tweets
   useEffect(() => {
 
-    const nextTweets = tftTweets.filter(tweet => {
+    const nextTweets = sampleContent.filter(content => {
 
+      let tweet = content.content
       // check if tweet meets filter criteria
       return streamFilters.some(filter => {
         if (filter.name === "Tweets") {
@@ -451,11 +528,43 @@ function App() {
       })
     })
 
-    setTweets(nextTweets)
+    setSampleContent(nextTweets)
   }, [streamFilters])
 
 
+  
   const [isResizing, setIsResizing] = useState(false)
+  const [chatHistory, setHistory] = useState([{time: new Date(), message: "Welcome to the chat!", agent: "system"}])
+
+  // when chat history updates, make a new query
+  useEffect(() => {
+
+    const loadMemory = async (query, k) => {
+      const similarTweets = await queryDB(query, k)
+      const tweetIDs = similarTweets.map(tweet => parseFloat(tweet.id))
+
+      // filter all by tweetIDs retrieved
+      const filteredTweets = tftTweets.filter(tweet => tweetIDs.includes(tweet.id))
+
+      // setSampleContent(filteredTweets)
+      
+      return filteredTweets
+    }
+
+    // get most recent message
+    const lastMessage = chatHistory[chatHistory.length - 1]
+
+    // if message is from user, make a query
+    console.log("updating memory")
+    const query = lastMessage.message
+
+    loadMemory(query,5)
+
+    
+    
+
+  }, [chatHistory])
+
 
 
   return (
@@ -523,6 +632,9 @@ function App() {
       />
 
       <div className="fixed z-40" style={{ top: size.height, left: size.width }}>
+
+        <Chat chatHistory = {chatHistory} setHistory = {setHistory} />
+
         <StreamSidebar
           inFocus={focusedContent !== null}
           isResizing = {isResizing}
@@ -530,7 +642,7 @@ function App() {
           setStream={setStream}
           currentStream={currentStream}
           stream={streams[0]}
-          streamContent={tweets.length}
+          streamContent={sampleContent.length}
 
           streamFilters={streamFilters}
           toggleFilters={toggleFilters}
@@ -540,7 +652,7 @@ function App() {
       </div>
 
       <Feed 
-        openOverview={openOverview}
+        content={sampleContent}
         filters = {streamFilters}
         offsetLeft = {size.width + 236}
         sidebarTop = {size.height}

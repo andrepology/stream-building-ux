@@ -211,14 +211,15 @@ const StreamHeader = ({ streamName, streamDescription, isResizing, isOpen }) => 
                 )}
             />
 
-            <textarea 
-                className="absolute w-full h-20 text-lg py-8 px-4 bottom-12 left-0 bg-white/0"
-            />
+            
 
         </div >
 
     )
 }
+
+
+
 
 
 const ContentIndicator = ({ contentType }) => {
@@ -642,10 +643,6 @@ const StreamSidebar = ({ stream, isResizing, currentStream, streamFilters, toggl
     }
 
     const [isFocused, setFocus] = useState(false)
-
-    const toggleFocus = () => {
-        setFocus(!isFocused)
-    }
 
     const [ref, bounds] = useMeasure()
     const [remainingHeight, setRemainingHeight] = useState(null)
