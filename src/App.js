@@ -129,7 +129,6 @@ const Feed = ({ content, offsetLeft, sidebarTop, isResizing }) => {
               />
             )
           }
-          
 
           return (
             <Card 
@@ -209,12 +208,12 @@ const Dialog = ({chatMessage}) => {
 
   return (
     <div className="flex items-baseline gap-6">
-      <div className="w-6 h-6 text-center rounded-full bg-gray-400/20">
+      <div className="w-6 h-6 shrink text-center rounded-full bg-gray-400/20">
         {agent[0]}
       </div>
       <p 
         // wrap text to not overflow
-        className="w-full break-all"
+        className="w-4/5 break-all"
       >{message}</p>
     </div>
   )
