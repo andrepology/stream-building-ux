@@ -57,16 +57,22 @@ const Feed = ({ content, offsetLeft, sidebarTop, isResizing }) => {
     />
   ));
 
-
+  // add an empty object to beginnign and end of content 
+  // to allow for padding
+  content = [{}, ...content, {}]
+  
   // Dynamically sizing rows
   const gridRef = useRef()
   const rowSizes = useRef({})
 
+
+  
   const setRowSize =(index, size) => {
 
     rowSizes.current = {...rowSizes.current, [index]: size}
     gridRef?.current?.resetAfterRowIndex(0, false)
   }
+
 
   
   const getRowSize = index => rowSizes.current[index] + GUTTER || 200
@@ -85,13 +91,14 @@ const Feed = ({ content, offsetLeft, sidebarTop, isResizing }) => {
       className='z-10 pl-6'
       style={{position: 'relative', overflow: 'visible', left: offsetLeft, top: 0}}
     >
+
       <VariableSizeGrid
 
         ref = {gridRef}
 
         width = {remainingWidth}
         height = {window.innerHeight}
-        style={{overflowX: 'visible', overflowY: 'scroll', }}
+        style={{overflowX: 'visible', overflowY: 'scroll' }}
 
         columnCount = {nCols}
         columnWidth = {() => colWidth}
@@ -114,6 +121,14 @@ const Feed = ({ content, offsetLeft, sidebarTop, isResizing }) => {
           
           const index = rowIndex * nCols + columnIndex
           const content = nCols > 1 ? data[index] : data[rowIndex]
+
+          if (index === 0 || index === data.length - 1) {
+            return (
+              <div 
+                style={{...style, width: colWidth, height: sidebarTop}}
+              />
+            )
+          }
           
 
           return (
@@ -482,7 +497,7 @@ function App() {
     })
 
     const loadMemory = async () => {
-      const similarTweets = await queryDB("what are some interface possibilites for spatial thinking?", 100)
+      const similarTweets = await queryDB("what are some interface possibilites for spatial thinking?", 5)
       const tweetIDs = similarTweets.map(tweet => parseFloat(tweet.id))
 
       // filter all by tweetIDs retrieved
