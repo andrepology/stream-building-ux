@@ -248,9 +248,10 @@ const ChatInput = ({ input, setInput, isLoading }) => {
   if (isLoading) {
     return (
       <input
+          value = {"Loading..."}
           placeholder='Loading...'
           disabled
-          className="w-4/5 bg-white/0 text-md text-gray-900 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 "
+          className="w-4/5 bg-white/0 text-md text-gray-300 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 "
       />
     )
   }
@@ -279,7 +280,7 @@ const ChatInput = ({ input, setInput, isLoading }) => {
 }
 
 
-const Chat = ({ chatHistory, isLoading, updateHistory }) => {
+const Chat = memo(({ chatHistory, isLoading, updateHistory }) => {
 
   const [input, setInput] = useState('')
 
@@ -304,10 +305,6 @@ const Chat = ({ chatHistory, isLoading, updateHistory }) => {
 
   }
 
-
-
-
-
   // render chat history based on agent input
   return (
     <div 
@@ -323,7 +320,7 @@ const Chat = ({ chatHistory, isLoading, updateHistory }) => {
       </form>
     </div>
   )
-}
+})
 
 const tweets = tftTweets.map(tweet => {
   return {
@@ -500,6 +497,7 @@ function App() {
 
 
   const loadMemory = async (query = "what are some interface possibilites for spatial thinking?", k = 300) => {
+    // setsSampleContent based on query
 
     setLoading(true)
 
@@ -510,17 +508,14 @@ function App() {
     // filter all by tweetIDs retrieved
     const filteredTweets = tweets.filter(tweet => tweetIDs.includes(tweet.id))
     
-    setLoading(false)
-    
     setSampleContent(filteredTweets)
 
 
-    return filteredTweets
-  }
+    setLoading(false)
 
-  useEffect(() => {
-    loadMemory()
-  }, [])
+
+    return
+  }
 
 
   const filteredContent = useMemo(() => {
@@ -558,8 +553,6 @@ function App() {
 
   const [isResizing, setIsResizing] = useState(false)
 
-
-
   const [chatHistory, setHistory] = useState([
     {
       time: new Date(),
@@ -568,8 +561,14 @@ function App() {
       contentIds: sampleContent.map(c => c.id)
     }])
 
+  useEffect(() => {
 
-  const createContextPrompt = () => {
+    loadMemory()
+
+  }, [])
+
+
+  const createContextPrompt = useCallback(() => {
 
     // extract html from sampleContent
     const html = sampleContent.map(tweet => tweet.content.html)
@@ -581,11 +580,11 @@ function App() {
     // newline join rawText
     const textString = rawText.join("\n")
 
-    const contextPrompt = "Respond with as few words as possible. You are an assistant to make sense of online discourse. Reference and use as context the following tweets \n " + textString
+    const contextPrompt = "Respond with as few words as possible. You are an assistant to make sense of online discourse. Reference and optionally use as context the following tweets \n " + textString
 
     return contextPrompt
 
-  }
+  }, [sampleContent])
 
   const updateHistory = useCallback((message) => {
 
@@ -595,40 +594,33 @@ function App() {
 
     setHistory([...chatHistory, newMessage])
 
-  }, [sampleContent])
+  }, [sampleContent, chatHistory])
 
 
-
-
-
-  const sumbitChat = async (chatHistory) => {
+  const submitChat = async () => {
 
     // change chatHistory to correct schema {role: , content: }
-    const typedChat = chatHistory.map(chat => {
+    const typedChatHistory = chatHistory.map(chat => {
       return {
         role: chat.role,
         content: chat.content
       }
     })
 
-    console.log("submit", typedChat)
+    // replace first message content with context prompt
+    const context = createContextPrompt()
 
-    const updatedChat = await sendChat(typedChat)
+    typedChatHistory[0].content = context
+    
+    setLoading(true)
 
-    console.log("updated", updatedChat)
+    let message = await sendChat( typedChatHistory)
+    
 
-    // remove context prompt
-    const basePrompt = updatedChat[updatedChat.length - 1].content.replace(createContextPrompt(), "")
-    // replace last message with base prompt
-    updatedChat[updatedChat.length - 1] = {
-      ...updatedChat[updatedChat.length - 1],
-      content: basePrompt
-    }
+    setHistory([...chatHistory, {...message, now: new Date()}])
 
-    console.log("base", basePrompt)
+    setLoading(false)
 
-
-    setHistory(updatedChat)
 
     return
 
@@ -645,17 +637,20 @@ function App() {
       // if message is from user, make a query
       if (lastAgent === "user") {
 
-        loadMemory(lastMessageText, 5)
+        if (chatHistory.length === 2) {
+          // TODO: a better system for processing sessions
+          // load question into memory
+          loadMemory(lastMessageText, 100)
+          
+        } 
 
-        const contextMessage = createContextPrompt()
+        if (chatHistory.length >= 2) {
 
-        const updatedChat = [...chatHistory]
+          submitChat()
 
-        updatedChat[updatedChat.length - 1] = {
-          ...updatedChat[updatedChat.length - 1],
-          content: lastMessageText + contextMessage
         }
-        // sumbitChat(updatedChat)
+
+
       }
     }
   }, [chatHistory])

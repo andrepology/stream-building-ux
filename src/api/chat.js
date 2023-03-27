@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const sendChat = async (messages) => {
 
-
     const data = {
       messages: messages
     }
@@ -18,7 +17,7 @@ const sendChat = async (messages) => {
 
     const chatResponse = await axios.post('http://0.0.0.0:8000/chat', data, config)
 
-    return chatResponse.data.messages
+    return chatResponse.data.message
 }
 
 export { sendChat }
