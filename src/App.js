@@ -3,6 +3,7 @@ import cn from 'classnames';
 import { useSpring, animated } from '@react-spring/web'
 
 import { queryDB } from './api/vectorRetrieval';
+import { sendChat } from './api/chat';
 
 import { Rnd } from 'react-rnd';
 
@@ -37,7 +38,7 @@ const Grab = ({ isResizing} ) => {
 
 
 
-const Feed = ({ content, offsetLeft, sidebarTop, isResizing }) => {
+const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
 
   // accepts content and renders a grid of content in a chosen order
   // manages their focus
@@ -66,16 +67,17 @@ const Feed = ({ content, offsetLeft, sidebarTop, isResizing }) => {
   const rowSizes = useRef({})
 
 
+
   // scrollToTop on rerender
   useEffect(() => {
     gridRef?.current?.scrollToItem({rowIndex: 0, columnIndex: 0})
   }, [content])
-  
+
   
   const setRowSize =(index, size) => {
 
     rowSizes.current = {...rowSizes.current, [index]: size}
-    gridRef?.current?.resetAfterRowIndex(0, false)
+    gridRef?.current?.resetAfterRowIndex(index, false)
   }
 
 
@@ -88,9 +90,12 @@ const Feed = ({ content, offsetLeft, sidebarTop, isResizing }) => {
 
   const nRows = Math.ceil(content?.length / nCols)
 
+
   // only render if there is content to render
   if (!content) return null
-  
+
+
+
   return (
     <div 
       className='z-10 pl-6'
@@ -159,7 +164,7 @@ const Feed = ({ content, offsetLeft, sidebarTop, isResizing }) => {
       </VariableSizeGrid>
     </div>
   )
-}
+})
 
 
 // obj of streams: seeds
@@ -209,17 +214,17 @@ const useFilters = () => {
 
 const Dialog = ({chatMessage}) => {
   // render a dialog bubble
-  const {message, time, agent} = chatMessage
+  const { content, time, role } = chatMessage
 
   return (
     <div className="flex items-baseline gap-6">
       <div className="w-6 h-6 shrink text-center rounded-full bg-gray-400/20">
-        {agent[0]}
+        {role[0]}
       </div>
       <p 
         // wrap text to not overflow
-        className="w-4/5 break-all"
-      >{message}</p>
+        className="w-4/5 break-all max-h-12 overflow-scroll"
+      >{content}</p>
     </div>
   )
 }
@@ -235,25 +240,74 @@ const MessageStream = ({chatHistory}) => {
 
 }
 
-const Chat = ({chatHistory, setHistory}) => {
+
+const ChatInput = ({ input, setInput, isLoading }) => {
+
+  // if loading return disabled input
+  
+  if (isLoading) {
+    return (
+      <input
+          placeholder='Loading...'
+          disabled
+          className="w-4/5 bg-white/0 text-md text-gray-900 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 "
+      />
+    )
+  }
+
+  return (
+    <>
+      <input
+        placeholder='Type a message...'
+        value={input}
+        onChange={e => setInput(e.target.value)}
+        className="w-4/5 bg-white/0 text-md text-gray-900 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 "
+      />
+          {
+      input.length > 0 && (
+
+        <button
+          // submit with enter key
+
+          type="submit"
+          className="shrink rounded-sm w-8 h-8 bg-white/95"
+        />
+
+      )
+    }
+    </>
+  )
+
+}
+
+
+const Chat = ({ chatHistory, isLoading, updateHistory }) => {
 
   const [input, setInput] = useState('')
-  const updateHistory = (newMessage) => {
-    setHistory([...chatHistory, newMessage])
-  }
+
 
   const submitRequest = (e) => {
 
     e.preventDefault()
 
-    updateHistory({time: new Date(), message: input, agent: "human"})
+    updateHistory({
+      time: new Date(),
+      content: input,
+      role: "user",
+    })
+
     setInput('')
+
   }
+
+
+
+
 
   // render chat history based on agent input
   return (
     <div 
-      className="fixed top-56 flex flex-col gap-4"
+      className="fixed top-12 flex flex-col gap-4"
       style = {{width: 238}}
     >
       <MessageStream chatHistory={chatHistory}/>
@@ -261,22 +315,7 @@ const Chat = ({chatHistory, setHistory}) => {
         onSubmit={(e) => submitRequest(e)}
         className="flex shadow-subdue h-12 justify-between border border-white/55 bg-white/35 rounded-md pl-3.5 pr-2 py-2 resize-none w-full"
       >
-        <input 
-          placeholder='Type a message...'
-          value = {input}
-          onChange = {e => setInput(e.target.value)}
-          className="w-4/5 bg-white/0 text-md text-gray-900 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 "
-        />
-        {input.length > 0 && (
-          
-            <button 
-              // submit with enter key
-
-              type = "submit"
-              className="shrink rounded-sm w-8 h-8 bg-white/95"
-            />
-          
-        )}
+        <ChatInput isLoading={isLoading} setInput={setInput} input={input} />
       </form>
     </div>
   )
@@ -295,6 +334,10 @@ function App() {
   const [currentStream, setStream] = useState({ name: "Trails For Thought", description: "A stream about the tools we shape and the tools that shape us" });
 
   const [focusedContent, setFocusedContent] = useState(null);
+  // TODO: sorting and randomising order of Feed
+  const [sampleContent, setSampleContent] = useState([])
+  const [isLoading, setLoading] = useState(false)
+
 
   // TODO: move to useFilters
   const [viewConfig, setViewConfig] = useState({
@@ -321,16 +364,15 @@ function App() {
   const [streamFilters, setFilters, toggleFilters] = useFilters();
 
   const [size, setSize] = useState({
-    width: 56,
+    width: 256,
     height: 224,
     x: 0,
     y: 0
   })
 
 
-  // Tally Feed statistics on a change of currentStream or streamFilters 
+  // Tally Feed statistics on a change of sampleContent
   useEffect(() => {
-    console.log('Tallying Feed Statistics');
 
     // time performance of tallying
     // const start = performance.now();
@@ -368,7 +410,9 @@ function App() {
       const accounts = new Set()
       var nextAccounts = []
 
-      tftTweets.forEach(tweet => {
+      sampleContent.forEach(content => {
+
+        const tweet = content.content
 
         accounts.add(tweet.author.username)
         nextAccounts.push(tweet.author)
@@ -442,76 +486,43 @@ function App() {
       setFilters(filterState)
     }
 
-
     transform()
 
     // const end = performance.now();
     // console.log(`Transforming took ${performance.now() - end} ms`, filterState);
 
 
-  }, [currentStream])
+  }, [sampleContent])
 
 
-  const addEntityToStream = (evt, entity) => {
+  const loadMemory = async (query = "what are some interface possibilites for spatial thinking?", k = 300) => {
 
-    // This is essentially a form submission to an action
-    evt.preventDefault();
-    evt.stopPropagation();
-
-
-    const entityObject = {
-      id: entity.id,
-      name: entity.html || entity.name,
-      kind: entity.kind ? entity.kind : entity.html ? "Tweet" : "Account"
-    }
-
-
-    // For now, just update client state
-    setStreams(prevState => {
-
-      const newState = prevState.map((e, i) => {
-
-
-        if (currentStream.name === e.name) {
-
-          // push seed to current stream
-          return { ...e, seeds: e.seeds.concat([entityObject]) }
-        }
-        return e
-      })
-
-      return newState
-    })
-
-
-
-  }
-
-  // TODO: sorting and randomising order of Feed
-  const [sampleContent , setSampleContent] = useState([])
-  const loadMemory = async (query = "what are some interface possibilites for spatial thinking?", k = 1000 ) => {
+    // load tweets according to a query to support a response
     const similarTweets = await queryDB(query, k)
     const tweetIDs = similarTweets.map(tweet => parseFloat(tweet.id))
 
     // filter all by tweetIDs retrieved
     const filteredTweets = tweets.filter(tweet => tweetIDs.includes(tweet.id))
-
-    setSampleContent(filteredTweets)
     
+    
+    setSampleContent(filteredTweets)
+
+
     return filteredTweets
   }
 
-  // load tftTweets into sample Content
   useEffect(() => {
+
+    console.log("loading initial data")
     loadMemory()
   }, [])
 
 
+  const filteredContent = useMemo(() => {
 
-  // can probably not use useEffect and have a single memoized function that returns the filtered tweets
-  useEffect(() => {
+    console.log("filtering content")
 
-    const nextTweets = sampleContent.filter(content => {
+    return sampleContent.filter(content => {
 
       let tweet = content.content
       // check if tweet meets filter criteria
@@ -535,34 +546,122 @@ function App() {
           })
         }
       })
+
+    })
+  }, [streamFilters, sampleContent])
+
+
+  const [isResizing, setIsResizing] = useState(false)
+
+
+
+  const [chatHistory, setHistory] = useState([
+    {
+      time: new Date(),
+      content: "This is where you can create trails of thinking to think about things that might not fit in your head",
+      role: "system",
+      contentIds: sampleContent.map(c => c.id)
+    }])
+
+
+  const createContextPrompt = () => {
+
+    // extract html from sampleContent
+    const html = sampleContent.map(tweet => tweet.content.html)
+    // remove html tags
+    const text = html.map(text => text.replace(/(<([^>]+)>)/gi, ""))
+    // remove urls
+    const rawText = text.map(text => text.replace(/(https?:\/\/[^\s]+)/g, ""))
+
+    // newline join rawText
+    const textString = rawText.join("\n")
+
+    const contextPrompt = "Respond with as few words as possible. You are an assistant to make sense of online discourse. Reference and use as context the following tweets \n " + textString
+
+    return contextPrompt
+
+  }
+
+  const updateHistory = useCallback((message) => {
+
+    // contentIDs
+    const contentIds = sampleContent.map(c => c.id)
+    const newMessage = { ...message, contentIds: contentIds }
+
+    setHistory([...chatHistory, newMessage])
+
+  }, [sampleContent])
+
+
+
+
+
+  const sumbitChat = async (chatHistory) => {
+
+    // change chatHistory to correct schema {role: , content: }
+    const typedChat = chatHistory.map(chat => {
+      return {
+        role: chat.role,
+        content: chat.content
+      }
     })
 
-    setSampleContent(nextTweets)
-  }, [streamFilters])
+    console.log("submit", typedChat)
+
+    const updatedChat = await sendChat(typedChat)
+
+    console.log("updated", updatedChat)
+
+    // remove context prompt
+    const basePrompt = updatedChat[updatedChat.length - 1].content.replace(createContextPrompt(), "")
+    // replace last message with base prompt
+    updatedChat[updatedChat.length - 1] = {
+      ...updatedChat[updatedChat.length - 1],
+      content: basePrompt
+    }
+
+    console.log("base", basePrompt)
 
 
-  
-  const [isResizing, setIsResizing] = useState(false)
-  const [chatHistory, setHistory] = useState([{time: new Date(), message: "Welcome to the chat!", agent: "system"}])
+    setHistory(updatedChat)
+
+    return
+
+  }
 
   // Makes requests again to VDB
   useEffect(() => {
     if (chatHistory.length > 1) {
 
       const lastMessage = chatHistory[chatHistory.length - 1]
-      const lastAgent = lastMessage.agent
-      const lastMessageText = lastMessage.message
+      const lastAgent = lastMessage.role
+      const lastMessageText = lastMessage.content
 
       // if message is from user, make a query
-      if (lastAgent === "human") {
-        const query = lastMessageText
-        const k = 5
-        loadMemory(query, k)
+      if (lastAgent === "user") {
+
+        console.log("1")
+
+        loadMemory(lastMessageText, 5)
+
+        const contextMessage = createContextPrompt()
+
+        const updatedChat = [...chatHistory]
+
+        updatedChat[updatedChat.length - 1] = {
+          ...updatedChat[updatedChat.length - 1],
+          content: lastMessageText + contextMessage
+        }
+
+        console.log("2")
+
+        sumbitChat(updatedChat)
+
+        console.log("3")
+
       }
     }
   }, [chatHistory])
-
-
 
   return (
     <div className="app-bg h-screen w-screen">
@@ -630,7 +729,7 @@ function App() {
 
       <div className="fixed z-40" style={{ top: size.height, left: size.width }}>
 
-        <Chat chatHistory = {chatHistory} setHistory = {setHistory} />
+        <Chat isLoading={isLoading} chatHistory={chatHistory} updateHistory={updateHistory} />
 
         <StreamSidebar
           inFocus={focusedContent !== null}
@@ -639,7 +738,7 @@ function App() {
           setStream={setStream}
           currentStream={currentStream}
           stream={streams[0]}
-          streamContent={sampleContent.length}
+          streamContent={filteredContent.length}
 
           streamFilters={streamFilters}
           toggleFilters={toggleFilters}
@@ -649,7 +748,7 @@ function App() {
       </div>
 
       <Feed 
-        content={sampleContent}
+        content={filteredContent}
         filters = {streamFilters}
         offsetLeft = {size.width + 236}
         sidebarTop = {size.height}
