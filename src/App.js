@@ -267,8 +267,6 @@ const ChatInput = ({ input, setInput, isLoading }) => {
       input.length > 0 && (
 
         <button
-          // submit with enter key
-
           type="submit"
           className="shrink rounded-sm w-8 h-8 bg-white/95"
         />
@@ -288,15 +286,21 @@ const Chat = ({ chatHistory, isLoading, updateHistory }) => {
 
   const submitRequest = (e) => {
 
+    // prevent submit if input is empty
     e.preventDefault()
-
-    updateHistory({
-      time: new Date(),
-      content: input,
-      role: "user",
-    })
-
-    setInput('')
+    
+    if (input.length > 0) {
+  
+      updateHistory({
+        time: new Date(),
+        content: input,
+        role: "user",
+      })
+  
+      setInput('')
+    }
+    
+    
 
   }
 
@@ -497,6 +501,8 @@ function App() {
 
   const loadMemory = async (query = "what are some interface possibilites for spatial thinking?", k = 300) => {
 
+    setLoading(true)
+
     // load tweets according to a query to support a response
     const similarTweets = await queryDB(query, k)
     const tweetIDs = similarTweets.map(tweet => parseFloat(tweet.id))
@@ -504,6 +510,7 @@ function App() {
     // filter all by tweetIDs retrieved
     const filteredTweets = tweets.filter(tweet => tweetIDs.includes(tweet.id))
     
+    setLoading(false)
     
     setSampleContent(filteredTweets)
 
@@ -512,8 +519,6 @@ function App() {
   }
 
   useEffect(() => {
-
-    console.log("loading initial data")
     loadMemory()
   }, [])
 
@@ -640,8 +645,6 @@ function App() {
       // if message is from user, make a query
       if (lastAgent === "user") {
 
-        console.log("1")
-
         loadMemory(lastMessageText, 5)
 
         const contextMessage = createContextPrompt()
@@ -652,13 +655,7 @@ function App() {
           ...updatedChat[updatedChat.length - 1],
           content: lastMessageText + contextMessage
         }
-
-        console.log("2")
-
-        sumbitChat(updatedChat)
-
-        console.log("3")
-
+        // sumbitChat(updatedChat)
       }
     }
   }, [chatHistory])
