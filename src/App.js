@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, memo, useMemo, forwardRef, useRef } from 'react';
+import { useState, useEffect, useCallback, cloneElement, memo, useMemo, forwardRef, useRef } from 'react';
 import cn from 'classnames';
 import { useSpring, animated } from '@react-spring/web'
 
@@ -8,6 +8,9 @@ import { sendChat } from './api/chat';
 import { Rnd } from 'react-rnd';
 
 import debounce from 'lodash.debounce';
+
+import { ImSpinner2 } from 'react-icons/im';
+import { AiOutlineSend } from 'react-icons/ai';
 
 import Masks from './assets/Masks.png';
 
@@ -19,6 +22,7 @@ import { VariableSizeGrid } from 'react-window';
 import './App.css';
 
 import tftTweets from './static/sample.json'
+import { left } from '@popperjs/core';
 
 
 
@@ -244,17 +248,14 @@ const MessageStream = ({chatHistory}) => {
 const ChatInput = ({ input, setInput, isLoading }) => {
 
   // if loading return disabled input
-  
-  if (isLoading) {
-    return (
-      <input
-          value = {"Loading..."}
-          placeholder='Loading...'
-          disabled
-          className="w-4/5 bg-white/0 text-md text-gray-300 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 "
-      />
-    )
-  }
+
+  let Icon = isLoading ?
+    <ImSpinner2 className='w-4 h-4 mx-auto text-gray-400 hover:text-gray-300 animate-spin' />
+    :
+    input.length > 0 ?
+      <AiOutlineSend className='w-4 h-4 mx-auto text-gray-400 hover:text-gray-300' /> :
+      <div />
+
 
   return (
     <>
@@ -264,16 +265,11 @@ const ChatInput = ({ input, setInput, isLoading }) => {
         onChange={e => setInput(e.target.value)}
         className="w-4/5 bg-white/0 text-md text-gray-900 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 "
       />
-          {
-      input.length > 0 && (
-
         <button
-          type="submit"
-          className="shrink rounded-sm w-8 h-8 bg-white/95"
-        />
-
-      )
-    }
+        className="shrink rounded-sm w-8 h-8 "
+      >
+        {Icon}
+      </button>
     </>
   )
 
@@ -615,7 +611,7 @@ function App() {
     setLoading(true)
 
     let message = await sendChat( typedChatHistory)
-    
+  
 
     setHistory([...chatHistory, {...message, now: new Date()}])
 
@@ -625,6 +621,7 @@ function App() {
     return
 
   }
+
 
   // Makes requests again to VDB
   useEffect(() => {
@@ -644,7 +641,7 @@ function App() {
           
         } 
 
-        if (chatHistory.length >= 2) {
+        if (chatHistory.length > 2) {
 
           submitChat()
 

@@ -17,6 +17,11 @@ const sendChat = async (messages) => {
 
     const chatResponse = await axios.post('http://0.0.0.0:8000/chat', data, config)
 
+    // if error, return error message
+    if (chatResponse.data.error) {
+      return chatResponse.data.error
+    }
+
     return chatResponse.data.message
 }
 
