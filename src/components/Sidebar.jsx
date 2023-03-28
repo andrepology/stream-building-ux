@@ -620,7 +620,12 @@ const Tabs = ({ tabs, toggleTabs }) => {
     )
 }
 
-const StreamSidebar = ({ stream, isResizing, currentStream, streamFilters, toggleFilters, viewConfig }) => {
+
+
+
+
+
+const StreamSidebar = ({ stream, header = null,  isResizing, currentStream, streamFilters, toggleFilters, viewConfig }) => {
 
     // Renders a Stream object, its metadata, View Controller and Seeds
 
@@ -667,12 +672,7 @@ const StreamSidebar = ({ stream, isResizing, currentStream, streamFilters, toggl
                 )}
         >
 
-            <StreamHeader
-                isOpen = {isOpen}
-                isResizing={isResizing}
-                streamName={stream.name}
-                streamDescription={currentStream.description}
-            />
+            {header}
 
             <div
                 className={"flex flex-col"}

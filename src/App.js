@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, cloneElement, memo, useMemo, forwardRef, useRef } from 'react';
+import { useState, useEffect, useCallback, cloneElement, memo, useMemo, forwardRef, useRef, useLayoutEffect } from 'react';
 import cn from 'classnames';
 import { useSpring, animated } from '@react-spring/web'
 
@@ -23,15 +23,20 @@ import './App.css';
 
 import tftTweets from './static/sample.json'
 import { left } from '@popperjs/core';
+import useMeasure from 'react-use-measure';
 
 
 
 const Grab = ({ isResizing} ) => {
-   
+
+  const [isHovered, setHovered] = useState(false)
+
   return (
-    <div className="bg-gray-400/20 hover:bg-gray-600/95 absolute top-6 right-4 w-6 h-6 rounded-full cursor-grab">
+    <div
+      className="bg-gray-400/20 hover:bg-gray-300/20 absolute top-6 right-4 w-6 h-6 rounded-full cursor-grab"
+    >
       <div className={cn(
-          "w-3 h-3 hover:w-5 hover:h-5 rounded-full bg-white/55 m-auto hover:mt-0.5 mt-1.5",
+        "w-3 h-3 transition-all duration-200 hover:w-5 hover:h-5 rounded-full bg-white/55 hover:bg-white/95 m-auto hover:mt-0.5 mt-1.5",
           
         )}/>
     </div>
@@ -216,18 +221,31 @@ const useFilters = () => {
   return [streamFilters, setFilters, toggleFilters]
 }
 
-const Dialog = ({chatMessage}) => {
+const Dialog = ({chatMessage, className}) => {
   // render a dialog bubble
   const { content, time, role } = chatMessage
 
+  const isAssistant = role === 'assistant'
+
   return (
-    <div className="flex items-baseline gap-6">
-      <div className="w-6 h-6 shrink text-center rounded-full bg-gray-400/20">
-        {role[0]}
+    <div 
+      className={"flex items-baseline gap-4 " + className}
+
+    >
+      <div
+        className="bg-gray-400/20 flex items-center hover:bg-gray-300/20 w-6 h-6 rounded-full cursor-grab"
+      > 
+        <div className='text-center text-gray-300 text-sm leading-5 mx-auto w-4 h-4 rounded-full bg-white/55'>
+          {role[0]}
+        </div>
       </div>
+
       <p 
         // wrap text to not overflow
-        className="w-4/5 break-all max-h-12 overflow-scroll"
+        className={
+          cn("py-2 px-1.5 w-4/5 break-all text-gray-100/80 hover:text-gray-100",
+          {"": isAssistant},
+          )}
       >{content}</p>
     </div>
   )
@@ -235,10 +253,30 @@ const Dialog = ({chatMessage}) => {
 
 const MessageStream = ({chatHistory}) => {
 
+
+  // measure height of message stream
+  const [messageRef, bounds] = useMeasure()
+
+  // force rerender when bounds changes
+  const [_, setRerender] = useState(0)
+
+  useLayoutEffect(() => {
+    setRerender(_ => _ + 1)
+  }, [bounds])
+
+  const remainingSpace = window.innerHeight - bounds?.bottom
+  
+  const sessionHeader = <Dialog className = {"sticky top-0 pb-2 border-b border-gray-400 "} chatMessage = {chatHistory[1] || chatHistory[0]} key = {1} />
+
   // render a stream of messages
   return (
-    <div className="relative w-full -left-8 flex flex-col gap-2">
-      {chatHistory.map((message, i) => <Dialog chatMessage={message} key={i}/>)}
+    <div 
+      ref = {messageRef}
+      style = {{top: -bounds?.height - 12, maxHeight: 400}}
+      className="absolute overflow-scroll w-full -left-7 flex flex-col gap-2"
+    >
+      {sessionHeader}
+      {chatHistory.slice(2, chatHistory.length).map((message, i) => <Dialog chatMessage={message} key={i + 1}/>)}
     </div>
   )
 
@@ -304,13 +342,17 @@ const Chat = memo(({ chatHistory, isLoading, updateHistory }) => {
   // render chat history based on agent input
   return (
     <div 
-      className="fixed top-12 flex flex-col gap-4"
-      style = {{width: 238}}
+      className="flex flex-col gap-4"
+      style={{ width: 238 }}
     >
       <MessageStream chatHistory={chatHistory}/>
       <form 
         onSubmit={(e) => submitRequest(e)}
-        className="flex shadow-subdue h-12 justify-between border border-white/55 bg-white/35 rounded-md pl-3.5 pr-2 py-2 resize-none w-full"
+        className={cn(
+          "flex h-12 transition-shadow duration-200 justify-between border border-white/55 bg-white/35 rounded-md pl-3 pr-2 py-2 resize-none w-full",
+          { "bg-white/55 shadow-focus": input.length > 0}
+        )
+        }
       >
         <ChatInput isLoading={isLoading} setInput={setInput} input={input} />
       </form>
@@ -718,11 +760,13 @@ function App() {
 
       <div className="fixed z-40" style={{ top: size.height, left: size.width }}>
 
-        <Chat isLoading={isLoading} chatHistory={chatHistory} updateHistory={updateHistory} />
+        
 
         <StreamSidebar
           inFocus={focusedContent !== null}
           isResizing = {isResizing}
+
+          header = {<Chat isLoading={isLoading} chatHistory={chatHistory} updateHistory={updateHistory} />}
 
           setStream={setStream}
           currentStream={currentStream}
