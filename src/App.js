@@ -266,7 +266,7 @@ const MessageStream = ({chatHistory}) => {
 
   const remainingSpace = window.innerHeight - bounds?.bottom
   
-  const sessionHeader = <Dialog className = {"sticky top-0 pb-2 border-b border-gray-400 "} chatMessage = {chatHistory[1] || chatHistory[0]} key = {1} />
+  const sessionHeader = <Dialog className = {"sticky top-0 pb-2 border-b border-gray-500 "} chatMessage = {chatHistory[1] || chatHistory[0]} key = {1} />
 
   // render a stream of messages
   return (
@@ -286,6 +286,10 @@ const MessageStream = ({chatHistory}) => {
 const ChatInput = ({ input, setInput, isLoading }) => {
 
   // if loading return disabled input
+  const [isFocused, setFocused] = useState(false)
+
+  
+
 
   let Icon = isLoading ?
     <ImSpinner2 className='w-4 h-4 mx-auto text-gray-400 hover:text-gray-300 animate-spin' />
@@ -298,10 +302,13 @@ const ChatInput = ({ input, setInput, isLoading }) => {
   return (
     <>
       <input
+        onBlur={() => setFocused(false)}
+        onFocus={() => setFocused(true)}
+
         placeholder='Type a message...'
         value={input}
         onChange={e => setInput(e.target.value)}
-        className="w-4/5 bg-white/0 text-md text-gray-900 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 "
+        className="w-4/5 bg-white/0 text-md transition-transform duration-300 text-gray-900 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 "
       />
         <button
         className="shrink rounded-sm w-8 h-8 "
@@ -339,6 +346,8 @@ const Chat = memo(({ chatHistory, isLoading, updateHistory }) => {
 
   }
 
+  const focused = input.length > 0
+
   // render chat history based on agent input
   return (
     <div 
@@ -348,8 +357,9 @@ const Chat = memo(({ chatHistory, isLoading, updateHistory }) => {
       <MessageStream chatHistory={chatHistory}/>
       <form 
         onSubmit={(e) => submitRequest(e)}
+        style = {focused ? {transform : 'translateX(-2px) translateY(-2px)'} : {}}
         className={cn(
-          "flex h-12 transition-shadow duration-200 justify-between border border-white/55 bg-white/35 rounded-md pl-3 pr-2 py-2 resize-none w-full",
+          "flex h-12 transition-all duration-200 justify-between border border-white/55 bg-white/35 rounded-md pl-3.5 pr-2 py-2 resize-none w-full",
           { "bg-white/55 shadow-focus": input.length > 0}
         )
         }
