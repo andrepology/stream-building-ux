@@ -181,7 +181,7 @@ const StreamHeader = ({ streamName, streamDescription, isResizing, isOpen }) => 
                 )
             }
             >
-            <div className="flex justify-between items-baseline tracking-tight">
+            <div className="flex relative justify-between items-baseline tracking-tight">
                 <div
                     className="z-10 w-4/5 text-base"
                     // style={isFocused ? font : {}}
@@ -210,10 +210,16 @@ const StreamHeader = ({ streamName, streamDescription, isResizing, isOpen }) => 
                     { "opacity-0": true }
                 )}
             />
+
+            
+
         </div >
 
     )
 }
+
+
+
 
 
 const ContentIndicator = ({ contentType }) => {
@@ -614,7 +620,12 @@ const Tabs = ({ tabs, toggleTabs }) => {
     )
 }
 
-const StreamSidebar = ({ stream, isResizing, currentStream, streamFilters, toggleFilters, viewConfig }) => {
+
+
+
+
+
+const StreamSidebar = ({ stream, header = null,  isResizing, currentStream, streamFilters, toggleFilters, viewConfig }) => {
 
     // Renders a Stream object, its metadata, View Controller and Seeds
 
@@ -637,10 +648,6 @@ const StreamSidebar = ({ stream, isResizing, currentStream, streamFilters, toggl
     }
 
     const [isFocused, setFocus] = useState(false)
-
-    const toggleFocus = () => {
-        setFocus(!isFocused)
-    }
 
     const [ref, bounds] = useMeasure()
     const [remainingHeight, setRemainingHeight] = useState(null)
@@ -665,12 +672,7 @@ const StreamSidebar = ({ stream, isResizing, currentStream, streamFilters, toggl
                 )}
         >
 
-            <StreamHeader
-                isOpen = {isOpen}
-                isResizing={isResizing}
-                streamName={stream.name}
-                streamDescription={currentStream.description}
-            />
+            {header}
 
             <div
                 className={"flex flex-col"}

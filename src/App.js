@@ -1,11 +1,16 @@
-import { useState, useEffect, useCallback, memo, useMemo, forwardRef, useRef } from 'react';
+import { useState, useEffect, useCallback, cloneElement, memo, useMemo, forwardRef, useRef, useLayoutEffect } from 'react';
 import cn from 'classnames';
 import { useSpring, animated } from '@react-spring/web'
-import axios from 'axios';
+
+import { queryDB } from './api/vectorRetrieval';
+import { sendChat } from './api/chat';
 
 import { Rnd } from 'react-rnd';
 
 import debounce from 'lodash.debounce';
+
+import { ImSpinner2 } from 'react-icons/im';
+import { AiOutlineSend } from 'react-icons/ai';
 
 import Masks from './assets/Masks.png';
 
@@ -16,16 +21,22 @@ import { VariableSizeGrid } from 'react-window';
 
 import './App.css';
 
-import tftTweets from './components/sample';
+import tftTweets from './static/sample.json'
+import { left } from '@popperjs/core';
+import useMeasure from 'react-use-measure';
 
 
 
 const Grab = ({ isResizing} ) => {
-   
+
+  const [isHovered, setHovered] = useState(false)
+
   return (
-    <div className="bg-gray-400/20 hover:bg-gray-600/95 absolute top-6 right-4 w-6 h-6 rounded-full cursor-grab">
+    <div
+      className="bg-gray-400/20 hover:bg-gray-300/20 absolute top-6 right-4 w-6 h-6 rounded-full cursor-grab"
+    >
       <div className={cn(
-          "w-3 h-3 hover:w-5 hover:h-5 rounded-full bg-white/55 m-auto hover:mt-0.5 mt-1.5",
+        "w-3 h-3 transition-all duration-200 hover:w-5 hover:h-5 rounded-full bg-white/55 hover:bg-white/95 m-auto hover:mt-0.5 mt-1.5",
           
         )}/>
     </div>
@@ -35,12 +46,14 @@ const Grab = ({ isResizing} ) => {
 
 
 
-const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
-  // accepts children and returns a list of content in a chosen order
+const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
+
+  // accepts content and renders a grid of content in a chosen order
   // manages their focus
 
   const [GUTTER, setGUTTER] = useState(22)
+  
 
   const innerElementType = forwardRef(({ style, ...rest }, ref) => (
     <div
@@ -54,34 +67,28 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
     />
   ));
 
-
-  const [sampleContent , setSampleContent] = useState([])
-  // load tftTweets into sample Content
-  useEffect(() => {
-
-    const tweets = tftTweets.map(tweet => {
-      return {
-        id: tweet.id,
-        content: tweet,
-        type: 'tweet'
-      }
-    })
-
-    setSampleContent(tweets)
-  }, [])
-
-
-  const [focusedContent, setFocusedContent] = useState([]);
+  // add an empty object to beginnign and end of content 
+  // to allow for padding
+  content = [{}, ...content, {}]
   
   // Dynamically sizing rows
   const gridRef = useRef()
   const rowSizes = useRef({})
 
+
+
+  // scrollToTop on rerender
+  useEffect(() => {
+    gridRef?.current?.scrollToItem({rowIndex: 0, columnIndex: 0})
+  }, [content])
+
+  
   const setRowSize =(index, size) => {
 
     rowSizes.current = {...rowSizes.current, [index]: size}
-    gridRef.current.resetAfterRowIndex(0, false)
+    gridRef?.current?.resetAfterRowIndex(index, false)
   }
+
 
   
   const getRowSize = index => rowSizes.current[index] + GUTTER || 200
@@ -90,22 +97,27 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
   const remainingWidth = window.innerWidth - offsetLeft
   const colWidth = Math.min(480, remainingWidth/nCols)
 
-  const nRows = Math.ceil(sampleContent.length / nCols)
+  const nRows = Math.ceil(content?.length / nCols)
 
-  console.log("feed rerendered")
-  
+
+  // only render if there is content to render
+  if (!content) return null
+
+
+
   return (
     <div 
       className='z-10 pl-6'
       style={{position: 'relative', overflow: 'visible', left: offsetLeft, top: 0}}
     >
+
       <VariableSizeGrid
 
         ref = {gridRef}
 
         width = {remainingWidth}
         height = {window.innerHeight}
-        style={{overflowX: 'visible', overflowY: 'scroll', }}
+        style={{overflowX: 'visible', overflowY: 'scroll' }}
 
         columnCount = {nCols}
         columnWidth = {() => colWidth}
@@ -120,7 +132,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
 
         overscanRowCount = {1}
 
-        itemData = {sampleContent}
+        itemData = {content}
         
       >
         {({ data, columnIndex, rowIndex, style, isScrolling }) => {
@@ -128,7 +140,14 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
           
           const index = rowIndex * nCols + columnIndex
           const content = nCols > 1 ? data[index] : data[rowIndex]
-          
+
+          if (index === 0 || index === data.length - 1) {
+            return (
+              <div 
+                style={{...style, width: colWidth, height: sidebarTop}}
+              />
+            )
+          }
 
           return (
             <Card 
@@ -144,7 +163,7 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
               getRowSize = {getRowSize}
               
 
-              gridRef = {gridRef}
+              ref = {gridRef}
 
               index = {rowIndex}
               sidebarTop = {sidebarTop}
@@ -154,12 +173,12 @@ const Feed = ({ children, offsetLeft, sidebarTop, isResizing }) => {
       </VariableSizeGrid>
     </div>
   )
-}
+})
 
 
 // obj of streams: seeds
 const sampleStreams = [
-  { name: 'Tools For Thought', seeds: [{ name: 'Alex Xu', kind: 'person' }, { name: 'Tana Inc.', kind: 'Organization' }] },
+  { name: 'Trails For Thought', seeds: [{ name: 'Alex Xu', kind: 'person' }, { name: 'Tana Inc.', kind: 'Organization' }] },
   { name: 'Human In The Loop', seeds: ['Andy Matuschak', 'CMU_HCI'] },
   { name: 'Biochemistry Geeks', seeds: [''] }
 ];
@@ -202,18 +221,172 @@ const useFilters = () => {
   return [streamFilters, setFilters, toggleFilters]
 }
 
+const Dialog = ({chatMessage, className}) => {
+  // render a dialog bubble
+  const { content, time, role } = chatMessage
+
+  const isAssistant = role === 'assistant'
+
+  return (
+    <div 
+      className={"flex items-baseline gap-4 " + className}
+
+    >
+      <div
+        className="bg-gray-400/20 flex items-center hover:bg-gray-300/20 w-6 h-6 rounded-full cursor-grab"
+      > 
+        <div className='text-center text-gray-300 text-sm leading-5 mx-auto w-4 h-4 rounded-full bg-white/55'>
+          {role[0]}
+        </div>
+      </div>
+
+      <p 
+        // wrap text to not overflow
+        className={
+          cn("py-2 px-1.5 w-4/5 break-all text-gray-100/80 hover:text-gray-100",
+          {"": isAssistant},
+          )}
+      >{content}</p>
+    </div>
+  )
+}
+
+const MessageStream = ({chatHistory}) => {
+
+
+  // measure height of message stream
+  const [messageRef, bounds] = useMeasure()
+
+  // force rerender when bounds changes
+  const [_, setRerender] = useState(0)
+
+  useLayoutEffect(() => {
+    setRerender(_ => _ + 1)
+  }, [bounds])
+
+  const remainingSpace = window.innerHeight - bounds?.bottom
+  
+  const sessionHeader = <Dialog className = {"sticky top-0 pb-2 border-b border-gray-500 "} chatMessage = {chatHistory[1] || chatHistory[0]} key = {1} />
+
+  // render a stream of messages
+  return (
+    <div 
+      ref = {messageRef}
+      style = {{top: -bounds?.height - 12, maxHeight: 400}}
+      className="absolute overflow-scroll w-full -left-7 flex flex-col gap-2"
+    >
+      {sessionHeader}
+      {chatHistory.slice(2, chatHistory.length).map((message, i) => <Dialog chatMessage={message} key={i + 1}/>)}
+    </div>
+  )
+
+}
+
+
+const ChatInput = ({ input, setInput, isLoading }) => {
+
+  // if loading return disabled input
+  const [isFocused, setFocused] = useState(false)
+
+  
+
+
+  let Icon = isLoading ?
+    <ImSpinner2 className='w-4 h-4 mx-auto text-gray-400 hover:text-gray-300 animate-spin' />
+    :
+    input.length > 0 ?
+      <AiOutlineSend className='w-4 h-4 mx-auto text-gray-400 hover:text-gray-300' /> :
+      <div />
+
+
+  return (
+    <>
+      <input
+        onBlur={() => setFocused(false)}
+        onFocus={() => setFocused(true)}
+
+        placeholder='Type a message...'
+        value={input}
+        onChange={e => setInput(e.target.value)}
+        className="w-4/5 bg-white/0 text-md transition-transform duration-300 text-gray-900 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 "
+      />
+        <button
+        className="shrink rounded-sm w-8 h-8 "
+      >
+        {Icon}
+      </button>
+    </>
+  )
+
+}
+
+
+const Chat = memo(({ chatHistory, isLoading, updateHistory }) => {
+
+  const [input, setInput] = useState('')
+
+
+  const submitRequest = (e) => {
+
+    // prevent submit if input is empty
+    e.preventDefault()
+    
+    if (input.length > 0) {
+  
+      updateHistory({
+        time: new Date(),
+        content: input,
+        role: "user",
+      })
+  
+      setInput('')
+    }
+    
+    
+
+  }
+
+  const focused = input.length > 0
+
+  // render chat history based on agent input
+  return (
+    <div 
+      className="flex flex-col gap-4"
+      style={{ width: 238 }}
+    >
+      <MessageStream chatHistory={chatHistory}/>
+      <form 
+        onSubmit={(e) => submitRequest(e)}
+        style = {focused ? {transform : 'translateX(-2px) translateY(-2px)'} : {}}
+        className={cn(
+          "flex h-12 transition-all duration-200 justify-between border border-white/55 bg-white/35 rounded-md pl-3.5 pr-2 py-2 resize-none w-full",
+          { "bg-white/55 shadow-focus": input.length > 0}
+        )
+        }
+      >
+        <ChatInput isLoading={isLoading} setInput={setInput} input={input} />
+      </form>
+    </div>
+  )
+})
+
+const tweets = tftTweets.map(tweet => {
+  return {
+    id: parseFloat(tweet.id),
+    content: tweet,
+    type: 'tweet'
+  }
+})
 
 function App() {
   const [streams, setStreams] = useState(sampleStreams)
-  const [currentStream, setStream] = useState({ name: "Tools For Thought", description: "A stream about the tools we shape and the tools that shape us" });
-
-
-  const [accounts, setAccounts] = useState([]);
-  const [tweets, setTweets] = useState([]);
-  
+  const [currentStream, setStream] = useState({ name: "Trails For Thought", description: "A stream about the tools we shape and the tools that shape us" });
 
   const [focusedContent, setFocusedContent] = useState(null);
-  const [openOverview, setOpenOverview] = useState(false);
+  // TODO: sorting and randomising order of Feed
+  const [sampleContent, setSampleContent] = useState([])
+  const [isLoading, setLoading] = useState(false)
+
 
   // TODO: move to useFilters
   const [viewConfig, setViewConfig] = useState({
@@ -240,16 +413,15 @@ function App() {
   const [streamFilters, setFilters, toggleFilters] = useFilters();
 
   const [size, setSize] = useState({
-    width: 56,
+    width: 256,
     height: 224,
     x: 0,
     y: 0
   })
 
 
-  // Tally Feed statistics on a change of currentStream or streamFilters 
+  // Tally Feed statistics on a change of sampleContent
   useEffect(() => {
-    console.log('Tallying Feed Statistics');
 
     // time performance of tallying
     // const start = performance.now();
@@ -287,7 +459,9 @@ function App() {
       const accounts = new Set()
       var nextAccounts = []
 
-      tftTweets.forEach(tweet => {
+      sampleContent.forEach(content => {
+
+        const tweet = content.content
 
         accounts.add(tweet.author.username)
         nextAccounts.push(tweet.author)
@@ -359,9 +533,7 @@ function App() {
       const { tally, accounts } = await tallyContent()
       const filterState = await transformTally(tally)
       setFilters(filterState)
-      setAccounts(accounts)
     }
-
 
     transform()
 
@@ -369,51 +541,38 @@ function App() {
     // console.log(`Transforming took ${performance.now() - end} ms`, filterState);
 
 
-  }, [currentStream])
+  }, [sampleContent])
 
 
-  const addEntityToStream = (evt, entity) => {
+  const loadMemory = async (query = "what are some interface possibilites for spatial thinking?", k = 300) => {
+    // setsSampleContent based on query
 
-    // This is essentially a form submission to an action
-    evt.preventDefault();
-    evt.stopPropagation();
+    setLoading(true)
 
+    // load tweets according to a query to support a response
+    const similarTweets = await queryDB(query, k)
+    const tweetIDs = similarTweets.map(tweet => parseFloat(tweet.id))
 
-    const entityObject = {
-      id: entity.id,
-      name: entity.html || entity.name,
-      kind: entity.kind ? entity.kind : entity.html ? "Tweet" : "Account"
-    }
-
-
-    // For now, just update client state
-    setStreams(prevState => {
-
-      const newState = prevState.map((e, i) => {
+    // filter all by tweetIDs retrieved
+    const filteredTweets = tweets.filter(tweet => tweetIDs.includes(tweet.id))
+    
+    setSampleContent(filteredTweets)
 
 
-        if (currentStream.name === e.name) {
-
-          // push seed to current stream
-          return { ...e, seeds: e.seeds.concat([entityObject]) }
-        }
-        return e
-      })
-
-      return newState
-    })
+    setLoading(false)
 
 
-
+    return
   }
 
-  // TODO: sorting and randomising order of Feed
 
-  // can probably not use useEffect and have a single memoized function that returns the filtered tweets
-  useEffect(() => {
+  const filteredContent = useMemo(() => {
 
-    const nextTweets = tftTweets.filter(tweet => {
+    console.log("filtering content")
 
+    return sampleContent.filter(content => {
+
+      let tweet = content.content
       // check if tweet meets filter criteria
       return streamFilters.some(filter => {
         if (filter.name === "Tweets") {
@@ -435,14 +594,115 @@ function App() {
           })
         }
       })
-    })
 
-    setTweets(nextTweets)
-  }, [streamFilters])
+    })
+  }, [streamFilters, sampleContent])
 
 
   const [isResizing, setIsResizing] = useState(false)
 
+  const [chatHistory, setHistory] = useState([
+    {
+      time: new Date(),
+      content: "This is where you can create trails of thinking to think about things that might not fit in your head",
+      role: "system",
+      contentIds: sampleContent.map(c => c.id)
+    }])
+
+  useEffect(() => {
+
+    loadMemory()
+
+  }, [])
+
+
+  const createContextPrompt = useCallback(() => {
+
+    // extract html from sampleContent
+    const html = sampleContent.map(tweet => tweet.content.html)
+    // remove html tags
+    const text = html.map(text => text.replace(/(<([^>]+)>)/gi, ""))
+    // remove urls
+    const rawText = text.map(text => text.replace(/(https?:\/\/[^\s]+)/g, ""))
+
+    // newline join rawText
+    const textString = rawText.join("\n")
+
+    const contextPrompt = "Respond with as few words as possible. You are an assistant to make sense of online discourse. Reference and optionally use as context the following tweets \n " + textString
+
+    return contextPrompt
+
+  }, [sampleContent])
+
+  const updateHistory = useCallback((message) => {
+
+    // contentIDs
+    const contentIds = sampleContent.map(c => c.id)
+    const newMessage = { ...message, contentIds: contentIds }
+
+    setHistory([...chatHistory, newMessage])
+
+  }, [sampleContent, chatHistory])
+
+
+  const submitChat = async () => {
+
+    // change chatHistory to correct schema {role: , content: }
+    const typedChatHistory = chatHistory.map(chat => {
+      return {
+        role: chat.role,
+        content: chat.content
+      }
+    })
+
+    // replace first message content with context prompt
+    const context = createContextPrompt()
+
+    typedChatHistory[0].content = context
+    
+    setLoading(true)
+
+    let message = await sendChat( typedChatHistory)
+  
+
+    setHistory([...chatHistory, {...message, now: new Date()}])
+
+    setLoading(false)
+
+
+    return
+
+  }
+
+
+  // Makes requests again to VDB
+  useEffect(() => {
+    if (chatHistory.length > 1) {
+
+      const lastMessage = chatHistory[chatHistory.length - 1]
+      const lastAgent = lastMessage.role
+      const lastMessageText = lastMessage.content
+
+      // if message is from user, make a query
+      if (lastAgent === "user") {
+
+        if (chatHistory.length === 2) {
+          // TODO: a better system for processing sessions
+          // load question into memory
+          loadMemory(lastMessageText, 100)
+          
+        } 
+
+        if (chatHistory.length > 2) {
+
+          submitChat()
+
+        }
+
+
+      }
+    }
+  }, [chatHistory])
 
   return (
     <div className="app-bg h-screen w-screen">
@@ -509,14 +769,19 @@ function App() {
       />
 
       <div className="fixed z-40" style={{ top: size.height, left: size.width }}>
+
+        
+
         <StreamSidebar
           inFocus={focusedContent !== null}
           isResizing = {isResizing}
 
+          header = {<Chat isLoading={isLoading} chatHistory={chatHistory} updateHistory={updateHistory} />}
+
           setStream={setStream}
           currentStream={currentStream}
           stream={streams[0]}
-          streamContent={tweets.length}
+          streamContent={filteredContent.length}
 
           streamFilters={streamFilters}
           toggleFilters={toggleFilters}
@@ -526,7 +791,7 @@ function App() {
       </div>
 
       <Feed 
-        openOverview={openOverview}
+        content={filteredContent}
         filters = {streamFilters}
         offsetLeft = {size.width + 236}
         sidebarTop = {size.height}
@@ -572,6 +837,5 @@ const StreamBackdrop = ({ currentStream, sidebarTop, sidebarLeft }) => {
   )
 }
 
-const BackdropMemo = memo(StreamBackdrop, (prevProps, nextProps) => prevProps.currentStream == nextProps.currentStream)
 
 export default App;
