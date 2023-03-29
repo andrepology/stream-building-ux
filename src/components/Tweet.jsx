@@ -445,8 +445,8 @@ const Card = forwardRef((props, gridRef) => {
         if (focus === pinFocus) {
 
             console.log(prevFocus.current)
-            setFocus(prevFocus.current || 0) 
-            setRowFocus(index, prevFocus.current || 0)
+            setFocus(prevFocus.current !== 1.5? prevFocus.current : 1) 
+            setRowFocus(index, prevFocus.current !== 1.5? prevFocus.current : 1)
         } else {
             prevFocus.current = focus
             setFocus(pinFocus)
