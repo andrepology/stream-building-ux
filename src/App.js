@@ -45,8 +45,6 @@ const Grab = ({ isResizing} ) => {
 }
 
 
-
-
 const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
 
   // accepts content and renders a grid of content in a chosen order
@@ -72,15 +70,19 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
   content = [{}, ...content, {}]
   
   // Dynamically sizing rows
-  const gridRef = useRef()
+  const gridRef = useRef(null)
+  const scrollRef = useRef(null)
+
+  const scrollTo = useCallback((scrollOffset) => {
+    scrollRef?.current?.scrollTo({ 
+      left: 0, 
+      top: scrollOffset,
+      behavior: 'smooth',
+    })
+  }, [])
+
+
   const rowSizes = useRef({})
-
-
-
-  // scrollToTop on rerender
-  useEffect(() => {
-    gridRef?.current?.scrollToItem({rowIndex: 0, columnIndex: 0})
-  }, [content])
 
   
   const setRowSize =(index, size) => {
@@ -114,6 +116,7 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
       <VariableSizeGrid
 
         ref = {gridRef}
+        outerRef = {scrollRef}
 
         width = {remainingWidth}
         height = {window.innerHeight}
@@ -155,6 +158,7 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
               content = {content} 
               
               isScrolling = {isScrolling}
+              scrollTo = {scrollTo}
               
               style = {style} 
               

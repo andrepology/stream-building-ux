@@ -21,7 +21,7 @@ const queryDB = async ( query = "tft", top_k = 100) => {
       },
     }
 
-    const response = await axios.post('https://trails-chat-retrieval.fly.dev/query', data, config)
+    const response = await axios.post('http://0.0.0.0:8000/query', data, config)
     const docs = response.data.results[0].results
 
     // filter scores below 0.7

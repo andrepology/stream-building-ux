@@ -402,7 +402,7 @@ const Tweet = forwardRef(({ tweet, isFocused }, ref) => {
 
 const Card = forwardRef((props, gridRef) => {
 
-    const { content, isScrolling, style, index, isResizing, setRowSize, sidebarTop = 256 } = props
+    const { content, scrollTo, style, isScrolling, index, isResizing, setRowSize, sidebarTop } = props
 
     const cardRef = useRef()
 
@@ -413,6 +413,20 @@ const Card = forwardRef((props, gridRef) => {
     const [focusRef, bounds] = useMeasure({ scroll: true, debounce: { scroll: 10, resize: 10 } });
 
     const distFromSidebar = bounds.top - sidebarTop + 16
+
+    // if scrolling has stopped, scrollTo
+    useLayoutEffect(() => {
+        if (!isScrolling) {
+            if (focus > 0.80 && focus < 0.90) {
+    
+                const deltaY = bounds.top - sidebarTop
+                
+    
+                scrollTo(style.top - sidebarTop + 16)
+    
+            }
+        }
+    }, [isScrolling])
 
 
     useLayoutEffect(() => {
