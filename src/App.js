@@ -97,7 +97,7 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
   
   const nCols = 1
   const remainingWidth = window.innerWidth - offsetLeft
-  const colWidth = Math.min(480, remainingWidth/nCols)
+  const colWidth = Math.min(440, remainingWidth/nCols)
 
   const nRows = Math.ceil(content?.length / nCols)
 
@@ -773,9 +773,6 @@ function App() {
       />
 
       <div className="fixed z-40" style={{ top: size.height, left: size.width }}>
-
-        
-
         <StreamSidebar
           inFocus={focusedContent !== null}
           isResizing = {isResizing}

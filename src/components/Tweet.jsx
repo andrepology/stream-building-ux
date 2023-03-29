@@ -258,7 +258,7 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
 
 
     return (
-        <div className='max-w-full min-w-full flex gap-4 justify-between items-baseline'>
+        <div className='grow flex gap-4 justify-between items-baseline'>
             <div className="w-2/5 grow flex items-baseline gap-4">
 
                 <h3
@@ -283,7 +283,6 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
                 </p>
 
             </div>
-            <ContentTag className="shrink inline-block" kind={"tweet"} />
         </div>
     )
 
@@ -320,8 +319,6 @@ const MetricsFooter = ({ tweet, isFocused }) => {
         "Replies": tweet.public_metrics.reply_count,
     }
 
-
-
     return (
         <div className={cn(
             'flex justify-between transition-all duration-500 opacity-0 items-center',
@@ -351,32 +348,21 @@ const MetricsFooter = ({ tweet, isFocused }) => {
                     count={interactions.Retweets}
                 />
             </div>
-            <div
-                // center icon below
-                className={cn(
-                    'h-9 w-9 flex cursor-pointer opacity-100 items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300',
-                    
-                )}
-            >
-                <IoAdd
-                    size={22}
-                />
-            </div>
         </div>
     )
 }
 
 
 
-const Tweet = forwardRef(({ tweet, isFocused }, ref) => {
+const Tweet = memo(({ tweet, isFocused }) => {
 
     const parsedContent = tweet.html.replace(/\\n/g, '<br/>');
 
 
     return (
+
         <div
-            ref={ref}
-            className = "flex flex-col gap-4"
+            className="grow flex flex-col gap-4"
         >
 
             {/* ContentHeader (Author, @handle, timestamp)  */}
@@ -387,18 +373,47 @@ const Tweet = forwardRef(({ tweet, isFocused }, ref) => {
             <p
                 data-cy='text'
                 dangerouslySetInnerHTML={{ __html: parsedContent }}
-                className={cn("text-gray-100 font-normal leading-5 pr-12",
+                className={cn("text-gray-100 font-normal leading-5 ",
                 )}
             />
 
             {/* Interaction Metrics */}
             <MetricsFooter isFocused={isFocused} tweet={tweet} />
         </div>
+
+
     )
 
 
     
 })
+
+
+
+const CardTag = memo(({ kind = "tweet", isFocused }) => {
+
+    return (
+        <div
+            className='flex flex-col justify-between items-end'
+        >
+            <ContentTag className="shrink inline-block" kind={kind} />
+
+            <div
+                // center icon below
+                className={cn(
+                    'h-9 w-9 flex cursor-pointer transition-all duration-200 opacity-0 items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300',
+                    { 'opacity-100': isFocused }
+                )}
+            >
+                <IoAdd
+                    size={22}
+                />
+            </div>
+        </div>
+    )
+
+})
+
 
 const Card = forwardRef((props, gridRef) => {
 
@@ -498,12 +513,14 @@ const Card = forwardRef((props, gridRef) => {
             ref={focusRef}
         >
             <div
-                className={cn("card min-w-24",
+                className={cn("card min-w-24 w-full flex",
                 )}
                 style={isResizing? {opacity: 0.1} : focusStyle}
                 ref={cardRef}
             >
                 <Tweet tweet={tweet} isFocused={isFocused} />
+                <CardTag kinds = {"tweet"} isFocused = {isFocused} />
+
                 {/* Context Building */}
                 {openContext && tweet.entities?.length > 0 && (
                     ContextBuilder(offsetLeft, tweet, isFocused)
