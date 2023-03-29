@@ -83,23 +83,32 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
 
 
   const rowSizes = useRef({})
-
-  
   const setRowSize =(index, size) => {
 
     rowSizes.current = {...rowSizes.current, [index]: size}
     gridRef?.current?.resetAfterRowIndex(index, false)
   }
 
+  const rowFocus = useRef({})
+  const setRowFocus = (index, focus) => {
+    rowFocus.current = {...rowFocus.current, [index]: focus}
+    gridRef?.current?.resetAfterRowIndex(index, false)
+  }
+
 
   
   const getRowSize = index => rowSizes.current[index] + GUTTER || 200
+  const getRowFocus = index => rowFocus.current[index] || 0.5
+
+ 
   
   const nCols = 1
   const remainingWidth = window.innerWidth - offsetLeft
   const colWidth = Math.min(440, remainingWidth/nCols)
 
   const nRows = Math.ceil(content?.length / nCols)
+
+  
 
 
   // only render if there is content to render
@@ -163,8 +172,13 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
               style = {style} 
               
               isResizing={isResizing}
+
               setRowSize = {setRowSize}
               getRowSize = {getRowSize}
+
+              setRowFocus = {setRowFocus}
+              getRowFocus = {getRowFocus}
+              
               
 
               ref = {gridRef}

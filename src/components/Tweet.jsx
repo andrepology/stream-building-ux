@@ -11,7 +11,8 @@ import { areEqual } from 'react-window';
 
 import { GrFormClose } from 'react-icons/gr';
 import VerifiedIcon from '../icons/verified.jsx'
-import { IoAdd } from 'react-icons/io5'
+import { IoAdd, IoCheckmark } from 'react-icons/io5'
+
 
 import ContentTag from './ContentTag';
 import { ContentThumbnail } from './ContentTag';
@@ -390,7 +391,18 @@ const Tweet = memo(({ tweet, isFocused }) => {
 
 
 
-const CardTag = memo(({ kind = "tweet", isFocused }) => {
+const CardTag = memo(({ kind = "tweet", isFocused, isPinned, pinCard }) => {
+
+
+    const Icon = isPinned ?
+        <IoCheckmark
+            size={22}
+            onClick={pinCard}
+        /> :
+        <IoAdd
+            size={22}
+            onClick={pinCard}
+        />
 
     return (
         <div
@@ -399,15 +411,14 @@ const CardTag = memo(({ kind = "tweet", isFocused }) => {
             <ContentTag className="shrink inline-block" kind={kind} />
 
             <div
+                onClick={() => pinCard()}
                 // center icon below
                 className={cn(
                     'h-9 w-9 flex cursor-pointer transition-all duration-200 opacity-0 items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300',
                     { 'opacity-100': isFocused }
                 )}
             >
-                <IoAdd
-                    size={22}
-                />
+                {Icon}
             </div>
         </div>
     )
@@ -417,19 +428,38 @@ const CardTag = memo(({ kind = "tweet", isFocused }) => {
 
 const Card = forwardRef((props, gridRef) => {
 
-    const { content, scrollTo, style, isScrolling, index, isResizing, setRowSize, sidebarTop } = props
+    const { content, scrollTo, style, isScrolling, index, isResizing, setRowSize, getRowFocus, setRowFocus, sidebarTop } = props
 
     const cardRef = useRef()
 
     // a scalar value [0,1] that represents how focused the Card is
-    const [focus, setFocus] = useState(0)
+    const [focus, setFocus] = useState(getRowFocus(index) || 0)
+    const prevFocus = useRef(getRowFocus(index) || null)
+    const pinFocus = 1.5
 
+    const isPinned = focus === pinFocus
+
+    // a function to toggle focus to 2
+    const pinCard = () => {
+        
+        if (focus === pinFocus) {
+
+            console.log(prevFocus.current)
+            setFocus(prevFocus.current || 0) 
+            setRowFocus(index, prevFocus.current || 0)
+        } else {
+            prevFocus.current = focus
+            setFocus(pinFocus)
+            setRowFocus(index, pinFocus)
+        }
+    }
+    
     // set the focus of the Card based on its position in the viewport
     const [focusRef, bounds] = useMeasure({ scroll: true, debounce: { scroll: 10, resize: 10 } });
 
     const distFromSidebar = bounds.top - sidebarTop + 16
 
-    // if scrolling has stopped, scrollTo
+    // if scrolling has stopped, snap to sidebar
     useLayoutEffect(() => {
         if (!isScrolling) {
             if (focus > 0.80 && focus < 0.90) {
@@ -448,35 +478,39 @@ const Card = forwardRef((props, gridRef) => {
 
         if (cardRef.current) {
 
-            const cardHeight = cardRef.current.getBoundingClientRect().height
+            const cardHeight = cardRef.current?.getBoundingClientRect().height
             setRowSize(index, cardHeight + 16*isFocused)
 
             gridRef?.current?.resetAfterRowIndex(index, false)
 
         }
-        
 
-        // if Tweet is below the Sidebar
-        if (distFromSidebar > 0) {
+        if (!isPinned) {
+            // if Tweet is below the Sidebar
+            if (distFromSidebar > 0) {
 
-            // scale focus[0,1] based on distance from sidebar
-            let remainingDistance = window.innerHeight - sidebarTop
-            let focus = 1 - (distFromSidebar / remainingDistance)
-            setFocus(focus)
-            
+                // scale focus[0,1] based on distance from sidebar
+                let remainingDistance = window.innerHeight - sidebarTop
+                let focus = 1 - (distFromSidebar / remainingDistance)
+                setFocus(focus)
+                setRowFocus(index, focus)
 
-        } else {
-            // above the Sidebar
 
-            let remainingDistance = sidebarTop
-            let focus = (bounds.top / remainingDistance)
+            } else {
+                // above the Sidebar
 
-            setFocus(focus)
+                let remainingDistance = sidebarTop
+                let focus = (bounds.top / remainingDistance)
 
+                setFocus(focus)
+                setRowFocus(index, focus)
+
+            }
         }
+
+
     
     }, [bounds, sidebarTop, isResizing])
-
 
 
     const focusThreshold = 0.80
@@ -491,7 +525,7 @@ const Card = forwardRef((props, gridRef) => {
 
     const yMargin = 22
 
-    const isFocused = distFromSidebar > 0 && focus > 0.75
+    const isFocused = (distFromSidebar > 0 && focus > 0.75) || isPinned
     const tweet = content.content
 
     const openContext = isFocused && !isResizing
@@ -500,6 +534,7 @@ const Card = forwardRef((props, gridRef) => {
 
     return (
         <div
+
             key = {content.id}
             // absolutely position by Grid
             style={{
@@ -519,7 +554,7 @@ const Card = forwardRef((props, gridRef) => {
                 ref={cardRef}
             >
                 <Tweet tweet={tweet} isFocused={isFocused} />
-                <CardTag kinds = {"tweet"} isFocused = {isFocused} />
+                <CardTag kinds={"tweet"} isFocused={isFocused} isPinned={isPinned} pinCard={pinCard} />
 
                 {/* Context Building */}
                 {openContext && tweet.entities?.length > 0 && (
