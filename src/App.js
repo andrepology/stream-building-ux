@@ -104,7 +104,7 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
   
   const nCols = 1
   const remainingWidth = window.innerWidth - offsetLeft
-  const colWidth = Math.min(440, remainingWidth/nCols)
+  const colWidth = Math.min(360, remainingWidth/nCols)
 
   const nRows = Math.ceil(content?.length / nCols)
 
@@ -253,7 +253,7 @@ const Dialog = ({chatMessage, className}) => {
       <div
         className="bg-gray-400/20 flex items-center hover:bg-gray-300/20 w-6 h-6 rounded-full cursor-grab"
       > 
-        <div className='text-center text-gray-300 text-sm leading-5 mx-auto w-4 h-4 rounded-full bg-white/55'>
+        <div className='text-center text-gray-300 text-sm leading-5 mx-auto w-5 h-5 rounded-full bg-white/55'>
           {role[0]}
         </div>
       </div>
@@ -342,6 +342,7 @@ const ChatInput = ({ input, setInput, isLoading }) => {
 const Chat = memo(({ chatHistory, isLoading, updateHistory }) => {
 
   const [input, setInput] = useState('')
+  const [isFocused, setFocused] = useState(false)
 
 
   const submitRequest = (e) => {
@@ -364,7 +365,7 @@ const Chat = memo(({ chatHistory, isLoading, updateHistory }) => {
 
   }
 
-  const focused = input.length > 0
+  const focus = input.length > 0 || isFocused 
 
   // render chat history based on agent input
   return (
@@ -375,10 +376,18 @@ const Chat = memo(({ chatHistory, isLoading, updateHistory }) => {
       <MessageStream chatHistory={chatHistory}/>
       <form 
         onSubmit={(e) => submitRequest(e)}
-        style = {focused ? {transform : 'translateX(-2px) translateY(-2px)'} : {}}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        style = {focus ? 
+            {
+              transform : 'translateX(-2px) translateY(-2px)', 
+              backgroundColor: `rgb(250 249 250 / 0.55)`,
+              borderColor: `rgb(250 249 250 / 0.55)`
+            } : 
+            {}}
         className={cn(
-          "flex h-12 transition-all duration-200 justify-between border border-white/55 bg-white/35 rounded-md pl-3.5 pr-2 py-2 resize-none w-full",
-          { "bg-white/55 shadow-focus": input.length > 0}
+          "flex h-12 transition-all duration-200 justify-between border border-white/10 bg-white/35 rounded-md pl-3.5 pr-2 py-2 resize-none w-full",
+          { "bg-white/55 border-white/55 shadow-focus": input.length > 0}
         )
         }
       >
@@ -622,7 +631,7 @@ function App() {
   const [chatHistory, setHistory] = useState([
     {
       time: new Date(),
-      content: "This is where you can create trails of thinking to think about things that might not fit in your head",
+      content: "What do we think through?",
       role: "system",
       contentIds: sampleContent.map(c => c.id)
     }])
@@ -756,6 +765,9 @@ function App() {
             bottomRight: <Grab isResizing={isResizing} />
           }
         }
+
+        maxHeight = {window.innerHeight - 128}
+        maxWidth = {window.innerWidth - 400}
 
         enableResizing={
           {

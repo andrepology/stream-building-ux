@@ -435,7 +435,7 @@ const Card = forwardRef((props, gridRef) => {
     // a scalar value [0,1] that represents how focused the Card is
     const [focus, setFocus] = useState(getRowFocus(index) || 0)
     const prevFocus = useRef(getRowFocus(index) || null)
-    const pinFocus = 1.5
+    const pinFocus = 1.25
 
     const isPinned = focus === pinFocus
 
@@ -531,11 +531,19 @@ const Card = forwardRef((props, gridRef) => {
     const openContext = isFocused && !isResizing
     const offsetLeft = bounds.width + 22
 
+    const scrollOnBlur = () => {
+        if (focus < 0.75) {
+            scrollTo(style.top - sidebarTop)
+        }
+    }
+
 
     return (
         <div
 
             key = {content.id}
+            // scroll to it onClick
+            onClick={scrollOnBlur}
             // absolutely position by Grid
             style={{
                 ...style, 
