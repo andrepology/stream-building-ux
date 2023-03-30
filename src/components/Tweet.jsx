@@ -363,7 +363,7 @@ const Tweet = memo(({ tweet, isFocused }) => {
     return (
 
         <div
-            className="grow flex flex-col gap-4"
+            className="flex-1 w-4/5 flex flex-col gap-4"
         >
 
             {/* ContentHeader (Author, @handle, timestamp)  */}
@@ -548,7 +548,7 @@ const Card = forwardRef((props, gridRef) => {
             ref={focusRef}
         >
             <div
-                className={cn("card min-w-24 w-full flex",
+                className={cn("card min-w-24 flex",
                 )}
                 style={isResizing? {opacity: 0.1} : focusStyle}
                 ref={cardRef}
