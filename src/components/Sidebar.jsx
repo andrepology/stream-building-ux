@@ -401,14 +401,10 @@ const Controls = ({viewConfig, setViewConfig}) => {
     const controls = Object.keys(viewConfig).map((control) => {
         let controlName = control 
 
-        console.log(controlName)
 
         // where viewConfig[control] is true
 
         let value = Object.entries(viewConfig[control]).filter(([key, value]) => value === true)[0][0]
-            
-        
-        
         let formOptions = Object.keys(viewConfig[control])
 
         return (
@@ -537,7 +533,6 @@ const SeedDrawer = ({ seeds }) => {
 
 const View = ({ streamFilters, toggleFilters, viewConfig, setViewConfig }) => {
 
-    console.log(viewConfig)
     // recursively renders Content filters
 
     const renderFilters = (streamFilters, level) => {
@@ -587,7 +582,6 @@ const useRemainingHeight = (ref, state) => {
     }, [ref])
 
     useEffect(() => {
-        console.log("Measuring remaining height")
         handleResize()
         window.addEventListener('resize', handleResize)
         return () => window.removeEventListener('resize', handleResize)

@@ -45,7 +45,7 @@ const Grab = ({ isResizing} ) => {
 }
 
 
-const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
+const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing, setRowFocus, rowFocus  }) => {
 
   // accepts content and renders a grid of content in a chosen order
   // manages their focus
@@ -87,11 +87,6 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
 
     rowSizes.current = {...rowSizes.current, [index]: size}
     gridRef?.current?.resetAfterRowIndex(index, false)
-  }
-
-  const rowFocus = useRef({})
-  const setRowFocus = (index, focus) => {
-    rowFocus.current = {...rowFocus.current, [index]: focus}
   }
 
 
@@ -727,6 +722,22 @@ function App() {
     }
   }, [chatHistory])
 
+
+  const rowFocus = useRef({})
+  const setRowFocus = (index, focus) => {
+    rowFocus.current = {...rowFocus.current, [index]: focus}
+  }
+
+  const pinnedRows = useRef(null)
+
+  useEffect(() => {
+    const pins = Object.entries(rowFocus.current).filter(([index, focus]) => focus > 1).map(([index, focus]) => index)
+    
+    console.log(pinnedRows)
+
+    pinnedRows.current = pins
+  }, [rowFocus.current])
+
   return (
     <div className="app-bg h-screen w-screen">
       <Rnd
@@ -819,6 +830,8 @@ function App() {
         offsetLeft = {size.width + 236}
         sidebarTop = {size.height}
         isResizing = {isResizing}
+        rowFocus = {rowFocus}
+        setRowFocus = {setRowFocus}
       />
       
 
