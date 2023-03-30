@@ -92,7 +92,6 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
   const rowFocus = useRef({})
   const setRowFocus = (index, focus) => {
     rowFocus.current = {...rowFocus.current, [index]: focus}
-    gridRef?.current?.resetAfterRowIndex(index, false)
   }
 
 
@@ -406,10 +405,11 @@ const tweets = tftTweets.map(tweet => {
 })
 
 function App() {
+  
   const [streams, setStreams] = useState(sampleStreams)
   const [currentStream, setStream] = useState({ name: "Trails For Thought", description: "A stream about the tools we shape and the tools that shape us" });
 
-  const [focusedContent, setFocusedContent] = useState(null);
+  
   // TODO: sorting and randomising order of Feed
   const [sampleContent, setSampleContent] = useState([])
   const [isLoading, setLoading] = useState(false)
@@ -800,7 +800,6 @@ function App() {
 
       <div className="fixed z-40" style={{ top: size.height, left: size.width }}>
         <StreamSidebar
-          inFocus={focusedContent !== null}
           isResizing = {isResizing}
 
           header = {<Chat isLoading={isLoading} chatHistory={chatHistory} updateHistory={updateHistory} />}

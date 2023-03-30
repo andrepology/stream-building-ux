@@ -18,7 +18,6 @@ import ContentTag from './ContentTag';
 import { ContentThumbnail } from './ContentTag';
 
 
-
 import LikeIcon from '../icons/like.jsx'
 import ReplyIcon from '../icons/reply.jsx'
 import RetweetIcon from '../icons/retweet.jsx'
@@ -440,14 +439,13 @@ const Card = forwardRef((props, gridRef) => {
     const isPinned = focus === pinFocus
 
     // a function to toggle focus to 2
-    const pinCard = () => {
-        
+    const pinCard = () => {      
         if (focus === pinFocus) {
-
-            console.log(prevFocus.current)
-            setFocus(prevFocus.current !== 1.5? prevFocus.current : 1) 
-            setRowFocus(index, prevFocus.current !== 1.5? prevFocus.current : 1)
+            // if already pinned, recover previous value
+            setFocus(prevFocus.current !== pinFocus? prevFocus.current : 1) 
+            setRowFocus(index, prevFocus.current !== pinFocus? prevFocus.current : 1)
         } else {
+            // set isPinned
             prevFocus.current = focus
             setFocus(pinFocus)
             setRowFocus(index, pinFocus)
@@ -515,7 +513,7 @@ const Card = forwardRef((props, gridRef) => {
 
     const focusThreshold = 0.80
     const focusStyle = {
-        opacity: focus > focusThreshold ? 1 : 0.1 + focus * 0.5,
+        opacity: focus > focusThreshold ? 1 : 0.2 + focus * 0.5,
         transform: focus > focusThreshold ? `scale(${1 + 0.05 * focus})` : `scale(1.00)`,
         padding: '12px 12px 16px',
         transition: `all ${0.2 * focus}s ease-in-out`,

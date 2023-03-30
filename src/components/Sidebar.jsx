@@ -9,6 +9,13 @@ import { MdKeyboardArrowRight } from 'react-icons/md'
 import { BiDotsVertical, BiCaretRight } from 'react-icons/bi'
 import {IoIosCheckmark} from 'react-icons/io'
 
+import Slider from "react-input-slider"
+
+import { ReactComponent as Content} from "../assets/Icon/Content/Content.svg"
+import { ReactComponent as Aggregation} from "../assets/Icon/Aggregation/Aggregation.svg"
+import { ReactComponent as Far} from "../assets/Icon/Far/Far.svg"
+import { ReactComponent as Near} from "../assets/Icon/Near/Near.svg"
+
 
 import { useCallback } from "react";
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
@@ -76,7 +83,7 @@ const AccordionDetails = ({ refHeight, expanded, children }) => {
 
         heightToFill.current = window.innerHeight - bounds.bottom + 156
 
-    }, [refHeight, bounds.bottom])
+    }, [refHeight, children, bounds.bottom, bounds])
 
     const { minHeight, height, visibility } = useSpring({
         from: { minHeight: 0, height: 0, visibility: 0, y: 0 },
@@ -103,11 +110,11 @@ const AccordionDetails = ({ refHeight, expanded, children }) => {
     } else { return null }
 }
 
-const Accordion = ({  height, summary, details, toggle, tabs = null }) => {
+const Accordion = ({  height, summary, details, toggle, tabs = null, _expanded = false }) => {
     // renders a controlled accordion with animated expand/collapse
 
     // Fallback if not controlled by parent
-    const [expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(_expanded)
 
     const detailsToggle = toggle ? () => toggle() : () => setExpanded(!expanded)
     const istabs = tabs ?? expanded
@@ -390,11 +397,15 @@ const ViewHeader = ({ expanded }) => {
 }
 
 const ViewControls = () => {
+
+    
+
+
     return (
         <div className="pb-3">
-            <Control controlName={"Zoom"} value="Forest" />
-            <Control controlName={"Scope"} value="Near" />
-            <Control controlName={"Range"} value="Day" />
+            <Control controlName={"Zoom"} value="Forest" formOptions={["Forest", "Trees"]} />
+            <Control controlName={"Scope"} value="Near" formOptions={["Crumbs", "Near", "Far"]} />
+            <Control controlName={"Range"} value="Day" formOptions={["Day", "Month", "Year"]} />
         </div>
     )
 
@@ -408,6 +419,7 @@ const ViewController = ({ view, setView }) => {
             <Accordion
                 summary={<ViewHeader />}
                 details={<ViewControls />}
+                _expanded = {true}
             />
         </div>
     )
@@ -562,14 +574,86 @@ const useRemainingHeight = (ref, state) => {
 
 const Control = ({ controlName, value, formOptions }) => {
 
+    // Renders an input control with a name, a current value of possible values
+    // value must be in possibleValues
+ 
+    const [index, setIndex] = useState(formOptions.indexOf(value))
+    const _value = formOptions[index]
+
+    const formLength = formOptions.length - 1
+
+    const leftOpacity = 0.3 + (formLength - index)/formLength
+    const rightOpacity = 0.3 + (index/formLength)
+
+    const leftTransform = 1 + 0.2*(formLength - index)/formLength
+    const rightTransform = 1 + 0.2*index/formLength
+
+    const IconLeft = controlName === "Zoom" ? 
+        <Aggregation style={{opacity: leftOpacity, transform: `scale(${leftTransform }`}} />
+        : controlName === "Scope" ?
+        <Near style={{opacity: leftOpacity, transform: `scale(${leftTransform }`}} />
+        : <div className="w-12 h-12"/>
+
+    const IconRight = controlName === "Zoom" ?
+        <Content style={{opacity: rightOpacity, transform: `scale(${rightTransform}` }} />
+        : controlName === "Scope" ?
+        <Far style={{opacity: rightOpacity, transform: `scale(${rightTransform}`}} />
+        : <div className="w-12 h-12"/>
+    
+
+    const tickStep = ({x}) => {
+        // if x is int, setIndex
+        if (x % 1 === 0) {
+            setIndex(x)
+        }
+    }
+
     return (
         <div className="flex flex-col gap-0 pt-2 pb-1 pl-6 pr-4.5 ">
             <p className="caption text-gray-400" >{controlName}</p>
-            <div className="flex justify-between py-1">
-                <p className="text-gray-100">{value}</p>
-                <div className="flex gap-1.5">
-                    {formOptions}
+            <div className="flex items-center justify-between py-1">
+                <p className="text-gray-100">{_value}</p>
+
+                <div className="flex items-center gap-2">
+                    {cloneElement(IconLeft ?? <div/>, {className: "transition-all duration-500 cursor-pointer", onClick: () => setIndex(0)})}
+
+                    <Slider
+                        axis = "x"
+                        x = {index}
+                        onChange={tickStep}
+                        xmin={0}
+                        xmax={formOptions.length - 1}
+                        
+
+                        styles = {{
+                            track: {
+                                backgroundColor: "#d7d5dd",
+                                height: "1px",
+                                width: "50px"
+                            },
+                            active: {
+                                backgroundColor: "#D0CED4",
+                            }, 
+                            thumb: {
+                                width: "9px",
+                                height: "9px",
+                                backgroundColor: "#36353B",
+                                boxShadow: "none"
+                        }}}
+                        
+                        //marks={formOptions.map((v, i) => ({ value: i, label: v }))}
+                        //track={false}
+                        //valueLabelDisplay="auto"
+                        // valueLabelFormat={(v) => formOptions[v]}
+                    />
+
+                    {cloneElement(IconRight ?? <div/>, {className: "transition-all duration-500 cursor-pointer", onClick: () => setIndex(formOptions.length - 1)  })}
+
                 </div>
+
+            
+                
+                
             </div>
         </div>
     )
