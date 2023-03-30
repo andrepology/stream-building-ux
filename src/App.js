@@ -418,23 +418,19 @@ function App() {
   // TODO: move to useFilters
   const [viewConfig, setViewConfig] = useState({
     zoom: {
-      topic: true,
-      tweet: false
-    },
-    limit: {
-      day: true,
-      week: false,
-      month: false,
-    },
-    sort: {
-      new: true,
-      relevant: false
+      forest: true,
+      trees: false
     },
     scope: {
       crumbs: true,
       near: false,
       far: false
-    }
+    },
+    range: {
+      day: true,
+      week: false,
+      month: false,
+    },
   });
 
   const [streamFilters, setFilters, toggleFilters] = useFilters();
@@ -813,6 +809,7 @@ function App() {
           toggleFilters={toggleFilters}
 
           viewConfig={viewConfig}
+          setViewConfig = {setViewConfig}
         />
       </div>
 

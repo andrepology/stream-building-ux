@@ -396,29 +396,53 @@ const ViewHeader = ({ expanded }) => {
     )
 }
 
-const ViewControls = () => {
+const Controls = ({viewConfig, setViewConfig}) => {
 
-    
+    const controls = Object.keys(viewConfig).map((control) => {
+        let controlName = control 
+
+        console.log(controlName)
+
+        // where viewConfig[control] is true
+
+        let value = Object.entries(viewConfig[control]).filter(([key, value]) => value === true)[0][0]
+            
+        
+        
+        let formOptions = Object.keys(viewConfig[control])
+
+        return (
+            <Control
+                controlName={controlName}
+                value={value}
+                formOptions={formOptions}
+                setViewConfig={setViewConfig}
+            />
+        )
+
+    }
+
+
+    )
+
 
 
     return (
         <div className="pb-3">
-            <Control controlName={"Zoom"} value="Forest" formOptions={["Forest", "Trees"]} />
-            <Control controlName={"Scope"} value="Near" formOptions={["Crumbs", "Near", "Far"]} />
-            <Control controlName={"Range"} value="Day" formOptions={["Day", "Month", "Year"]} />
+            {controls}
         </div>
     )
 
 }
 
 
-const ViewController = ({ view, setView }) => {
+const ViewControls = ({ viewConfig, setViewConfig }) => {
 
     return (
         <div className="sticky bg-white/35 border-b border-gray-500">
             <Accordion
                 summary={<ViewHeader />}
-                details={<ViewControls />}
+                details={<Controls viewConfig = {viewConfig} setViewConfig = {setViewConfig} />}
                 _expanded = {true}
             />
         </div>
@@ -511,8 +535,9 @@ const SeedDrawer = ({ seeds }) => {
     )
 }
 
-const ContentFilters = ({ streamFilters, toggleFilters }) => {
+const View = ({ streamFilters, toggleFilters, viewConfig, setViewConfig }) => {
 
+    console.log(viewConfig)
     // recursively renders Content filters
 
     const renderFilters = (streamFilters, level) => {
@@ -541,7 +566,7 @@ const ContentFilters = ({ streamFilters, toggleFilters }) => {
 
     return (
         <div className="flex flex-col gap-3 pb-16">
-            <ViewController />
+            <ViewControls viewConfig = {viewConfig} setViewConfig = {setViewConfig} />
 
             {renderFilters(streamFilters, 1)}
         </div>
@@ -572,13 +597,17 @@ const useRemainingHeight = (ref, state) => {
     return height
 }
 
-const Control = ({ controlName, value, formOptions }) => {
+const Control = ({ controlName, value, formOptions, setViewConfig }) => {
 
     // Renders an input control with a name, a current value of possible values
     // value must be in possibleValues
+
+    controlName = controlName.charAt(0).toUpperCase() + controlName.slice(1)
  
     const [index, setIndex] = useState(formOptions.indexOf(value))
-    const _value = formOptions[index]
+    let _value = formOptions[index]
+    _value = _value.charAt(0).toUpperCase() + _value.slice(1)
+    
 
     const formLength = formOptions.length - 1
 
@@ -607,6 +636,10 @@ const Control = ({ controlName, value, formOptions }) => {
             setIndex(x)
         }
     }
+
+
+    // when inactive for 1.5 seonds, setViewControls
+
 
     return (
         <div className="flex flex-col gap-0 pt-2 pb-1 pl-6 pr-4.5 ">
@@ -709,7 +742,7 @@ const Tabs = ({ tabs, toggleTabs }) => {
 
 
 
-const StreamSidebar = ({ stream, header = null,  isResizing, currentStream, streamFilters, toggleFilters, viewConfig }) => {
+const StreamSidebar = ({ stream, header = null,  isResizing, currentStream, streamFilters, toggleFilters, viewConfig, setViewConfig }) => {
 
     // Renders a Stream object, its metadata, View Controller and Seeds
 
@@ -774,7 +807,7 @@ const StreamSidebar = ({ stream, header = null,  isResizing, currentStream, stre
                 <Accordion
                     height={remainingHeight}
                     summary={<div></div>}
-                    details={<ContentFilters streamFilters={streamFilters} toggleFilters={toggleFilters} viewConfig={viewConfig} />}
+                    details={<View streamFilters={streamFilters} toggleFilters={toggleFilters} viewConfig={viewConfig} setViewConfig = {setViewConfig} />}
                     toggle={() => toggleTabs("view")}
                     tabs={tabs["view"]}
 
