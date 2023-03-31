@@ -125,7 +125,7 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing, setSeed  }) =>
 
   return (
     <div 
-      className='z-10 pl-6'
+      className='feed z-10 pl-6'
       style={{position: 'relative', overflow: 'visible', left: offsetLeft, top: 0}}
     >
 
@@ -253,16 +253,29 @@ const Dialog = ({chatMessage, className}) => {
   const { content, time, role } = chatMessage
 
   const isAssistant = role === 'assistant'
+  const isUser = role === 'user'
+
+  const [isHovered, setHovered] = useState(false)
+
 
   return (
     <div 
-      className={"flex items-baseline gap-4 " + className}
-
+      className={"flex items-baseline gap-1.5 " + className}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       <div
-        className="bg-gray-400/20 flex items-center hover:bg-gray-300/20 w-6 h-6 rounded-full cursor-grab"
+        className={cn(
+          "bg-gray-400/20 flex items-center w-6 h-6 rounded-full cursor-grab",
+          {"bg-gray-300/20": isHovered}
+        )}
       > 
-        <div className='text-center text-gray-300 text-sm leading-5 mx-auto w-5 h-5 rounded-full bg-white/55'>
+        <div 
+          className={
+            cn(
+              'text-center text-gray-200/95 text-sm leading-5 mx-auto w-5 h-5 rounded-full bg-white/55',
+              {"bg-white/95 text-gray-100/95": isHovered}
+          )}>
           {role[0]}
         </div>
       </div>
@@ -270,15 +283,17 @@ const Dialog = ({chatMessage, className}) => {
       <p 
         // wrap text to not overflow
         className={
-          cn("py-2 px-1.5 w-4/5 break-all text-gray-100/80 hover:text-gray-100",
-          {"": isAssistant},
+          cn("grow transition-all duration-200 py-2 px-1.5 font-light hover:font-normal tracking-wide w-4/5 border-white/0 leading-5 break-words text-gray-100 hover:text-gray-100",
+          {"rounded-md pl-6 pr-2 py-2 cursor-pointer": isUser},
+          {"pl-6": isAssistant},
+          // {"bg-white/55 border-white/55": isHovered && isUser},
           )}
       >{content}</p>
     </div>
   )
 }
 
-const MessageStream = ({chatHistory}) => {
+const MessageStream = ({chatHistory, width }) => {
 
 
   // measure height of message stream
@@ -291,20 +306,37 @@ const MessageStream = ({chatHistory}) => {
     setRerender(_ => _ + 1)
   }, [bounds])
 
-  const remainingSpace = window.innerHeight - bounds?.bottom
+  console.log(chatHistory.length)
   
-  const sessionHeader = <Dialog className = {"sticky top-0 pb-2 border-b border-gray-500 "} chatMessage = {chatHistory[1] || chatHistory[0]} key = {1} />
+
+  const sessionHeader = chatHistory.length > 1 &&
+    <Dialog 
+      className = {cn(
+        "sticky top-0 pb-2 border-b border-gray-500",
+        {"border-b-0 bg-bg/0 backdrop-blur-none": chatHistory.length < 2},
+        {"backdrop-blur-xl bg-bg/40": chatHistory.length >= 2}
+      )} 
+      chatMessage = {chatHistory[1] || chatHistory[0]} 
+      key = {1} 
+    />
+
+  const offsetLeft = 30
 
   // render a stream of messages
   return (
     <div 
       ref = {messageRef}
-      style = {{top: -bounds?.height - 12, maxHeight: 400}}
-      className="absolute overflow-scroll w-full -left-7 flex flex-col gap-2"
+      style = {{
+        left: -offsetLeft,
+        top: -bounds?.height - 16, 
+        maxHeight: 320, 
+        width: width + offsetLeft}}
+      className="absolute overflow-scroll w-full flex flex-col gap-2"
     >
       {sessionHeader}
       {chatHistory.slice(2, chatHistory.length).map((message, i) => <Dialog chatMessage={message} key={i + 1}/>)}
     </div>
+
   )
 
 }
@@ -314,9 +346,6 @@ const ChatInput = ({ input, setInput, isLoading }) => {
 
   // if loading return disabled input
   const [isFocused, setFocused] = useState(false)
-
-  
-
 
   let Icon = isLoading ?
     <ImSpinner2 className='w-4 h-4 mx-auto text-gray-400 hover:text-gray-300 animate-spin' />
@@ -332,10 +361,16 @@ const ChatInput = ({ input, setInput, isLoading }) => {
         onBlur={() => setFocused(false)}
         onFocus={() => setFocused(true)}
 
-        placeholder='Type a message...'
+        placeholder='Trailing Through ...'
         value={input}
         onChange={e => setInput(e.target.value)}
-        className="w-4/5 bg-white/0 text-md transition-transform duration-300 text-gray-900 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 "
+        className={cn(
+          "w-4/5 bg-white/0 text-md placeholder-gray-200 transition-transform duration-300 text-gray-900 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 ",
+          {"placeholder-gray-200/55": isFocused}
+        )}
+        style = {{
+          opacity: isFocused ? 1 : 0.35,
+        }}
       />
         <button
         className="shrink rounded-sm w-8 h-8 "
@@ -348,7 +383,7 @@ const ChatInput = ({ input, setInput, isLoading }) => {
 }
 
 
-const Chat = memo(({ chatHistory, isLoading, updateHistory }) => {
+const Chat = memo(({ chatHistory, isLoading, updateHistory, width = 256 }) => {
 
   const [input, setInput] = useState('')
   const [isFocused, setFocused] = useState(false)
@@ -380,9 +415,9 @@ const Chat = memo(({ chatHistory, isLoading, updateHistory }) => {
   return (
     <div 
       className="flex flex-col gap-4"
-      style={{ width: 238 }}
+      style={{ width: width }}
     >
-      <MessageStream chatHistory={chatHistory}/>
+      <MessageStream chatHistory={chatHistory} width = {width}/>
       <form 
         onSubmit={(e) => submitRequest(e)}
         onFocus={() => setFocused(true)}
@@ -395,7 +430,7 @@ const Chat = memo(({ chatHistory, isLoading, updateHistory }) => {
             } : 
             {}}
         className={cn(
-          "flex h-12 transition-all duration-200 justify-between border border-white/10 bg-white/35 rounded-md pl-3.5 pr-2 py-2 resize-none w-full",
+          "flex transition-all duration-200 z-10 justify-between border border-white/10 bg-white/35 rounded-md pl-3.5 pr-2 py-2 resize-none w-full",
           { "bg-white/55 border-white/55 shadow-focus": input.length > 0}
         )
         }
@@ -482,7 +517,7 @@ function App() {
   
   const [size, setSize] = useState({
     width: 256,
-    height: 224,
+    height: 480,
     x: 0,
     y: 0
   })
@@ -668,7 +703,7 @@ function App() {
   const [chatHistory, setHistory] = useState([
     {
       time: new Date(),
-      content: "What do we think through?",
+      content: "",
       role: "system",
       contentIds: sampleContent.map(c => c.id)
     }])
@@ -863,7 +898,7 @@ function App() {
 
         setSeed = {setSeed}
 
-        offsetLeft = {size.width + 236}
+        offsetLeft = {size.width + 256}
         sidebarTop = {size.height}
         isResizing = {isResizing}
 
@@ -871,7 +906,11 @@ function App() {
       />
       
 
-      <StreamBackdrop currentStream={currentStream.name} sidebarLeft = {size.width} sidebarTop = {size.height} />
+      <StreamBackdrop 
+        currentStream={currentStream.name} 
+        isResizing = {isResizing}
+        sidebarLeft = {size.width} 
+        sidebarTop = {size.height} />
 
     </div>
 
@@ -879,7 +918,7 @@ function App() {
   );
 }
 
-const StreamBackdrop = ({ currentStream, sidebarTop, sidebarLeft }) => {
+const StreamBackdrop = ({ currentStream, sidebarTop, sidebarLeft, isResizing }) => {
   
   const bgImage = {
     backgroundImage: `url(${Masks})`,
@@ -887,13 +926,17 @@ const StreamBackdrop = ({ currentStream, sidebarTop, sidebarLeft }) => {
     backgroundSize: "cover",
   } 
 
+  const displace = isResizing ? 0 : 0
+
   return (
     <>
       <div
         className='absolute tracking-tighter text-gray-500/60 font-semibold z-0'
         style = {{
-          top: sidebarTop - 64,
-          left: sidebarLeft + 156,
+          top: sidebarTop - 64 + displace,
+          left: sidebarLeft + 156 - displace,
+          transform: isResizing? `scale(0.95)` : `scale(1)`,
+          transition: 'transform 0.1s ease-in-out',
           fontSize: '5rem',
           userSelect: 'none',
           zIndex: '1'

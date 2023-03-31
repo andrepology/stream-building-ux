@@ -7,6 +7,7 @@
   padding: 0;
 }
 
+
 html,
 body {
   margin: 0;
@@ -17,6 +18,8 @@ body {
   overflow: hidden;
   box-sizing: border-box;
 }
+
+
 
 
 .animate-text-pulse {

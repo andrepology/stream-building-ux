@@ -446,7 +446,7 @@ const Controls = ({viewConfig, setViewConfig}) => {
 const ViewControls = ({ viewConfig, setViewConfig }) => {
 
     return (
-        <div className="sticky top-0 bg-white/35 backdrop-blur-lg border-b border-gray-500">
+        <div className="sticky top-0 bg-white/35 backdrop-blur-md border-b border-gray-500">
             <Accordion
                 summary={<ViewHeader />}
                 details={<Controls viewConfig = {viewConfig} setViewConfig = {setViewConfig} />}
@@ -514,7 +514,7 @@ const StatusIndicator = () => {
 const StatusViewer = ({ status, setStatus }) => {
 
     return (
-        <div className="bg-white/35 border-b border-gray-500">
+        <div className="sticky top-0 bg-white/35 backdrop-blur-xl border-b border-gray-500">
             <Accordion
                 summary={<StatusHeader />}
                 details={<StatusIndicator />}
@@ -746,7 +746,7 @@ const Tabs = ({ tabs, toggleTabs, crumbs, view }) => {
         <div
             className={
                 cn(
-                    "pl-4.5 pt-2.5 pb-3 pr-3.5 flex gap-4 items-baseline",
+                    "pl-4.5  pt-2.5 pb-3 pr-3.5 flex gap-4 items-baseline",
                     { "bg-white/35": isOpen },
                 )
             }
@@ -812,11 +812,13 @@ const StreamSidebar = ({ header = null,  isResizing, currentStream, streamFilter
 
     const crumbs = currentStream?.seeds
 
+    const SIDEBAR_WIDTH = 256
+
 
     return (
         <div
             ref={ref}
-            style = {{ width: 238 }}
+            style = {{ width: SIDEBAR_WIDTH }}
             className={
                 cn(
                     "flex flex-col gap-0 rounded-md ",
