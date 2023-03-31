@@ -46,12 +46,23 @@ const InlineContent = ({ name, kind }) => {
     // A width-constrained entity tag
     // Useful for rendering seeds
 
+    const [isHovered, setIsHovered] = useState(false)
+
     return (
-        <div className={
+
+        <div
+            onMouseEnter={() => {setIsHovered(true)}}
+            onMouseLeave={() => setIsHovered(false)}
+            className={
             cn(
                 "pl-3 pr-2.5 py-2 max-w-96 items-baseline inline-flex justify-between bg-white/55 rounded-md")
         }>
-            <p className=" w-4/5 truncate hover:overflow hover:whitespace-normal text-gray-200">
+            <p
+                className={cn(
+                    "w-4/5 truncate text-gray-200",
+                    { "overflow whitespace-normal": isHovered }
+                )}
+            >
                 {name}
             </p>
 
@@ -687,13 +698,41 @@ const Control = ({ controlName, value, formOptions, setViewConfig }) => {
 }
 
 
-const Tabs = ({ tabs, toggleTabs }) => {
+
+const Indicator = ({ hasChanged }) => {
+
+    return (
+        <div
+            className={cn(
+                "absolute animate-none -right-1.5 top-0.5 transition-opacity duration-200 opacity-0 w-1 h-1 bg-gray-200 rounded-full animate-pulse",
+                { "animate-pulse opacity-100": true }
+            )}
+        />
+    )
+}
+
+const Tabs = ({ tabs, toggleTabs, crumbs, view }) => {
     // Renders tabs for Seeds and View Controller
 
+    const prevCrumbs = useRef([])
+
+    useEffect(() => {
+        if (prevCrumbs.current?.length !== crumbs?.length) {
+            console.log("crumbs changed")
+            console.log(prevCrumbs.current?.length, crumbs?.length)
+
+            prevCrumbs.current.length = crumbs?.length || 0
+        }
+    })
+
+
+
+    const hasChanged = prevCrumbs.current?.length !== crumbs?.length
+
     const isOpen = Object.values(tabs).includes(true)
+    const baseStyle = "cursor-pointer relative tracking-tighter leading-5 transition-all duration-200"
 
     const activeStyle = (isActive) => {
-        let baseStyle = "cursor-pointer tracking-tighter leading-5 transition-all duration-200"
 
         let addition = isActive ?
             "text-gray-100 hover:text-gray-100/70 font-normal "
@@ -702,7 +741,6 @@ const Tabs = ({ tabs, toggleTabs }) => {
 
         return baseStyle + " " + addition
     }
-
 
     return (
         <div
@@ -715,16 +753,19 @@ const Tabs = ({ tabs, toggleTabs }) => {
         >
 
             <h2
-                className={activeStyle(tabs.seeds)}
+                className={activeStyle(tabs.seeds) + " " + (hasChanged ? "animate-text-pulse" : "animation-none")}
                 onClick={() => toggleTabs("seeds")}
+
             >
                 Crumbs
+
             </h2>
             <h2
                 className={activeStyle(tabs.view)}
                 onClick={() => toggleTabs("view")}
             >
                 View
+
             </h2>
         </div>
 
@@ -769,6 +810,8 @@ const StreamSidebar = ({ header = null,  isResizing, currentStream, streamFilter
         }
     }, [tabs, bounds])
 
+    const crumbs = currentStream?.seeds
+
 
     return (
         <div
@@ -788,7 +831,7 @@ const StreamSidebar = ({ header = null,  isResizing, currentStream, streamFilter
             <div
                 className={"flex flex-col"}
             >
-                <Tabs tabs={tabs} toggleTabs={toggleTabs} />
+                <Tabs tabs={tabs} toggleTabs={toggleTabs} crumbs={crumbs} />
 
                 <Accordion
                     height={remainingHeight}

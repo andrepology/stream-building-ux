@@ -19,6 +19,23 @@ body {
 }
 
 
+.animate-text-pulse {
+  /* animate 4 times */
+
+  animation: pulse-black 0.3s 1;
+}
+
+
+@keyframes pulse-black {
+
+  90% {
+    color: rgb(144, 144, 144);
+  }
+
+  180% {
+    color: rgba(224, 224, 224, 0);
+  }
+}
 
 .app-bg {
   background-color: #F3F1F3;

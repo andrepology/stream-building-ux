@@ -392,7 +392,6 @@ const Tweet = memo(({ tweet, isFocused }) => {
 
 const CardTag = memo(({ kind = "tweet", isFocused, isPinned, pinCard }) => {
 
-
     const Icon = isPinned ?
         <IoCheckmark
             size={22}
@@ -425,7 +424,7 @@ const CardTag = memo(({ kind = "tweet", isFocused, isPinned, pinCard }) => {
 })
 
 
-const BaseCard = forwardRef((props, gridRef) => {
+const Card = forwardRef((props, gridRef) => {
 
     const { content, setSeed, scrollTo, style, isScrolling, index, isResizing, setRowSize, getRowFocus, setRowFocus, sidebarTop } = props
 
@@ -464,9 +463,7 @@ const BaseCard = forwardRef((props, gridRef) => {
         if (!isScrolling) {
             if (focus > 0.80 && focus < 0.90) {
     
-                const deltaY = bounds.top - sidebarTop
-                
-    
+                // TODO: snap into place
                 scrollTo(style.top - sidebarTop + 16)
     
             }
@@ -476,7 +473,7 @@ const BaseCard = forwardRef((props, gridRef) => {
 
     useLayoutEffect(() => {
 
-        if (cardRef.current) {
+        if (cardRef?.current) {
 
             const cardHeight = cardRef.current?.getBoundingClientRect().height
             setRowSize(index, cardHeight + 16*isFocused)
@@ -569,10 +566,6 @@ const BaseCard = forwardRef((props, gridRef) => {
                     ContextBuilder(offsetLeft, tweet, isFocused)
                 )}
             </div>
-
-
-
-
             
 
         </div>
@@ -582,7 +575,6 @@ const BaseCard = forwardRef((props, gridRef) => {
 
 })
 
-const Card = memo(BaseCard, areEqual)
 
 
 
@@ -595,10 +587,10 @@ function ContextBuilder(offsetLeft, tweet, isFocused) {
     return (
         <div 
             className={cn(
-                'absolute flex flex-col gap-3 w-56 transition-all duration-300',
-                isFocused ? 'opacity-100' : 'opacity-0'
+                'absolute flex flex-col gap-3 w-56 transition-opacity opacity-0 duration-300',
+                isFocused && 'opacity-100'
             )}
-            style={{ top: 16, left: offsetLeft + 16, width: contextWidth }}
+            style={{ top: 16, left: offsetLeft + 16, width: contextWidth}}
         >
             <p className='caption leading-3 text-gray-300/90 pl-2 pb-1.5 border-b border-gray-500'>Related Content</p>
             <div className='flex flex-col gap-6'>
