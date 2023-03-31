@@ -15,7 +15,7 @@ const sendChat = async (messages) => {
       },
     }
 
-    const chatResponse = await axios.post('https://trails-chat-retrieval.fly.dev/chat', data, config)
+    const chatResponse = await axios.post('http://0.0.0.0:8000/chat', data, config)
 
     // if error, return error message
     if (chatResponse.data.error) {

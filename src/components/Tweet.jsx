@@ -11,11 +11,11 @@ import { areEqual } from 'react-window';
 
 import { GrFormClose } from 'react-icons/gr';
 import VerifiedIcon from '../icons/verified.jsx'
-import { IoAdd } from 'react-icons/io5'
+import { IoAdd, IoCheckmark } from 'react-icons/io5'
+
 
 import ContentTag from './ContentTag';
 import { ContentThumbnail } from './ContentTag';
-
 
 
 import LikeIcon from '../icons/like.jsx'
@@ -258,7 +258,7 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
 
 
     return (
-        <div className='max-w-full min-w-full flex gap-4 justify-between items-baseline'>
+        <div className='grow flex gap-4 justify-between items-baseline'>
             <div className="w-2/5 grow flex items-baseline gap-4">
 
                 <h3
@@ -283,7 +283,6 @@ const ContentHeader = ({ content, contentType, isFocused }) => {
                 </p>
 
             </div>
-            <ContentTag className="shrink inline-block" kind={"tweet"} />
         </div>
     )
 
@@ -320,8 +319,6 @@ const MetricsFooter = ({ tweet, isFocused }) => {
         "Replies": tweet.public_metrics.reply_count,
     }
 
-
-
     return (
         <div className={cn(
             'flex justify-between transition-all duration-500 opacity-0 items-center',
@@ -351,32 +348,21 @@ const MetricsFooter = ({ tweet, isFocused }) => {
                     count={interactions.Retweets}
                 />
             </div>
-            <div
-                // center icon below
-                className={cn(
-                    'h-9 w-9 flex cursor-pointer opacity-100 items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300',
-                    
-                )}
-            >
-                <IoAdd
-                    size={22}
-                />
-            </div>
         </div>
     )
 }
 
 
 
-const Tweet = forwardRef(({ tweet, isFocused }, ref) => {
+const Tweet = memo(({ tweet, isFocused }) => {
 
     const parsedContent = tweet.html.replace(/\\n/g, '<br/>');
 
 
     return (
+
         <div
-            ref={ref}
-            className = "flex flex-col gap-4"
+            className="flex-1 w-4/5 flex flex-col gap-4"
         >
 
             {/* ContentHeader (Author, @handle, timestamp)  */}
@@ -387,72 +373,146 @@ const Tweet = forwardRef(({ tweet, isFocused }, ref) => {
             <p
                 data-cy='text'
                 dangerouslySetInnerHTML={{ __html: parsedContent }}
-                className={cn("text-gray-100 font-normal leading-5 pr-12",
+                className={cn("text-gray-100 font-normal leading-5 ",
                 )}
             />
 
             {/* Interaction Metrics */}
             <MetricsFooter isFocused={isFocused} tweet={tweet} />
         </div>
+
+
     )
 
 
     
 })
 
+
+
+const CardTag = memo(({ kind = "tweet", isFocused, isPinned, pinCard }) => {
+
+    const Icon = isPinned ?
+        <IoCheckmark
+            size={22}
+            onClick={pinCard}
+        /> :
+        <IoAdd
+            size={22}
+            onClick={pinCard}
+        />
+
+    return (
+        <div
+            className='flex flex-col w-9 overflow-visible justify-between items-end'
+        >
+            <ContentTag className="shrink overflow-visible inline-block" kind={kind} />
+
+            <div
+                onClick={() => pinCard()}
+                // center icon below
+                className={cn(
+                    'h-9 w-9 flex cursor-pointer transition-all duration-200 opacity-0 items-center justify-center rounded-md bg-white/55 border border-gray-500 text-gray-400 hover:bg-gray-500 hover:text-gray-300',
+                    { 'opacity-100': isFocused }
+                )}
+            >
+                {Icon}
+            </div>
+        </div>
+    )
+
+})
+
+
 const Card = forwardRef((props, gridRef) => {
 
-    const { content, isScrolling, style, index, isResizing, setRowSize, sidebarTop = 256 } = props
+    const { content, setSeed, scrollTo, style, isScrolling, index, isResizing, setRowSize, getRowFocus, setRowFocus, sidebarTop } = props
 
     const cardRef = useRef()
 
     // a scalar value [0,1] that represents how focused the Card is
-    const [focus, setFocus] = useState(0)
+    const [focus, setFocus] = useState(getRowFocus(index) || 0)
+    const prevFocus = useRef(getRowFocus(index) || null)
+    const pinFocus = 1.25
 
+    const isPinned = focus === pinFocus
+
+    // a function to toggle focus to 2
+    const pinCard = () => {      
+        if (focus === pinFocus) {
+            // if already pinned, recover previous value
+            setFocus(prevFocus.current !== pinFocus? prevFocus.current : 1) 
+            setRowFocus(index, prevFocus.current !== pinFocus? prevFocus.current : 1)
+            setSeed(content)
+        } else {
+            // set isPinned
+            prevFocus.current = focus
+            setFocus(pinFocus)
+            setRowFocus(index, pinFocus)
+            setSeed(content)
+        }
+    }
+    
     // set the focus of the Card based on its position in the viewport
     const [focusRef, bounds] = useMeasure({ scroll: true, debounce: { scroll: 10, resize: 10 } });
 
     const distFromSidebar = bounds.top - sidebarTop + 16
 
+    // if scrolling has stopped, snap to sidebar
+    useLayoutEffect(() => {
+        if (!isScrolling) {
+            if (focus > 0.80 && focus < 0.90) {
+    
+                // TODO: snap into place
+                scrollTo(style.top - sidebarTop + 16)
+    
+            }
+        }
+    }, [isScrolling])
+
 
     useLayoutEffect(() => {
 
-        if (cardRef.current) {
+        if (cardRef?.current) {
 
-            const cardHeight = cardRef.current.getBoundingClientRect().height
+            const cardHeight = cardRef.current?.getBoundingClientRect().height
             setRowSize(index, cardHeight + 16*isFocused)
 
             gridRef?.current?.resetAfterRowIndex(index, false)
 
         }
-        
 
-        // if Tweet is below the Sidebar
-        if (distFromSidebar > 0) {
+        if (!isPinned) {
+            // if Tweet is below the Sidebar
+            if (distFromSidebar > 0) {
 
-            // scale focus[0,1] based on distance from sidebar
-            let remainingDistance = window.innerHeight - sidebarTop
-            let focus = 1 - (distFromSidebar / remainingDistance)
-            setFocus(focus)
-            
+                // scale focus[0,1] based on distance from sidebar
+                let remainingDistance = window.innerHeight - sidebarTop
+                let focus = 1 - (distFromSidebar / remainingDistance)
+                setFocus(focus)
+                setRowFocus(index, focus)
 
-        } else {
-            // above the Sidebar
 
-            let remainingDistance = sidebarTop
-            let focus = (bounds.top / remainingDistance)
+            } else {
+                // above the Sidebar
 
-            setFocus(focus)
+                let remainingDistance = sidebarTop
+                let focus = (bounds.top / remainingDistance)
 
+                setFocus(focus)
+                setRowFocus(index, focus)
+
+            }
         }
+
+
     
     }, [bounds, sidebarTop, isResizing])
 
 
-
     const focusThreshold = 0.80
     const focusStyle = {
-        opacity: focus > focusThreshold ? 1 : 0.1 + focus * 0.5,
+        opacity: focus > focusThreshold ? 1 : 0.2 + focus * 0.5,
         transform: focus > focusThreshold ? `scale(${1 + 0.05 * focus})` : `scale(1.00)`,
         padding: '12px 12px 16px',
         transition: `all ${0.2 * focus}s ease-in-out`,
@@ -462,16 +522,25 @@ const Card = forwardRef((props, gridRef) => {
 
     const yMargin = 22
 
-    const isFocused = distFromSidebar > 0 && focus > 0.75
+    const isFocused = (distFromSidebar > 0 && focus > 0.75) || isPinned
     const tweet = content.content
 
     const openContext = isFocused && !isResizing
     const offsetLeft = bounds.width + 22
 
+    const scrollOnBlur = () => {
+        if (focus < 0.75) {
+            scrollTo(style.top - sidebarTop)
+        }
+    }
+
 
     return (
         <div
+
             key = {content.id}
+            // scroll to it onClick
+            onClick={scrollOnBlur}
             // absolutely position by Grid
             style={{
                 ...style, 
@@ -484,21 +553,19 @@ const Card = forwardRef((props, gridRef) => {
             ref={focusRef}
         >
             <div
-                className={cn("card min-w-24",
+                className={cn("card min-w-24 flex",
                 )}
                 style={isResizing? {opacity: 0.1} : focusStyle}
                 ref={cardRef}
             >
                 <Tweet tweet={tweet} isFocused={isFocused} />
+                <CardTag kinds={"tweet"} isFocused={isFocused} isPinned={isPinned} pinCard={pinCard} />
+
                 {/* Context Building */}
                 {openContext && tweet.entities?.length > 0 && (
                     ContextBuilder(offsetLeft, tweet, isFocused)
                 )}
             </div>
-
-
-
-
             
 
         </div>
@@ -509,6 +576,9 @@ const Card = forwardRef((props, gridRef) => {
 })
 
 
+
+
+
 function ContextBuilder(offsetLeft, tweet, isFocused) {
 
     
@@ -517,10 +587,10 @@ function ContextBuilder(offsetLeft, tweet, isFocused) {
     return (
         <div 
             className={cn(
-                'absolute flex flex-col gap-3 w-56 transition-all duration-300',
-                isFocused ? 'opacity-100' : 'opacity-0'
+                'absolute flex flex-col gap-3 w-56 transition-opacity opacity-0 duration-300',
+                isFocused && 'opacity-100'
             )}
-            style={{ top: 16, left: offsetLeft + 16, width: contextWidth }}
+            style={{ top: 16, left: offsetLeft + 16, width: contextWidth}}
         >
             <p className='caption leading-3 text-gray-300/90 pl-2 pb-1.5 border-b border-gray-500'>Related Content</p>
             <div className='flex flex-col gap-6'>

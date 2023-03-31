@@ -9,6 +9,13 @@ import { MdKeyboardArrowRight } from 'react-icons/md'
 import { BiDotsVertical, BiCaretRight } from 'react-icons/bi'
 import {IoIosCheckmark} from 'react-icons/io'
 
+import Slider from "react-input-slider"
+
+import { ReactComponent as Content} from "../assets/Icon/Content/Content.svg"
+import { ReactComponent as Aggregation} from "../assets/Icon/Aggregation/Aggregation.svg"
+import { ReactComponent as Far} from "../assets/Icon/Far/Far.svg"
+import { ReactComponent as Near} from "../assets/Icon/Near/Near.svg"
+
 
 import { useCallback } from "react";
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
@@ -39,12 +46,23 @@ const InlineContent = ({ name, kind }) => {
     // A width-constrained entity tag
     // Useful for rendering seeds
 
+    const [isHovered, setIsHovered] = useState(false)
+
     return (
-        <div className={
+
+        <div
+            onMouseEnter={() => {setIsHovered(true)}}
+            onMouseLeave={() => setIsHovered(false)}
+            className={
             cn(
                 "pl-3 pr-2.5 py-2 max-w-96 items-baseline inline-flex justify-between bg-white/55 rounded-md")
         }>
-            <p className="whitespace-nowrap truncate text-gray-200">
+            <p
+                className={cn(
+                    "w-4/5 truncate text-gray-200",
+                    { "overflow whitespace-normal": isHovered }
+                )}
+            >
                 {name}
             </p>
 
@@ -76,7 +94,7 @@ const AccordionDetails = ({ refHeight, expanded, children }) => {
 
         heightToFill.current = window.innerHeight - bounds.bottom + 156
 
-    }, [refHeight, bounds.bottom])
+    }, [refHeight, children, bounds.bottom, bounds])
 
     const { minHeight, height, visibility } = useSpring({
         from: { minHeight: 0, height: 0, visibility: 0, y: 0 },
@@ -103,11 +121,11 @@ const AccordionDetails = ({ refHeight, expanded, children }) => {
     } else { return null }
 }
 
-const Accordion = ({  height, summary, details, toggle, tabs = null }) => {
+const Accordion = ({  height, summary, details, toggle, tabs = null, _expanded = false }) => {
     // renders a controlled accordion with animated expand/collapse
 
     // Fallback if not controlled by parent
-    const [expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(_expanded)
 
     const detailsToggle = toggle ? () => toggle() : () => setExpanded(!expanded)
     const istabs = tabs ?? expanded
@@ -389,25 +407,50 @@ const ViewHeader = ({ expanded }) => {
     )
 }
 
-const ViewControls = () => {
+const Controls = ({viewConfig, setViewConfig}) => {
+
+    const controls = Object.keys(viewConfig).map((control) => {
+        let controlName = control 
+
+
+        // where viewConfig[control] is true
+
+        let value = Object.entries(viewConfig[control]).filter(([key, value]) => value === true)[0][0]
+        let formOptions = Object.keys(viewConfig[control])
+
+        return (
+            <Control
+                controlName={controlName}
+                value={value}
+                formOptions={formOptions}
+                setViewConfig={setViewConfig}
+            />
+        )
+
+    }
+
+
+    )
+
+
+
     return (
         <div className="pb-3">
-            <Control controlName={"Zoom"} value="Forest" />
-            <Control controlName={"Scope"} value="Near" />
-            <Control controlName={"Range"} value="Day" />
+            {controls}
         </div>
     )
 
 }
 
 
-const ViewController = ({ view, setView }) => {
+const ViewControls = ({ viewConfig, setViewConfig }) => {
 
     return (
-        <div className="sticky bg-white/35 border-b border-gray-500">
+        <div className="sticky top-0 bg-white/35 backdrop-blur-md border-b border-gray-500">
             <Accordion
                 summary={<ViewHeader />}
-                details={<ViewControls />}
+                details={<Controls viewConfig = {viewConfig} setViewConfig = {setViewConfig} />}
+                _expanded = {true}
             />
         </div>
     )
@@ -471,7 +514,7 @@ const StatusIndicator = () => {
 const StatusViewer = ({ status, setStatus }) => {
 
     return (
-        <div className="bg-white/35 border-b border-gray-500">
+        <div className="sticky top-0 bg-white/35 backdrop-blur-xl border-b border-gray-500">
             <Accordion
                 summary={<StatusHeader />}
                 details={<StatusIndicator />}
@@ -499,7 +542,7 @@ const SeedDrawer = ({ seeds }) => {
     )
 }
 
-const ContentFilters = ({ streamFilters, toggleFilters }) => {
+const View = ({ streamFilters, toggleFilters, viewConfig, setViewConfig }) => {
 
     // recursively renders Content filters
 
@@ -529,7 +572,7 @@ const ContentFilters = ({ streamFilters, toggleFilters }) => {
 
     return (
         <div className="flex flex-col gap-3 pb-16">
-            <ViewController />
+            <ViewControls viewConfig = {viewConfig} setViewConfig = {setViewConfig} />
 
             {renderFilters(streamFilters, 1)}
         </div>
@@ -550,7 +593,6 @@ const useRemainingHeight = (ref, state) => {
     }, [ref])
 
     useEffect(() => {
-        console.log("Measuring remaining height")
         handleResize()
         window.addEventListener('resize', handleResize)
         return () => window.removeEventListener('resize', handleResize)
@@ -560,29 +602,137 @@ const useRemainingHeight = (ref, state) => {
     return height
 }
 
-const Control = ({ controlName, value, formOptions }) => {
+const Control = ({ controlName, value, formOptions, setViewConfig }) => {
+
+    // Renders an input control with a name, a current value of possible values
+    // value must be in possibleValues
+
+    controlName = controlName.charAt(0).toUpperCase() + controlName.slice(1)
+ 
+    const [index, setIndex] = useState(formOptions.indexOf(value))
+    let _value = formOptions[index]
+    _value = _value.charAt(0).toUpperCase() + _value.slice(1)
+    
+
+    const formLength = formOptions.length - 1
+
+    const leftOpacity = 0.3 + (formLength - index)/formLength
+    const rightOpacity = 0.3 + (index/formLength)
+
+    const leftTransform = 1 + 0.2*(formLength - index)/formLength
+    const rightTransform = 1 + 0.2*index/formLength
+
+    const IconLeft = controlName === "Zoom" ? 
+        <Aggregation style={{opacity: leftOpacity, transform: `scale(${leftTransform }`}} />
+        : controlName === "Scope" ?
+        <Near style={{opacity: leftOpacity, transform: `scale(${leftTransform }`}} />
+        : <div className="w-12 h-12"/>
+
+    const IconRight = controlName === "Zoom" ?
+        <Content style={{opacity: rightOpacity, transform: `scale(${rightTransform}` }} />
+        : controlName === "Scope" ?
+        <Far style={{opacity: rightOpacity, transform: `scale(${rightTransform}`}} />
+        : <div className="w-12 h-12"/>
+    
+
+    const tickStep = ({x}) => {
+        // if x is int, setIndex
+        if (x % 1 === 0) {
+            setIndex(x)
+        }
+    }
+
+
+    // when inactive for 1.5 seonds, setViewControls
+
 
     return (
         <div className="flex flex-col gap-0 pt-2 pb-1 pl-6 pr-4.5 ">
             <p className="caption text-gray-400" >{controlName}</p>
-            <div className="flex justify-between py-1">
-                <p className="text-gray-100">{value}</p>
-                <div className="flex gap-1.5">
-                    {formOptions}
+            <div className="flex items-center justify-between py-1">
+                <p className="text-gray-100">{_value}</p>
+
+                <div className="flex items-center gap-2">
+                    {cloneElement(IconLeft ?? <div/>, {className: "transition-all duration-500 cursor-pointer", onClick: () => setIndex(0)})}
+
+                    <Slider
+                        axis = "x"
+                        x = {index}
+                        onChange={tickStep}
+                        xmin={0}
+                        xmax={formOptions.length - 1}
+                        
+
+                        styles = {{
+                            track: {
+                                backgroundColor: "#d7d5dd",
+                                height: "1px",
+                                width: "50px"
+                            },
+                            active: {
+                                backgroundColor: "#D0CED4",
+                            }, 
+                            thumb: {
+                                width: "9px",
+                                height: "9px",
+                                backgroundColor: "#36353B",
+                                boxShadow: "none"
+                        }}}
+                        
+                        //marks={formOptions.map((v, i) => ({ value: i, label: v }))}
+                        //track={false}
+                        //valueLabelDisplay="auto"
+                        // valueLabelFormat={(v) => formOptions[v]}
+                    />
+
+                    {cloneElement(IconRight ?? <div/>, {className: "transition-all duration-500 cursor-pointer", onClick: () => setIndex(formOptions.length - 1)  })}
+
                 </div>
+
+            
+                
+                
             </div>
         </div>
     )
 }
 
 
-const Tabs = ({ tabs, toggleTabs }) => {
+
+const Indicator = ({ hasChanged }) => {
+
+    return (
+        <div
+            className={cn(
+                "absolute animate-none -right-1.5 top-0.5 transition-opacity duration-200 opacity-0 w-1 h-1 bg-gray-200 rounded-full animate-pulse",
+                { "animate-pulse opacity-100": true }
+            )}
+        />
+    )
+}
+
+const Tabs = ({ tabs, toggleTabs, crumbs, view }) => {
     // Renders tabs for Seeds and View Controller
 
+    const prevCrumbs = useRef([])
+
+    useEffect(() => {
+        if (prevCrumbs.current?.length !== crumbs?.length) {
+            console.log("crumbs changed")
+            console.log(prevCrumbs.current?.length, crumbs?.length)
+
+            prevCrumbs.current.length = crumbs?.length || 0
+        }
+    })
+
+
+
+    const hasChanged = prevCrumbs.current?.length !== crumbs?.length
+
     const isOpen = Object.values(tabs).includes(true)
+    const baseStyle = "cursor-pointer relative tracking-tighter leading-5 transition-all duration-200"
 
     const activeStyle = (isActive) => {
-        let baseStyle = "cursor-pointer tracking-tighter leading-5 transition-all duration-200"
 
         let addition = isActive ?
             "text-gray-100 hover:text-gray-100/70 font-normal "
@@ -592,28 +742,30 @@ const Tabs = ({ tabs, toggleTabs }) => {
         return baseStyle + " " + addition
     }
 
-
     return (
         <div
             className={
                 cn(
-                    "pl-4.5 pt-2.5 pb-3 pr-3.5 flex gap-4 items-baseline",
+                    "pl-4.5  pt-2.5 pb-3 pr-3.5 flex gap-4 items-baseline",
                     { "bg-white/35": isOpen },
                 )
             }
         >
 
             <h2
-                className={activeStyle(tabs.seeds)}
+                className={activeStyle(tabs.seeds) + " " + (hasChanged ? "animate-text-pulse" : "animation-none")}
                 onClick={() => toggleTabs("seeds")}
+
             >
                 Crumbs
+
             </h2>
             <h2
                 className={activeStyle(tabs.view)}
                 onClick={() => toggleTabs("view")}
             >
                 View
+
             </h2>
         </div>
 
@@ -625,7 +777,7 @@ const Tabs = ({ tabs, toggleTabs }) => {
 
 
 
-const StreamSidebar = ({ stream, header = null,  isResizing, currentStream, streamFilters, toggleFilters, viewConfig }) => {
+const StreamSidebar = ({ header = null,  isResizing, currentStream, streamFilters, toggleFilters, viewConfig, setViewConfig }) => {
 
     // Renders a Stream object, its metadata, View Controller and Seeds
 
@@ -656,13 +808,17 @@ const StreamSidebar = ({ stream, header = null,  isResizing, currentStream, stre
         if (bounds.height) {
             setRemainingHeight(window.innerHeight - bounds.height - 2 * bounds.top)
         }
-    }, [tabs, bounds.x, bounds.y])
+    }, [tabs, bounds])
+
+    const crumbs = currentStream?.seeds
+
+    const SIDEBAR_WIDTH = 256
 
 
     return (
         <div
             ref={ref}
-            style = {{ width: 238 }}
+            style = {{ width: SIDEBAR_WIDTH }}
             className={
                 cn(
                     "flex flex-col gap-0 rounded-md ",
@@ -677,12 +833,12 @@ const StreamSidebar = ({ stream, header = null,  isResizing, currentStream, stre
             <div
                 className={"flex flex-col"}
             >
-                <Tabs tabs={tabs} toggleTabs={toggleTabs} />
+                <Tabs tabs={tabs} toggleTabs={toggleTabs} crumbs={crumbs} />
 
                 <Accordion
                     height={remainingHeight}
                     summary={<div></div>}
-                    details={<SeedDrawer seeds={stream.seeds} />}
+                    details={<SeedDrawer seeds={currentStream.seeds} />}
                     toggle={() => toggleTabs("seeds")}
                     tabs={tabs["seeds"]}
                 />
@@ -690,7 +846,7 @@ const StreamSidebar = ({ stream, header = null,  isResizing, currentStream, stre
                 <Accordion
                     height={remainingHeight}
                     summary={<div></div>}
-                    details={<ContentFilters streamFilters={streamFilters} toggleFilters={toggleFilters} viewConfig={viewConfig} />}
+                    details={<View streamFilters={streamFilters} toggleFilters={toggleFilters} viewConfig={viewConfig} setViewConfig = {setViewConfig} />}
                     toggle={() => toggleTabs("view")}
                     tabs={tabs["view"]}
 

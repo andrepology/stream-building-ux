@@ -46,8 +46,16 @@ const Grab = ({ isResizing} ) => {
 
 
 
+const propsAreEqual = (prevProps, nextProps) => {
+  // do not rerender if setSeed has changed
+  // this is to prevent the grid from rerendering when the seed is changed
 
-const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
+  return prevProps.setSeed !== nextProps.setSeed
+}
+
+
+
+const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing, setSeed  }) => {
 
   // accepts content and renders a grid of content in a chosen order
   // manages their focus
@@ -72,32 +80,42 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
   content = [{}, ...content, {}]
   
   // Dynamically sizing rows
-  const gridRef = useRef()
+  const gridRef = useRef(null)
+  const scrollRef = useRef(null)
+
+  const scrollTo = useCallback((scrollOffset) => {
+    scrollRef?.current?.scrollTo({ 
+      left: 0, 
+      top: scrollOffset,
+      behavior: 'smooth',
+    })
+  }, [])
+
+
   const rowSizes = useRef({})
-
-
-
-  // scrollToTop on rerender
-  useEffect(() => {
-    gridRef?.current?.scrollToItem({rowIndex: 0, columnIndex: 0})
-  }, [content])
-
-  
   const setRowSize =(index, size) => {
 
     rowSizes.current = {...rowSizes.current, [index]: size}
     gridRef?.current?.resetAfterRowIndex(index, false)
   }
 
-
+  const rowFocus = useRef({})
+  const setRowFocus = (index, focus) => {
+    rowFocus.current = {...rowFocus.current, [index]: focus}
+  }
   
   const getRowSize = index => rowSizes.current[index] + GUTTER || 200
+  const getRowFocus = index => rowFocus.current[index] || 0.5
+
+ 
   
   const nCols = 1
   const remainingWidth = window.innerWidth - offsetLeft
-  const colWidth = Math.min(480, remainingWidth/nCols)
+  const colWidth = Math.min(360, remainingWidth/nCols)
 
   const nRows = Math.ceil(content?.length / nCols)
+
+  
 
 
   // only render if there is content to render
@@ -107,13 +125,14 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
 
   return (
     <div 
-      className='z-10 pl-6'
+      className='feed z-10 pl-6'
       style={{position: 'relative', overflow: 'visible', left: offsetLeft, top: 0}}
     >
 
       <VariableSizeGrid
 
         ref = {gridRef}
+        outerRef = {scrollRef}
 
         width = {remainingWidth}
         height = {window.innerHeight}
@@ -155,12 +174,20 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
               content = {content} 
               
               isScrolling = {isScrolling}
+              scrollTo = {scrollTo}
               
               style = {style} 
               
               isResizing={isResizing}
+
               setRowSize = {setRowSize}
               getRowSize = {getRowSize}
+
+              setRowFocus = {setRowFocus}
+              getRowFocus = {getRowFocus}
+
+              setSeed = {setSeed}
+              
               
 
               ref = {gridRef}
@@ -173,12 +200,12 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing }) => {
       </VariableSizeGrid>
     </div>
   )
-})
+}, )
 
 
 // obj of streams: seeds
 const sampleStreams = [
-  { name: 'Trails For Thought', seeds: [{ name: 'Alex Xu', kind: 'person' }, { name: 'Tana Inc.', kind: 'Organization' }] },
+  { name: 'Trails For Thought', description: "Tools we shape and the tools that shape us", seeds: [{ name: 'Alex Xu', kind: 'account' }, { name: 'Tana Inc.', kind: 'entity' }] },
   { name: 'Human In The Loop', seeds: ['Andy Matuschak', 'CMU_HCI'] },
   { name: 'Biochemistry Geeks', seeds: [''] }
 ];
@@ -226,16 +253,29 @@ const Dialog = ({chatMessage, className}) => {
   const { content, time, role } = chatMessage
 
   const isAssistant = role === 'assistant'
+  const isUser = role === 'user'
+
+  const [isHovered, setHovered] = useState(false)
+
 
   return (
     <div 
-      className={"flex items-baseline gap-4 " + className}
-
+      className={"flex items-baseline gap-1.5 " + className}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       <div
-        className="bg-gray-400/20 flex items-center hover:bg-gray-300/20 w-6 h-6 rounded-full cursor-grab"
+        className={cn(
+          "bg-gray-400/20 flex items-center w-6 h-6 rounded-full cursor-grab",
+          {"bg-gray-300/20": isHovered}
+        )}
       > 
-        <div className='text-center text-gray-300 text-sm leading-5 mx-auto w-4 h-4 rounded-full bg-white/55'>
+        <div 
+          className={
+            cn(
+              'text-center text-gray-200/95 text-sm leading-5 mx-auto w-5 h-5 rounded-full bg-white/55',
+              {"bg-white/95 text-gray-100/95": isHovered}
+          )}>
           {role[0]}
         </div>
       </div>
@@ -243,15 +283,17 @@ const Dialog = ({chatMessage, className}) => {
       <p 
         // wrap text to not overflow
         className={
-          cn("py-2 px-1.5 w-4/5 break-all text-gray-100/80 hover:text-gray-100",
-          {"": isAssistant},
+          cn("grow transition-all duration-200 py-2 px-1.5 font-light hover:font-normal tracking-wide w-4/5 border-white/0 leading-5 break-words text-gray-100 hover:text-gray-100",
+          {"rounded-md pl-6 pr-2 py-2 cursor-pointer": isUser},
+          {"pl-6": isAssistant},
+          // {"bg-white/55 border-white/55": isHovered && isUser},
           )}
       >{content}</p>
     </div>
   )
 }
 
-const MessageStream = ({chatHistory}) => {
+const MessageStream = ({chatHistory, width }) => {
 
 
   // measure height of message stream
@@ -264,20 +306,37 @@ const MessageStream = ({chatHistory}) => {
     setRerender(_ => _ + 1)
   }, [bounds])
 
-  const remainingSpace = window.innerHeight - bounds?.bottom
+  console.log(chatHistory.length)
   
-  const sessionHeader = <Dialog className = {"sticky top-0 pb-2 border-b border-gray-500 "} chatMessage = {chatHistory[1] || chatHistory[0]} key = {1} />
+
+  const sessionHeader = chatHistory.length > 1 &&
+    <Dialog 
+      className = {cn(
+        "sticky top-0 pb-2 border-b border-gray-500",
+        {"border-b-0 bg-bg/0 backdrop-blur-none": chatHistory.length < 2},
+        {"backdrop-blur-xl bg-bg/40": chatHistory.length >= 2}
+      )} 
+      chatMessage = {chatHistory[1] || chatHistory[0]} 
+      key = {1} 
+    />
+
+  const offsetLeft = 30
 
   // render a stream of messages
   return (
     <div 
       ref = {messageRef}
-      style = {{top: -bounds?.height - 12, maxHeight: 400}}
-      className="absolute overflow-scroll w-full -left-7 flex flex-col gap-2"
+      style = {{
+        left: -offsetLeft,
+        top: -bounds?.height - 16, 
+        maxHeight: 320, 
+        width: width + offsetLeft}}
+      className="absolute overflow-scroll w-full flex flex-col gap-2"
     >
       {sessionHeader}
       {chatHistory.slice(2, chatHistory.length).map((message, i) => <Dialog chatMessage={message} key={i + 1}/>)}
     </div>
+
   )
 
 }
@@ -287,9 +346,6 @@ const ChatInput = ({ input, setInput, isLoading }) => {
 
   // if loading return disabled input
   const [isFocused, setFocused] = useState(false)
-
-  
-
 
   let Icon = isLoading ?
     <ImSpinner2 className='w-4 h-4 mx-auto text-gray-400 hover:text-gray-300 animate-spin' />
@@ -305,10 +361,16 @@ const ChatInput = ({ input, setInput, isLoading }) => {
         onBlur={() => setFocused(false)}
         onFocus={() => setFocused(true)}
 
-        placeholder='Type a message...'
+        placeholder='Trailing Through ...'
         value={input}
         onChange={e => setInput(e.target.value)}
-        className="w-4/5 bg-white/0 text-md transition-transform duration-300 text-gray-900 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 "
+        className={cn(
+          "w-4/5 bg-white/0 text-md placeholder-gray-200 transition-transform duration-300 text-gray-900 placeholder-gray-900/50 focus:outline-none focus:ring-0 text-md font-medium text-gray-100 leading-6 ",
+          {"placeholder-gray-200/55": isFocused}
+        )}
+        style = {{
+          opacity: isFocused ? 1 : 0.35,
+        }}
       />
         <button
         className="shrink rounded-sm w-8 h-8 "
@@ -321,9 +383,10 @@ const ChatInput = ({ input, setInput, isLoading }) => {
 }
 
 
-const Chat = memo(({ chatHistory, isLoading, updateHistory }) => {
+const Chat = memo(({ chatHistory, isLoading, updateHistory, width = 256 }) => {
 
   const [input, setInput] = useState('')
+  const [isFocused, setFocused] = useState(false)
 
 
   const submitRequest = (e) => {
@@ -346,21 +409,29 @@ const Chat = memo(({ chatHistory, isLoading, updateHistory }) => {
 
   }
 
-  const focused = input.length > 0
+  const focus = input.length > 0 || isFocused 
 
   // render chat history based on agent input
   return (
     <div 
       className="flex flex-col gap-4"
-      style={{ width: 238 }}
+      style={{ width: width }}
     >
-      <MessageStream chatHistory={chatHistory}/>
+      <MessageStream chatHistory={chatHistory} width = {width}/>
       <form 
         onSubmit={(e) => submitRequest(e)}
-        style = {focused ? {transform : 'translateX(-2px) translateY(-2px)'} : {}}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        style = {focus ? 
+            {
+              transform : 'translateX(-2px) translateY(-2px)', 
+              backgroundColor: `rgb(250 249 250 / 0.55)`,
+              borderColor: `rgb(250 249 250 / 0.55)`
+            } : 
+            {}}
         className={cn(
-          "flex h-12 transition-all duration-200 justify-between border border-white/55 bg-white/35 rounded-md pl-3.5 pr-2 py-2 resize-none w-full",
-          { "bg-white/55 shadow-focus": input.length > 0}
+          "flex transition-all duration-200 z-10 justify-between border border-white/10 bg-white/35 rounded-md pl-3.5 pr-2 py-2 resize-none w-full",
+          { "bg-white/55 border-white/55 shadow-focus": input.length > 0}
         )
         }
       >
@@ -379,42 +450,74 @@ const tweets = tftTweets.map(tweet => {
 })
 
 function App() {
-  const [streams, setStreams] = useState(sampleStreams)
-  const [currentStream, setStream] = useState({ name: "Trails For Thought", description: "A stream about the tools we shape and the tools that shape us" });
+  
 
-  const [focusedContent, setFocusedContent] = useState(null);
+  const [currentStream, setStream] = useState(sampleStreams[0]);
+
+  const setSeed = useCallback((content) => {
+    // sets a piece of content as a seed
+    const seeds = currentStream.seeds
+
+    // if seed already exists remove it
+    if (seeds.find(seed => seed.id === content.id)) {
+      setStream( p => {
+        return {
+          ...p,
+          seeds: seeds.filter(seed => seed.id !== content.id)
+        }
+      }  )
+      return
+    }
+
+    // TODO: make flexible to accounts etc
+    const newSeed = {
+      ...content,
+      dateAdded: new Date(),
+      name: content.content.html
+    }    
+
+    console.log(seeds, newSeed)
+
+    // join new seed to seeds
+    
+    setStream( p => {
+      return {
+        ...p,
+        seeds: [...seeds, newSeed]
+
+      }
+    }  )
+    
+  }, [currentStream.seeds])
+  
   // TODO: sorting and randomising order of Feed
   const [sampleContent, setSampleContent] = useState([])
   const [isLoading, setLoading] = useState(false)
 
-
   // TODO: move to useFilters
   const [viewConfig, setViewConfig] = useState({
     zoom: {
-      topic: true,
-      tweet: false
-    },
-    limit: {
-      day: true,
-      week: false,
-      month: false,
-    },
-    sort: {
-      new: true,
-      relevant: false
+      forest: true,
+      trees: false
     },
     scope: {
       crumbs: true,
       near: false,
       far: false
-    }
+    },
+    range: {
+      day: true,
+      week: false,
+      month: false,
+    },
   });
 
   const [streamFilters, setFilters, toggleFilters] = useFilters();
 
+  
   const [size, setSize] = useState({
     width: 256,
-    height: 224,
+    height: 480,
     x: 0,
     y: 0
   })
@@ -537,10 +640,6 @@ function App() {
 
     transform()
 
-    // const end = performance.now();
-    // console.log(`Transforming took ${performance.now() - end} ms`, filterState);
-
-
   }, [sampleContent])
 
 
@@ -604,7 +703,7 @@ function App() {
   const [chatHistory, setHistory] = useState([
     {
       time: new Date(),
-      content: "This is where you can create trails of thinking to think about things that might not fit in your head",
+      content: "",
       role: "system",
       contentIds: sampleContent.map(c => c.id)
     }])
@@ -626,9 +725,9 @@ function App() {
     const rawText = text.map(text => text.replace(/(https?:\/\/[^\s]+)/g, ""))
 
     // newline join rawText
-    const textString = rawText.join("\n")
+    const textString = rawText.join("\\n")
 
-    const contextPrompt = "Respond with as few words as possible. You are an assistant to make sense of online discourse. Reference and optionally use as context the following tweets \n " + textString
+    const contextPrompt = "You are an assistant to make sense of online discourse. Reference and optionally use as context the following tweets \\n " + textString
 
     return contextPrompt
 
@@ -657,7 +756,6 @@ function App() {
 
     // replace first message content with context prompt
     const context = createContextPrompt()
-
     typedChatHistory[0].content = context
     
     setLoading(true)
@@ -704,6 +802,9 @@ function App() {
     }
   }, [chatHistory])
 
+
+
+
   return (
     <div className="app-bg h-screen w-screen">
       <Rnd
@@ -739,6 +840,9 @@ function App() {
           }
         }
 
+        maxHeight = {window.innerHeight - 128}
+        maxWidth = {window.innerWidth - 400}
+
         enableResizing={
           {
             top: false,
@@ -769,37 +873,44 @@ function App() {
       />
 
       <div className="fixed z-40" style={{ top: size.height, left: size.width }}>
-
-        
-
         <StreamSidebar
-          inFocus={focusedContent !== null}
           isResizing = {isResizing}
 
           header = {<Chat isLoading={isLoading} chatHistory={chatHistory} updateHistory={updateHistory} />}
 
           setStream={setStream}
           currentStream={currentStream}
-          stream={streams[0]}
+          stream={currentStream}
           streamContent={filteredContent.length}
 
           streamFilters={streamFilters}
           toggleFilters={toggleFilters}
 
           viewConfig={viewConfig}
+          setViewConfig = {setViewConfig}
         />
       </div>
 
       <Feed 
+
         content={filteredContent}
         filters = {streamFilters}
-        offsetLeft = {size.width + 236}
+
+        setSeed = {setSeed}
+
+        offsetLeft = {size.width + 256}
         sidebarTop = {size.height}
         isResizing = {isResizing}
+
+        
       />
       
 
-      <StreamBackdrop currentStream={currentStream.name} sidebarLeft = {size.width} sidebarTop = {size.height} />
+      <StreamBackdrop 
+        currentStream={currentStream.name} 
+        isResizing = {isResizing}
+        sidebarLeft = {size.width} 
+        sidebarTop = {size.height} />
 
     </div>
 
@@ -807,7 +918,7 @@ function App() {
   );
 }
 
-const StreamBackdrop = ({ currentStream, sidebarTop, sidebarLeft }) => {
+const StreamBackdrop = ({ currentStream, sidebarTop, sidebarLeft, isResizing }) => {
   
   const bgImage = {
     backgroundImage: `url(${Masks})`,
@@ -815,13 +926,17 @@ const StreamBackdrop = ({ currentStream, sidebarTop, sidebarLeft }) => {
     backgroundSize: "cover",
   } 
 
+  const displace = isResizing ? 0 : 0
+
   return (
     <>
       <div
         className='absolute tracking-tighter text-gray-500/60 font-semibold z-0'
         style = {{
-          top: sidebarTop - 64,
-          left: sidebarLeft + 156,
+          top: sidebarTop - 64 + displace,
+          left: sidebarLeft + 156 - displace,
+          transform: isResizing? `scale(0.95)` : `scale(1)`,
+          transition: 'transform 0.1s ease-in-out',
           fontSize: '5rem',
           userSelect: 'none',
           zIndex: '1'
