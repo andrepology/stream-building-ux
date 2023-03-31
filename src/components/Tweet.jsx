@@ -427,7 +427,7 @@ const CardTag = memo(({ kind = "tweet", isFocused, isPinned, pinCard }) => {
 
 const Card = forwardRef((props, gridRef) => {
 
-    const { content, scrollTo, style, isScrolling, index, isResizing, setRowSize, getRowFocus, setRowFocus, sidebarTop } = props
+    const { content, setSeed, scrollTo, style, isScrolling, index, isResizing, setRowSize, getRowFocus, setRowFocus, sidebarTop } = props
 
     const cardRef = useRef()
 
@@ -444,11 +444,14 @@ const Card = forwardRef((props, gridRef) => {
             // if already pinned, recover previous value
             setFocus(prevFocus.current !== pinFocus? prevFocus.current : 1) 
             setRowFocus(index, prevFocus.current !== pinFocus? prevFocus.current : 1)
+            setSeed(content)
+            
         } else {
             // set isPinned
             prevFocus.current = focus
             setFocus(pinFocus)
             setRowFocus(index, pinFocus)
+            setSeed(content)
         }
     }
     

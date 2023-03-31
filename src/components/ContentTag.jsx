@@ -12,7 +12,7 @@ const tagColor = {
     "default": "bg-gray-500 text-gray-300"
 }
 
-const ContentTag = ({ kind, className = null }) => {
+const ContentTag = ({ kind = "tweet", className = null }) => {
 
     // hover state
     const [hover, setHover] = useState(false)
@@ -21,12 +21,12 @@ const ContentTag = ({ kind, className = null }) => {
 
     return (
         <div
-            className={className + ' caption inline-block h-4 cursor-default text-center  truncate leading-3 rounded-full px-1.5 py-0.5  ' + color}
+            className={className + ' caption inline-block h-4 cursor-default text-center leading-3 rounded-full px-1.5 py-0.5  ' + color}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
         >
             {
-                hover ? kind : kind.slice(0, 3)
+                hover ? kind : kind.slice(0, 3) 
             }
         </div>
     )

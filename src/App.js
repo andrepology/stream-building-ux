@@ -45,7 +45,17 @@ const Grab = ({ isResizing} ) => {
 }
 
 
-const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing, setRowFocus, rowFocus  }) => {
+
+const propsAreEqual = (prevProps, nextProps) => {
+  // do not rerender if setSeed has changed
+  // this is to prevent the grid from rerendering when the seed is changed
+
+  return prevProps.setSeed !== nextProps.setSeed
+}
+
+
+
+const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing, setSeed  }) => {
 
   // accepts content and renders a grid of content in a chosen order
   // manages their focus
@@ -89,7 +99,10 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing, setRowFocus, r
     gridRef?.current?.resetAfterRowIndex(index, false)
   }
 
-
+  const rowFocus = useRef({})
+  const setRowFocus = (index, focus) => {
+    rowFocus.current = {...rowFocus.current, [index]: focus}
+  }
   
   const getRowSize = index => rowSizes.current[index] + GUTTER || 200
   const getRowFocus = index => rowFocus.current[index] || 0.5
@@ -172,6 +185,8 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing, setRowFocus, r
 
               setRowFocus = {setRowFocus}
               getRowFocus = {getRowFocus}
+
+              setSeed = {setSeed}
               
               
 
@@ -185,12 +200,12 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing, setRowFocus, r
       </VariableSizeGrid>
     </div>
   )
-})
+}, )
 
 
 // obj of streams: seeds
 const sampleStreams = [
-  { name: 'Trails For Thought', seeds: [{ name: 'Alex Xu', kind: 'person' }, { name: 'Tana Inc.', kind: 'Organization' }] },
+  { name: 'Trails For Thought', description: "Tools we shape and the tools that shape us", seeds: [{ name: 'Alex Xu', kind: 'account' }, { name: 'Tana Inc.', kind: 'entity' }] },
   { name: 'Human In The Loop', seeds: ['Andy Matuschak', 'CMU_HCI'] },
   { name: 'Biochemistry Geeks', seeds: [''] }
 ];
@@ -401,14 +416,48 @@ const tweets = tftTweets.map(tweet => {
 
 function App() {
   
-  const [streams, setStreams] = useState(sampleStreams)
-  const [currentStream, setStream] = useState({ name: "Trails For Thought", description: "A stream about the tools we shape and the tools that shape us" });
 
+  const [currentStream, setStream] = useState(sampleStreams[0]);
+
+  const setSeed = (content) => {
+    // sets a piece of content as a seed
+    const seeds = currentStream.seeds
+
+    // if seed already exists remove it
+    if (seeds.find(seed => seed.id === content.id)) {
+      setStream( p => {
+        return {
+          ...p,
+          seeds: seeds.filter(seed => seed.id !== content.id)
+        }
+      }  )
+      return
+    }
+
+    // TODO: make flexible to accounts etc
+    const newSeed = {
+      ...content,
+      dateAdded: new Date(),
+      name: content.content.html
+    }    
+
+    console.log(seeds, newSeed)
+
+    // join new seed to seeds
+    
+    setStream( p => {
+      return {
+        ...p,
+        seeds: [...seeds, newSeed]
+
+      }
+    }  )
+    
+  }
   
   // TODO: sorting and randomising order of Feed
   const [sampleContent, setSampleContent] = useState([])
   const [isLoading, setLoading] = useState(false)
-
 
   // TODO: move to useFilters
   const [viewConfig, setViewConfig] = useState({
@@ -430,6 +479,7 @@ function App() {
 
   const [streamFilters, setFilters, toggleFilters] = useFilters();
 
+  
   const [size, setSize] = useState({
     width: 256,
     height: 224,
@@ -555,10 +605,6 @@ function App() {
 
     transform()
 
-    // const end = performance.now();
-    // console.log(`Transforming took ${performance.now() - end} ms`, filterState);
-
-
   }, [sampleContent])
 
 
@@ -644,9 +690,9 @@ function App() {
     const rawText = text.map(text => text.replace(/(https?:\/\/[^\s]+)/g, ""))
 
     // newline join rawText
-    const textString = rawText.join("\n")
+    const textString = rawText.join("\\n")
 
-    const contextPrompt = "Respond with as few words as possible. You are an assistant to make sense of online discourse. Reference and optionally use as context the following tweets \n " + textString
+    const contextPrompt = "You are an assistant to make sense of online discourse. Reference and optionally use as context the following tweets \\n " + textString
 
     return contextPrompt
 
@@ -675,7 +721,6 @@ function App() {
 
     // replace first message content with context prompt
     const context = createContextPrompt()
-
     typedChatHistory[0].content = context
     
     setLoading(true)
@@ -723,20 +768,7 @@ function App() {
   }, [chatHistory])
 
 
-  const rowFocus = useRef({})
-  const setRowFocus = (index, focus) => {
-    rowFocus.current = {...rowFocus.current, [index]: focus}
-  }
 
-  const pinnedRows = useRef(null)
-
-  useEffect(() => {
-    const pins = Object.entries(rowFocus.current).filter(([index, focus]) => focus > 1).map(([index, focus]) => index)
-    
-    console.log(pinnedRows)
-
-    pinnedRows.current = pins
-  }, [rowFocus.current])
 
   return (
     <div className="app-bg h-screen w-screen">
@@ -813,7 +845,7 @@ function App() {
 
           setStream={setStream}
           currentStream={currentStream}
-          stream={streams[0]}
+          stream={currentStream}
           streamContent={filteredContent.length}
 
           streamFilters={streamFilters}
@@ -825,13 +857,17 @@ function App() {
       </div>
 
       <Feed 
+
         content={filteredContent}
         filters = {streamFilters}
+
+        setSeed = {setSeed}
+
         offsetLeft = {size.width + 236}
         sidebarTop = {size.height}
         isResizing = {isResizing}
-        rowFocus = {rowFocus}
-        setRowFocus = {setRowFocus}
+
+        
       />
       
 

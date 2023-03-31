@@ -51,7 +51,7 @@ const InlineContent = ({ name, kind }) => {
             cn(
                 "pl-3 pr-2.5 py-2 max-w-96 items-baseline inline-flex justify-between bg-white/55 rounded-md")
         }>
-            <p className="whitespace-nowrap truncate text-gray-200">
+            <p className=" w-4/5 truncate hover:overflow hover:whitespace-normal text-gray-200">
                 {name}
             </p>
 
@@ -435,7 +435,7 @@ const Controls = ({viewConfig, setViewConfig}) => {
 const ViewControls = ({ viewConfig, setViewConfig }) => {
 
     return (
-        <div className="sticky bg-white/35 border-b border-gray-500">
+        <div className="sticky top-0 bg-white/35 backdrop-blur-lg border-b border-gray-500">
             <Accordion
                 summary={<ViewHeader />}
                 details={<Controls viewConfig = {viewConfig} setViewConfig = {setViewConfig} />}
@@ -736,7 +736,7 @@ const Tabs = ({ tabs, toggleTabs }) => {
 
 
 
-const StreamSidebar = ({ stream, header = null,  isResizing, currentStream, streamFilters, toggleFilters, viewConfig, setViewConfig }) => {
+const StreamSidebar = ({ header = null,  isResizing, currentStream, streamFilters, toggleFilters, viewConfig, setViewConfig }) => {
 
     // Renders a Stream object, its metadata, View Controller and Seeds
 
@@ -793,7 +793,7 @@ const StreamSidebar = ({ stream, header = null,  isResizing, currentStream, stre
                 <Accordion
                     height={remainingHeight}
                     summary={<div></div>}
-                    details={<SeedDrawer seeds={stream.seeds} />}
+                    details={<SeedDrawer seeds={currentStream.seeds} />}
                     toggle={() => toggleTabs("seeds")}
                     tabs={tabs["seeds"]}
                 />
