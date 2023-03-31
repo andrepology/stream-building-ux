@@ -405,9 +405,9 @@ const CardTag = memo(({ kind = "tweet", isFocused, isPinned, pinCard }) => {
 
     return (
         <div
-            className='flex flex-col justify-between items-end'
+            className='flex flex-col w-9 overflow-visible justify-between items-end'
         >
-            <ContentTag className="shrink inline-block" kind={kind} />
+            <ContentTag className="shrink overflow-visible inline-block" kind={kind} />
 
             <div
                 onClick={() => pinCard()}
@@ -425,7 +425,7 @@ const CardTag = memo(({ kind = "tweet", isFocused, isPinned, pinCard }) => {
 })
 
 
-const Card = forwardRef((props, gridRef) => {
+const BaseCard = forwardRef((props, gridRef) => {
 
     const { content, setSeed, scrollTo, style, isScrolling, index, isResizing, setRowSize, getRowFocus, setRowFocus, sidebarTop } = props
 
@@ -445,7 +445,6 @@ const Card = forwardRef((props, gridRef) => {
             setFocus(prevFocus.current !== pinFocus? prevFocus.current : 1) 
             setRowFocus(index, prevFocus.current !== pinFocus? prevFocus.current : 1)
             setSeed(content)
-            
         } else {
             // set isPinned
             prevFocus.current = focus
@@ -582,6 +581,10 @@ const Card = forwardRef((props, gridRef) => {
 
 
 })
+
+const Card = memo(BaseCard, areEqual)
+
+
 
 
 function ContextBuilder(offsetLeft, tweet, isFocused) {

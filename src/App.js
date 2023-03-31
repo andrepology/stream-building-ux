@@ -419,7 +419,7 @@ function App() {
 
   const [currentStream, setStream] = useState(sampleStreams[0]);
 
-  const setSeed = (content) => {
+  const setSeed = useCallback((content) => {
     // sets a piece of content as a seed
     const seeds = currentStream.seeds
 
@@ -453,7 +453,7 @@ function App() {
       }
     }  )
     
-  }
+  }, [currentStream.seeds])
   
   // TODO: sorting and randomising order of Feed
   const [sampleContent, setSampleContent] = useState([])
