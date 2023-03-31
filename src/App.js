@@ -111,7 +111,7 @@ const Feed = memo(({ content, offsetLeft, sidebarTop, isResizing, setSeed  }) =>
   
   const nCols = 1
   const remainingWidth = window.innerWidth - offsetLeft
-  const colWidth = Math.min(360, remainingWidth/nCols)
+  const colWidth = Math.min(392, remainingWidth/nCols)
 
   const nRows = Math.ceil(content?.length / nCols)
 
@@ -284,8 +284,8 @@ const Dialog = ({chatMessage, className}) => {
         // wrap text to not overflow
         className={
           cn("grow transition-all duration-200 py-2 px-1.5 font-light hover:font-normal tracking-wide w-4/5 border-white/0 leading-5 break-words text-gray-100 hover:text-gray-100",
-          {"rounded-md pl-6 pr-2 py-2 cursor-pointer": isUser},
-          {"pl-6": isAssistant},
+          {"rounded-md pl-4.5 pr-2 py-2 cursor-pointer": isUser},
+          {"pl-4.5": isAssistant},
           // {"bg-white/55 border-white/55": isHovered && isUser},
           )}
       >{content}</p>
