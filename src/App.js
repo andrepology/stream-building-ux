@@ -491,7 +491,7 @@ function App() {
   }, [currentStream.seeds])
   
   // TODO: sorting and randomising order of Feed
-  const [sampleContent, setSampleContent] = useState([])
+  const [sampleContent, setSampleContent] = useState(tweets)
   const [isLoading, setLoading] = useState(false)
 
   // TODO: move to useFilters
@@ -710,7 +710,7 @@ function App() {
 
   useEffect(() => {
 
-    loadMemory()
+    // loadMemory()
 
   }, [])
 
